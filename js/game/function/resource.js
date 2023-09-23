@@ -56,6 +56,11 @@ function getResourceID(id,res_name){
 			}
 			getByID(id+'BrID',`<br>`)
 			player['resource'][res_name+'Unlock'] = true
+			if(unlocked && player['resource'][res_name+'Unlocked']==false){
+				if(main['resource'][res_name]['unlockAction']!==undefined){
+					$(main['resource'][res_name]['unlockAction'])
+				}
+			}
 			player['resource'][res_name+'Unlocked'] = true
 		}else{
 			document.getElementById(id+"TitleID").style.display = 'none'
@@ -90,9 +95,6 @@ function resourceAction(id){
 			let gain = main['resource'][id]['gain']()
 			if(main['resource'][id]['unlocked']!==undefined){
 				let unlocked = main['resource'][id]['unlocked']()
-				if(main['resource'][id]['unlockedLog']!==undefined){
-					addLog(main['resource'][id]['unlockedLog']()[0],main['resource'][id]['unlockedLog']()[1])
-				}
 				if(unlocked || unlocked==null){
 					player['resource'][id] = player['resource'][id].add(n(gain).mul(diff))
 				}

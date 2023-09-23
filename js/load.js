@@ -58,10 +58,9 @@ function baseLoad(){
 		let y = mainResearch['main'][i]['map']()
 		if(!researchArray.includes(y)){
 			researchArray.push(y)
-			researchStr = '<br><br><br><br><div id="'+y+'LoadMainResearch" style="text-align: -webkit-center"></div>'+researchStr
+			researchStr += '<br><br><br><br><div id="'+y+'LoadMainResearch" style="text-align: -webkit-center"></div>'
 		}
 	}
-	researchStr = '<br><br><div id="topLoadMainResearch" style="text-align: -webkit-center; display: block; height: 80px"></div>'+researchStr
 	getByID('loadMainResearch',researchStr)
 	for(let i in mainResearch['main']){
 		addByID(mainResearch['main'][i]['map']()+'LoadMainResearch',`

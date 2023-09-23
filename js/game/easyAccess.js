@@ -6,6 +6,6 @@ function getBuildGain(building,resource){
     return n(main['building'][building]['tooltip']['effect']['gain'][resource]()).mul(player['building'][building])
 }
 
-function displayResourceUnlocked(resource){
+function getResourceUnlocked(resource){
     return player['resource'][resource].gt(0) || player['resource'][resource+'Unlocked']
 }

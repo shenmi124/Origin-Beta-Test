@@ -4,6 +4,7 @@ var mainButton = {
     },
     research:{
         name(){return i18n('mainButton.research')},
+        unlocked(){return getResourceUnlocked('fiber')}
     },
     setting:{
         name(){return i18n('mainButton.setting')},
@@ -61,7 +62,10 @@ var main = {
                 }
             },
             research(){return n(1)},
-            unlocked(){return getResourceBaseMax('fiber')},
+            unlockAction(){
+                addLog('你现在可以在研究选项卡下进行研究了','#888')
+            },
+            unlocked(){return getResourceUnlocked('fiber')},
         },
         stone:{
             name(){return i18n("resource.stone")},
@@ -81,7 +85,10 @@ var main = {
                 }
             },
             research(){return n(5)},
-            unlocked(){return displayResourceUnlocked('stone')},
+            unlockAction(){
+                addLog('你在泥土中发现了一些石子','#000')
+            },
+            unlocked(){return getResourceUnlocked('stone')},
         },
         tin:{
             name(){return i18n("resource.tin")},
@@ -101,7 +108,10 @@ var main = {
                 }
             },
             research(){return n(5)},
-            unlocked(){return displayResourceUnlocked('tin')},
+            unlockAction(){
+                addLog('你在泥土中发现了一些金属','#000')
+            },
+            unlocked(){return getResourceUnlocked('tin')},
         },
         gem:{
             name(){return i18n("resource.gem")},
@@ -122,7 +132,7 @@ var main = {
                 }
             },
             research(){return n(5)},
-            unlocked(){return displayResourceUnlocked('gem')},
+            unlocked(){return getResourceUnlocked('gem')},
         },
         grass:{
             name(){return '植被'},
@@ -197,7 +207,7 @@ var main = {
                     }
                 }
             },
-            unlocked(){return displayResourceUnlocked('researchPoints') || main['resource']['researchPoints']['max']().gt(0)},
+            unlocked(){return getResourceUnlocked('researchPoints') || main['resource']['researchPoints']['max']().gt(0)},
         },
         devSpeed:{
             newType(){return '特殊资源'},
@@ -298,6 +308,27 @@ var main = {
 
 var mainResearch = {
     main:{
+        m21:{
+            name(){return '燧石打磨'},
+            tooltip:{
+                0(){return '尝试在泥土中寻找其他物质'},
+            },
+            effect:{
+                0:{
+                    1(){return ['行动采集泥土 获取概率×120%',true]},
+                },
+            },
+            cost: {
+                0:{
+                    dirt(){return n(12)},
+                    fiber(){return n(5)}
+                },
+            },
+            max(){return n(1)},
+            map(){return 2},
+            canvas(){return ['m11']},
+            unlocked(){return player.research.m11.gte(1) && getResourceUnlocked('stone')}
+        },
         m11:{
             name(){return '泥筛工艺'},
             tooltip:{
@@ -311,7 +342,7 @@ var mainResearch = {
             cost: {
                 0:{
                     dirt(){return n(12)},
-                    fiber(){return n(5)}
+                    fiber(){return n(4)}
                 },
             },
             max(){return n(1)},
@@ -329,7 +360,7 @@ var mainResearch = {
             },
             cost: {
                 0:{
-                    fiber(){return n(8)}
+                    fiber(){return n(6)}
                 },
             },
             max(){return n(1)},

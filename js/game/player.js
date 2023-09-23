@@ -36,6 +36,8 @@ function autoLoader(){
 
     for(let i in mainResearch['main']){
 		loader(['research',i],n(0))
+        loader(['research',i+'Unlock'],false)
+        loader(['research',i+'Unlocked'],false)
 		loader(['mainResearch',i],false)
 		loader(['canMainResearch',i],false)
 	}

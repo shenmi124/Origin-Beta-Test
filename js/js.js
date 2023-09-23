@@ -83,6 +83,13 @@ function dataDiff(){
 
 function getID(){
 	dataDiff()
+	for(let i in mainButton){
+		let unlocked = true
+		if(mainButton[i]['unlocked']!==undefined){
+			unlocked = mainButton[i]['unlocked']()
+		}
+		unlockedLoad(i+'MainTabID',unlocked)
+	}
 
 	for(let i in main['resource']){
 		getResourceID(i+'LoadResource',i)
@@ -91,7 +98,7 @@ function getID(){
 
 	for(let i in main['action']){
 		let unlocked = true
-		if(main['action'][i]['unlocked']!=undefined){
+		if(main['action'][i]['unlocked']!==undefined){
 			unlocked = main['action'][i]['unlocked']()
 		}
 		unlockedLoad(i+'LoadAction',unlocked)
@@ -99,7 +106,7 @@ function getID(){
 
 	for(let i in main['building']){
 		let unlocked = true
-		if(main['building'][i]['unlocked']!=undefined){
+		if(main['building'][i]['unlocked']!==undefined){
 			unlocked = main['building'][i]['unlocked']()
 		}
 		unlockedLoad(i+'LoadBuilding',unlocked)
@@ -107,10 +114,20 @@ function getID(){
 
 	for(let i in mainResearch['main']){
 		let unlocked = true
-		if(mainResearch['main'][i]['unlocked']!=undefined){
+		if(mainResearch['main'][i]['unlocked']!==undefined){
 			unlocked = mainResearch['main'][i]['unlocked']()
+		}else{
+			player['research'][i+'Unlock'] = true
+			player['research'][i+'Unlocked'] = true
 		}
 		unlockedLoad(i+'MainResearchDivID',unlocked,'inline-grid')
+		if(unlocked){
+			player['research'][i+'Unlock'] = true
+			if(player['research'][i+'Unlocked']==false){
+				addLog('你对研究有了一些新的启发','#888')
+			}
+			player['research'][i+'Unlocked'] = true
+		}
 	}
 
 	getBr()
