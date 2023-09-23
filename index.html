@@ -1,0 +1,97 @@
+<html>
+
+<head>
+	<title>起源科技</title>
+	<link rel="icon" type="image/png" sizes="64x64" href="logo.png">
+	<meta charset="utf-8">
+	
+	<script src="js/game/player.js"></script>
+	<script src="js/game/main.js"></script>
+	<script src="js/game/game.js"></script>
+	<script src="js/game/easyAccess.js"></script>
+	
+	<script src="js/load/ins/break_eternity.js"></script>
+	<script src="js/load/ins/LZString.js"></script>
+	<script src="js/load/ins/save.js"></script>
+	<script src="js/load/ins/saveload.js"></script>
+	<script src="js/load/ins/jQ.js"></script>
+	<script src='js/load/ins/color.js'></script>
+	<script src='js/load/ins/i18n.js'></script>
+
+	<script src="js/load/canvas.js" defer></script>
+	<script src="js/load/loading.js"></script>
+	<script src="js/load/log.js"></script>
+	<script src="js/load/format.js"></script>
+
+	<script src="js/game/function/tooltip.js"></script>
+	<script src="js/game/function/building.js"></script>
+	<script src="js/game/function/base.js"></script>
+	<script src="js/game/function/resource.js"></script>
+	<script src="js/game/function/other.js"></script>
+	<script src="js/game/function/research.js"></script>
+	<script src="js/game/function/action.js"></script>
+	<script src="js/game/function/events.js"></script>
+
+	<script src="js/js.js"></script>
+	<script src="js/load.js"></script>
+
+	<script src="js/setting/pointer.js"></script>
+	<script src="js/setting/setting.js"></script>
+	<script src="js/setting/lag.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/css.css"/>
+	<link rel="stylesheet" type="text/css" href="css/load.css"/>
+	<link rel="stylesheet" type="text/css" href="css/side.css"/>
+	<link rel="stylesheet" type="text/css" href="css/resource.css"/>
+	<link rel="stylesheet" type="text/css" href="css/logs.css"/>
+	
+	<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+</head>
+
+<body>
+	<div id="loading">
+		<div id="loading_bg">
+			<div class="loader">
+				<img src="logo.png"><br><br>
+				<big>加载中...</big><br>
+			</div>
+		</div>
+	</div>
+	<canvas class="canvas"></canvas>
+	<a href="upload.html" target="_blank" class="version">v0.3</a>
+	<a href="https://afdian.net/@Mysterious124" target="_blank" class="donate">点我捐助</a>
+	<div id="game">
+		<div id="leftColumn" class="column" style="vertical-align: top;">
+			<a id="loadResource"></a>
+		</div>
+		<div id="midColumn" class="column" style="vertical-align: top">
+			<mainTab id="tab_button">
+				<a id="loadMainButton"></a>
+			</mainTab>
+			<br>
+			<mainTab id="tab_setting" style="display: none;">
+				<button onclick="save('Origin_Research')" class="settingBto">保存</button><br>
+				<button onclick="booleanSetting('autoSave')" class="settingBto">自动保存:<a id="autoSaveID"></a></button><br>
+				<button onclick="exportSave('Origin_Research')" id="export" class="settingBto">导出</button><br>
+				<button onclick="importSave()" id="import" class="settingBto">导入</button><br>
+				<button onclick="if(!!confirm('你确定要硬重置吗?这样你将失去一切!!!')){if(!!confirm('这个存档将永远失去!(很长时间!)')){hardReset('Origin_Research')}}" id="export"  class="settingBto">硬重置</button><br>
+				<button onclick="countingMethod()" class="settingBto">计数法:<a id="countingMethodID"></a></button><br>
+				<button onclick="booleanSetting('mouseSetting')" class="settingBto">优化鼠标:<a id="mouseSettingID"></a></button><br>
+			</mainTab>
+			<mainTab id="tab_main">
+				<a id="loadMain"></a>
+			</mainTab>
+			<mainTab id="tab_research" style="display: none;">
+				<a id="loadMainResearch"></a>
+			</mainTab>
+		</div>
+	</div>
+	<div id="rightColumn" class="column" style="vertical-align: top;">
+		<div>日志</div>
+		<div class="log">
+			<div id="logLoadID"></div>
+		</div>
+	</div>
+	<div id="tooltip" class="button_tooltip" style="display: none; padding-bottom: 8px; border-bottom: 1px solid gray; text-align: center;"></div>
+</body>
+</html>

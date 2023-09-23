@@ -1,0 +1,21 @@
+.resource-title.resource-name {
+    width: 90px;
+}
+
+.resource-title.resource-onClick {
+    width: 90px;
+    cursor:pointer;
+}
+
+.resource-title {
+    padding-left: 2px;
+    display: table-cell;
+    white-space: nowrap !important;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    font-size: 16px;
+}
+
+.box {
+    text-shadow: 1px 1px 0px;
+}
