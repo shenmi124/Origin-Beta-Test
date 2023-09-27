@@ -52,7 +52,6 @@ function dataDiff(){
 	if(player.research.conducted!=undefined && player.resource.researchPoints.gte(main['resource']['researchPoints']['max']())){
 		player.research[player.research.conducted] = player.research[player.research.conducted].add(1)
 		if(player.research[player.research.conducted].gte(mainResearch['main'][player.research.conducted]['max']())){
-			player.mainResearch[player.research.conducted] = true
 			player.canMainResearch[player.research.conducted] = false
 			document.getElementById(player.research.conducted+"MainResearchButtonID").style.borderColor = 'rgb(174, 35, 252)'
 		}else{

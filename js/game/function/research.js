@@ -20,7 +20,7 @@ function researchClick(id){
             logs += '<br><li-hid>'+format(n(res).sub(player['resource'][i]))+colorText(i)[1]+'</span>'
         }
     }
-    if(player.mainResearch[id]==true){
+    if(player.research[id].gte(mainResearch['main'][id]['max']())){
 
     }else if(player.canMainResearch[id]==true && player.research.conducted==id){
         player.research.conducted = undefined

@@ -109,11 +109,13 @@ function tooltip(id,id2){
 			}
 			cost += `
 			<span>
-				<div style="width: 50px; display: table-cell">`+colorText(i)[1]+`</div>
-				<div style="width: 50px; display: table-cell; color: `+(player['resource'][i].gte(mainResearch['main'][id]['cost'][res][i]()) ? `` : `red` )+`">`+format(player['resource'][i])+`</div>
-			</span>
-			<span> / 
-				<div style="width: 50px; display: table-cell; style="color: `+(n(main['resource'][i]['max']).gte(mainResearch['main'][id]['cost'][res][i]()) ? `` : `red` )+`"">`+format(mainResearch['main'][id]['cost'][res][i]())+`</div>
+				<span>
+					<div style="width: 50px; display: table-cell">`+colorText(i)[1]+`</div>
+					<div style="width: 50px; display: table-cell; font-style: italic; color: `+(player['resource'][i].gte(mainResearch['main'][id]['cost'][res][i]()) ? `rgb(48, 86, 87);` : `red` )+`">`+format(player['resource'][i])+`</div>
+				</span>
+				<span style="font-style: italic; color: rgb(48, 86, 87);"> / 
+					<div style="width: 50px; display: table-cell; style="color: `+(n(main['resource'][i]['max']).gte(mainResearch['main'][id]['cost'][res][i]()) ? `` : `red` )+`"">`+format(mainResearch['main'][id]['cost'][res][i]())+`</div>
+				</span>
 			</span>
 			`+time+`<br>`
 		}
@@ -125,9 +127,9 @@ function tooltip(id,id2){
 			}
 		}
 		if(player.research.conducted==undefined || player.research.conducted==id){
-			cost += '<hr><span><div style="width: 50px; display: table-cell"><span style="color:'+colorText('researchPoints')[0]+'">研究值</span></div><div style="width: 50px; display: table-cell">'+format(player.resource.researchPoints)+'</div> / '+format(researchNeeds(id))+'</span></left>'
+			cost += '<hr><span><div style="width: 50px; display: table-cell"><span style="color:'+colorText('researchPoints')[0]+'">研究值</span></div>'+format(researchNeeds(id))+'</div> ('+format(player.resource.researchPoints)+')</span></left>'
 		}else{
-			cost += '<hr><span>正在进行研究: '+mainResearch['main'][id]['name']()+'<br><div style="width: 50px; display: table-cell"><span style="color:'+colorText('researchPoints')[0]+'">研究值</span></div><div style="width: 50px; display: table-cell">'+format(player.resource.researchPoints)+'</div> / '+format(researchNeeds(player.research.conducted))+'</span></left>'
+			cost += '<hr><span>正在进行研究: '+mainResearch['main'][id]['name']()
 		}
 		if(player.research[id].gte(mainResearch['main'][id]['max']())){
 			cost = '<hr>研究完成'
@@ -137,7 +139,7 @@ function tooltip(id,id2){
 			for(ii in mainResearch['main'][id]['effect'][i]){
 				if(n(i).lt(mainResearch['main'][id]['max']())){
 					if(player.research[id].eq(i)){
-						effect += `<br>`+(mainResearch['main'][id]['effect'][i][ii]()[1] ? `<green>(<i class="fa fa-plus"></i>)</green>` : `<yellow>(<i class="fa  fa-rotate-right"></i>)</yellow>`)+mainResearch['main'][id]['effect'][i][ii]()[0]
+						effect += `<br>`+(mainResearch['main'][id]['effect'][i][ii]()[1] ? `<green>(<i class="fa fa-plus"></i>)</green>` : `<yellow>(<i class="fa  fa-rotate-right"></i>)</yellow>`)+'<span style="color: rgb(48, 86, 87);">'+mainResearch['main'][id]['effect'][i][ii]()[0]+'</span>'
 					}else if(player.research[id].gte(i)){
 						effect += (mainResearch['main'][id]['effect'][i][ii]()[1] ? `<br><li-hid>`+mainResearch['main'][id]['effect'][i][ii]()[0] : '')
 					}

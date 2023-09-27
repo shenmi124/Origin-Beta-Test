@@ -345,7 +345,7 @@ var mainResearch = {
         m31:{
             name(){return '燧石镐'},
             tooltip:{
-                0(){return '并不能算的上是一把真正的镐子,不过是一块更加锋利的石头罢了<tip>“碎”石镐'},
+                0(){return '并不能算的上是一把真正的镐子,不过是一块更加锋利的石头罢了<tip>“碎”石镐</tip>'},
             },
             effect:{
                 0:{
