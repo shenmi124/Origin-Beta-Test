@@ -47,6 +47,9 @@ function researchClick(id){
         </div>
     `)
 
+    if(player.research[id].gte(1)){
+        document.getElementById(id+"MainResearchButtonID").style.borderColor = 'rgb(246, 170, 255)'
+    }
     if(player.research[id].gte(mainResearch['main'][id]['max']())){
         document.getElementById(id+"MainResearchButtonID").style.borderColor = 'rgb(174, 35, 252)'
     }

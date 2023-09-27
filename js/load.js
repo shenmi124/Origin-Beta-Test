@@ -64,7 +64,7 @@ function baseLoad(){
 	getByID('loadMainResearch',researchStr)
 	for(let i in mainResearch['main']){
 		addByID(mainResearch['main'][i]['map']()+'LoadMainResearch',`
-			<div id="`+i+`MainResearchDivID" style="display: inline-grid; margin-left: 100px; margin-right: 100px;">
+			<div id="`+i+`MainResearchDivID" style="display: inline-grid; margin-left: 40px; margin-right: 40px;">
 				<tooltip `+tooltipLoad(i,'TooltipLoadResearch')+` style="text-align: -webkit-center" class="MainResearch">
 					<button id="`+i+`MainResearchButtonID" class="MainResearch Button" onclick="researchClick('`+i+`')"></button>
 				</tooltip>
@@ -76,11 +76,14 @@ function baseLoad(){
 		if(player.canMainResearch[i]==true){
 			document.getElementById(i+"MainResearchButtonID").style.borderColor = 'rgb(73, 219, 189)'
 		}
+		if(player.research[i].gte(1)){
+			document.getElementById(i+"MainResearchButtonID").style.borderColor = 'rgb(246, 170, 255)'
+		}
 		if(player.research[i].gte(mainResearch['main'][i]['max']())){
 			document.getElementById(i+"MainResearchButtonID").style.borderColor = 'rgb(174, 35, 252)'
 		}
 	}
-    if(player.research.conducted!=undefined){
+    if(player.research.conducted!==undefined){
         document.getElementById(player.research.conducted+"MainResearchButtonID").style.borderColor = 'rgb(74, 161, 254)'
     }
 	canDraw = true

@@ -40,12 +40,6 @@ li::marker {
     color: #888;
 }
 
-left {
-    margin-left: 3px;
-    display: block;
-    text-align: left;
-}
-
 li-hid {
     margin-left: 23px
 }
@@ -54,12 +48,27 @@ li-log {
     margin-left: 14px
 }
 
+left {
+    margin-left: 3px;
+    display: block;
+    text-align: left;
+}
+
 green { 
     color: green;
 }
 
 yellow { 
     color: yellowgreen;
+}
+
+tip {
+    margin-top: 10px;
+    font-size: 12px;
+    font-style: italic;
+    color: rgb(48, 86, 87);
+    display: block;
+    text-align: right;
 }
 
 #tooltip {
@@ -139,6 +148,7 @@ yellow {
 .MainResearch {
     width: 49px;
     height: 49px;
+    border-radius: 5px;
     display: inline-grid;
     margin-bottom: 0px;
     background-color: white;

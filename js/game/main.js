@@ -228,7 +228,7 @@ var main = {
                     'dirt','stone','tin','gem'
                 ]
                 let pro = [
-                    n(70),n(5),n(0.5),n(0.05)
+                    n(70),n(7.5),n(0.05),n(0.002)
                 ]
                 let bas = [
                     n(0.75),n(0.05),n(0.005),n(0)
@@ -244,8 +244,8 @@ var main = {
                 }
                 return a
             },
-            luck(){return n(1).add(player.research.m11.mul(0.2).add(1))},
-            mul(){return n(1)},
+            luck(){return n(1).add(player.research.m11.add(player.research.m22).mul(0.2))},
+            mul(){return n(1).add(player.research.m21.mul(0.3))},
             onClick(){
                 for(let i in main['action']['collectionDirt']['gain']()){
                     let res = main['action']['collectionDirt']['gain']()[i]
@@ -262,6 +262,8 @@ var main = {
                 let base = ''
                 let gain = ''
                 let mul = ''
+                let luck = ''
+                let hr = ''
                 for(let i in main['action']['collectionDirt']['gain']()){
                     let res = main['action']['collectionDirt']['gain']()[i]
                     if(res[4] && player.game.actionDirt.includes(res[0])){
@@ -271,17 +273,29 @@ var main = {
                         //format(n((res[2]).add(n(0).mul(res[3]))))+'~'+format(n((res[2]).add(n(1).mul(res[3]))))
                     }
                 }
-                if(n(main['action']['collectionDirt']['mul']()).gt(1)){
-                    mul = '<hr>效果倍率:<br><li-hid>×'+formatScientific(main['action']['collectionDirt']['mul'](),0)
+                if(n(main['action']['collectionDirt']['luck']()).gt(1)){
+                    luck = '<div>幸运倍率:<br><li-hid>×'+format(main['action']['collectionDirt']['luck'](),0)+'</div>'
+                    hr = '<hr>'
                 }
-                return "泥土从你的手中漏出"+base+gain+mul+"</left>"
+                if(n(main['action']['collectionDirt']['mul']()).gt(1)){
+                    mul = '<div>产出倍率:<br><li-hid>×'+format(main['action']['collectionDirt']['mul'](),0)+'</div>'
+                    hr = '<hr>'
+                }
+                return "泥土从你的手中漏出"+base+gain+hr+luck+mul+"</left>"
             },
             unlocked(){return true},
         },
         mow:{
             name(){return '割草'},
-            tooltip(){return '割草,然后制取纤维'},
-            onClick(){player.resource.fiber = player.resource.fiber.add(n(Math.random() * 0.2).mul(player.research.m12.mul(0.25).add(1)))}
+            tooltip(){
+                let mul = ''
+                if(n(main.action.mow.mul()).gt(1)){
+                    mul = '<left><hr><div>产出倍率:<br><li-hid>×'+format(main['action']['collectionDirt']['mul'](),0)+'</div></left>'
+                }
+                return '割草,然后制取纤维'+mul
+            },
+            mul(){return player.research.m12.mul(0.5).add(1)},
+            onClick(){player.resource.fiber = player.resource.fiber.add(n(Math.random() * 0.2).mul(main.action.mow.mul()))}
         }
     },
     building:{
@@ -308,26 +322,131 @@ var main = {
 
 var mainResearch = {
     main:{
-        m21:{
-            name(){return '燧石打磨'},
+        /*m31:{
+            name(){return '磨石'},
             tooltip:{
-                0(){return '尝试在泥土中寻找其他物质'},
+                0(){return '撵磨开始'},
             },
             effect:{
                 0:{
-                    1(){return ['行动采集泥土 获取概率×120%',true]},
+                    1(){return ['解锁建筑 磨石',true]},
                 },
             },
             cost: {
                 0:{
-                    dirt(){return n(12)},
-                    fiber(){return n(5)}
+                    stone(){return n(5)},
+                },
+            },
+            max(){return n(1)},
+            map(){return 3},
+            canvas(){return ['m21']},
+            unlocked(){return player.research.m21.gte(1)}
+        },*/
+        m31:{
+            name(){return '燧石镐'},
+            tooltip:{
+                0(){return '并不能算的上是一把真正的镐子,不过是一块更加锋利的石头罢了<tip>“碎”石镐'},
+            },
+            effect:{
+                0:{
+                    1(){return ['行动采集泥土 产出倍率+50%',true]},
+                },
+            },
+            cost: {
+                0:{
+                    stone(){return n(2)},
+                },
+            },
+            max(){return n(1)},
+            map(){return 3},
+            canvas(){return ['m21']},
+            unlocked(){return player.research.m21.gte(1)}
+        },
+        m32:{
+            name(){return '燧石铲'},
+            tooltip:{
+                0(){return '学会使用工具'},
+            },
+            effect:{
+                0:{
+                    1(){return ['行动采集泥土 产出倍率+50%',true]},
+                },
+            },
+            cost: {
+                0:{
+                    stone(){return n(2)},
+                },
+            },
+            max(){return n(1)},
+            map(){return 3},
+            canvas(){return ['m21']},
+            unlocked(){return player.research.m21.gte(1)}
+        },
+        m33:{
+            name(){return '燧石刀'},
+            tooltip:{
+                0(){return '学会使用武器,即使它的敌人是草'},
+            },
+            effect:{
+                0:{
+                    1(){return ['行动割草 产出倍率+50%',true]},
+                },
+            },
+            cost: {
+                0:{
+                    stone(){return n(2)},
+                },
+            },
+            max(){return n(1)},
+            map(){return 3},
+            canvas(){return ['m21']},
+            unlocked(){return player.research.m21.gte(1)}
+        },
+        m21:{
+            name(){return '燧石打磨'},
+            tooltip:{
+                0(){return '打磨石头'},
+            },
+            effect:{
+                0:{
+                    1(){return ['行动采集泥土 产出倍率+'+(player.research.m21.gte(2) ? '60' : '30')+'%',true]},
+                },
+                1:{
+                    1(){return ['行动采集泥土 产出倍率+30%',false]},
+                },
+            },
+            cost: {
+                0:{
+                    stone(){return n(0.3)},
+                },
+                1:{
+                    stone(){return n(5)},
+                },
+            },
+            max(){return n(2)},
+            map(){return 2},
+            canvas(){return ['m11']},
+            unlocked(){return player.research.m11.gte(1) && getResourceUnlocked('stone')}
+        },
+        m22:{
+            name(){return '纤维网'},
+            tooltip:{
+                0(){return '加强过滤,也许你能从泥土中找到一些碎石.'},
+            },
+            effect:{
+                0:{
+                    1(){return ['行动采集泥土 幸运倍率+20%',true]},
+                },
+            },
+            cost: {
+                0:{
+                    fiber(){return n(8)}
                 },
             },
             max(){return n(1)},
             map(){return 2},
-            canvas(){return ['m11']},
-            unlocked(){return player.research.m11.gte(1) && getResourceUnlocked('stone')}
+            canvas(){return ['m11','m12']},
+            unlocked(){return player.research.m11.gte(1) && player.research.m12.gte(1)}
         },
         m11:{
             name(){return '泥筛工艺'},
@@ -336,17 +455,19 @@ var mainResearch = {
             },
             effect:{
                 0:{
-                    1(){return ['行动采集泥土 获取概率×120%',true]},
+                    1(){return ['行动采集泥土 幸运倍率+20%',true]},
                 },
             },
             cost: {
                 0:{
                     dirt(){return n(12)},
-                    fiber(){return n(4)}
+                    fiber(){return n(3)}
                 },
             },
             max(){return n(1)},
-            map(){return 1}
+            map(){return 1},
+            canvas(){return ['sg']},
+            unlocked(){return player.research.sg.gte(1)}
         },
         m12:{
             name(){return '纤维绳'},
@@ -355,16 +476,37 @@ var mainResearch = {
             },
             effect:{
                 0:{
-                    1(){return ['行动割草 获取倍率×125%',true]},
+                    1(){return ['行动割草 产出倍率+50%',true]},
                 },
             },
             cost: {
                 0:{
-                    fiber(){return n(6)}
+                    fiber(){return n(4)}
                 },
             },
             max(){return n(1)},
-            map(){return 1}
-        }
+            map(){return 1},
+            canvas(){return ['sg']},
+            unlocked(){return player.research.sg.gte(1)}
+        },
+        sg:{
+            name(){return '降临'},
+            tooltip:{
+                0(){return '我...是谁?<tip>无所不知,无所不能,无所不在,即为神性</tip>'},
+            },
+            effect:{
+                0:{
+                    0(){return ['效果: 无',true]},
+                },
+            },
+            cost: {
+                0:{
+                    dirt(){return n(1)},
+                    fiber(){return n(1)}
+                },
+            },
+            max(){return n(1)},
+            map(){return 0}
+        },
     }
 }

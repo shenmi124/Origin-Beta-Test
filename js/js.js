@@ -73,9 +73,12 @@ function dataDiff(){
 		}
 		if(player['research'][id].lt(mainResearch['main'][id]['max']()) && player.research.conducted!==id && player.canMainResearch[id]==false){
 			if(canresearch){
-				document.getElementById(id+"MainResearchButtonID").style.borderColor = 'rgb(41 192 84)'
+				document.getElementById(id+"MainResearchButtonID").style.borderColor = 'rgb(41, 192, 84)'
 			}else{
 				document.getElementById(id+"MainResearchButtonID").style.borderColor = ''
+				if(player['research'][id].gte(1)){
+					document.getElementById(id+"MainResearchButtonID").style.borderColor = 'rgb(246, 170, 255)'
+				}
 			}
 		}
 	}
