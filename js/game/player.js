@@ -12,7 +12,6 @@ function dataLoader(){
     loader(['data','startGame'],false)
 
 	loader(['setting','autoSave'],true)
-	loader(['setting','saveTick'],false)
 	loader(['setting','countingMethod'],"standard")
 	loader(['setting','mouseSetting'],true)
 	loader(['setting','language'],undefined)

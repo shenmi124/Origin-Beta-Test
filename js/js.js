@@ -94,7 +94,7 @@ function getID(){
 	}
 
 	for(let i in main['resource']){
-		getResourceID(i+'LoadResource',i)
+		getResourceID(i)
 		resourceAction(i)
 	}
 
@@ -146,12 +146,12 @@ setInterval(function(){
 	
 	if(player.setting.autoSave==true){
 		save('Origin_Research')
-	}else if(player.setting.saveTick!=false){
-		player.setting.saveTick = true
-	}
-	if(player.setting.saveTick==true){
-		save('Origin_Research')
-		player.setting.saveTick = false
 	}
 	getID()
 }, 50)
+
+setInterval(function(){
+	if(player.setting.autoSave==true){
+		save('Origin_Research')
+	}
+}, 60000)

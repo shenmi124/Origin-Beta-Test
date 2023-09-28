@@ -73,11 +73,11 @@ function baseLoad(){
 				</div>
 			</div>
 		`)
-		if(player.canMainResearch[i]==true){
-			document.getElementById(i+"MainResearchButtonID").style.borderColor = 'rgb(73, 219, 189)'
-		}
 		if(player.research[i].gte(1)){
 			document.getElementById(i+"MainResearchButtonID").style.borderColor = 'rgb(246, 170, 255)'
+		}
+		if(player.canMainResearch[i]==true){
+			document.getElementById(i+"MainResearchButtonID").style.borderColor = 'rgb(73, 219, 189)'
 		}
 		if(player.research[i].gte(mainResearch['main'][i]['max']())){
 			document.getElementById(i+"MainResearchButtonID").style.borderColor = 'rgb(174, 35, 252)'

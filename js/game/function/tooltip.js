@@ -111,9 +111,9 @@ function tooltip(id,id2){
 			<span>
 				<span>
 					<div style="width: 50px; display: table-cell">`+colorText(i)[1]+`</div>
-					<div style="width: 50px; display: table-cell; font-style: italic; color: `+(player['resource'][i].gte(mainResearch['main'][id]['cost'][res][i]()) ? `rgb(48, 86, 87);` : `red` )+`">`+format(player['resource'][i])+`</div>
+					<div style="width: 50px; display: table-cell; color: `+(player['resource'][i].gte(mainResearch['main'][id]['cost'][res][i]()) ? `rgb(48, 86, 87);` : `red` )+`">`+format(player['resource'][i])+`</div>
 				</span>
-				<span style="font-style: italic; color: rgb(48, 86, 87);"> / 
+				<span style="color: rgb(48, 86, 87);"> / 
 					<div style="width: 50px; display: table-cell; style="color: `+(n(main['resource'][i]['max']).gte(mainResearch['main'][id]['cost'][res][i]()) ? `` : `red` )+`"">`+format(mainResearch['main'][id]['cost'][res][i]())+`</div>
 				</span>
 			</span>

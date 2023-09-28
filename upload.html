@@ -57,37 +57,50 @@
             box-shadow: 2px 2px 4px black;
         }
 
-        .logCode {
+        .logGame {
+            color: rgb(115, 18, 160);
+            text-shadow: none;
+            padding-bottom: 3px;
+            padding-left: 5px;
+            padding-right: 5px;
+            border-radius: 5px;
+            font-style: oblique;
+        }
+        .logMore {
             color: rgb(18, 84, 206);
             text-shadow: none;
             padding-bottom: 3px;
             padding-left: 5px;
             padding-right: 5px;
             border-radius: 5px;
+            font-style: oblique;
         }
-        .logGame {
-            color: rgb(146, 18, 206);
+        .logCode {
+            color: rgb(178, 206, 18);
             text-shadow: none;
             padding-bottom: 3px;
             padding-left: 5px;
             padding-right: 5px;
             border-radius: 5px;
+            font-style: oblique;
         }
-        .logMore {
-            color: rgb(16, 180, 153);
-            text-shadow: none;
-            padding-bottom: 3px;
-            padding-left: 5px;
-            padding-right: 5px;
-            border-radius: 5px;
-        }
-        .logFun {
+        .logFix {
             color: rgb(76, 180, 16);
             text-shadow: none;
             padding-bottom: 3px;
             padding-left: 5px;
             padding-right: 5px;
             border-radius: 5px;
+            font-style: oblique;
+        }
+        .logFun {
+            color: rgb(16, 180, 153);
+            text-shadow: none;
+            padding-bottom: 3px;
+            padding-left: 5px;
+            padding-right: 5px;
+            border-radius: 5px;
+            font-style: oblique;
         }
     </style>
     <script>
@@ -132,11 +145,21 @@
         <details>
             <summary><big><big><big><big>更新日志 —— 剧透警告</big></big></big></big></summary>
             <details>
+                <summary class="second"><big><big>v0.3.4</big></big></summary>
+                <div class="third">
+                    <span class="logGame">内容添加</span>&nbsp;&nbsp;基础内容<br>
+                    <span class="logCode">小修改</span>&nbsp;&nbsp;默认自动保存时间间隔为60s一次<br>
+                    <span class="logCode">小修改</span>&nbsp;&nbsp;优化了资源进度条算法<br>
+                    <span class="logFix">修复</span>&nbsp;&nbsp;修复研究有时无法购买的bug<br>
+                    <span class="logFix">修复</span>&nbsp;&nbsp;修复资源进度条无动画的bug<br>
+                </div>
+            </details>
+            <details>
                 <summary class="second"><big><big>v0.3.3</big></big></summary>
                 <div class="third">
                     <span class="logMore">细节添加</span>&nbsp;&nbsp;研究样式更加美观<br>
                     <span class="logMore">细节添加</span>&nbsp;&nbsp;悬浮框显示位置修改<br>
-                    <span class="logCode">修正</span>&nbsp;&nbsp;修复研究有时无法购买的bug<br>
+                    <span class="logFix">修复</span>&nbsp;&nbsp;修复研究有时无法购买的bug<br>
                 </div>
             </details>
             <details>
@@ -157,7 +180,7 @@
                 <div class="third">
                     <span class="logGame">内容添加</span>&nbsp;&nbsp;更多基础内容,即使还不足以游玩<br>
                     <span class="logFun">轶事</span>&nbsp;&nbsp;其实这游戏断断续续重构了一年才开始做<br>
-                    <span class="logFun">轶事</span>&nbsp;&nbsp;v0.3为第三次重构的版本,我将其称为RC2.之所以不叫RC是因为第三次重构和第二次区别不大仅仅是优化了代码<br>
+                    <span class="logFun">轶事</span>&nbsp;&nbsp;v0.3为第三次重构的版本,我将其称为RC2.之所以不叫RC3是因为第三次重构和第二次区别不大仅仅是优化了代码<br>
                 </div>
             </details>
             <br>

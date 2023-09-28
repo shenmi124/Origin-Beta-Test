@@ -67,4 +67,6 @@ function booleanSetting(id){
 			}
 		}
 	}
+	
+	save('Origin_Research')
 }

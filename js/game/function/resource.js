@@ -8,7 +8,8 @@ function getResourceTitleID(id,res_name){
 		<tooltip onmouseenter='mouseLoad("`+res_name+`","TooltipLoadResource")' onmouseleave='document.getElementById("tooltip").style.display = "none";window.clearInterval(tooltipSel)' style="cursor: help;">
 			<div class="resource-title resource-name `+Class+`" style="color: `+colorText(res_name)[0]+`; position: relative;">
 			`+i18n('resource.'+res_name)+`
-		</tooltip></div>`
+		</tooltip></div>
+		<div class="resource-title border" id="`+res_name+`BorderID" style="background: `+colorText(res_name)[0]+`; z-index: -1; transition-duration: 0.2s; clip-path: inset(0% 0% 0% 0%);"></div>`
 	)
 }
 
@@ -31,7 +32,7 @@ function getResourceDoc(id){
 	}
 }
 
-function getResourceID(id,res_name){
+function getResourceID(res_name, id = res_name+'LoadResource'){
 	getByID(id+'ID',`
 		<div class="resource-title" id="`+res_name+`ID" style="width: 90px;"></div>
 		<div class="resource-title" style="width: 0px;">
@@ -43,7 +44,6 @@ function getResourceID(id,res_name){
 		<div class="resource-title" style="width: 140px;">
 			<div class="resource-title" id="`+res_name+`GainID" style="width: 140px;"></div>
 		</div>
-		<div class="resource-title border" id="`+res_name+`BorderID" style="background: `+colorText(res_name)[0]+`; z-index: -1; transition-duration: 0.2s; clip-path: inset(0% 0% 0% 0%);"></div>
 		`
 	)
     if(main['resource'][res_name]['unlocked']!=undefined){
