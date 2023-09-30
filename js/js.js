@@ -44,6 +44,8 @@ function getBr(){
 			document.getElementById(i+'LoadBuildingBrID').style.display = 'none'
 		}
 	}
+	
+	document.getElementById('loadMainResearch').style.height = window.innerHeight-100 + 'px'
 }
 
 function dataDiff(){

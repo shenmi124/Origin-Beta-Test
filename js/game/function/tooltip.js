@@ -55,7 +55,7 @@ function tooltip(id,id2){
 						}
 					}
 				}
-				gain += '<br><br>总计:<br>('+format(main['resource'][id]['gain']())+'/秒)'
+				gain += '<br><br>总计:<br>('+format(main['resource'][id]['gain']())+'</u>/秒)'
 				gain += time
 			}
 			return getTooltipDoc(colorText(id)[1]+"<small>"+bas+res+max+gain+'</small>')
@@ -75,26 +75,49 @@ function tooltip(id,id2){
 
 	if(id2=='TooltipLoadBuilding'){
 		let name = '未命名'
-		let cost = ''
-		let eff = ''
+		let cost = '<hr><left>'
+		let eff = '<hr><left>'
 		if(main['building'][id]['name']!=undefined){
 			name = main['building'][id]['name']()
 		}
 		if(main['building'][id]['tooltip']['cost']!=undefined){
-			let a = ''
 			for(i in main['building'][id]['tooltip']['cost']){
 				let res = n(main['building'][id]['tooltip']['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['tooltip']['costPower']()).add(1)).sub(1)
-				a = `<span><div style="width: 50px; display: table-cell">`+colorText(i)[1]+`</div><div style="width: 50px; display: table-cell">`+format(player['resource'][i])+`</div> / `+format(res)+`</span>`
-				cost += '<div style="text-align: left;">'+a+'</div>'
+				let time = ''
+				if(main['resource'][i]['gain']!=undefined){
+					if(n(main['resource'][i]['gain']()).gt(0)){
+						if(n(res).sub(player['resource'][i]).div(main['resource'][i]['gain']()).gt(0)){
+							time = ' | '+formatTime(n(res).sub(player['resource'][i]).div(main['resource'][i]['gain']()))
+						}else{
+							time = ''
+						}
+					}
+				}
+				cost += `
+				<span>
+					<span>
+						<div style="width: 65px; display: table-cell">`+colorText(i)[1]+`</div>
+						<div style="width: 50px; display: table-cell; color: `+(n(main['resource'][i]['max']()).lt(res) || player['resource'][i].gte(res) ? `rgb(31, 70, 71)` : `red` )+`">`+format(player['resource'][i])+`</div>
+					</span>
+					<span style="color: rgb(31, 70, 71);"> / 
+						<div style="width: 50px; display: table-cell; color: `+(n(main['resource'][i]['max']()).gte(res) ? `` : `red` )+`">`+format(res)+`</div>
+					</span>
+				</span>
+				`+time+`<br>`
 			}
 		}
+		cost += '</left>'
 		if(main['building'][id]['tooltip']['effect']['gain']!=undefined){
-			eff += '<hr>'
 			for(i in main['building'][id]['tooltip']['effect']['gain']){
-				eff += `<div style="text-align: left;"><span><div style="width: 50px; display: table-cell">`+colorText(i)[1]+`</div>生产 +<div style="width: 70px; display: table-cell">`+format(main['building'][id]['tooltip']['effect']['gain'][i]())+`/s</div><div style="width: 110px; display: table-cell">(+`+getBuildGain(id,i)+`)</div></div>`
+				eff += `<span>
+					<div style="width: 65px; display: table-cell">`+colorText(i)[1]+`</div>
+					<div style="width: 80px; display: table-cell">+`+format(main['building'][id]['tooltip']['effect']['gain'][i]())+`/s</div>
+					<div style="width: 50px; display: table-cell;">(+`+format(getBuildGain(id,i))+`)</div>
+				</span>`
 			}
 		}
-		return getTooltipDoc(name+"("+formatWhole(player['building'][id],0)+")"+'<hr><small>'+main['building'][id]['tooltip']['base']()+'<hr>'+cost+eff+'</samll>')
+		eff += '</left>'
+		return getTooltipDoc(name+"("+formatWhole(player['building'][id],0)+")"+'<hr><small>'+main['building'][id]['tooltip']['base']()+cost+eff+'</samll>')
 	}
 
 	if(id2=='TooltipLoadResearch'){
@@ -104,17 +127,21 @@ function tooltip(id,id2){
 			let time = ''
 			if(main['resource'][i]['gain']!=undefined){
 				if(n(main['resource'][i]['gain']()).gt(0)){
-					time = ' | '+formatTime(n(mainResearch['main'][id]['cost'][res][i]()).sub(player['resource'][i]).div(main['resource'][i]['gain']()))
+					if(n(mainResearch['main'][id]['cost'][res][i]()).sub(player['resource'][i]).div(main['resource'][i]['gain']()).gt(0)){
+						time = ' | '+formatTime(n(mainResearch['main'][id]['cost'][res][i]()).sub(player['resource'][i]).div(main['resource'][i]['gain']()))
+					}else{
+						time = ''
+					}
 				}
 			}
 			cost += `
 			<span>
 				<span>
-					<div style="width: 50px; display: table-cell">`+colorText(i)[1]+`</div>
-					<div style="width: 50px; display: table-cell; color: `+(player['resource'][i].gte(mainResearch['main'][id]['cost'][res][i]()) ? `rgb(48, 86, 87);` : `red` )+`">`+format(player['resource'][i])+`</div>
+					<div style="width: 65px; display: table-cell">`+colorText(i)[1]+`</div>
+					<div style="width: 50px; display: table-cell; color: `+(n(main['resource'][i]['max']()).lt(mainResearch['main'][id]['cost'][res][i]()) || player['resource'][i].gte(mainResearch['main'][id]['cost'][res][i]()) ? `rgb(31, 70, 71)` : `red` )+`">`+format(player['resource'][i])+`</div>
 				</span>
-				<span style="color: rgb(48, 86, 87);"> / 
-					<div style="width: 50px; display: table-cell; style="color: `+(n(main['resource'][i]['max']).gte(mainResearch['main'][id]['cost'][res][i]()) ? `` : `red` )+`"">`+format(mainResearch['main'][id]['cost'][res][i]())+`</div>
+				<span style="color: rgb(31, 70, 71);"> / 
+					<div style="width: 50px; display: table-cell; color: `+(n(main['resource'][i]['max']()).gte(mainResearch['main'][id]['cost'][res][i]()) ? `` : `red` )+`">`+format(mainResearch['main'][id]['cost'][res][i]())+`</div>
 				</span>
 			</span>
 			`+time+`<br>`
@@ -139,7 +166,7 @@ function tooltip(id,id2){
 			for(ii in mainResearch['main'][id]['effect'][i]){
 				if(n(i).lt(mainResearch['main'][id]['max']())){
 					if(player.research[id].eq(i)){
-						effect += `<br>`+(mainResearch['main'][id]['effect'][i][ii]()[1] ? `<green>(<i class="fa fa-plus"></i>)</green>` : `<yellow>(<i class="fa  fa-rotate-right"></i>)</yellow>`)+'<span style="color: rgb(48, 86, 87);">'+mainResearch['main'][id]['effect'][i][ii]()[0]+'</span>'
+						effect += `<br>`+(mainResearch['main'][id]['effect'][i][ii]()[1] ? `<green>(<i class="fa fa-plus"></i>)</green>` : `<yellow>(<i class="fa  fa-rotate-right"></i>)</yellow>`)+'<span style="color: rgb(31, 70, 71);">'+mainResearch['main'][id]['effect'][i][ii]()[0]+'</span>'
 					}else if(player.research[id].gte(i)){
 						effect += (mainResearch['main'][id]['effect'][i][ii]()[1] ? `<br><li-hid>`+mainResearch['main'][id]['effect'][i][ii]()[0] : '')
 					}

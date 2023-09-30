@@ -53,7 +53,7 @@ function baseLoad(){
 
 	let researchStr = ''
 	let researchArray = []
-	researchStr += '<br><br><div id="bottomLoadMainResearch" style="text-align: -webkit-center; display: block; height: 80px"></div>'
+	researchStr += '<br><br><div id="topLoadMainResearch" style="text-align: -webkit-center; display: block; height: 20px"></div>'
 	for(let i in mainResearch['main']){
 		let y = mainResearch['main'][i]['map']()
 		if(!researchArray.includes(y)){
@@ -61,6 +61,7 @@ function baseLoad(){
 			researchStr += '<br><br><br><br><div id="'+y+'LoadMainResearch" style="text-align: -webkit-center"></div>'
 		}
 	}
+	researchStr += '<br><br><div id="bottomLoadMainResearch" style="text-align: -webkit-center; display: block; height: 80px"></div>'
 	getByID('loadMainResearch',researchStr)
 	for(let i in mainResearch['main']){
 		addByID(mainResearch['main'][i]['map']()+'LoadMainResearch',`

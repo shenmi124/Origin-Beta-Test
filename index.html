@@ -64,7 +64,7 @@
 		</div>
 	</div>
 	<canvas class="canvas"></canvas>
-	<a href="upload.html" target="_blank" class="version">v0.3.4</a>
+	<a href="upload.html" target="_blank" class="version">v0.3.5</a>
 	<a href="https://afdian.net/@Mysterious124" target="_blank" class="donate">点我捐助</a>
 	<div id="game">
 		<div id="leftColumn" class="column" style="vertical-align: top;">
@@ -74,7 +74,6 @@
 			<mainTab id="tab_button">
 				<a id="loadMainButton"></a>
 			</mainTab>
-			<br>
 			<mainTab id="tab_setting" style="display: none;">
 				<button onclick="save('Origin_Research')" class="settingBto">保存</button><br>
 				<button onclick="booleanSetting('autoSave')" class="settingBto">自动保存:<a id="autoSaveID"></a></button><br>
@@ -85,10 +84,11 @@
 				<button onclick="booleanSetting('mouseSetting')" class="settingBto">优化鼠标:<a id="mouseSettingID"></a></button><br>
 			</mainTab>
 			<mainTab id="tab_main">
+				<br>
 				<a id="loadMain"></a>
 			</mainTab>
 			<mainTab id="tab_research" style="display: none;">
-				<a id="loadMainResearch"></a>
+				<a id="loadMainResearch" style="display: flow; overflow-y: scroll"></a>
 			</mainTab>
 		</div>
 	</div>

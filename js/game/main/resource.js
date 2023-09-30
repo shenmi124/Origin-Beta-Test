@@ -23,14 +23,14 @@ var MainResource = {
         name(){return '植被'},
         color(){return 'green'},
         max(){return getResourceBaseMax('grass')},
-        gain(){return n(0)},
+        gain(){return getBuildGain('farmland','grass')},
         tooltip:{
             base(){return '在这样荒芜的地方植物确实是不常见的东西'},
             gain: {
                 buildingFar: {
                     name: '建筑农田',
                     number(){
-                        return n(getBuildGain('farmland','grass'))
+                        return getBuildGain('farmland','grass')
                     }
                 }
             },
@@ -68,6 +68,27 @@ var MainResource = {
             addLog('你现在可以在研究选项卡下进行研究了','#888')
         },
         unlocked(){return getResourceUnlocked('fiber')},
+    },
+    water:{
+        name(){return '水'},
+        color(){return 'blue'},
+        max(){return getResourceBaseMax('water')},
+        gain(){return n(0)},
+        tooltip:{
+            base: '从水下第一个萌芽开始',
+            gain: {
+            },
+            max: {
+                baseMax: {
+                    name: "基础",
+                    number(){
+                        return n(3)
+                    }
+                }
+            }
+        },
+        research(){return n(1)},
+        unlocked(){return false},
     },
     stone:{
         name(){return i18n("resource.stone")},
@@ -135,27 +156,6 @@ var MainResource = {
         },
         research(){return n(5)},
         unlocked(){return getResourceUnlocked('gem')},
-    },
-    water:{
-        name(){return '水'},
-        color(){return 'blue'},
-        max(){return n(main.resource.water.tooltip.max.baseMax.number())},
-        gain(){return n(0)},
-        tooltip:{
-            base: '生命之源',
-            gain: {
-            },
-            max: {
-                baseMax: {
-                    name: "基础",
-                    number(){
-                        return n(3)
-                    }
-                }
-            }
-        },
-        research(){return n(1)},
-        unlocked(){return false},
     },
     researchPoints:{
         newType(){return '研究资源'},

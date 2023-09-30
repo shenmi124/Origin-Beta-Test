@@ -62,13 +62,18 @@ yellow {
     color: yellowgreen;
 }
 
-tip {
+fun {
     margin-top: 10px;
     font-size: 12px;
     font-style: italic;
-    color: rgb(48, 86, 87);
+    color: rgb(32, 51, 112);
     display: block;
     text-align: right;
+}
+
+tip {
+    font-size: 12px;
+    color: rgb(31, 70, 71);
 }
 
 #tooltip {
