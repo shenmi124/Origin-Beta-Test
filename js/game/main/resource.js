@@ -14,7 +14,7 @@ var MainResource = {
                         return n(30)
                     }
                 },
-                storageMax: {
+                buildingStorageMax: {
                     name: "建筑仓库",
                     number(){
                         return getBuildMax('storage','dirt')
@@ -46,6 +46,12 @@ var MainResource = {
                     number(){
                         return n(20)
                     }
+                },
+                buildingFarmlandMax: {
+                    name: "基础",
+                    number(){
+                        return n(20)
+                    }
                 }
             }
         },
@@ -67,7 +73,7 @@ var MainResource = {
                         return n(10)
                     }
                 },
-                storageMax: {
+                buildingStorageMax: {
                     name: "建筑仓库",
                     number(){
                         return getBuildMax('storage','fiber')

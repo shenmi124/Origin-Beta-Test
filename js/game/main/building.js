@@ -12,6 +12,9 @@ var MainBuilding = {
             effect: {
                 gain:{
                     plant(){return n(0.025)}
+                },
+                max:{
+                    plant(){return n(5)}
                 }
             }
         },
@@ -19,7 +22,7 @@ var MainBuilding = {
     mine:{
         name(){return '采石场'},
         unlocked(){return player.research.m41.gte(1)},
-        base(){return n(main.action.collectionDirt.luck()).add(main.action.collectionDirt.mul()).sub(2).mul(0.01)},
+        base(){return n(main.action.collectionDirt.luck()).add(main.action.collectionDirt.mul()).sub(2).mul(0.025)},
         tooltip:{
             base(){
                 let mul = ''
@@ -29,7 +32,7 @@ var MainBuilding = {
                 if(n(main.action.collectionDirt.luck()).gt(1)){
                     mul += '<br><li-hid>- 产量加成+ '+format(n(main.action.collectionDirt.mul()).sub(1))
                 }
-                mul += '<br><li-hid>- 基础倍率× 0.01'
+                mul += '<br><li-hid>- 基础倍率× 0.025'
                 return '自动获得石头<fun>等等...自动?</fun><hr><left>基础获取: '+format(main.building.mine.base())+'<small>'+mul+'</small></left><hr><tip>基础获取加成基于行动采集泥土</tip>'
             },
             cost: {

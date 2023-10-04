@@ -23,7 +23,7 @@
 }
 
 .settingBto {
-    width: var(--midWidth);
+    width: 100%;
     height: 28px;
     text-align: left;
 }

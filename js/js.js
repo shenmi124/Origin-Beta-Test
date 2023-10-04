@@ -7,10 +7,11 @@ function getBr(){
 	let log = Math.min(window.innerWidth-(document.getElementById("leftColumn").offsetWidth+(206*3)+36), 500)
 	let width = window.innerWidth-(document.getElementById("leftColumn").offsetWidth+log+36)
 
-	document.body.style.setProperty('--logWidth', log);
-	document.body.style.setProperty('--midWidth', width);
-	let w = Math.floor(width/206)
+	document.getElementById('logPage').style.width = log+'px'
+	document.getElementById('midColumn').style.width = width+'px'
+	document.getElementById('midColumn').style.width = width+'px'
 
+	let w = Math.floor(width/206)
 	let actionBr = -1
 	for(let i in main['action']){
 		let unlocked = true
@@ -51,7 +52,31 @@ function getBr(){
 function dataDiff(){
 	gameDiff()
 
-	if(player.research.conducted!=undefined && player.resource.researchPoints.gte(main['resource']['researchPoints']['max']())){
+	for(let id in main['building']){
+		let resCan = true
+		let maxCan = true
+		for(let i in main['building'][id]['tooltip']['cost']){
+			let res = n(main['building'][id]['tooltip']['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['tooltip']['costPower']()).add(1)).sub(1)
+			if(n(main['resource'][i]['max']!==undefined)){
+				if(n(main['resource'][i]['max']()).lt(res)){
+					addedCss(id+"BuildingButtonID",'max')
+					maxCan = false
+				}
+			}
+			if(n(player['resource'][i]).lt(res)){
+				addedCss(id+"BuildingButtonID",'res')
+				resCan = false
+			}
+		}
+		if(maxCan){
+			removeCss(id+"BuildingButtonID",'max')
+		}
+		if(resCan){
+			removeCss(id+"BuildingButtonID",'res')
+		}
+	}
+
+	if(player.research.conducted!==undefined && player.resource.researchPoints.gte(main['resource']['researchPoints']['max']())){
 		player.research[player.research.conducted] = player.research[player.research.conducted].add(1)
 		if(player.research[player.research.conducted].gte(mainResearch['main'][player.research.conducted]['max']())){
 			player.canMainResearch[player.research.conducted] = false
@@ -64,16 +89,27 @@ function dataDiff(){
 	}
 
 	for(id in mainResearch['main']){
-		let canresearch = true
+		let canResearch = true
+		let maxRsearch = true
 		let research = Number(player['research'][id])
 		for(i in mainResearch['main'][id]['cost'][research]){
 			let res = mainResearch['main'][id]['cost'][research][i]()
-			if(n(player['resource'][i]).lt(res)){
-				canresearch = false
+			if(main['resource'][i]['max']!==undefined){
+				if(n(main['resource'][i]['max']()).lt(res)){
+					maxRsearch = false
+				}
+			}
+			if(player['resource'][i].lt(res)){
+				canResearch = false
 			}
 		}
 		if(player['research'][id].lt(mainResearch['main'][id]['max']()) && player.research.conducted!==id && player.canMainResearch[id]==false){
-			if(canresearch){
+			if(maxRsearch){
+				removeCss(id+"MainResearchButtonID",'max')
+			}else{
+				addedCss(id+"MainResearchButtonID",'max')
+			}
+			if(canResearch){
 				document.getElementById(id+"MainResearchButtonID").style.borderColor = 'rgb(41, 192, 84)'
 			}else{
 				document.getElementById(id+"MainResearchButtonID").style.borderColor = ''

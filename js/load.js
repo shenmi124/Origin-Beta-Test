@@ -95,13 +95,13 @@ let gameLoading = function(){
 
 	baseLoad()
 
-	document.getElementById("tooltip").style.display = 'none'
+	Close('tooltip')
+	Close('tipPage')
 
 	getByID("countingMethodID", player.setting.countingMethod)
 
 	booleanSetting('mouseSetting')
 	booleanSetting('mouseSetting')
-
 	let set = ['autoSave','mouseSetting']
 	for(i in set){
 		getByID(set[i]+'ID',player['setting'][set[i]] ? '开启' : '关闭')

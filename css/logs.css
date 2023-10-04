@@ -1,5 +1,5 @@
 .log {
-    width: var(--logWidth);
+    width: 500px;
     height: calc(100% - 63px);
     border-top: 1px solid rgb(78, 78, 78);
     overflow-x: auto;

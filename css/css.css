@@ -33,6 +33,18 @@ button:hover {
     background: rgb(219, 219, 219);
 }
 
+button.res {
+    color: red;
+}
+
+button.max {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+button.max:hover {
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
 li::marker {
     content: '●';
     font-size: 16px;
@@ -111,7 +123,6 @@ tip {
 #midColumn {
     overflow-x: auto;
     overflow-y: auto;
-    width: var(--midWidth);
 }
 
 #rightColumn {
@@ -158,6 +169,7 @@ tip {
     margin-bottom: 0px;
     background-color: white;
     border: 0px solid rgba(0, 0, 0, 0);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px;
 }
 
 .MainResearch:hover {

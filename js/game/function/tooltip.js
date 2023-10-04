@@ -85,7 +85,7 @@ function tooltip(id,id2){
 				let res = n(main['building'][id]['tooltip']['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['tooltip']['costPower']()).add(1)).sub(1)
 				let time = ''
 				if(main['resource'][i]['gain']!==undefined){
-					if(n(main['resource'][i]['gain']()).gt(0) && player['resource'][i].lt(res)){
+					if(n(main['resource'][i]['gain']()).gt(0) && player['resource'][i].lt(res) && n(main['resource'][i]['max']()).gte(res)){
 						time = ' ( '+formatTime(n(res).sub(player['resource'][i]).div(main['resource'][i]['gain']()))+' )'
 					}else if(n(main['resource'][i]['max']()).lt(res)){
 						time = ' ( '+format(n(main['resource'][i]['max']()).sub(res))+' )'
@@ -115,6 +115,9 @@ function tooltip(id,id2){
 				</span><br>`
 			}
 		}
+		if(main['building'][id]['tooltip']['effect']['gain']!==undefined && main['building'][id]['tooltip']['effect']['max']!==undefined){
+			eff += '<hr>'
+		}
 		if(main['building'][id]['tooltip']['effect']['max']!==undefined){
 			for(let i in main['building'][id]['tooltip']['effect']['max']){
 				eff += `<span>
@@ -135,8 +138,8 @@ function tooltip(id,id2){
 		for(i in mainResearch['main'][id]['cost'][res]){
 			let time = ''
 			if(main['resource'][i]['gain']!==undefined){
-				if(n(main['resource'][i]['gain']()).gt(0) && n(player['resource'][i]).lt(mainResearch['main'][id]['cost'][res][i]())){
-					time = ' | '+formatTime(n(mainResearch['main'][id]['cost'][res][i]()).sub(player['resource'][i]).div(main['resource'][i]['gain']()))
+				if(n(main['resource'][i]['gain']()).gt(0) && n(player['resource'][i]).lt(mainResearch['main'][id]['cost'][res][i]()) && n(main['resource'][i]['max']()).gte(mainResearch['main'][id]['cost'][res][i]())){
+					time = ' ( '+formatTime(n(mainResearch['main'][id]['cost'][res][i]()).sub(player['resource'][i]).div(main['resource'][i]['gain']()))+' )'
 				}else if(n(main['resource'][i]['max']()).lt(mainResearch['main'][id]['cost'][res][i]())){
 					time = ' ( '+format(n(main['resource'][i]['max']()).sub(mainResearch['main'][id]['cost'][res][i]()))+' )'
 				}else{

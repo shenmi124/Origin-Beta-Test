@@ -2,10 +2,6 @@ function getNumberByID(id,id2){
 	document.getElementById(id+"ID").innerHTML = format(id2);
 }
 
-function getNotNumberByID(id,id2){
-	document.getElementById(id+"ID").innerHTML = id2;
-}
-
 function getByID(id,id2){
 	document.getElementById(id).innerHTML = id2;
 }

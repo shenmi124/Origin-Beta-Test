@@ -1,9 +1,5 @@
 function getBuildingID(id){
-        getByID(id+"LoadBuildingID",`
-        <tooltip `+tooltipLoad(id,'TooltipLoadBuilding')+`>
-            <button onclick="Build('`+id+`')">`+main['building'][id]['name']()+`(`+player['building'][id]+`)</button>
-        </tooltip>
-        `)
+    componentBuilding(id)
 }
 
 function Build(id){
@@ -25,9 +21,5 @@ function Build(id){
     }else{
         addLog(logs,'#888')
     }
-    getByID(id+"LoadBuildingID",`
-    <tooltip `+tooltipLoad(id,'TooltipLoadBuilding')+`>
-        <button onclick="Build('`+id+`')">`+main['building'][id]['name']()+`(`+player['building'][id]+`)</button>
-    </tooltip>
-    `)
+    componentBuilding(id)
 }

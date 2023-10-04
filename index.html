@@ -15,6 +15,7 @@
 	<script src="js/game/main.js"></script>
 	<script src="js/game/game.js"></script>
 	<script src="js/game/easyAccess.js"></script>
+	<script src="js/game/systemComponents.js"></script>
 	
 	<script src="js/load/ins/break_eternity.js"></script>
 	<script src="js/load/ins/LZString.js"></script>
@@ -64,7 +65,7 @@
 		</div>
 	</div>
 	<canvas class="canvas"></canvas>
-	<a href="upload.html" target="_blank" class="version">v0.4</a>
+	<a href="upload.html" target="_blank" class="version">v0.4.1</a>
 	<a href="https://afdian.net/@Mysterious124" target="_blank" class="donate">点我捐助</a>
 	<div id="game">
 		<div id="leftColumn" class="column" style="vertical-align: top;">
@@ -75,6 +76,7 @@
 				<a id="loadMainButton"></a>
 			</mainTab>
 			<mainTab id="tab_setting" style="display: none;">
+				<br>
 				<button onclick="save('Origin_Research')" class="settingBto">保存</button><br>
 				<button onclick="booleanSetting('autoSave')" class="settingBto">自动保存:<a id="autoSaveID"></a></button><br>
 				<button onclick="exportSave('Origin_Research')" id="export" class="settingBto">导出</button><br>
@@ -93,8 +95,11 @@
 		</div>
 	</div>
 	<div id="rightColumn" class="column" style="vertical-align: top;">
+		<div id="tipPage">
+			<div>标记</div>
+		</div>
 		<div>日志</div>
-		<div class="log">
+		<div id="logPage" class="log">
 			<div id="logLoadID"></div>
 		</div>
 	</div>
