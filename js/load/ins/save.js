@@ -86,6 +86,7 @@ function exportSave(){
 }
 function importSave(saveStr = prompt("输入存档")){
     saveObj = JSON.parse(LZString.decompressFromBase64(saveStr))
+    window.location.reload()
 }
 function hardReset(key){
     player = null;

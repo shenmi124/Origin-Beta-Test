@@ -96,8 +96,8 @@ function getID(){
 	}
 
 	for(let i in main['resource']){
+		resourceCompute(i)
 		getResourceID(i)
-		resourceAction(i)
 	}
 
 	for(let i in main['action']){

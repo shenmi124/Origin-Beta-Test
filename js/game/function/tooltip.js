@@ -77,43 +77,52 @@ function tooltip(id,id2){
 		let name = '未命名'
 		let cost = '<hr><left>'
 		let eff = '<hr><left>'
-		if(main['building'][id]['name']!=undefined){
+		if(main['building'][id]['name']!==undefined){
 			name = main['building'][id]['name']()
 		}
-		if(main['building'][id]['tooltip']['cost']!=undefined){
-			for(i in main['building'][id]['tooltip']['cost']){
+		if(main['building'][id]['tooltip']['cost']!==undefined){
+			for(let i in main['building'][id]['tooltip']['cost']){
 				let res = n(main['building'][id]['tooltip']['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['tooltip']['costPower']()).add(1)).sub(1)
 				let time = ''
-				if(main['resource'][i]['gain']!=undefined){
-					if(n(main['resource'][i]['gain']()).gt(0)){
-						if(n(res).sub(player['resource'][i]).div(main['resource'][i]['gain']()).gt(0)){
-							time = ' | '+formatTime(n(res).sub(player['resource'][i]).div(main['resource'][i]['gain']()))
-						}else{
-							time = ''
-						}
+				if(main['resource'][i]['gain']!==undefined){
+					if(n(main['resource'][i]['gain']()).gt(0) && player['resource'][i].lt(res)){
+						time = ' ( '+formatTime(n(res).sub(player['resource'][i]).div(main['resource'][i]['gain']()))+' )'
+					}else if(n(main['resource'][i]['max']()).lt(res)){
+						time = ' ( '+format(n(main['resource'][i]['max']()).sub(res))+' )'
 					}
 				}
 				cost += `
 				<span>
 					<span>
 						<div style="width: 65px; display: table-cell">`+colorText(i)[1]+`</div>
-						<div style="width: 50px; display: table-cell; color: `+(n(main['resource'][i]['max']()).lt(res) || player['resource'][i].gte(res) ? `rgb(31, 70, 71)` : `red` )+`">`+format(player['resource'][i])+`</div>
+						<div style="width: 55px; display: table-cell; color: `+(player['resource'][i].gte(res) ? `rgb(31, 70, 71)` : `red` )+`">`+format(player['resource'][i])+`</div>
 					</span>
 					<span style="color: rgb(31, 70, 71);"> / 
-						<div style="width: 50px; display: table-cell; color: `+(n(main['resource'][i]['max']()).gte(res) ? `` : `red` )+`">`+format(res)+`</div>
+						<div style="text-align: right; width: 55px; display: table-cell; color: `+(n(main['resource'][i]['max']()).gte(res) ? `` : `red` )+`">`+format(res)+`</div>
 					</span>
-				</span>
-				`+time+`<br>`
+				</span><tip>
+				`+time+`</tip><br>`
 			}
 		}
 		cost += '</left>'
-		if(main['building'][id]['tooltip']['effect']['gain']!=undefined){
-			for(i in main['building'][id]['tooltip']['effect']['gain']){
+		if(main['building'][id]['tooltip']['effect']['gain']!==undefined){
+			for(let i in main['building'][id]['tooltip']['effect']['gain']){
 				eff += `<span>
 					<div style="width: 65px; display: table-cell">`+colorText(i)[1]+`</div>
-					<div style="width: 80px; display: table-cell">+`+format(main['building'][id]['tooltip']['effect']['gain'][i]())+`/s</div>
-					<div style="width: 50px; display: table-cell;">(+`+format(getBuildGain(id,i))+`)</div>
-				</span>`
+					+`+format(main['building'][id]['tooltip']['effect']['gain'][i]())+`/s
+					<br><div style="width: 65px; display: table-cell"></div>
+					(+`+format(getBuildGain(id,i))+`/s)
+				</span><br>`
+			}
+		}
+		if(main['building'][id]['tooltip']['effect']['max']!==undefined){
+			for(let i in main['building'][id]['tooltip']['effect']['max']){
+				eff += `<span>
+					<div style="width: 65px; display: table-cell">`+colorText(i)[1]+`</div>
+					上限+`+format(main['building'][id]['tooltip']['effect']['max'][i]())+`
+					<br><div style="width: 65px; display: table-cell"></div>
+					(+`+format(getBuildMax(id,i))+`)
+				</span><br>`
 			}
 		}
 		eff += '</left>'
@@ -125,26 +134,26 @@ function tooltip(id,id2){
 		let res = Number(player['research'][id])
 		for(i in mainResearch['main'][id]['cost'][res]){
 			let time = ''
-			if(main['resource'][i]['gain']!=undefined){
-				if(n(main['resource'][i]['gain']()).gt(0)){
-					if(n(mainResearch['main'][id]['cost'][res][i]()).sub(player['resource'][i]).div(main['resource'][i]['gain']()).gt(0)){
-						time = ' | '+formatTime(n(mainResearch['main'][id]['cost'][res][i]()).sub(player['resource'][i]).div(main['resource'][i]['gain']()))
-					}else{
-						time = ''
-					}
+			if(main['resource'][i]['gain']!==undefined){
+				if(n(main['resource'][i]['gain']()).gt(0) && n(player['resource'][i]).lt(mainResearch['main'][id]['cost'][res][i]())){
+					time = ' | '+formatTime(n(mainResearch['main'][id]['cost'][res][i]()).sub(player['resource'][i]).div(main['resource'][i]['gain']()))
+				}else if(n(main['resource'][i]['max']()).lt(mainResearch['main'][id]['cost'][res][i]())){
+					time = ' ( '+format(n(main['resource'][i]['max']()).sub(mainResearch['main'][id]['cost'][res][i]()))+' )'
+				}else{
+					time = ''
 				}
 			}
 			cost += `
 			<span>
 				<span>
 					<div style="width: 65px; display: table-cell">`+colorText(i)[1]+`</div>
-					<div style="width: 50px; display: table-cell; color: `+(n(main['resource'][i]['max']()).lt(mainResearch['main'][id]['cost'][res][i]()) || player['resource'][i].gte(mainResearch['main'][id]['cost'][res][i]()) ? `rgb(31, 70, 71)` : `red` )+`">`+format(player['resource'][i])+`</div>
+					<div style="width: 55px; display: table-cell; color: `+(player['resource'][i].gte(mainResearch['main'][id]['cost'][res][i]()) ? `rgb(31, 70, 71)` : `red` )+`">`+format(player['resource'][i])+`</div>
 				</span>
 				<span style="color: rgb(31, 70, 71);"> / 
-					<div style="width: 50px; display: table-cell; color: `+(n(main['resource'][i]['max']()).gte(mainResearch['main'][id]['cost'][res][i]()) ? `` : `red` )+`">`+format(mainResearch['main'][id]['cost'][res][i]())+`</div>
+					<div style="text-align: right; width: 55px; display: table-cell; color: `+(n(main['resource'][i]['max']()).gte(mainResearch['main'][id]['cost'][res][i]()) ? `` : `red` )+`">`+format(mainResearch['main'][id]['cost'][res][i]())+`</div>
 				</span>
-			</span>
-			`+time+`<br>`
+			</span><tip>
+			`+time+`</tip><br>`
 		}
 		if(player.canMainResearch[id]==true){
 			if(player.research.conducted==id){

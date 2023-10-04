@@ -161,8 +161,6 @@ function formatScientific(decimal, precision = 2, small) {
 
 function formatWhole(decimal) {
     decimal = new Decimal(decimal)
-    if (decimal.gte(1e4)) return formatScientific(decimal, 2)
-    if (decimal.lte(0.99) && !decimal.eq(0)) return formatScientific(decimal, 2)
     return formatScientific(decimal, 0)
 }
 

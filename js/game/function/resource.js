@@ -87,7 +87,7 @@ function getResourceID(res_name, id = res_name+'LoadResource'){
 	getResourceDoc(res_name)
 }
 
-function resourceAction(id){
+function resourceCompute(id){
 	if(main['resource'][id]['number']!==undefined){
 		player['resource'][id] = n(main['resource'][id]['number']())
 	}else{

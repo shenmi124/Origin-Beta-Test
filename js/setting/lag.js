@@ -21,7 +21,7 @@ let language = {
             "resource.tin": "锡",
             "resource.gem": "宝石",
             "resource.water": "水",
-            "resource.grass": "植被",
+            "resource.plant": "植被",
 
             "resource.researchPoints": "研究",
 

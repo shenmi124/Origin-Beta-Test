@@ -13,24 +13,30 @@ var MainResource = {
                     number(){
                         return n(30)
                     }
+                },
+                storageMax: {
+                    name: "建筑仓库",
+                    number(){
+                        return getBuildMax('storage','dirt')
+                    }
                 }
             }
         },
         research(){return n(0.5)},
         unlocked(){return true},
     },
-    grass:{
+    plant:{
         name(){return '植被'},
         color(){return 'green'},
-        max(){return getResourceBaseMax('grass')},
-        gain(){return getBuildGain('farmland','grass')},
+        max(){return getResourceBaseMax('plant')},
+        gain(){return getResourceBaseGain('plant')},
         tooltip:{
             base(){return '在这样荒芜的地方植物确实是不常见的东西'},
             gain: {
                 buildingFar: {
                     name: '建筑农田',
                     number(){
-                        return getBuildGain('farmland','grass')
+                        return getBuildGain('farmland','plant')
                     }
                 }
             },
@@ -44,7 +50,7 @@ var MainResource = {
             }
         },
         research(){return n(2)},
-        unlocked(){return getResourceUnlocked('grass')},
+        unlocked(){return getResourceUnlocked('plant')},
     },
     fiber:{
         name(){return i18n("resource.fiber")},
@@ -59,6 +65,12 @@ var MainResource = {
                     name: "基础",
                     number(){
                         return n(10)
+                    }
+                },
+                storageMax: {
+                    name: "建筑仓库",
+                    number(){
+                        return getBuildMax('storage','fiber')
                     }
                 }
             }
@@ -94,15 +106,27 @@ var MainResource = {
         name(){return i18n("resource.stone")},
         color(){return '#444'},
         max(){return getResourceBaseMax('stone')},
-        gain(){return n(0)},
+        gain(){return getResourceBaseGain('stone')},
         tooltip:{
             gain: {
+                buildingFar: {
+                    name: '建筑采石场',
+                    number(){
+                        return getBuildGain('mine','stone')
+                    }
+                }
             },
             max: {
                 baseMax: {
                     name: "基础",
                     number(){
                         return n(50)
+                    }
+                },
+                buildingStorageMax: {
+                    name: "建筑仓库",
+                    number(){
+                        return getBuildMax('storage','stone')
                     }
                 }
             }
@@ -188,8 +212,9 @@ var MainResource = {
         newType(){return '特殊资源'},
         name(){return '时速'},
         color(){return 'rgb(74, 161, 254)'},
+        number(){return player.data.devSpeed},
         tooltip:{
-            base: '真实游戏速度',
+            base(){return '真实游戏速度'},
         },
         unlocked(){return !n(player.data.devSpeed).eq(1)},
     },

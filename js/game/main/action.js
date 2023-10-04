@@ -43,7 +43,7 @@ var MainAction = {
                 let res = main['action']['collectionDirt']['gain']()[i]
                 let p = n(Math.random() * 99)
                 if(res[1].gte(p) && res[4]){
-                    player['resource'][res[0]] = player['resource'][res[0]].add(n(res[2]).add(n(Math.random()).mul(res[3])).mul(n(main['action']['collectionDirt']['mul']()))).min(main['resource'][res[0]]['max']())
+                    player['resource'][res[0]] = player['resource'][res[0]].add(n(res[2]).add(n(Math.random()).mul(res[3])).mul(n(main['action']['collectionDirt']['mul']())))
                     if(!player.game.actionDirt.includes(res[0])){
                         player.game.actionDirt.push(res[0])
                     }
@@ -73,7 +73,7 @@ var MainAction = {
                 mul = '<div>产出倍率:<br><li-hid>×'+format(main['action']['collectionDirt']['mul']())+'</div>'
                 hr = '<hr>'
             }
-            return "泥土从你的手中漏出"+base+gain+hr+luck+mul+"</left>"
+            return "泥土从你的手中漏出"+base+gain+hr+'<small>'+luck+mul+"</small></left>"
         },
         unlocked(){return true},
     },
@@ -82,7 +82,7 @@ var MainAction = {
         tooltip(){
             let mul = ''
             if(n(main.action.mow.mul()).gt(1)){
-                mul = '<left><hr><div>产出倍率:<br><li-hid>×'+format(main.action.mow.mul())+'</div></left>'
+                mul = '<left><hr><small><div>产出倍率:<br><li-hid>×'+format(main.action.mow.mul())+'</div></small></left>'
             }
             return '割草'+mul
         },
@@ -92,7 +92,7 @@ var MainAction = {
             let m = n(base).add(m33)
             return m
         },
-        onClick(){player.resource.grass = player.resource.grass.add(n(Math.random() * 1.5).mul(main.action.mow.mul()))}
+        onClick(){player.resource.plant = player.resource.plant.add(n(Math.random() * 1.5).mul(main.action.mow.mul()))}
     },
     grind:{
         name(){return '研磨'},
@@ -105,10 +105,10 @@ var MainAction = {
         },
         mul(){return player.research.m12.mul(0.5).add(1)},
         onClick(){
-            let num = n(Math.random() * 3).min(player.resource.grass)
-            player.resource.grass = player.resource.grass.sub(num)
+            let num = n(Math.random() * 3).min(player.resource.plant)
+            player.resource.plant = player.resource.plant.sub(num)
             player.resource.fiber = player.resource.fiber.add(n(Math.random() * 0.25).mul(num).mul(main.action.grind.mul()))
         },
-        unlocked(){return getResourceUnlocked('grass')},
+        unlocked(){return getResourceUnlocked('plant')},
     }
 }
