@@ -193,7 +193,7 @@ var mainResearch = {
             max(){return n(1)},
             map(){return 3},
             canvas(){return ['m22']},
-            unlocked(){return player.research.m22.gte(1) && getResourceUnlocked('water')}
+            unlocked(){return player.research.m22.gte(1)}
         },
         m21:{
             name(){return '燧石打磨'},
