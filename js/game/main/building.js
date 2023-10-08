@@ -30,7 +30,7 @@ var MainBuilding = {
                 mul += '<br><li-hid>- 产量加成+ '+format(n(main.action.collectionDirt.mul()).sub(1))
             }
             mul += '<br><li-hid>- 基础倍率× 0.025'
-            return '自动获得石头<fun>等等...自动?</fun><hr><left>基础获取: '+format(main.building.mine.base())+'<small>'+mul+'</small></left><hr><tip>基础获取加成基于行动采集泥土<tip>'
+            return '自动获得石头<fun>等等...自动?</fun><hr><left>基础获取: '+format(main.building.mine.base())+'<small>'+mul+'</small></left><hr><tip>基础获取加成基于行动采集泥土</tip>'
         },
         cost: {
             stone(){return n(2)}
