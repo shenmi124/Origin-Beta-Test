@@ -21,6 +21,29 @@ var mainResearch = {
             canvas(){return ['m42']},
             unlocked(){return player.research.m42.gte(1)}
         },*/
+        m61:{
+            name(){return '煅烧'},
+            tooltip:{
+                0(){return '熔炼'},
+            },
+            effect:{
+                0:{
+                    1(){return ['解锁建筑 熔炉',true]},
+                    2(){return ['资源信息 燃烧价值',true]},
+                },
+            },
+            cost: {
+                0:{
+                    stone(){return n(500)},
+                    coal(){return n(120)},
+                    copperOre(){return n(200)},
+                },
+            },
+            max(){return n(1)},
+            map(){return 6},
+            canvas(){return ['m51']},
+            unlocked(){return player.research.m51.gte(1)}
+        },
         m51:{
             name(){return '储物'},
             tooltip:{
@@ -41,6 +64,38 @@ var mainResearch = {
             map(){return 5},
             canvas(){return ['m41']},
             unlocked(){return player.research.m41.gte(1)}
+        },
+        m52:{
+            name(){return '探矿'},
+            tooltip:{
+                0(){return '采集矿石'},
+            },
+            effect:{
+                0:{
+                    1(){return ['建筑采石场 产物增加',true]},
+                },
+                1:{
+                    1(){return ['建筑采石场 产物增加',false]},
+                },
+                2:{
+                    1(){return ['建筑采石场 产物增加',false]},
+                },
+            },
+            cost: {
+                0:{
+                    coal(){return n(0.1)},
+                },
+                1:{
+                    copper(){return n(0.1)},
+                },
+                2:{
+                    tin(){return n(0.1)},
+                },
+            },
+            max(){return n(3)},
+            map(){return 5},
+            canvas(){return ['m41']},
+            unlocked(){return player.research.m41.gte(1) && getResourceUnlocked('coal')}
         },
         m41:{
             name(){return '采石场'},
@@ -244,7 +299,7 @@ var mainResearch = {
                     1(){return ['行动采集泥土 幸运倍率+'+getTooltipLoot('m22',20)+'%',true]},
                 },
                 1:{
-                    1(){return ['行动采集泥土 幸运倍率+20%',true]},
+                    1(){return ['行动采集泥土 幸运倍率+20%',false]},
                 }
             },
             cost: {

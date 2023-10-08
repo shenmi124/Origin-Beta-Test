@@ -4,19 +4,19 @@ var MainAction = {
         gain(){
             let a = []
             let res = [
-                'dirt','stone','tin','gem'
+                'dirt','stone','coal','copper','tin','gem'
             ]
             let pro = [
-                n(70),n(8),n(0.8),n(0.008)
+                n(70),n(8),n(2),n(0.5),n(0.08),n(0.0008)
             ]
             let bas = [
-                n(0.75),n(0.05),n(0.005),n(0)
+                n(0.75),n(0.05),n(0.01),n(0.001),n(0.0005),n(0)
             ]
             let ran = [
-                n(0.75),n(0.15),n(0.005),n(0.001)
+                n(0.75),n(0.15),n(0.01),n(0.001),n(0.0005),n(0.001)
             ]
             let unl = [
-                true,true,true,true
+                true,true,true,true,true,false
             ]
             for(let i in res){
                 a.push([res[i],n(pro[i]).mul(this.luck()),bas[i],ran[i],unl[i]])
@@ -61,7 +61,10 @@ var MainAction = {
                 if(res[4] && player.game.actionDirt.includes(res[0])){
                     base = '<hr><left>获取:'
                     gain += '<br><li-hid>'+colorText(res[0])[1]
-                    //formatScientific(res[1],1)+'%'
+                    if(player.research.m11.gte(2)){
+                        gain += '<br><li-hid><li-hid><small>概率: '+formatScientific(res[1],1)+'%</small>'
+                    }
+                    //
                     //format(n((res[2]).add(n(0).mul(res[3]))))+'~'+format(n((res[2]).add(n(1).mul(res[3]))))
                 }
             }

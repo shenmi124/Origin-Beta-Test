@@ -9,7 +9,7 @@ function getActionClick(id){
 	$(main['action'][id]['onClick'])
 	for(i in main['resource']){
 		if(main['resource'][i]['max']!==undefined){
-			player['resource'][i] = player['resource'][i].min(main['resource'][i]['max']())
+			player['resource'][i] = player['resource'][i].min(getResourceBaseMax(i))
 			getResourceID(i)
 		}
 	}

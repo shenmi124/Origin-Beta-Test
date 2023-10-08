@@ -16,17 +16,17 @@ function getResourceTitleID(id,res_name){
 function getResourceDoc(id){
 	getNumberByID(id,player['resource'][id])
 	if(main['resource'][id]['max']!=undefined){
-		getNumberByID(id+'Max',main['resource'][id]['max']())
+		getNumberByID(id+'Max',getResourceBaseMax(id))
 		document.getElementById(id+"slashID").style.display = ''
 	}else{
 		document.getElementById(id+"slashID").style.display = 'none'
 	}
 	if(main['resource'][id]['gain']!=undefined){
-		if(!main['resource'][id]['gain']().eq(0)){
-			if(main['resource'][id]['gain']().gt(0)){
-				getByID(id+'GainID','(＋'+format(main['resource'][id]['gain']())+' /s)')
+		if(!getResourceBaseGain(id).eq(0)){
+			if(getResourceBaseGain(id).gt(0)){
+				getByID(id+'GainID','(＋'+format(getResourceBaseGain(id))+' /s)')
 			}else{
-				getByID(id+'GainID','(－'+format(n(main['resource'][id]['gain']()).abs())+' /s)')
+				getByID(id+'GainID','(－'+format(n(getResourceBaseGain(id)).abs())+' /s)')
 			}
 		}
 	}
@@ -79,7 +79,7 @@ function getResourceID(res_name, id = res_name+'LoadResource'){
 		player['resource'][res_name+'Unlocked'] = true
 	}
 	if(main['resource'][res_name]['max']!==undefined){
-		let border = n(100).sub(player['resource'][res_name].div(main['resource'][res_name]['max']().max(0.01)).mul(100))
+		let border = n(100).sub(player['resource'][res_name].div(n(getResourceBaseMax(res_name)).max(0.01)).mul(100))
 		document.getElementById(res_name+"BorderID").style.clipPath = 'inset(0% '+border+'% 0% 0%)'
 	}else{
 		document.getElementById(res_name+"BorderID").style.clipPath = 'inset(0% 100% 0% 0%)'
@@ -92,7 +92,7 @@ function resourceCompute(id){
 		player['resource'][id] = n(main['resource'][id]['number']())
 	}else{
 		if(main['resource'][id]['gain']!==undefined){
-			let gain = main['resource'][id]['gain']()
+			let gain = getResourceBaseGain(id)
 			if(main['resource'][id]['unlocked']!==undefined){
 				let unlocked = main['resource'][id]['unlocked']()
 				if(unlocked || unlocked==null){
@@ -103,8 +103,7 @@ function resourceCompute(id){
 			}
 		}
 		if(main['resource'][id]['max']!==undefined){
-			let max = main['resource'][id]['max']()
-			player['resource'][id] = player['resource'][id].min(max).max(0)
+			player['resource'][id] = player['resource'][id].min(getResourceBaseMax(id)).max(0)
 		}
 	}
 }

@@ -18,6 +18,8 @@ let language = {
             "resource.dirt": "泥土",
             "resource.fiber": "纤维",
             "resource.stone": "石材",
+            "resource.coal": "煤炭",
+            "resource.copper": "铜",
             "resource.tin": "锡",
             "resource.gem": "宝石",
             "resource.water": "水",
@@ -26,6 +28,8 @@ let language = {
             "resource.researchPoints": "研究",
 
             "resource.devSpeed": "时速",
+
+            "resource.copperOre": "铜矿石",
         }
     }
 }

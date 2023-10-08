@@ -7,10 +7,10 @@ function componentBuilding(id){
 
     let resCan = true
     let maxCan = true
-    for(let i in main['building'][id]['tooltip']['cost']){
-        let res = n(main['building'][id]['tooltip']['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['tooltip']['costPower']()).add(1)).sub(1)
+    for(let i in main['building'][id]['cost']){
+        let res = n(main['building'][id]['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['costPower']()).add(1)).sub(1)
         if(n(main['resource'][i]['max']!==undefined)){
-            if(n(main['resource'][i]['max']()).lt(res)){
+            if(n(getResourceBaseMax(i)).lt(res)){
                 addedCss(id+"BuildingButtonID",'max')
                 maxCan = false
             }
