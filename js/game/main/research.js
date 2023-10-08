@@ -161,7 +161,7 @@ var mainResearch = {
                     1(){return ['行动采集泥土 产出倍率+'+getTooltipLoot('m31',50)+'%',true]},
                 },
                 1:{
-                    1(){return ['行动采集泥土 产出倍率+50%',true]},
+                    1(){return ['行动采集泥土 产出倍率+50%',false]},
                 },
             },
             cost: {
@@ -187,7 +187,7 @@ var mainResearch = {
                     1(){return ['行动采集泥土 幸运倍率+'+getTooltipLoot('m32',50)+'%',true]},
                 },
                 1:{
-                    1(){return ['行动采集泥土 幸运倍率+50%',true]},
+                    1(){return ['行动采集泥土 幸运倍率+50%',false]},
                 },
             },
             cost: {
@@ -213,7 +213,7 @@ var mainResearch = {
                     1(){return ['行动割草 产出倍率+'+getTooltipLoot('m33',50)+'%',true]},
                 },
                 1:{
-                    1(){return ['行动割草 产出倍率+50%',true]},
+                    1(){return ['行动割草 产出倍率+50%',false]},
                 },
             },
             cost: {
