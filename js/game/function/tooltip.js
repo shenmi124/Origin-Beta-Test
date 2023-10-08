@@ -144,10 +144,10 @@ function tooltip(id,id2){
 				let res = n(main['building'][id]['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['costPower']()).add(1)).sub(1)
 				let time = ''
 				if(main['resource'][i]['gain']!==undefined){
-					if(n(main['resource'][i]['gain']()).gt(0) && player['resource'][i].lt(res) && n(getResourceBaseMax(i)).gte(res)){
-						time = ' ( '+formatTime(n(res).sub(player['resource'][i]).div(main['resource'][i]['gain']()))+' )'
+					if(n(getResourceBaseGain(i)).gt(0) && player['resource'][i].lt(res) && n(getResourceBaseMax(i)).gte(res)){
+						time = ' ( '+formatTime(n(res).sub(player['resource'][i]).div(getResourceBaseGain(i)))+' )'
 					}else if(n(getResourceBaseMax(i)).lt(res)){
-						time = ' ( '+format(n(main['resource'][i]['max']()).sub(res))+' )'
+						time = ' ( '+format(n(getResourceBaseMax(i)).sub(res))+' )'
 					}
 				}
 				cost += `
@@ -205,8 +205,8 @@ function tooltip(id,id2){
 		for(i in mainResearch['main'][id]['cost'][res]){
 			let time = ''
 			if(main['resource'][i]['gain']!==undefined){
-				if(n(main['resource'][i]['gain']()).gt(0) && n(player['resource'][i]).lt(mainResearch['main'][id]['cost'][res][i]()) && n(getResourceBaseMax(i)).gte(mainResearch['main'][id]['cost'][res][i]())){
-					time = ' ( '+formatTime(n(mainResearch['main'][id]['cost'][res][i]()).sub(player['resource'][i]).div(main['resource'][i]['gain']()))+' )'
+				if(n(getResourceBaseGain(i)).gt(0) && n(player['resource'][i]).lt(mainResearch['main'][id]['cost'][res][i]()) && n(getResourceBaseMax(i)).gte(mainResearch['main'][id]['cost'][res][i]())){
+					time = ' ( '+formatTime(n(mainResearch['main'][id]['cost'][res][i]()).sub(player['resource'][i]).div(getResourceBaseGain(i)))+' )'
 				}else if(n(getResourceBaseMax(i)).lt(mainResearch['main'][id]['cost'][res][i]())){
 					time = ' ( '+format(n(getResourceBaseMax(i)).sub(mainResearch['main'][id]['cost'][res][i]()))+' )'
 				}else{
