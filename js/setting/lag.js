@@ -13,6 +13,7 @@ let language = {
         values:{
             "mainButton.main": "主页",
             "mainButton.research": "研究",
+            "mainButton.craft": "制作",
             "mainButton.setting": "设置",
 
             "resource.dirt": "泥土",
@@ -25,7 +26,9 @@ let language = {
             "resource.water": "水",
             "resource.plant": "植被",
 
-            "resource.researchPoints": "研究",
+            "resource.researchPoints": "科学",
+
+            "resource.craft": "巧物",
 
             "resource.devSpeed": "时速",
 

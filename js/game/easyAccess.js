@@ -14,6 +14,9 @@ function getResourceBaseGain(resource){
             }
         }
     }
+    if(main['resource'][resource]['mulResearch']!==undefined){
+        gain = gain.mul(main['resource'][resource]['mulResearch']())
+    }
     return gain
 }
 
@@ -34,6 +37,14 @@ function getResourceBaseMax(resource){
         }
     }
     return max
+}
+
+function getResourceBaseNumber(resource){
+    let num = n(0)
+    if(main['resource'][resource]['num']!==undefined){
+        num = num.add(main['resource'][resource]['num']())
+    }
+    return num
 }
 
 function getBuildGain(building,resource){

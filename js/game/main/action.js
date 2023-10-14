@@ -102,13 +102,18 @@ var MainAction = {
         tooltip(){
             let mul = ''
             if(n(main.action.grind.mul()).gt(1)){
-                mul = '<left><hr><div>产出倍率:<br><li-hid>×'+format(main.action.grind.mul())+'</div></left>'
+                mul = '<left><div>产出倍率:<br><li-hid>×'+format(main.action.grind.mul())+'</div></left>'
             }
-            return '然后制取纤维'+mul
+            let eff = ''
+            if(n(main.action.grind.efficiency()).gt(1)){
+                eff = '<left><div>效率倍率:<br><li-hid>×'+format(main.action.grind.efficiency())+'</div></left>'
+            }
+            return '然后制取纤维<hr>'+mul+eff
         },
         mul(){return player.research.m12.mul(0.5).add(1)},
+        efficiency(){return player.research.m42.sub(1).max(0).mul(0.5).add(1)},
         onClick(){
-            let num = n(Math.random() * 3).min(player.resource.plant)
+            let num = n(Math.random() * 3).mul(main.action.grind.efficiency()).min(player.resource.plant)
             player.resource.plant = player.resource.plant.sub(num)
             player.resource.fiber = player.resource.fiber.add(n(Math.random() * 0.25).mul(num).mul(main.action.grind.mul()))
         },

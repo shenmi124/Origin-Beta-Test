@@ -6,6 +6,10 @@ var mainButton = {
         name(){return i18n('mainButton.research')},
         unlocked(){return getResourceUnlocked('fiber')}
     },
+    craft:{
+        name(){return i18n('mainButton.craft')},
+        unlocked(){return getResourceUnlocked('craft')}
+    },
     setting:{
         name(){return i18n('mainButton.setting')},
     },

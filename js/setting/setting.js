@@ -29,6 +29,7 @@ function booleanSetting(id){
 
 	if(id=='autoSave'){
 		player.setting.saveTick = false
+		saveTime = n(60)
 	}
 
 	if(id=='mouseSetting'){	
@@ -70,3 +71,16 @@ function booleanSetting(id){
 	
 	save('Origin_Research')
 }
+
+let saveTime = n(60)
+
+setInterval(function(){
+	if(player.setting.autoSave==true){
+		saveTime = saveTime.sub(n(1).mul(diff))
+		if(saveTime.lte(0)){
+			save('Origin_Research')
+			saveTime = n(60)
+		}
+		getByID('autoSaveTimeID',formatTime(saveTime))
+	}
+}, 50)

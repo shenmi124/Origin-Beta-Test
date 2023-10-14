@@ -96,7 +96,7 @@ let gameLoading = function(){
 	baseLoad()
 
 	Close('tooltip')
-	Close('tipPage')
+	Close('datePage')
 
 	getByID("countingMethodID", player.setting.countingMethod)
 

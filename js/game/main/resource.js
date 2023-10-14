@@ -4,6 +4,7 @@ var MainResource = {
         color(){return '#cf7004'},
         max(){return n(30)},
         gain(){return n(0)},
+        mulResearch(){return player.research.m53.mul(0.5).add(1)},
         research(){return n(0.5)},
         unlocked(){return true},
     },
@@ -13,7 +14,7 @@ var MainResource = {
         max(){return n(20)},
         gain(){return n(0)},
         tooltip(){return '在这样荒芜的地方植物确实是不常见的东西'},
-        research(){return n(2)},
+        research(){return n(1)},
         unlocked(){return getResourceUnlocked('plant')},
     },
     fiber:{
@@ -21,7 +22,7 @@ var MainResource = {
         color(){return '#bac485'},
         max(){return n(10)},
         gain(){return n(0)},
-        research(){return n(1)},
+        research(){return n(2)},
         unlockAction(){
             addLog('你现在可以在研究选项卡下进行研究了','#888')
         },
@@ -94,11 +95,11 @@ var MainResource = {
     },
     researchPoints:{
         newType(){return '研究资源'},
-        name(){return '研究'},
+        name(){return '科学'},
         color(){return 'rgb(74, 161, 254)'},
         max(){return researchNeeds(player.research.conducted)},
         gain(){return n(1)},
-        tooltip(){return '智慧最好的体现<hr>研究抵达基础上限后完成研究<hr>研究基础上限取决于[消耗数量×研究难度]'},
+        tooltip(){return '智慧最好的体现<hr>科学抵达基础上限后完成研究<hr>科学基础上限取决于[消耗数量×研究难度]'},
         unlocked(){return getResourceUnlocked('researchPoints') || main['resource']['researchPoints']['max']().gt(0)},
     },
     copperOre:{
@@ -108,6 +109,14 @@ var MainResource = {
         gain(){return n(0)},
         research(){return n(100)},
         unlocked(){return getResourceUnlocked('copperOre')},
+    },
+    craft:{
+        newType(){return '能力资源'},
+        name(){return '巧物'},
+        color(){return '#000'},
+        number(){return abilityCraft()},
+        tooltip(){return '巧物决定你了制作的速度'},
+        unlocked(){return getResourceUnlocked('craft')},
     },
     devSpeed:{
         newType(){return '特殊资源'},

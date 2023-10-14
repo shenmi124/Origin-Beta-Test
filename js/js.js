@@ -187,9 +187,3 @@ setInterval(function(){
 	}
 	getID()
 }, 50)
-
-setInterval(function(){
-	if(player.setting.autoSave==true){
-		save('Origin_Research')
-	}
-}, 60000)

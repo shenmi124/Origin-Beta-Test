@@ -31,6 +31,8 @@ function tooltip(id,id2){
 				let now = format(gainNumber)
 				if(gainNumber.eq(getResourceBaseGain(id))){
 					now = '<u>'+format(gainNumber)+'</u>'
+				}else{
+					now = format(gainNumber)
 				}
 				if(!gainNumber.eq(0)){
 					gain += `<left><span>
@@ -46,6 +48,8 @@ function tooltip(id,id2){
 									gainNumber = gainNumber.add(n(main['building'][i]['effect']['gain'][ig]()).mul(player['building'][i]))
 									if(gainNumber.eq(getResourceBaseGain(id))){
 										now = '<u>'+format(gainNumber)+'</u>'
+									}else{
+										now = format(gainNumber)
 									}
 									if(!gainNumber.eq(0)){
 										gain += `<left><span>
@@ -56,6 +60,21 @@ function tooltip(id,id2){
 								}
 							}
 						}
+					}
+				}
+
+				if(main['resource'][id]['mulResearch']!==undefined){
+					gainNumber = gainNumber.mul(main['resource'][id]['mulResearch']())
+					if(gainNumber.eq(getResourceBaseGain(id))){
+						now = '<u>'+format(gainNumber)+'</u>'
+					}else{
+						now = format(gainNumber)
+					}
+					if(!gainNumber.eq(0)){
+						gain += `<left><span>
+							<div style="width: 155px; display: table-cell"><i class="fa fa-flask"></i> 研究</div>
+							<div style="width: 155px; display: table-cell">×`+format(main['resource'][id]['mulResearch']())+`</div>`+now+`
+						</span></left>`
 					}
 				}
 
@@ -82,6 +101,8 @@ function tooltip(id,id2){
 				let now = format(maxNumber)
 				if(maxNumber.eq(getResourceBaseMax(id))){
 					now = '<u>'+format(maxNumber)+'</u>'
+				}else{
+					now = format(maxNumber)
 				}
 				if(!maxNumber.eq(0)){
 					max += `<left><span>
@@ -97,6 +118,8 @@ function tooltip(id,id2){
 									maxNumber = maxNumber.add(n(main['building'][i]['effect']['max'][im]()).mul(player['building'][i]))
 									if(maxNumber.eq(getResourceBaseMax(id))){
 										now = '<u>'+format(maxNumber)+'</u>'
+									}else{
+										now = format(maxNumber)
 									}
 									if(!maxNumber.eq(0)){
 										max += `<left><span>
@@ -114,7 +137,27 @@ function tooltip(id,id2){
 					max = ''
 				}
 			}
-			return getTooltipDoc(colorText(id)[1]+"<small>"+bas+res+gain+max+time+'</small>')
+			let num = ''
+			let numNumber = n(0)
+			if(main['resource'][id]['number']!==undefined){
+				num += "<hr><a style='font-size: 14px'>资源数量</a>"
+				numNumber = numNumber.add(main['resource'][id]['number']())
+				let now = format(numNumber)
+				if(numNumber.eq(getResourceBaseNumber(id))){
+					now = '<u>'+format(numNumber)+'</u>'
+				}
+				if(!numNumber.eq(0)){
+					num += `<left><span>
+						<div style="width: 155px; display: table-cell"><i class="fa fa-plus-circle"></i> 基础</div>
+						<div style="width: 155px; display: table-cell">+`+format(main['resource'][id]['number']())+`</div>`+now+`
+					</span></left>`
+				}
+
+				if(numNumber.eq(0)){
+					num = ''
+				}
+			}
+			return getTooltipDoc(colorText(id)[1]+"<small>"+bas+res+gain+max+num+time+'</small>')
 	}
 
 	if(id2=='TooltipLoadAction'){
@@ -233,7 +276,7 @@ function tooltip(id,id2){
 			}
 		}
 		if(player.research.conducted==undefined || player.research.conducted==id){
-			cost += '<hr><span><div style="width: 50px; display: table-cell"><span style="color:'+colorText('researchPoints')[0]+'">研究值</span></div>'+format(researchNeeds(id))+'</div> ('+format(player.resource.researchPoints)+')</span></left>'
+			cost += '<hr><span><div style="width: 50px; display: table-cell"><span style="color:'+colorText('researchPoints')[0]+'">科学</span></div>'+format(researchNeeds(id))+'</div> ('+format(player.resource.researchPoints)+')</span></left>'
 		}else{
 			cost += '<hr><span>正在进行研究: '+mainResearch['main'][id]['name']()
 		}

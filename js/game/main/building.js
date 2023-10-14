@@ -10,9 +10,11 @@ var MainBuilding = {
         costPower(){return n(0.025)},
         effect: {
             gain:{
+                dirt(){return player.research.m53.gte(1) ? n(0.025) : n(0)},
                 plant(){return n(0.025)}
             },
             max:{
+                dirt(){return player.research.m53.gte(1) ? n(5) : n(0)},
                 plant(){return n(5)}
             }
         }
@@ -39,8 +41,8 @@ var MainBuilding = {
         effect: {
             gain:{
                 stone(){return n(main.building.mine.base())},
-                coal(){return player.research.m52.gte(1) ? n(main.building.mine.base()).mul(0.05) : n(0)},
-                copperOre(){return player.research.m52.gte(2) ? n(main.building.mine.base()).mul(0.005) : n(0)}
+                //coal(){return player.research.m52.gte(1) ? n(main.building.mine.base()).mul(0.05) : n(0)},
+                //copperOre(){return player.research.m52.gte(2) ? n(main.building.mine.base()).mul(0.005) : n(0)}
             }
         }
     },

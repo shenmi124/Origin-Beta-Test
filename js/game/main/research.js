@@ -20,7 +20,7 @@ var mainResearch = {
             map(){return 5},
             canvas(){return ['m42']},
             unlocked(){return player.research.m42.gte(1)}
-        },*/
+        },
         m61:{
             name(){return '煅烧'},
             tooltip:{
@@ -44,6 +44,7 @@ var mainResearch = {
             canvas(){return ['m51']},
             unlocked(){return player.research.m51.gte(1)}
         },
+        */
         m51:{
             name(){return '储物'},
             tooltip:{
@@ -65,6 +66,61 @@ var mainResearch = {
             canvas(){return ['m41']},
             unlocked(){return player.research.m41.gte(1)}
         },
+        m52:{
+            name(){return '雕刻'},
+            tooltip:{
+                0(){return '记录你的经历'},
+            },
+            effect:{
+                0:{
+                    2(){return ['制作物品 手稿',true]},
+                },
+            },
+            cost: {
+                0:{
+                    stone(){return n(15)},
+                },
+            },
+            max(){return n(1)},
+            map(){return 5},
+            canvas(){return ['m41']},
+            unlocked(){return player.research.m41.gte(1)}
+        },
+        m53:{
+            name(){return '堆肥'},
+            tooltip:{
+                0(){return '腐化'},
+            },
+            effect:{
+                0:{
+                    1(){return ['建筑农场 效果同样对泥土生效',true]},
+                    2(){return ['资源获取 泥土+'+getTooltipLoot('m53',50,0)+'%',true]},
+                    3(){return ['<tip>资源获取只对被动获取生效</tip>',false]},
+                },
+                1:{
+                    1(){return ['资源获取 泥土+50%',true]},
+                },
+                2:{
+                    2(){return ['资源获取 泥土+50%',true]},
+                },
+            },
+            cost: {
+                0:{
+                    dirt(){return n(100)},
+                },
+                1:{
+                    dirt(){return n(1000)},
+                },
+                2:{
+                    dirt(){return n(10000)},
+                },
+            },
+            max(){return n(3)},
+            map(){return 5},
+            canvas(){return ['m42']},
+            unlocked(){return player.research.m42.gte(3)}
+        },
+        /*
         m52:{
             name(){return '探矿'},
             tooltip:{
@@ -97,6 +153,7 @@ var mainResearch = {
             canvas(){return ['m41']},
             unlocked(){return player.research.m41.gte(1) && getResourceUnlocked('coal')}
         },
+        */
         m41:{
             name(){return '采石场'},
             tooltip:{
@@ -121,10 +178,10 @@ var mainResearch = {
             unlocked(){return player.research.m31.gte(1) && player.research.m32.gte(1)}
         },
         m42:{
-            name(){return '农具'},
+            name(){return '农作'},
             tooltip:{
                 0(){return '农耕时代'},
-                1(){return '<fun>从水下第一个萌芽开始...</fun>'},
+                5(){return '<fun>从水下第一个萌芽开始...</fun>'},
             },
             effect:{
                 0:{
@@ -132,21 +189,36 @@ var mainResearch = {
                 },
                 1:{
                     1(){return ['建筑农场 效果+'+getTooltipLoot('m42',20,1)+'%',true]},
+                    2(){return ['行动研磨 效率+'+getTooltipLoot('m42',50,1)+'%',true]},
+                    3(){return ['<tip>效率会同时增加消耗以及产出数量</tip>',false]}
                 },
                 2:{
                     1(){return ['建筑农场 效果+20%',false]},
+                    2(){return ['行动研磨 效率+50%',false]},
+                },
+                3:{
+                    1(){return ['建筑农场 效果+20%',false]},
+                    2(){return ['行动研磨 效率+50%',false]},
                 },
             },
             cost: {
                 0:{
                     dirt(){return n(30)},
-                    plant(){return n(5)},
+                    plant(){return n(50)},
                 },
                 1:{
+                    dirt(){return n(50)},
+                    stone(){return n(5)},
+                },
+                2:{
+                    dirt(){return n(100)},
+                    stone(){return n(5)},
+                },
+                3:{
                     water(){return n(3)},
                 },
             },
-            max(){return n(1).add(getResourceUnlocked('water') ? n(1) : n(0))},
+            max(){return n(3).add(getResourceUnlocked('water') ? n(2) : n(0))},
             map(){return 4},
             canvas(){return ['m33']},
             unlocked(){return player.research.m33.gte(1)}
@@ -241,7 +313,7 @@ var mainResearch = {
             },
             cost: {
                 0:{
-                    dirt(){return n(100)},
+                    dirt(){return n(300)},
                     fiber(){return n(50)},
                 },
             },
