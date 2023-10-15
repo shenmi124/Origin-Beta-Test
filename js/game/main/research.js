@@ -203,16 +203,18 @@ var mainResearch = {
             },
             cost: {
                 0:{
-                    dirt(){return n(30)},
-                    plant(){return n(50)},
+                    dirt(){return n(50)},
+                    plant(){return n(20)},
                 },
                 1:{
-                    dirt(){return n(50)},
-                    stone(){return n(5)},
+                    dirt(){return n(80)},
+                    stone(){return n(40)},
+                    plant(){return n(30)},
                 },
                 2:{
-                    dirt(){return n(100)},
-                    stone(){return n(5)},
+                    dirt(){return n(200)},
+                    stone(){return n(100)},
+                    plant(){return n(75)},
                 },
                 3:{
                     water(){return n(3)},

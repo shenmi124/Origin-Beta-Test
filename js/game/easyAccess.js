@@ -59,6 +59,10 @@ function getTooltipLoot(resource,effect,start=n(0),type='research'){
     return formatWhole(player[type][resource].sub(n(start)).max(1).mul(n(effect)))
 }
 
+function getEffectLoot(resource,effect,start=n(0),type='research'){
+    return n(player[type][resource].sub(n(start)).max(0).mul(n(effect)).add(1))
+}
+
 function getResourceUnlocked(resource){
     return player['resource'][resource].gt(0) || player['resource'][resource+'Unlocked']
 }

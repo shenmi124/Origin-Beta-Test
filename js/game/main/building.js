@@ -10,12 +10,12 @@ var MainBuilding = {
         costPower(){return n(0.025)},
         effect: {
             gain:{
-                dirt(){return player.research.m53.gte(1) ? n(0.025) : n(0)},
-                plant(){return n(0.025)}
+                dirt(){return player.research.m53.gte(1) ? n(0.025).mul(getEffectLoot('m42',0.2,1)) : n(0)},
+                plant(){return n(0.025).mul(getEffectLoot('m42',0.2,1))}
             },
             max:{
-                dirt(){return player.research.m53.gte(1) ? n(5) : n(0)},
-                plant(){return n(5)}
+                dirt(){return player.research.m53.gte(1) ? n(5).mul(getEffectLoot('m42',0.2,1)) : n(0)},
+                plant(){return n(5).mul(getEffectLoot('m42',0.2,1))}
             }
         }
     },
