@@ -37,7 +37,7 @@ function baseLoad(){
 	}
 	getByID('actionLoadID',actionStr)
 	for(let i in main['action']){
-		getByID(i+'LoadAction',`<br id="`+i+`LoadActionBrID"><a id="`+i+`LoadActionID"></a> `)
+		getByID(i+'LoadAction',`<br id="action`+i+`LoadBrID"><a id="`+i+`LoadActionID"></a> `)
 		getActionID(i)
 	}
 
@@ -47,8 +47,18 @@ function baseLoad(){
 	}
 	getByID('buildingLoadID',buildingStr)
 	for(let i in main['building']){
-		getByID(i+'LoadBuilding',`<br id="`+i+`LoadBuildingBrID"><a id="`+i+`LoadBuildingID"></a> `)
-		getBuildingID(i)
+		getByID(i+'LoadBuilding',`<br id="building`+i+`LoadBrID"><a id="`+i+`LoadBuildingID"></a> `)
+		componentBuilding(i)
+	}
+
+	let craftStr = ''
+	for(let i in main['craft']){
+		craftStr += '<a id='+i+'LoadCraft></a>'
+	}
+	getByID('craftLoadID',craftStr)
+	for(let i in main['craft']){
+		getByID(i+'LoadCraft',`<br id="craft`+i+`LoadBrID"><a id="`+i+`LoadCraftID"></a> `)
+		componentCraft(i)
 	}
 
 	let researchStr = ''
@@ -69,7 +79,7 @@ function baseLoad(){
 				<tooltip `+tooltipLoad(i,'TooltipLoadResearch')+` style="text-align: -webkit-center" class="MainResearch">
 					<button id="`+i+`MainResearchButtonID" class="MainResearch Button" onclick="researchClick('`+i+`')"></button>
 				</tooltip>
-				<div style="text-align: -webkit-center; font-size: 10px">
+				<div style="text-align: -webkit-center; font-size: 11px">
 					`+mainResearch['main'][i]['name']()+`
 				</div>
 			</div>

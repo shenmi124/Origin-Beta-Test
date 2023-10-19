@@ -7,7 +7,7 @@ var MainAction = {
                 'dirt','stone','coal','copper','tin','gem'
             ]
             let pro = [
-                n(70),n(8),n(2),n(0.5),n(0.08),n(0.0008)
+                n(70),n(8),n(1),n(0.25),n(0.04),n(0.0008)
             ]
             let bas = [
                 n(0.75),n(0.05),n(0.01),n(0.001),n(0.0005),n(0)
@@ -84,10 +84,12 @@ var MainAction = {
         name(){return '割草'},
         tooltip(){
             let mul = ''
+            let hr = ''
             if(n(main.action.mow.mul()).gt(1)){
-                mul = '<left><hr><small><div>产出倍率:<br><li-hid>×'+format(main.action.mow.mul())+'</div></small></left>'
+                mul = '<left><small><div>产出倍率:<br><li-hid>×'+format(main.action.mow.mul())+'</div></small></left>'
+                hr = '<hr>'
             }
-            return '割草'+mul
+            return '割草'+hr+mul
         },
         mul(){
             let base = n(1)
@@ -101,14 +103,17 @@ var MainAction = {
         name(){return '研磨'},
         tooltip(){
             let mul = ''
+            let hr = ''
             if(n(main.action.grind.mul()).gt(1)){
                 mul = '<left><div>产出倍率:<br><li-hid>×'+format(main.action.grind.mul())+'</div></left>'
+                hr = '<hr>'
             }
             let eff = ''
             if(n(main.action.grind.efficiency()).gt(1)){
                 eff = '<left><div>效率倍率:<br><li-hid>×'+format(main.action.grind.efficiency())+'</div></left>'
+                hr = '<hr>'
             }
-            return '然后制取纤维<hr>'+mul+eff
+            return '然后制取纤维'+hr+mul+eff
         },
         mul(){return player.research.m12.mul(0.5).add(1)},
         efficiency(){return player.research.m42.sub(1).max(0).mul(0.5).add(1)},

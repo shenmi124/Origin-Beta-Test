@@ -33,3 +33,22 @@ function addedCss(id,id2){
 function removeCss(id,id2){
 	document.getElementById(id).classList.remove(id2)
 }
+
+function unlockedLoad(id,unlocked,type=''){
+	if(unlocked){
+		document.getElementById(id).style.display = type
+	}else{
+		document.getElementById(id).style.display = 'none'
+	}
+}
+
+function showTab(id){
+	for(let i in mainButton){
+		Close('tab_'+i)
+		document.getElementById(i+"MainTabID").style.color = '#000'
+		document.getElementById(i+"MainTabID").style.opacity = ''
+	}
+	Open('tab_'+id)
+	document.getElementById(id+"MainTabID").style.color = 'rgb(0, 123, 255)'
+	document.getElementById(id+"MainTabID").style.opacity = '0.8'
+}

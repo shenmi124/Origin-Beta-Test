@@ -1,10 +1,11 @@
 function getResourceTitleID(id,res_name){
 	let Class = ''
-	if(main['resource'][res_name]['Class']!=undefined){
+	if(main['resource'][res_name]['Class']!==undefined){
 		Class = main['resource'][res_name]['Class']()
 	}
 	getByID(id+'TitleID',`
 		<div style="height:1px"></div>
+		<div class="borderMax" id="`+res_name+`BorderMaxID" style="background: #999;"></div>
 		<tooltip onmouseenter='mouseLoad("`+res_name+`","TooltipLoadResource")' onmouseleave='document.getElementById("tooltip").style.display = "none";window.clearInterval(tooltipSel)' style="cursor: help;">
 			<div class="resource-title resource-name `+Class+`" style="color: `+colorText(res_name)[0]+`; position: relative;">
 			`+i18n('resource.'+res_name)+`
@@ -15,13 +16,13 @@ function getResourceTitleID(id,res_name){
 
 function getResourceDoc(id){
 	getNumberByID(id,player['resource'][id])
-	if(main['resource'][id]['max']!=undefined){
+	if(main['resource'][id]['max']!==undefined){
 		getNumberByID(id+'Max',getResourceBaseMax(id))
 		document.getElementById(id+"slashID").style.display = ''
 	}else{
 		document.getElementById(id+"slashID").style.display = 'none'
 	}
-	if(main['resource'][id]['gain']!=undefined){
+	if(main['resource'][id]['gain']!==undefined){
 		if(!getResourceBaseGain(id).eq(0)){
 			if(getResourceBaseGain(id).gt(0)){
 				getByID(id+'GainID','(＋'+format(getResourceBaseGain(id))+' /s)')
@@ -46,12 +47,14 @@ function getResourceID(res_name, id = res_name+'LoadResource'){
 		</div>
 		`
 	)
-    if(main['resource'][res_name]['unlocked']!=undefined){
+    if(main['resource'][res_name]['unlocked']!==undefined){
         let unlocked = main['resource'][res_name]['unlocked']()
 		if(unlocked || unlocked==null){
 			document.getElementById(id+"TitleID").style.display = ''
 			document.getElementById(id+"ID").style.display = ''
-			if(main['resource'][res_name]['newType']!=undefined){
+			document.getElementById(res_name+"BorderID").style.display = ''
+			document.getElementById(res_name+"BorderMaxID").style.display = ''
+			if(main['resource'][res_name]['newType']!==undefined){
 				document.getElementById(res_name+"TypeID").style.display = ''
 			}
 			getByID(id+'BrID',`<br>`)
@@ -65,7 +68,9 @@ function getResourceID(res_name, id = res_name+'LoadResource'){
 		}else{
 			document.getElementById(id+"TitleID").style.display = 'none'
 			document.getElementById(id+"ID").style.display = 'none'
-			if(main['resource'][res_name]['newType']!=undefined){
+			document.getElementById(res_name+"BorderID").style.display = 'none'
+			document.getElementById(res_name+"BorderMaxID").style.display = 'none'
+			if(main['resource'][res_name]['newType']!==undefined){
 				document.getElementById(res_name+"TypeID").style.display = 'none'
 			}
 			getByID(id+'BrID',``)

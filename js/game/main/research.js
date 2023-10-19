@@ -48,11 +48,11 @@ var mainResearch = {
         m51:{
             name(){return '储物'},
             tooltip:{
-                0(){return '采集石头'},
+                0(){return '储存石头'},
             },
             effect:{
                 0:{
-                    1(){return ['解锁建筑 仓库',true]},
+                    1(){return ['<i class="fa fa-unlock-alt"></i>建筑 仓库',true]},
                 },
             },
             cost: {
@@ -73,7 +73,7 @@ var mainResearch = {
             },
             effect:{
                 0:{
-                    2(){return ['制作物品 手稿',true]},
+                    2(){return ['<i class="fa fa-unlock-alt"></i>物品 手稿',true]},
                 },
             },
             cost: {
@@ -93,15 +93,15 @@ var mainResearch = {
             },
             effect:{
                 0:{
-                    1(){return ['建筑农场 效果同样对泥土生效',true]},
-                    2(){return ['资源获取 泥土+'+getTooltipLoot('m53',50,0)+'%',true]},
+                    1(){return ['<i class="fa fa-home"></i>农场 效果同样对泥土生效',true]},
+                    2(){return ['<i class="fa fa-expand"></i>获取 泥土+'+getTooltipLoot('m53',50,0)+'%',true]},
                     3(){return ['<tip>资源获取只对被动获取生效</tip>',false]},
                 },
                 1:{
-                    1(){return ['资源获取 泥土+50%',true]},
+                    1(){return ['<i class="fa fa-expand"></i>获取 泥土+50%',true]},
                 },
                 2:{
-                    2(){return ['资源获取 泥土+50%',true]},
+                    2(){return ['<i class="fa fa-expand"></i>获取 泥土+50%',true]},
                 },
             },
             cost: {
@@ -161,10 +161,10 @@ var mainResearch = {
             },
             effect:{
                 0:{
-                    1(){return ['解锁建筑 采石场',true]},
-                    2(){return ['研究燧石稿 研究上限+1',true]},
-                    3(){return ['研究燧石铲 研究上限+1',true]},
-                    4(){return ['研究燧石刀 研究上限+1',true]},
+                    1(){return ['<i class="fa fa-unlock-alt"></i>建筑 采石场',true]},
+                    2(){return ['<i class="fa fa-flask"></i>燧石稿 研究上限+1',true]},
+                    3(){return ['<i class="fa fa-flask"></i>燧石铲 研究上限+1',true]},
+                    4(){return ['<i class="fa fa-flask"></i>燧石刀 研究上限+1',true]},
                 },
             },
             cost: {
@@ -185,20 +185,20 @@ var mainResearch = {
             },
             effect:{
                 0:{
-                    1(){return ['解锁建筑 农场',true]},
+                    1(){return ['<i class="fa fa-unlock-alt"></i>建筑 农场',true]},
                 },
                 1:{
-                    1(){return ['建筑农场 效果+'+getTooltipLoot('m42',20,1)+'%',true]},
-                    2(){return ['行动研磨 效率+'+getTooltipLoot('m42',50,1)+'%',true]},
+                    1(){return ['<i class="fa fa-home"></i>农场 效果+'+getTooltipLoot('m42',20,1)+'%',true]},
+                    2(){return ['<i class="fa fa-wrench"></i>研磨 效率+'+getTooltipLoot('m42',50,1)+'%',true]},
                     3(){return ['<tip>效率会同时增加消耗以及产出数量</tip>',false]}
                 },
                 2:{
-                    1(){return ['建筑农场 效果+20%',false]},
-                    2(){return ['行动研磨 效率+50%',false]},
+                    1(){return ['<i class="fa fa-home"></i>农场 效果+20%',false]},
+                    2(){return ['<i class="fa fa-wrench"></i>研磨 效率+50%',false]},
                 },
                 3:{
-                    1(){return ['建筑农场 效果+20%',false]},
-                    2(){return ['行动研磨 效率+50%',false]},
+                    1(){return ['<i class="fa fa-home"></i>农场 效果+20%',false]},
+                    2(){return ['<i class="fa fa-wrench"></i>研磨 效率+50%',false]},
                 },
             },
             cost: {
@@ -232,10 +232,10 @@ var mainResearch = {
             },
             effect:{
                 0:{
-                    1(){return ['行动采集泥土 产出倍率+'+getTooltipLoot('m31',50)+'%',true]},
+                    1(){return ['<i class="fa fa-wrench"></i>采集泥土 产出倍率+'+getTooltipLoot('m31',50)+'%',true]},
                 },
                 1:{
-                    1(){return ['行动采集泥土 产出倍率+50%',false]},
+                    1(){return ['<i class="fa fa-wrench"></i>采集泥土 产出倍率+50%',false]},
                 },
             },
             cost: {
@@ -258,10 +258,10 @@ var mainResearch = {
             },
             effect:{
                 0:{
-                    1(){return ['行动采集泥土 幸运倍率+'+getTooltipLoot('m32',50)+'%',true]},
+                    1(){return ['<i class="fa fa-wrench"></i>采集泥土 幸运倍率+'+getTooltipLoot('m32',50)+'%',true]},
                 },
                 1:{
-                    1(){return ['行动采集泥土 幸运倍率+50%',false]},
+                    1(){return ['<i class="fa fa-wrench"></i>采集泥土 幸运倍率+50%',false]},
                 },
             },
             cost: {
@@ -284,10 +284,10 @@ var mainResearch = {
             },
             effect:{
                 0:{
-                    1(){return ['行动割草 产出倍率+'+getTooltipLoot('m33',50)+'%',true]},
+                    1(){return ['<i class="fa fa-wrench"></i>割草 产出倍率+'+getTooltipLoot('m33',50)+'%',true]},
                 },
                 1:{
-                    1(){return ['行动割草 产出倍率+50%',false]},
+                    1(){return ['<i class="fa fa-wrench"></i>割草 产出倍率+50%',false]},
                 },
             },
             cost: {
@@ -331,16 +331,16 @@ var mainResearch = {
             },
             effect:{
                 0:{
-                    1(){return ['行动采集泥土 产出倍率+'+getTooltipLoot('m21',30)+'%',true]},
+                    1(){return ['<i class="fa fa-wrench"></i>采集泥土 产出倍率+'+getTooltipLoot('m21',30)+'%',true]},
                 },
                 1:{
-                    1(){return ['行动采集泥土 产出倍率+30%',false]},
+                    1(){return ['<i class="fa fa-wrench"></i>采集泥土 产出倍率+30%',false]},
                 },
                 2:{
-                    1(){return ['行动采集泥土 产出倍率+30%',false]},
+                    1(){return ['<i class="fa fa-wrench"></i>采集泥土 产出倍率+30%',false]},
                 },
                 3:{
-                    1(){return ['行动采集泥土 产出倍率+30%',false]},
+                    1(){return ['<i class="fa fa-wrench"></i>采集泥土 产出倍率+30%',false]},
                 },
             },
             cost: {
@@ -370,10 +370,10 @@ var mainResearch = {
             },
             effect:{
                 0:{
-                    1(){return ['行动采集泥土 幸运倍率+'+getTooltipLoot('m22',20)+'%',true]},
+                    1(){return ['<i class="fa fa-wrench"></i>采集泥土 幸运倍率+'+getTooltipLoot('m22',20)+'%',true]},
                 },
                 1:{
-                    1(){return ['行动采集泥土 幸运倍率+20%',false]},
+                    1(){return ['<i class="fa fa-wrench"></i>采集泥土 幸运倍率+20%',false]},
                 }
             },
             cost: {
@@ -397,15 +397,15 @@ var mainResearch = {
             },
             effect:{
                 0:{
-                    1(){return ['行动采集泥土 幸运倍率+'+getTooltipLoot('m31',20)+'%',true]},
+                    1(){return ['<i class="fa fa-wrench"></i>采集泥土 幸运倍率+'+getTooltipLoot('m31',20)+'%',true]},
                 },
                 1:{
-                    1(){return ['行动采集泥土 幸运倍率+20%',false]},
-                    2(){return ['行动采集泥土 揭示更多信息',true]},
+                    1(){return ['<i class="fa fa-wrench"></i>采集泥土 幸运倍率+20%',false]},
+                    2(){return ['<i class="fa fa-wrench"></i>采集泥土 揭示更多信息',true]},
                 },
                 2:{
-                    1(){return ['行动采集泥土 幸运倍率+20%',false]},
-                    2(){return ['行动采集泥土 揭示更多信息',false]},
+                    1(){return ['<i class="fa fa-wrench"></i>采集泥土 幸运倍率+20%',false]},
+                    2(){return ['<i class="fa fa-wrench"></i>采集泥土 揭示更多信息',false]},
                 },
             },
             cost: {
@@ -432,7 +432,7 @@ var mainResearch = {
             },
             effect:{
                 0:{
-                    1(){return ['行动研磨 产出倍率+50%',true]},
+                    1(){return ['<i class="fa fa-wrench"></i>研磨 产出倍率+50%',true]},
                 },
             },
             cost: {

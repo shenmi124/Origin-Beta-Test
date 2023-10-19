@@ -27,3 +27,11 @@ function componentBuilding(id){
         removeCss(id+"BuildingButtonID",'res')
     }
 }
+
+function componentCraft(id){
+    getByID(id+"LoadCraftID",`
+    <tooltip `+tooltipLoad(id,'TooltipLoadCraft')+`>
+        <button onclick="">`+main['craft'][id]['name']()+`</button>
+    </tooltip>
+    `)
+}

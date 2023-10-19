@@ -10,8 +10,8 @@ var MainBuilding = {
         costPower(){return n(0.025)},
         effect: {
             gain:{
-                dirt(){return player.research.m53.gte(1) ? n(0.025).mul(getEffectLoot('m42',0.2,1)) : n(0)},
-                plant(){return n(0.025).mul(getEffectLoot('m42',0.2,1))}
+                dirt(){return player.research.m53.gte(1) ? n(0.05).mul(getEffectLoot('m42',0.2,1)) : n(0)},
+                plant(){return n(0.05).mul(getEffectLoot('m42',0.2,1))}
             },
             max:{
                 dirt(){return player.research.m53.gte(1) ? n(5).mul(getEffectLoot('m42',0.2,1)) : n(0)},
@@ -22,7 +22,7 @@ var MainBuilding = {
     mine:{
         name(){return '采石场'},
         unlocked(){return player.research.m41.gte(1)},
-        base(){return n(main.action.collectionDirt.luck()).add(main.action.collectionDirt.mul()).sub(2).mul(0.025)},
+        base(){return n(main.action.collectionDirt.luck()).add(main.action.collectionDirt.mul()).sub(2).mul(0.05)},
         tooltip(){
             let mul = ''
             if(n(main.action.collectionDirt.luck()).gt(1)){
@@ -31,7 +31,7 @@ var MainBuilding = {
             if(n(main.action.collectionDirt.luck()).gt(1)){
                 mul += '<br><li-hid>- 产量加成+ '+format(n(main.action.collectionDirt.mul()).sub(1))
             }
-            mul += '<br><li-hid>- 基础倍率× 0.025'
+            mul += '<br><li-hid>- 基础倍率× 0.05'
             return '自动获得石头<fun>等等...自动?</fun><hr><left>基础获取: '+format(main.building.mine.base())+'<small>'+mul+'</small></left><hr><tip>基础获取加成基于行动采集泥土</tip>'
         },
         cost: {
@@ -54,7 +54,7 @@ var MainBuilding = {
             dirt(){return n(20)},
             stone(){return n(10)}
         },
-        costPower(){return n(0.05)},
+        costPower(){return n(0.045)},
         effect: {
             max:{
                 dirt(){return n(50)},

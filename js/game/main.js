@@ -6,10 +6,6 @@ var mainButton = {
         name(){return i18n('mainButton.research')},
         unlocked(){return getResourceUnlocked('fiber')}
     },
-    craft:{
-        name(){return i18n('mainButton.craft')},
-        unlocked(){return getResourceUnlocked('craft')}
-    },
     setting:{
         name(){return i18n('mainButton.setting')},
     },
@@ -24,10 +20,16 @@ var mainTab = {
         name(){return '建筑'},
         id(){return 'building'},
     },
+    craft:{
+        name(){return '制作'},
+        id(){return 'craft'},
+    },
 }
 
 var main = {
     resource: MainResource,
+
     action: MainAction,
     building: MainBuilding,
+    craft: MainCraft
 }

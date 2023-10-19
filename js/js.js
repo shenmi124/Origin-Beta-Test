@@ -12,37 +12,22 @@ function getBr(){
 	document.getElementById('midColumn').style.width = width+'px'
 
 	let w = Math.floor(width/206)
-	let actionBr = -1
-	for(let i in main['action']){
-		let unlocked = true
-		if(main['action'][i]['unlocked']!=undefined){
-			unlocked = main['action'][i]['unlocked']()
-		}
-		if(unlocked){
-			actionBr += 1
-			getByID(mainTab['action']['id']()+"TextID",mainTab['action']['name']()+'<br>')
-		}
-		if(actionBr%w === 0 && actionBr!=0){
-			document.getElementById(i+'LoadActionBrID').style.display = ''
-		}else{
-			document.getElementById(i+'LoadActionBrID').style.display = 'none'
-		}
-	}
-
-	let buildingBr = -1
-	for(let i in main['building']){
-		let unlocked = true
-		if(main['building'][i]['unlocked']!=undefined){
-			unlocked = main['building'][i]['unlocked']()
-		}
-		if(unlocked){
-			buildingBr += 1
-			getByID(mainTab['building']['id']()+"TextID",mainTab['building']['name']()+'<br>')
-		}
-		if(buildingBr%w === 0 && buildingBr!=0){
-			document.getElementById(i+'LoadBuildingBrID').style.display = ''
-		}else{
-			document.getElementById(i+'LoadBuildingBrID').style.display = 'none'
+	for(let maini in mainTab){
+		let br = -1
+		for(let i in main[maini]){
+			let unlocked = true
+			if(main[maini][i]['unlocked']!==undefined){
+				unlocked = main[maini][i]['unlocked']()
+			}
+			if(unlocked){
+				br += 1
+				getByID(mainTab[maini]['id']()+"TextID",mainTab[maini]['name']()+'<br>')
+			}
+			if(br%w === 0 && br!=0){
+				document.getElementById(maini+i+'LoadBrID').style.display = ''
+			}else{
+				document.getElementById(maini+i+'LoadBrID').style.display = 'none'
+			}
 		}
 	}
 	
@@ -150,6 +135,14 @@ function getID(){
 			unlocked = main['building'][i]['unlocked']()
 		}
 		unlockedLoad(i+'LoadBuilding',unlocked)
+	}
+
+	for(let i in main['craft']){
+		let unlocked = true
+		if(main['craft'][i]['unlocked']!==undefined){
+			unlocked = main['craft'][i]['unlocked']()
+		}
+		unlockedLoad(i+'LoadCraft',unlocked)
 	}
 
 	for(let i in mainResearch['main']){

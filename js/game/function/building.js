@@ -1,7 +1,3 @@
-function getBuildingID(id){
-    componentBuilding(id)
-}
-
 function Build(id){
     let canbuy = true
     let logs = '你还差'

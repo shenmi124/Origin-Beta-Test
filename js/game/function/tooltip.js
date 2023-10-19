@@ -217,7 +217,7 @@ function tooltip(id,id2){
 						<div style="width: 65px; display: table-cell">`+colorText(i)[1]+`</div>
 						+`+format(main['building'][id]['effect']['gain'][i]())+`/s
 						<br><div style="width: 65px; display: table-cell"></div>
-						(+`+format(getBuildGain(id,i))+`/s)
+						<tip><li-hid>(总计: `+format(getBuildGain(id,i))+`/s)</tip>
 					</span><br>`
 				}
 			}
@@ -233,13 +233,17 @@ function tooltip(id,id2){
 						<div style="width: 65px; display: table-cell">`+colorText(i)[1]+`</div>
 						上限+`+format(main['building'][id]['effect']['max'][i]())+`
 						<br><div style="width: 65px; display: table-cell"></div>
-						(+`+format(getBuildMax(id,i))+`)
+						<tip><li-hid>(总计: `+format(getBuildMax(id,i))+`)</tip>
 					</span><br>`
 				}
 			}
 		}
 		max += '</left>'
 		return getTooltipDoc(name+"("+formatWhole(player['building'][id],0)+")"+'<small>'+bas+cost+gainhr+gain+maxhr+max+'</samll>')
+	}
+
+	if(id2=='TooltipLoadCraft'){
+		return getTooltipDoc(main['craft'][id]['name']())
 	}
 
 	if(id2=='TooltipLoadResearch'){
@@ -278,7 +282,16 @@ function tooltip(id,id2){
 		if(player.research.conducted==undefined || player.research.conducted==id){
 			cost += '<hr><span><div style="width: 50px; display: table-cell"><span style="color:'+colorText('researchPoints')[0]+'">科学</span></div>'+format(researchNeeds(id))+'</div> ('+format(player.resource.researchPoints)+')</span></left>'
 		}else{
-			cost += '<hr><span>正在进行研究: '+mainResearch['main'][id]['name']()
+			cost += `<hr><span>
+				<div style="width: 50px; display: table-cell"><span style="color:`+colorText('researchPoints')[0]+`">科学</span></div>`+format(researchNeeds(player.research.conducted))+`</div>
+			</span>
+			<hr><span>
+				正在进行研究: `+mainResearch['main'][player.research.conducted]['name']()+`
+			</span>
+			<br><li-hid><span>
+				<div style="width: 50px; display: table-cell"><span style="color:`+colorText('researchPoints')[0]+`">科学
+			</span>
+			</div>`+format(researchNeeds(id))+`</div> (`+format(player.resource.researchPoints)+`)</span>`
 		}
 		if(player.research[id].gte(mainResearch['main'][id]['max']())){
 			cost = '<hr>研究完成'
@@ -303,7 +316,5 @@ function tooltip(id,id2){
 			}
 		}
 		return getTooltipDoc(mainResearch['main'][id]['name']()+'<hr><small>'+tooltip+effect+cost+'</small>')
-	}else{
-		return getTooltipDoc('未命名')
 	}
 }
