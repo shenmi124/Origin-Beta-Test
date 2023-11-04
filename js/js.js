@@ -4,14 +4,17 @@ var offlineTime=new Date()
 var diff=0
 
 function getBr(){
-	let log = Math.min(window.innerWidth-(document.getElementById("leftColumn").offsetWidth+(206*3)+36), 500)
-	let width = window.innerWidth-(document.getElementById("leftColumn").offsetWidth+log+36)
+	let left = window.innerWidth-document.getElementById("leftColumn").offsetWidth-36
+	let right = 475
+	let mid = Math.floor((left-right)/206)
+	if(mid <= 2){
+		mid = 2
+		let differ = (mid*206)-(left-right)
+		right = 475-differ
+	}
+	document.getElementById('midColumn').style.width = Math.max(mid, 2)*206+'px'
+	document.getElementById('rightColumn').style.width = right+'px'
 
-	document.getElementById('logPage').style.width = log+'px'
-	document.getElementById('midColumn').style.width = width+'px'
-	document.getElementById('midColumn').style.width = width+'px'
-
-	let w = Math.floor(width/206)
 	for(let maini in mainTab){
 		let br = -1
 		for(let i in main[maini]){
@@ -23,7 +26,7 @@ function getBr(){
 				br += 1
 				getByID(mainTab[maini]['id']()+"TextID",mainTab[maini]['name']()+'<br>')
 			}
-			if(br%w === 0 && br!=0){
+			if(br%mid === 0 && br!=0){
 				document.getElementById(maini+i+'LoadBrID').style.display = ''
 			}else{
 				document.getElementById(maini+i+'LoadBrID').style.display = 'none'
@@ -36,6 +39,21 @@ function getBr(){
 
 function dataDiff(){
 	gameDiff()
+	
+	for(i in main['action']){
+		if(main['action'][i]['cooldown']!==undefined){
+			let unlocked = true
+			if(main['action'][i]['unlocked']!==undefined){
+				unlocked = main['action'][i]['unlocked']()
+			}
+			if(unlocked){
+				player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].sub(n(1).mul(diff))
+			}
+
+			let border = n(100).sub(player['action'][i+'Cooldown'].div(n(main['action'][i]['cooldown']()).max(0.01)).mul(100))
+			document.getElementById("action"+i+"BorderID").style.clipPath = 'inset(0% '+border+'% 0% 0%)'
+		}
+	}
 
 	for(let id in main['building']){
 		let resCan = true
@@ -176,7 +194,7 @@ setInterval(function(){
 	timestart=t.getTime()
 	
 	if(player.setting.autoSave==true){
-		save('Origin_Research')
+		save('Origin')
 	}
 	getID()
 }, 50)

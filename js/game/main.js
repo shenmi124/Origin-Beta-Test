@@ -13,7 +13,7 @@ var mainButton = {
 
 var mainTab = {
     action:{
-        name(){return '行动'},
+        name(){return ''},
         id(){return 'action'},
     },
     building:{

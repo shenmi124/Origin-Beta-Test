@@ -280,10 +280,10 @@ function tooltip(id,id2){
 			}
 		}
 		if(player.research.conducted==undefined || player.research.conducted==id){
-			cost += '<hr><span><div style="width: 50px; display: table-cell"><span style="color:'+colorText('researchPoints')[0]+'">科学</span></div>'+format(researchNeeds(id))+'</div> ('+format(player.resource.researchPoints)+')</span></left>'
+			cost += '<hr><span><div style="width: 50px; display: table-cell"><span style="color:'+colorText('researchPoints')[0]+'">科学</span></div>'+format(researchRequire(id))+'</div> ('+format(player.resource.researchPoints)+')</span></left>'
 		}else{
 			cost += `<hr><span>
-				<div style="width: 50px; display: table-cell"><span style="color:`+colorText('researchPoints')[0]+`">科学</span></div>`+format(researchNeeds(player.research.conducted))+`</div>
+				<div style="width: 50px; display: table-cell"><span style="color:`+colorText('researchPoints')[0]+`">科学</span></div>`+format(researchRequire(player.research.conducted))+`</div>
 			</span>
 			<hr><span>
 				正在进行研究: `+mainResearch['main'][player.research.conducted]['name']()+`
@@ -291,7 +291,7 @@ function tooltip(id,id2){
 			<br><li-hid><span>
 				<div style="width: 50px; display: table-cell"><span style="color:`+colorText('researchPoints')[0]+`">科学
 			</span>
-			</div>`+format(researchNeeds(id))+`</div> (`+format(player.resource.researchPoints)+`)</span>`
+			</div>`+format(researchRequire(id))+`</div> (`+format(player.resource.researchPoints)+`)</span>`
 		}
 		if(player.research[id].gte(mainResearch['main'][id]['max']())){
 			cost = '<hr>研究完成'

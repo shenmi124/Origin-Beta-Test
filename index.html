@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<title>起源科技</title>
+	<title>起源</title>
 	<link rel="icon" type="image/png" sizes="64x64" href="logo.png">
 	<meta charset="utf-8">
 	
@@ -15,8 +15,6 @@
 	<script src="js/game/player.js"></script>
 	<script src="js/game/main.js"></script>
 	<script src="js/game/game.js"></script>
-	<script src="js/game/easyAccess.js"></script>
-	<script src="js/game/systemComponents.js"></script>
 	
 	<script src="js/load/ins/break_eternity.js"></script>
 	<script src="js/load/ins/LZString.js"></script>
@@ -33,13 +31,15 @@
 
 	<script src="js/game/function/tooltip.js"></script>
 	<script src="js/game/function/building.js"></script>
-	<script src="js/game/function/base.js"></script>
 	<script src="js/game/function/resource.js"></script>
 	<script src="js/game/function/research.js"></script>
 	<script src="js/game/function/action.js"></script>
 	<script src="js/game/function/craft.js"></script>
 	<script src="js/game/function/events.js"></script>
 
+	<script src="js/base.js"></script>
+	<script src="js/easyAccess.js"></script>
+	<script src="js/systemComponents.js"></script>
 	<script src="js/js.js"></script>
 	<script src="js/load.js"></script>
 
@@ -66,23 +66,25 @@
 		</div>
 	</div>
 	<canvas class="canvas"></canvas>
-	<a href="upload.html" target="_blank" class="version">v0.5</a>
-	<a href="https://afdian.net/@Mysterious124" target="_blank" class="donate">点我捐助</a>
+	<div style="visibility: hidden;">
+		<a href="upload.html" target="_blank" class="version">v0.5.1</a>
+		<a href="https://afdian.net/@Mysterious124" target="_blank" class="donate">点我捐助</a>
+	</div>
 	<div id="game">
-		<div id="leftColumn" class="column" style="vertical-align: top;">
+		<div id="leftColumn" class="column" style="vertical-align: top; visibility: hidden;">
 			<a id="loadResource"></a>
 		</div>
-		<div id="midColumn" class="column" style="vertical-align: top">
-			<mainTab id="tab_button">
+		<div id="midColumn" class="column" style="vertical-align: top;">
+			<mainTab id="tab_button" style="visibility: hidden;">
 				<a id="loadMainButton"></a>
 			</mainTab>
 			<mainTab id="tab_setting" style="display: none;">
 				<br>
-				<button onclick="save('Origin_Research');saveTime = n(60)" class="settingBto">保存</button><br>
+				<button onclick="save('Origin');saveTime = n(60)" class="settingBto">保存</button><br>
 				<button onclick="booleanSetting('autoSave')" class="settingBto">自动保存:<a id="autoSaveID"></a> (<a id="autoSaveTimeID"></a>)</button><br>
-				<button onclick="exportSave('Origin_Research')" id="export" class="settingBto">导出</button><br>
+				<button onclick="exportSave('Origin')" id="export" class="settingBto">导出</button><br>
 				<button onclick="importSave()" id="import" class="settingBto">导入</button><br>
-				<button onclick="if(!!confirm('你确定要硬重置吗?这样你将失去一切!!!')){if(!!confirm('这个存档将永远失去!(很长时间!)')){hardReset('Origin_Research')}}" id="export"  class="settingBto">硬重置</button><br>
+				<button onclick="if(!!confirm('你确定要硬重置吗?这样你将失去一切!!!')){if(!!confirm('这个存档将永远失去!(很长时间!)')){hardReset('Origin')}}" id="export"  class="settingBto">硬重置</button><br>
 				<button onclick="countingMethod()" class="settingBto">计数法:<a id="countingMethodID"></a></button><br>
 				<button onclick="booleanSetting('mouseSetting')" class="settingBto">优化鼠标:<a id="mouseSettingID"></a></button><br>
 			</mainTab>
@@ -94,14 +96,14 @@
 				<a id="loadMainResearch" style="display: flow; overflow-y: scroll"></a>
 			</mainTab>
 		</div>
-	</div>
-	<div id="rightColumn" class="column" style="vertical-align: top;">
-		<div id="datePage">
-			<div>标记</div>
-		</div>
-		<div>日志</div>
-		<div id="logPage" class="log">
-			<div id="logLoadID"></div>
+		<div id="rightColumn" class="column" style="vertical-align: top; opacity: 0;">
+			<div id="datePage">
+				<div>标记</div>
+			</div>
+			<div>日志</div>
+			<div id="logPage" class="log">
+				<div id="logLoadID"></div>
+			</div>
 		</div>
 	</div>
 	<div id="tooltip" class="button_tooltip" style="display: none; padding-bottom: 8px; border-bottom: 1px solid gray; text-align: center;"></div>

@@ -1,2 +1,2 @@
-load('Origin_Research')
+load('Origin')
 calcPlayer()

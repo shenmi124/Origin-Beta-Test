@@ -9,7 +9,7 @@ function dataLoader(){
     loader(['data','offline'],n(0))
 
     loader(['data','devSpeed'],n(1))
-    loader(['data','startGame'],false)
+    loader(['data','start'],n(0))
 
 	loader(['setting','autoSave'],true)
 	loader(['setting','countingMethod'],"standard")
@@ -29,6 +29,12 @@ function autoLoader(){
         loader(['resource',i+'Unlock'],false)
         loader(['resource',i+'Unlocked'],false)
 	}
+
+    for(let i in main['action']){
+        if(main['action'][i]['cooldown']!==undefined){
+            loader(['action',i+'Cooldown'],main['action'][i]['cooldown']())
+        }
+    }
     for(let i in main['building']){
 		loader(['building',i],n(0))
 	}

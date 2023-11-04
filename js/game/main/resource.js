@@ -97,7 +97,7 @@ var MainResource = {
         newType(){return '研究资源'},
         name(){return '科学'},
         color(){return 'rgb(74, 161, 254)'},
-        max(){return researchNeeds(player.research.conducted)},
+        max(){return researchRequire(player.research.conducted)},
         gain(){return n(1)},
         tooltip(){return '智慧最好的体现<hr>科学抵达基础上限后完成研究<hr>科学基础上限取决于[消耗数量×研究难度]'+(player.research.conducted!==undefined ? '<hr>'+mainResearch['main'][player.research.conducted]['name']() : '')},
         unlocked(){return getResourceUnlocked('researchPoints') || main['resource']['researchPoints']['max']().gt(0)},

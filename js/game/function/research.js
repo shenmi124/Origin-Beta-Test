@@ -1,4 +1,4 @@
-function researchNeeds(id){
+function researchRequire(id){
     if(id==undefined){return n(0)}
     let res = n(0)
     let research = Number(player['research'][id])

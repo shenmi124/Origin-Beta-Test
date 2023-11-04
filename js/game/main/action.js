@@ -1,4 +1,17 @@
 var MainAction = {
+    wakeUp:{
+        name(){return '醒来'},
+        onClick(){
+            player.data.start = n(1)
+            document.getElementById("rightColumn").style.opacity = 1
+            addLog('头痛欲裂。')
+            setTimeout(function(){addLog('你醒在一片荒地。')}, 1000)
+            setTimeout(function(){addLog('但你知道你应该要做些什么。')}, 2000)
+        },
+        tooltip(){return '头痛欲裂...'},
+        unlocked(){return player.data.start.eq(0)},
+        cooldown(){return n(2)},
+    },
     collectionDirt:{
         name(){return '采集泥土'},
         gain(){
@@ -59,7 +72,7 @@ var MainAction = {
             for(let i in main['action']['collectionDirt']['gain']()){
                 let res = main['action']['collectionDirt']['gain']()[i]
                 if(res[4] && player.game.actionDirt.includes(res[0])){
-                    base = '<hr><left>获取:'
+                    base = '<hr><left>可获取:'
                     gain += '<br><li-hid>'+colorText(res[0])[1]
                     if(player.research.m11.gte(2)){
                         gain += '<br><li-hid><li-hid><small>概率: '+formatScientific(res[1],1)+'%</small>'
@@ -78,7 +91,8 @@ var MainAction = {
             }
             return "泥土从你的手中漏出"+base+gain+hr+'<small>'+luck+mul+"</small></left>"
         },
-        unlocked(){return true},
+        cooldown(){return n(3)},
+        unlocked(){return player.data.start.gte(1)},
     },
     mow:{
         name(){return '割草'},
@@ -97,6 +111,7 @@ var MainAction = {
             let m = n(base).add(m33)
             return m
         },
+        unlocked(){return false},
         onClick(){player.resource.plant = player.resource.plant.add(n(Math.random() * 1.5).mul(main.action.mow.mul()))}
     },
     grind:{

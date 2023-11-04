@@ -37,8 +37,8 @@ function baseLoad(){
 	}
 	getByID('actionLoadID',actionStr)
 	for(let i in main['action']){
-		getByID(i+'LoadAction',`<br id="action`+i+`LoadBrID"><a id="`+i+`LoadActionID"></a> `)
-		getActionID(i)
+		getByID(i+'LoadAction',`<br id="action`+i+`LoadBrID"><a id="`+i+`LoadActionID"></a><button id="action`+i+`BorderID" style="z-index: -1; background: #000; transition-duration: 0.1s; clip-path: inset(0% 0% 0% 0%);"></button>`)
+		componentAction(i)
 	}
 
 	let buildingStr = ''
@@ -100,6 +100,12 @@ function baseLoad(){
 	canDraw = true
 }
 
+function gameLoad(){
+	if(player.data.start.gte(1)){
+		document.getElementById("rightColumn").style.opacity = 1
+	}
+}
+
 let gameLoading = function(){
 	mainLoad()
 
@@ -116,4 +122,6 @@ let gameLoading = function(){
 	for(i in set){
 		getByID(set[i]+'ID',player['setting'][set[i]] ? '开启' : '关闭')
 	}
+
+	gameLoad()
 }

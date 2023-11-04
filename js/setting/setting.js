@@ -69,7 +69,7 @@ function booleanSetting(id){
 		}
 	}
 	
-	save('Origin_Research')
+	save('Origin')
 }
 
 let saveTime = n(60)
@@ -78,7 +78,7 @@ setInterval(function(){
 	if(player.setting.autoSave==true){
 		saveTime = saveTime.sub(n(1).mul(diff))
 		if(saveTime.lte(0)){
-			save('Origin_Research')
+			save('Origin')
 			saveTime = n(60)
 		}
 		getByID('autoSaveTimeID',formatTime(saveTime))
