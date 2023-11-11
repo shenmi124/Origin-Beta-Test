@@ -34,6 +34,11 @@ function autoLoader(){
         if(main['action'][i]['cooldown']!==undefined){
             loader(['action',i+'Cooldown'],main['action'][i]['cooldown']())
         }
+        if(main['action'][i]['data']!==undefined){
+            for(let id in main['action'][i]['data']){
+                loader(['action',i,id],main['action'][i]['data'][id]())
+            }
+        }
     }
     for(let i in main['building']){
 		loader(['building',i],n(0))

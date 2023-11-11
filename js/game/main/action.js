@@ -5,36 +5,71 @@ var MainAction = {
             player.data.start = n(1)
             document.getElementById("rightColumn").style.opacity = 1
             addLog('头痛欲裂。')
-            setTimeout(function(){addLog('你醒在一片荒地。')}, 1000)
-            setTimeout(function(){addLog('但你知道你应该要做些什么。')}, 2000)
+            addLog('你醒在一片荒地。')
+            addLog('除了无尽头的草原什么都没有。')
         },
-        tooltip(){return '头痛欲裂...'},
+        tooltip(){return '苏醒...'},
         unlocked(){return player.data.start.eq(0)},
-        cooldown(){return n(2)},
+        cooldown(){return n(3)},
     },
-    collectionDirt:{
-        name(){return '采集泥土'},
-        gain(){
-            let a = []
-            let res = [
-                'dirt','stone','coal','copper','tin','gem'
-            ]
-            let pro = [
-                n(70),n(8),n(1),n(0.25),n(0.04),n(0.0008)
-            ]
-            let bas = [
-                n(0.75),n(0.05),n(0.01),n(0.001),n(0.0005),n(0)
-            ]
-            let ran = [
-                n(0.75),n(0.15),n(0.01),n(0.001),n(0.0005),n(0.001)
-            ]
-            let unl = [
-                true,true,true,true,true,false
-            ]
-            for(let i in res){
-                a.push([res[i],n(pro[i]).mul(this.luck()),bas[i],ran[i],unl[i]])
+    explore:{
+        name(){return '探索'},
+        onClick(){
+            let find = []
+            for(let i in main['action']['explore']['gain']){
+                let Base = main['action']['explore']['gain'][i]
+                let exp = n(Math.random() * 100).ceil()
+                if(n(Base['probability']()).gte(exp)){
+                    let gain = n(Base['base']()).add(Math.random(Number(Base['float']())))
+                    player['action']['explore'][i] = player['action']['explore'][i].add(gain)
+                    player['action']['explore'][i+'Fined'] = true
+                    find.push(i)
+                }
             }
-            return a
+            if(find[0]!==undefined){
+                let t = ''
+                for(let i in find){
+                    t += main['action']['explore']['gain'][find[i]]['name']()
+                }
+                addLog('*你找到了一些'+t+'*','#888')
+            }else{
+                player.action.explore.defined = true
+                addLog('*什么都没找到*','#888')
+            }
+        },
+        gain:{
+            collect: {
+                name(){return ' 泥土'},
+                probability(){return n(20)},
+                base(){return n(1)},
+                float(){return n(2)},
+            },
+            harvest: {
+                name(){return ' 植被'},
+                probability(){return n(20)},
+                base(){return n(1)},
+                float(){return n(2)},
+            },
+        },
+        tooltip(){return '寻找可用资源<br>即使没有工具与食物走不了多远'},
+        data:{
+            collect(){return n(0)},
+            collectFined(){return false},
+            harvest(){return n(0)},
+            harvestFined(){return false},
+        },
+        cooldown(){return n(10)},
+        unlocked(){return player.data.start.gte(1)},
+    },
+    collect:{
+        name(){return '采集'},
+        gain:{
+            dirt:{
+                probability(){return n(70)},
+                base(){return n(0.75)},
+                float(){return n(0.75)},
+                unlocked(){return true},
+            },
         },
         luck(){
             let base = n(1)
@@ -52,16 +87,6 @@ var MainAction = {
             return m
         },
         onClick(){
-            for(let i in main['action']['collectionDirt']['gain']()){
-                let res = main['action']['collectionDirt']['gain']()[i]
-                let p = n(Math.random() * 99)
-                if(res[1].gte(p) && res[4]){
-                    player['resource'][res[0]] = player['resource'][res[0]].add(n(res[2]).add(n(Math.random()).mul(res[3])).mul(n(main['action']['collectionDirt']['mul']())))
-                    if(!player.game.actionDirt.includes(res[0])){
-                        player.game.actionDirt.push(res[0])
-                    }
-                }
-            }
         },
         tooltip(){
             let base = ''
@@ -69,38 +94,29 @@ var MainAction = {
             let mul = ''
             let luck = ''
             let hr = ''
-            for(let i in main['action']['collectionDirt']['gain']()){
-                let res = main['action']['collectionDirt']['gain']()[i]
-                if(res[4] && player.game.actionDirt.includes(res[0])){
-                    base = '<hr><left>可获取:'
-                    gain += '<br><li-hid>'+colorText(res[0])[1]
-                    if(player.research.m11.gte(2)){
-                        gain += '<br><li-hid><li-hid><small>概率: '+formatScientific(res[1],1)+'%</small>'
-                    }
-                    //
-                    //format(n((res[2]).add(n(0).mul(res[3]))))+'~'+format(n((res[2]).add(n(1).mul(res[3]))))
-                }
-            }
-            if(n(main['action']['collectionDirt']['luck']()).gt(1)){
-                luck = '<div>幸运倍率:<br><li-hid>×'+format(main['action']['collectionDirt']['luck']())+'</div>'
+            if(n(main['action']['collect']['luck']()).gt(1)){
+                luck = '<div>幸运倍率:<br><li-hid>×'+format(main['action']['collect']['luck']())+'</div>'
                 hr = '<hr>'
             }
-            if(n(main['action']['collectionDirt']['mul']()).gt(1)){
-                mul = '<div>产出倍率:<br><li-hid>×'+format(main['action']['collectionDirt']['mul']())+'</div>'
+            if(n(main['action']['collect']['mul']()).gt(1)){
+                mul = '<div>产出倍率:<br><li-hid>×'+format(main['action']['collect']['mul']())+'</div>'
                 hr = '<hr>'
             }
             return "泥土从你的手中漏出"+base+gain+hr+'<small>'+luck+mul+"</small></left>"
         },
-        cooldown(){return n(3)},
-        unlocked(){return player.data.start.gte(1)},
+        cooldown(){return n(5)},
+        data:{
+            actionDirt(){return []},
+        },
+        unlocked(){return player.action.explore.collectFined==true},
     },
-    mow:{
-        name(){return '割草'},
+    harvest:{
+        name(){return '收割'},
         tooltip(){
             let mul = ''
             let hr = ''
-            if(n(main.action.mow.mul()).gt(1)){
-                mul = '<left><small><div>产出倍率:<br><li-hid>×'+format(main.action.mow.mul())+'</div></small></left>'
+            if(n(main.action.harvest.mul()).gt(1)){
+                mul = '<left><small><div>产出倍率:<br><li-hid>×'+format(main.action.harvest.mul())+'</div></small></left>'
                 hr = '<hr>'
             }
             return '割草'+hr+mul
@@ -111,32 +127,8 @@ var MainAction = {
             let m = n(base).add(m33)
             return m
         },
-        unlocked(){return false},
-        onClick(){player.resource.plant = player.resource.plant.add(n(Math.random() * 1.5).mul(main.action.mow.mul()))}
+        onClick(){},
+        cooldown(){return n(5)},
+        unlocked(){return player.action.explore.harvestFined==true},
     },
-    grind:{
-        name(){return '研磨'},
-        tooltip(){
-            let mul = ''
-            let hr = ''
-            if(n(main.action.grind.mul()).gt(1)){
-                mul = '<left><div>产出倍率:<br><li-hid>×'+format(main.action.grind.mul())+'</div></left>'
-                hr = '<hr>'
-            }
-            let eff = ''
-            if(n(main.action.grind.efficiency()).gt(1)){
-                eff = '<left><div>效率倍率:<br><li-hid>×'+format(main.action.grind.efficiency())+'</div></left>'
-                hr = '<hr>'
-            }
-            return '然后制取纤维'+hr+mul+eff
-        },
-        mul(){return player.research.m12.mul(0.5).add(1)},
-        efficiency(){return player.research.m42.sub(1).max(0).mul(0.5).add(1)},
-        onClick(){
-            let num = n(Math.random() * 3).mul(main.action.grind.efficiency()).min(player.resource.plant)
-            player.resource.plant = player.resource.plant.sub(num)
-            player.resource.fiber = player.resource.fiber.add(n(Math.random() * 0.25).mul(num).mul(main.action.grind.mul()))
-        },
-        unlocked(){return getResourceUnlocked('plant')},
-    }
 }

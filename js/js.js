@@ -40,7 +40,7 @@ function getBr(){
 function dataDiff(){
 	gameDiff()
 	
-	for(i in main['action']){
+	for(let i in main['action']){
 		if(main['action'][i]['cooldown']!==undefined){
 			let unlocked = true
 			if(main['action'][i]['unlocked']!==undefined){
@@ -48,6 +48,14 @@ function dataDiff(){
 			}
 			if(unlocked){
 				player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].sub(n(1).mul(diff))
+			}
+
+			if(player['action'][i+'Cooldown'].lte(0)){
+				removeCss("action"+i+"ButtonID",'complete')
+				document.getElementById("action"+i+"ButtonID").disabled = false
+			}else{
+				addedCss("action"+i+"ButtonID",'complete')
+				document.getElementById("action"+i+"ButtonID").disabled = true
 			}
 
 			let border = n(100).sub(player['action'][i+'Cooldown'].div(n(main['action'][i]['cooldown']()).max(0.01)).mul(100))

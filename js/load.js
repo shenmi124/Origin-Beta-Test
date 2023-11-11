@@ -37,7 +37,7 @@ function baseLoad(){
 	}
 	getByID('actionLoadID',actionStr)
 	for(let i in main['action']){
-		getByID(i+'LoadAction',`<br id="action`+i+`LoadBrID"><a id="`+i+`LoadActionID"></a><button id="action`+i+`BorderID" style="z-index: -1; background: #000; transition-duration: 0.1s; clip-path: inset(0% 0% 0% 0%);"></button>`)
+		getByID(i+'LoadAction',`<br id="action`+i+`LoadBrID"><a id="`+i+`LoadActionID"></a><button id="action`+i+`BorderID" style="z-index: -1; background: #000; transition-duration: 0.05s; clip-path: inset(0% 0% 0% 0%);"></button>`)
 		componentAction(i)
 	}
 

@@ -26,7 +26,6 @@ button {
     border: 1px solid rgb(255, 255, 255);
     text-align: center;
     margin-bottom: 10px;
-    position: absolute;
 }
 
 button:hover {
@@ -35,6 +34,12 @@ button:hover {
 
 button.cold {
     background: rgb(245, 245, 245, 0.9);
+    position: absolute;
+    z-index: 2;
+}
+
+button.cold.complete {
+    cursor: not-allowed;
 }
 
 button.cold:hover {
@@ -137,7 +142,7 @@ tip {
 #rightColumn {
     width: 100%;
     overflow-y: auto;
-    transition-duration: 0.2s;
+    transition-duration: 0.1s;
 }
 
 #game {

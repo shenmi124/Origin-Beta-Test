@@ -5,7 +5,6 @@ function gameDiff(){
 }
 
 function gameLoader(){
-    loader(['game','actionDirt'],[])
     loader(['game','time'],n(0))
 }
 

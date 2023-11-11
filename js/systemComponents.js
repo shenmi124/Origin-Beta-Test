@@ -1,7 +1,7 @@
 function componentAction(id){
 	getByID(id+"LoadActionID",`
 	<tooltip `+tooltipLoad(id,'TooltipLoadAction')+`>
-		<button class="cold" onclick="getActionClick('`+id+`')">`+main['action'][id]['name']()+`</button>
+		<button id="action`+id+`ButtonID" class="cold" onclick="getActionClick('`+id+`')">`+main['action'][id]['name']()+`</button>
 	</tooltip>
     `)
 }
