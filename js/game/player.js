@@ -9,7 +9,7 @@ function dataLoader(){
     loader(['data','offline'],n(0))
 
     loader(['data','devSpeed'],n(1))
-    loader(['data','start'],n(0))
+    loader(['data','stage'],n(0))
 
 	loader(['setting','autoSave'],true)
 	loader(['setting','countingMethod'],"standard")
@@ -40,9 +40,21 @@ function autoLoader(){
             }
         }
     }
+
     for(let i in main['building']){
 		loader(['building',i],n(0))
 	}
+
+    for(let i in main['craft']){
+        if(main['craft'][i]['cooldown']!==undefined){
+            loader(['craft',i+'Cooldown'],main['craft'][i]['cooldown']())
+        }
+        if(main['craft'][i]['data']!==undefined){
+            for(let id in main['craft'][i]['data']){
+                loader(['craft',i,id],main['craft'][i]['data'][id]())
+            }
+        }
+    }
 
     for(let i in mainResearch['main']){
 		loader(['research',i],n(0))

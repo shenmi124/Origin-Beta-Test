@@ -17,6 +17,8 @@ let language = {
             "mainButton.setting": "设置",
 
             "resource.dirt": "泥土",
+            "resource.wood": "木材",
+            "resource.food": "食物",
             "resource.fiber": "纤维",
             "resource.stone": "石材",
             "resource.coal": "煤炭",

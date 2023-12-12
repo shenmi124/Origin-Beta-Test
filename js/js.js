@@ -37,17 +37,28 @@ function getBr(){
 	document.getElementById('loadMainResearch').style.height = window.innerHeight-100 + 'px'
 }
 
+function systemDiff(){
+	getByID('actionEfficient',formatScientific(n(actionEfficient()).mul(100),1))
+}
+
 function dataDiff(){
+	systemDiff()
 	gameDiff()
 	
 	for(let i in main['action']){
 		if(main['action'][i]['cooldown']!==undefined){
 			let unlocked = true
+			let canC = true
 			if(main['action'][i]['unlocked']!==undefined){
 				unlocked = main['action'][i]['unlocked']()
 			}
-			if(unlocked){
-				player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].sub(n(1).mul(diff))
+			if(main['action'][i]['canCooldown']!==undefined){
+				canC = main['action'][i]['canCooldown']()
+			}
+			if(unlocked && canC){
+				player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].sub(n(actionEfficient()).mul(diff))
+			}else{
+				player['action'][i+'Cooldown'] = n(main['action'][i]['cooldown']())
 			}
 
 			if(player['action'][i+'Cooldown'].lte(0)){
@@ -58,6 +69,7 @@ function dataDiff(){
 				document.getElementById("action"+i+"ButtonID").disabled = true
 			}
 
+			document.getElementById("action"+i+"BorderID").style.transitionDuration = '0.2s'
 			let border = n(100).sub(player['action'][i+'Cooldown'].div(n(main['action'][i]['cooldown']()).max(0.01)).mul(100))
 			document.getElementById("action"+i+"BorderID").style.clipPath = 'inset(0% '+border+'% 0% 0%)'
 		}
@@ -97,6 +109,36 @@ function dataDiff(){
 			document.getElementById(player.research.conducted+"MainResearchButtonID").style.borderColor = ''
 		}
 		player.research.conducted = undefined
+	}
+
+	for(let i in main['craft']){
+		if(main['craft'][i]['cooldown']!==undefined){
+			let unlocked = true
+			let canC = true
+			if(main['craft'][i]['unlocked']!==undefined){
+				unlocked = main['craft'][i]['unlocked']()
+			}
+			if(main['craft'][i]['canCooldown']!==undefined){
+				canC = main['craft'][i]['canCooldown']()
+			}
+			if(unlocked && canC){
+				player['craft'][i+'Cooldown'] = player['craft'][i+'Cooldown'].sub(n(actionEfficient()).mul(diff))
+			}else{
+				player['craft'][i+'Cooldown'] = n(main['craft'][i]['cooldown']())
+			}
+
+			if(player['craft'][i+'Cooldown'].lte(0)){
+				removeCss("craft"+i+"ButtonID",'complete')
+				document.getElementById("craft"+i+"ButtonID").disabled = false
+			}else{
+				addedCss("craft"+i+"ButtonID",'complete')
+				document.getElementById("craft"+i+"ButtonID").disabled = true
+			}
+
+			document.getElementById("craft"+i+"BorderID").style.transitionDuration = '0.2s'
+			let border = n(100).sub(player['craft'][i+'Cooldown'].div(n(main['craft'][i]['cooldown']()).max(0.01)).mul(100))
+			document.getElementById("craft"+i+"BorderID").style.clipPath = 'inset(0% '+border+'% 0% 0%)'
+		}
 	}
 
 	for(id in mainResearch['main']){
@@ -201,8 +243,5 @@ setInterval(function(){
 	diff=diff.mul(offlineBoost)
 	timestart=t.getTime()
 	
-	if(player.setting.autoSave==true){
-		save('Origin')
-	}
 	getID()
 }, 50)

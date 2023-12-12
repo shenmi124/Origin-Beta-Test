@@ -3,6 +3,8 @@ function getActionClick(id){
 		if(player['action'][id+'Cooldown'].lte(0)){
 			$(main['action'][id]['onClick'])
 			player['action'][id+'Cooldown'] = n(main['action'][id]['cooldown']())
+
+			document.getElementById("action"+id+"BorderID").style.transitionDuration = '0s'
 			let border = n(100).sub(player['action'][id+'Cooldown'].div(n(main['action'][id]['cooldown']()).max(0.01)).mul(100))
 			document.getElementById("action"+id+"BorderID").style.clipPath = 'inset(0% '+border+'% 0% 0%)'
 		}

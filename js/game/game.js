@@ -1,6 +1,4 @@
 function gameDiff(){
-	
-
 	player.game.time = player.game.time.add(n(1).mul(diff))
 }
 

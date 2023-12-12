@@ -8,12 +8,15 @@ function addLog(id,color="#000"){
     log = '<div class="logTimes" style="color: '+color+'; transition-duration: 1s; opacity: 1;" id="logTimes'+logID+'"><span style="padding: 0px 0px 2px 0px; font-size: 14px;">'+id+'<br></span></div>'+log
     logTime = logTime.add(1)
     logID = logID.add(1)
+    
+    logTick = logTick.add(20)
+    insLog()
 }
 
-setInterval(function(){
+function insLog(){
     logRealTime = logRealTime.add(n(1).mul(diff)).min(logTime)
     logTick = logTick.add(n(20).mul(diff))
-    if(logTick>=20){
+    if(logTick.gte(20)){
         logTick = n(0)
 
         getByID('logLoadID',log)
@@ -29,4 +32,6 @@ setInterval(function(){
             },100)
         }
     }
-}, 50)
+}
+
+setInterval(insLog, 50)

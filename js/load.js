@@ -10,7 +10,7 @@ function mainLoad(){
 
 	let mainStr = ''
 	for(let i in mainTab){
-		let text = '<a id="'+mainTab[i]['id']()+'TextID"></a>'
+		let text = '<a style="font-size: 14px;" id="'+mainTab[i]['id']()+'TextID"></a>'
 		let load = '<a id="'+mainTab[i]['id']()+'LoadID"></a>'
 		mainStr += text+load+'<br><br>'
 	}
@@ -18,7 +18,7 @@ function mainLoad(){
 }
 
 function baseLoad(){
-	let resourceStr = '<span style="color: #888">基础资源</span><br>'
+	let resourceStr = '<a style="font-size: 12px; color: #666">行动效率:<span id="actionEfficient"></span>%</a><br><br><br>'
 	for(let i in main['resource']){
 		if(main['resource'][i]['newType']!=undefined){
 			resourceStr += '<span id="'+i+'TypeID" style="color: #888; display: none"><br>'+main['resource'][i]['newType']()+'<br></span>'
@@ -57,7 +57,7 @@ function baseLoad(){
 	}
 	getByID('craftLoadID',craftStr)
 	for(let i in main['craft']){
-		getByID(i+'LoadCraft',`<br id="craft`+i+`LoadBrID"><a id="`+i+`LoadCraftID"></a> `)
+		getByID(i+'LoadCraft',`<br id="craft`+i+`LoadBrID"><a id="`+i+`LoadCraftID"></a><button id="craft`+i+`BorderID" style="z-index: -1; background: #000; transition-duration: 0.05s; clip-path: inset(0% 0% 0% 0%);"></button>`)
 		componentCraft(i)
 	}
 
@@ -101,9 +101,7 @@ function baseLoad(){
 }
 
 function gameLoad(){
-	if(player.data.start.gte(1)){
-		document.getElementById("rightColumn").style.opacity = 1
-	}
+	gameStage(null)
 }
 
 let gameLoading = function(){

@@ -15,6 +15,7 @@
 	<script src="js/game/player.js"></script>
 	<script src="js/game/main.js"></script>
 	<script src="js/game/game.js"></script>
+	<script src="js/game/data.js"></script>
 	
 	<script src="js/load/ins/break_eternity.js"></script>
 	<script src="js/load/ins/LZString.js"></script>
@@ -24,24 +25,24 @@
 	<script src='js/load/ins/color.js'></script>
 	<script src='js/load/ins/i18n.js'></script>
 
+	<script src="js/base.js"></script>
+	<script src="js/easyAccess.js"></script>
+	<script src="js/systemComponents.js"></script>
+	<script src="js/js.js"></script>
+	<script src="js/load.js"></script>
+
 	<script src="js/load/canvas.js" defer></script>
 	<script src="js/load/loading.js"></script>
 	<script src="js/load/log.js"></script>
 	<script src="js/load/format.js"></script>
 
 	<script src="js/game/function/tooltip.js"></script>
-	<script src="js/game/function/building.js"></script>
-	<script src="js/game/function/resource.js"></script>
-	<script src="js/game/function/research.js"></script>
-	<script src="js/game/function/action.js"></script>
-	<script src="js/game/function/craft.js"></script>
+	<script src="js/game/function/buildingSystem.js"></script>
+	<script src="js/game/function/resourceSystem.js"></script>
+	<script src="js/game/function/researchSystem.js"></script>
+	<script src="js/game/function/actionSystem.js"></script>
+	<script src="js/game/function/craftSystem.js"></script>
 	<script src="js/game/function/events.js"></script>
-
-	<script src="js/base.js"></script>
-	<script src="js/easyAccess.js"></script>
-	<script src="js/systemComponents.js"></script>
-	<script src="js/js.js"></script>
-	<script src="js/load.js"></script>
 
 	<script src="js/setting/pointer.js"></script>
 	<script src="js/setting/setting.js"></script>
@@ -67,11 +68,11 @@
 	</div>
 	<canvas class="canvas"></canvas>
 	<div style="visibility: hidden;">
-		<a href="upload.html" target="_blank" class="version">v0.5.2</a>
+		<a href="upload.html" target="_blank" class="version">v0.5.3</a>
 		<a href="https://afdian.net/@Mysterious124" target="_blank" class="donate">点我捐助</a>
 	</div>
 	<div id="game">
-		<div id="leftColumn" class="column" style="vertical-align: top; visibility: hidden;">
+		<div id="leftColumn" class="column" style="vertical-align: top; opacity: 0; visibility: hidden;">
 			<a id="loadResource"></a>
 		</div>
 		<div id="midColumn" class="column" style="vertical-align: top;">

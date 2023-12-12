@@ -39,7 +39,7 @@ function componentBuilding(id){
 function componentCraft(id){
     getByID(id+"LoadCraftID",`
     <tooltip `+tooltipLoad(id,'TooltipLoadCraft')+`>
-        <button onclick="">`+main['craft'][id]['name']()+`</button>
+        <button id="craft`+id+`ButtonID" class="cold" onclick="getCraftClick('`+id+`')">`+main['craft'][id]['name']()+`</button>
     </tooltip>
     `)
 }
