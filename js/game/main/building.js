@@ -1,4 +1,20 @@
 var MainBuilding = {
+    colony:{
+        name(){return '定居地'},
+        unlocked(){return player.action.explore.colonyFined},
+        loot(){return false},
+        cost: {
+            dirt(){return n(10)}
+        },
+        costPower(){return n(0.045)},
+        effect: {
+            max:{
+                dirt(){return n(20)},
+                food(){return n(20)},
+                stone(){return n(20)},
+            }
+        }
+    },
     mine:{
         name(){return '采石场'},
         unlocked(){return false},
@@ -27,7 +43,6 @@ var MainBuilding = {
     storage:{
         name(){return '仓库'},
         unlocked(){return false},
-        base(){return n(main.action.collect.luck()).add(main.action.collect.mul()).sub(2)},
         cost: {
             dirt(){return n(20)},
             stone(){return n(10)}
@@ -36,7 +51,6 @@ var MainBuilding = {
         effect: {
             max:{
                 dirt(){return n(50)},
-                fiber(){return n(10)},
                 stone(){return n(30)},
             }
         }

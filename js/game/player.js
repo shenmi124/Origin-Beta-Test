@@ -46,6 +46,7 @@ function autoLoader(){
 	}
 
     for(let i in main['craft']){
+        loader(['craft',i+'Times'],n(0))
         if(main['craft'][i]['cooldown']!==undefined){
             loader(['craft',i+'Cooldown'],main['craft'][i]['cooldown']())
         }

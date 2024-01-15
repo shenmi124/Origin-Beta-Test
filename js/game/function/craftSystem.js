@@ -2,6 +2,7 @@ function getCraftClick(id){
 	if(main['craft'][id]['cooldown']!==undefined){
 		if(player['craft'][id+'Cooldown'].lte(0)){
 			$(main['craft'][id]['onClick'])
+			player['craft'][id+'Times'] = player['craft'][id+'Times'].add(1)
 			player['craft'][id+'Cooldown'] = n(main['craft'][id]['cooldown']())
 
 			document.getElementById("craft"+id+"BorderID").style.transitionDuration = '0s'
@@ -10,6 +11,7 @@ function getCraftClick(id){
 		}
 	}else{
 		$(main['craft'][id]['onClick'])
+		player['craft'][id+'Times'] = player['craft'][id+'Times'].add(1)
 	}
 	for(i in main['resource']){
 		if(main['resource'][i]['max']!==undefined){

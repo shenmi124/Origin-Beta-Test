@@ -1,7 +1,7 @@
 var tooltipSel
 
-function tooltipLoad(id,id2){
-	return `onmouseenter='mouseLoad("`+id+`","`+id2+`")' onmouseleave='document.getElementById("tooltip").style.display = "none";window.clearInterval(tooltipSel)' onclick='document.getElementById("tooltip").style.display = "none";window.clearInterval(tooltipSel)'`
+function tooltipLoad(id,id2,onClick=`onclick='document.getElementById("tooltip").style.display = "none"`){
+	return `onmouseenter='mouseLoad("`+id+`","`+id2+`")' onmouseleave='document.getElementById("tooltip").style.display = "none";window.clearInterval(tooltipSel)' `+onClick+`;window.clearInterval(tooltipSel)'`
 }
 
 function tooltipU(number,id){
@@ -48,12 +48,12 @@ function tooltip(id,id2){
 					}
 					if(gN){
 						gain += `<left><span>
-							<div style="width: 160px; display: table-cell"><i class="fa fa-plus-circle"></i> `+gT+`</div>
+							<div style="width: 160px; display: table-cell"><green>+</green></i> `+gT+`</div>
 							<div style="width: 160px; display: table-cell">+`+format(main['resource'][id]['gain']())+`</div>`+now+`
 						</span></left>`
 					}else{
 						gain = `<left><span style="color: red">
-							<div style="width: 160px; display: table-cell"><i class="fa fa-minus-circle"></i> `+gT+`</div>
+							<div style="width: 160px; display: table-cell"><red>-</red> `+gT+`</div>
 							<div style="width: 160px; display: table-cell; color: red">`+format(main['resource'][id]['gain']())+`</div>`+now+`
 						</span></left>` + gain
 					}
@@ -108,7 +108,9 @@ function tooltip(id,id2){
 						time = '<hr>已抵达上限'
 					}else if(main['resource'][id]['gain']!==undefined){
 						if(n(getResourceBaseGain(id)).gt(0)){
-							time = '<hr>'+formatTime(n(getResourceBaseMax(id)).sub(player['resource'][id]).div(getResourceBaseGain(id)))+'<br>抵达上限'
+							time = '<hr>'+formatTime(n(getResourceBaseMax(id)).sub(player['resource'][id]).div(getResourceBaseGain(id)))+'后抵达上限'
+						}else if(n(getResourceBaseGain(id)).lt(0) && !player['resource'][id].eq(0)){
+							time = '<hr>'+formatTime(player['resource'][id].div(getResourceBaseGain(id)).abs())+'后耗尽'
 						}
 					}
 				}
@@ -126,7 +128,7 @@ function tooltip(id,id2){
 				}
 				if(!maxNumber.eq(0)){
 					max += `<left><span>
-						<div style="width: 160px; display: table-cell"><i class="fa fa-plus-circle"></i> 基础</div>
+						<div style="width: 160px; display: table-cell"><green>+</green> 基础</div>
 						<div style="width: 160px; display: table-cell">+`+format(main['resource'][id]['max']())+`</div>`+now+`
 					</span></left>`
 				}
@@ -168,7 +170,7 @@ function tooltip(id,id2){
 				}
 				if(!numNumber.eq(0)){
 					num += `<left><span>
-						<div style="width: 160px; display: table-cell"><i class="fa fa-plus-circle"></i> 基础</div>
+						<div style="width: 160px; display: table-cell"><green>+</green></i> 基础</div>
 						<div style="width: 160px; display: table-cell">+`+format(main['resource'][id]['number']())+`</div>`+now+`
 					</span></left>`
 				}
@@ -329,7 +331,7 @@ function tooltip(id,id2){
 			for(ii in mainResearch['main'][id]['effect'][i]){
 				if(n(i).lt(mainResearch['main'][id]['max']())){
 					if(player.research[id].eq(i)){
-						effect += `<br>`+(mainResearch['main'][id]['effect'][i][ii]()[1] ? `<green>(<i class="fa fa-plus"></i>)</green>` : `<yellow>(<i class="fa  fa-rotate-right"></i>)</yellow>`)+'<span style="color: rgb(31, 70, 71);">'+mainResearch['main'][id]['effect'][i][ii]()[0]+'</span>'
+						effect += `<br>`+(mainResearch['main'][id]['effect'][i][ii]()[1] ? `<green>(<green>+</green>)</green>` : `<yellow>(<i class="fa  fa-rotate-right"></i>)</yellow>`)+'<span style="color: rgb(31, 70, 71);">'+mainResearch['main'][id]['effect'][i][ii]()[0]+'</span>'
 					}else if(player.research[id].gte(i)){
 						effect += (mainResearch['main'][id]['effect'][i][ii]()[1] ? `<br><li-hid>`+mainResearch['main'][id]['effect'][i][ii]()[0] : '')
 					}
@@ -344,5 +346,27 @@ function tooltip(id,id2){
 			}
 		}
 		return getTooltipDoc(mainResearch['main'][id]['name']()+'<hr><small>'+tooltip+effect+cost+'</small>')
+	}
+
+	if(id2=='else'){
+		if(id=='actionEfficient'){
+			let too = ''
+			for(i in efficient['action']){
+				if(efficient['action'][i]['active']()){
+					if(n(efficient['action'][i]['effect']()).lte(0)){
+						too += `<red><span>
+							<div style="width: 100px; display: table-cell">`+efficient['action'][i]['name']()+`:</div>
+							<span>`+formatScientific(n(efficient['action'][i]['effect']()),1)+`%</div>
+						</span></red><br>`
+					}else{
+						too += `<span>
+							<div style="width: 350px; display: table-cell">`+efficient['action'][i]['name']()+`:</div>
+							<div>`+formatScientific(n(efficient['action'][i]['effect']()),1)+`%</div>
+						</span><br>`
+					}
+				}
+			}
+			return getTooltipDoc('行动效率<hr><left><small>'+too+'<li-hid><hr>- 总计: '+formatScientific(n(actionEfficient()).mul(100),1)+'%</left></small>')
+		}
 	}
 }

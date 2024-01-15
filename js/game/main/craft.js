@@ -19,7 +19,7 @@ let MainCraft = {
             return base
         },
         onClick(){
-            gameStage(2)
+            getStage(2)
 
             for(i in main['craft']['collect']['gain']){
                 let exp = n(Math.random() * 100)
@@ -65,7 +65,7 @@ let MainCraft = {
         gain:{
             food:{
                 probability(){return n(100)},
-                base(){return n(0.5)},
+                base(){return n(1.5)},
                 float(){return n(1.5)},
                 unlocked(){return true},
             },
@@ -85,7 +85,7 @@ let MainCraft = {
             return base
         },
         onClick(){
-            gameStage(2)
+            getStage(2)
 
             for(i in main['craft']['harvest']['gain']){
                 let exp = n(Math.random() * 100)

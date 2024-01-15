@@ -1,0 +1,32 @@
+li::marker {
+    content: '●';
+    font-size: 16px;
+    font-weight: bold;
+    color: #888;
+}
+
+li-hid {
+    margin-left: 23px
+}
+
+li-log {
+    margin-left: 14px
+}
+
+left {
+    margin-left: 3px;
+    display: block;
+    text-align: left;
+}
+
+red { 
+    color: red;
+}
+
+green { 
+    color: green;
+}
+
+yellow { 
+    color: yellowgreen;
+}

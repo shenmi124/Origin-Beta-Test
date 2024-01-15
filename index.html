@@ -11,6 +11,7 @@
 	<script src="js/game/main/resource.js"></script>
 	<script src="js/game/main/research.js"></script>
 	<script src="js/game/main/craft.js"></script>
+	<script src="js/game/main/efficient.js"></script>
 	
 	<script src="js/game/player.js"></script>
 	<script src="js/game/main.js"></script>
@@ -49,12 +50,11 @@
 	<script src="js/setting/lag.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="css/css.css"/>
+	<link rel="stylesheet" type="text/css" href="css/font.css"/>
 	<link rel="stylesheet" type="text/css" href="css/load.css"/>
 	<link rel="stylesheet" type="text/css" href="css/side.css"/>
 	<link rel="stylesheet" type="text/css" href="css/resource.css"/>
 	<link rel="stylesheet" type="text/css" href="css/logs.css"/>
-	
-	<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
 </head>
 
 <body>
@@ -68,7 +68,7 @@
 	</div>
 	<canvas class="canvas"></canvas>
 	<div style="visibility: hidden;">
-		<a href="upload.html" target="_blank" class="version">v0.5.3</a>
+		<a target="_blank" class="version">v0.5.4</a>
 		<a href="https://afdian.net/@Mysterious124" target="_blank" class="donate">点我捐助</a>
 	</div>
 	<div id="game">
@@ -76,7 +76,7 @@
 			<a id="loadResource"></a>
 		</div>
 		<div id="midColumn" class="column" style="vertical-align: top;">
-			<mainTab id="tab_button" style="visibility: hidden;">
+			<mainTab id="tab_button" style="opacity: 0; visibility: hidden;">
 				<a id="loadMainButton"></a>
 			</mainTab>
 			<mainTab id="tab_setting" style="display: none;">

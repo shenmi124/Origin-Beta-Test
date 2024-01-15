@@ -145,7 +145,6 @@ function formatScientific(decimal, precision = 2, small) {
     if (isNaN(decimal.sign) || isNaN(decimal.layer) || isNaN(decimal.mag)) {
         return "NaN"
     }
-    if(decimal.sign<0){return "-"+format(decimal.neg(), precision, small)}
     if(decimal.mag == Number.POSITIVE_INFINITY){return "Infinity"}
 
     if(decimal.gte(1e4)){

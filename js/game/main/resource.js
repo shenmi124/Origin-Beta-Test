@@ -36,7 +36,7 @@ var MainResource = {
         gainTooltip(){return '食用'},
         tooltip(){return '在这样荒芜的地方植物确实是不常见的东西'},
         unlockAction(){
-            addLog('食物帮助你更好的探索')
+            addLog('你找到了一些食物')
         },
         research(){return n(1)},
         unlocked(){return getResourceUnlocked('food')},

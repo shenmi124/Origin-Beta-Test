@@ -18,9 +18,9 @@ function mainLoad(){
 }
 
 function baseLoad(){
-	let resourceStr = '<a style="font-size: 12px; color: #666">行动效率:<span id="actionEfficient"></span>%</a><br><br><br>'
+	let resourceStr = '<tooltip '+tooltipLoad('actionEfficient','else',null)+'><a style="font-size: 12px; color: #666">行动效率</tooltip>: <span id="actionEfficient"></span></a><br><br><br>'
 	for(let i in main['resource']){
-		if(main['resource'][i]['newType']!=undefined){
+		if(main['resource'][i]['newType']!==undefined){
 			resourceStr += '<span id="'+i+'TypeID" style="color: #888; display: none"><br>'+main['resource'][i]['newType']()+'<br></span>'
 		}
 		resourceStr += `<a id=`+i+`LoadResource></a>`
@@ -33,7 +33,7 @@ function baseLoad(){
 
 	let actionStr = ''
 	for(let i in main['action']){
-		actionStr += '<a id='+i+'LoadAction></a>'
+		actionStr += '<a style="transition-duration: 1s;" id='+i+'LoadAction></a>'
 	}
 	getByID('actionLoadID',actionStr)
 	for(let i in main['action']){
@@ -43,7 +43,7 @@ function baseLoad(){
 
 	let buildingStr = ''
 	for(let i in main['building']){
-		buildingStr += '<a id='+i+'LoadBuilding></a>'
+		buildingStr += '<a style="transition-duration: 1s;" id='+i+'LoadBuilding></a>'
 	}
 	getByID('buildingLoadID',buildingStr)
 	for(let i in main['building']){
@@ -53,7 +53,7 @@ function baseLoad(){
 
 	let craftStr = ''
 	for(let i in main['craft']){
-		craftStr += '<a id='+i+'LoadCraft></a>'
+		craftStr += '<a style="transition-duration: 1s;" id='+i+'LoadCraft></a>'
 	}
 	getByID('craftLoadID',craftStr)
 	for(let i in main['craft']){
@@ -101,7 +101,7 @@ function baseLoad(){
 }
 
 function gameLoad(){
-	gameStage(null)
+	getStage(null)
 }
 
 let gameLoading = function(){

@@ -13,7 +13,7 @@ function getBr(){
 		right = 475-differ
 	}
 	document.getElementById('midColumn').style.width = Math.max(mid, 2)*206+'px'
-	document.getElementById('rightColumn').style.width = right+'px'
+	document.body.style.setProperty('--rightColumnWidth', right + 'px');
 
 	for(let maini in mainTab){
 		let br = -1
@@ -38,7 +38,11 @@ function getBr(){
 }
 
 function systemDiff(){
-	getByID('actionEfficient',formatScientific(n(actionEfficient()).mul(100),1))
+	let color = ''
+	if(n(actionEfficient()).lt(1)){
+		color = 'red'
+	}
+	getByID('actionEfficient','<span style="color: '+color+'">'+formatScientific(n(actionEfficient()).mul(100),1)+'%</span>')
 }
 
 function dataDiff(){

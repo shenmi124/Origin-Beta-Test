@@ -1,37 +1,25 @@
-let log = ''
-let logTime = n(0)
-let logRealTime = n(0)
-let logTick = n(0)
-let logID = n(0)
+let logQueue = []
+let logTimes = 0
+let logComplete = 0
 
 function addLog(id,color="#000"){
-    log = '<div class="logTimes" style="color: '+color+'; transition-duration: 1s; opacity: 1;" id="logTimes'+logID+'"><span style="padding: 0px 0px 2px 0px; font-size: 14px;">'+id+'<br></span></div>'+log
-    logTime = logTime.add(1)
-    logID = logID.add(1)
-    
-    logTick = logTick.add(20)
-    insLog()
+    logQueue.push(
+        '<div class="logTimes" style="color: '+color+'; transition-duration: 1s; opacity: 0;" id="logTimes'+logTimes+'"><span style="padding: 0px 0px 2px 0px; font-size: 14px;">'+id+'<br></span></div><br>'
+    )
+    logTimes += 1
 }
 
 function insLog(){
-    logRealTime = logRealTime.add(n(1).mul(diff)).min(logTime)
-    logTick = logTick.add(n(20).mul(diff))
-    if(logTick.gte(20)){
-        logTick = n(0)
-
-        getByID('logLoadID',log)
-        for(let i = logRealTime.floor();n(i).lt(logTime);i++){
-            document.getElementById('logTimes'+i).style.opacity = 0
-            document.getElementById('logTimes'+i).style.display = 'none'
-        }
-        const times = logRealTime.floor()
-        if(document.getElementById('logTimes'+times)!==null){
-            document.getElementById('logTimes'+times).style.display = ''
-            setTimeout(function(){
-                    document.getElementById('logTimes'+times).style.opacity = 1
-            },100)
-        }
+    if(logQueue[0]!==undefined){
+        misByID('logLoadID',logQueue[0])
+        document.getElementById('logTimes'+logComplete).style.opacity = 0
+        const times = logComplete
+        setTimeout(function(){
+            document.getElementById('logTimes'+times).style.opacity = 1
+        },100)
+        logComplete += 1
+        logQueue.splice(0, 1)
     }
 }
 
-setInterval(insLog, 50)
+setInterval(insLog, 500)

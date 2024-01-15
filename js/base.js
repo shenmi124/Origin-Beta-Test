@@ -10,6 +10,11 @@ function addByID(id,id2){
 	document.getElementById(id).innerHTML += id2;
 }
 
+function misByID(id,id2){
+	document.getElementById(id).innerHTML = id2 + document.getElementById(id).innerHTML;
+}
+
+
 function getTooltipDoc(id){
 	document.getElementById('tooltip').innerHTML = id;
 }
@@ -34,11 +39,15 @@ function removeCss(id,id2){
 	document.getElementById(id).classList.remove(id2)
 }
 
-function unlockedLoad(id,unlocked,type=''){
+function unlockedLoad(id,unlocked){
 	if(unlocked){
-		document.getElementById(id).style.display = type
+		document.getElementById(id).style.display = ''
+        setTimeout(function(){
+            document.getElementById(id).style.opacity = 1
+        },100)
 	}else{
 		document.getElementById(id).style.display = 'none'
+		document.getElementById(id).style.opacity = 0
 	}
 }
 

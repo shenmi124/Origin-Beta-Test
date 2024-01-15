@@ -7,4 +7,7 @@
 }
 
 .logTimes {
+    width: var(--rightColumnWidth);
+    flex-wrap: wrap;
+    display: inline-flex;
 }
