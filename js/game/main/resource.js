@@ -1,11 +1,17 @@
 var MainResource = {
+    explore:{
+        name(){return i18n("resource.explore")},
+        color(){return '#2ca02c'},
+        gain(){return n(0)},
+        mulResearch(){return n(1)},
+        unlocked(){return player.resource.explore.gte(1000)},
+    },
     dirt:{
         name(){return i18n("resource.dirt")},
         color(){return 'rgb(150, 108, 74)'},
         max(){return n(30)},
         gain(){return n(0)},
         mulResearch(){return n(1)},
-        research(){return n(0.5)},
         unlocked(){return true},
     },
     wood:{
@@ -14,7 +20,6 @@ var MainResource = {
         max(){return n(30)},
         gain(){return n(0)},
         mulResearch(){return n(1)},
-        research(){return n(0.5)},
         unlocked(){return getResourceUnlocked('wood') && false},
     },
     stone:{

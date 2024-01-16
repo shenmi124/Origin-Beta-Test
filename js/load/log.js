@@ -7,6 +7,9 @@ function addLog(id,color="#000"){
         '<div class="logTimes" style="color: '+color+'; transition-duration: 1s; opacity: 0;" id="logTimes'+logTimes+'"><span style="padding: 0px 0px 2px 0px; font-size: 14px;">'+id+'<br></span></div><br>'
     )
     logTimes += 1
+    if(logQueue[0]==undefined){
+        insLog()
+    }
 }
 
 function insLog(){

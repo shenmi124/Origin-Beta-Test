@@ -15,7 +15,8 @@ let language = {
             "mainButton.research": "研究",
             "mainButton.craft": "制作",
             "mainButton.setting": "设置",
-
+            
+            "resource.explore": "探索",
             "resource.dirt": "泥土",
             "resource.wood": "木材",
             "resource.food": "食物",

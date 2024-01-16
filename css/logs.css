@@ -4,6 +4,7 @@
     overflow-x: auto;
     overflow-y: auto;
     text-align: left;
+    text-wrap: balance;
 }
 
 .logTimes {

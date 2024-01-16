@@ -7,9 +7,13 @@ function componentAction(id){
 }
 
 function componentBuilding(id){
+    let number = `(`+player['building'][id]+`)`
+    if(main['building'][id]['instant']!==undefined){
+        number = main['building'][id]['instant']() ? `` : `(`+player['building'][id]+`)`
+    }
     getByID(id+"LoadBuildingID",`
     <tooltip `+tooltipLoad(id,'TooltipLoadBuilding')+`>
-        <button id="`+id+`BuildingButtonID" onclick="Build('`+id+`')">`+main['building'][id]['name']()+`(`+player['building'][id]+`)</button>
+        <button id="`+id+`BuildingButtonID" onclick="Build('`+id+`')">`+main['building'][id]['name']()+number+`</button>
     </tooltip>
     `)
 

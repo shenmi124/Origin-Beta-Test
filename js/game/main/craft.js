@@ -6,7 +6,7 @@ let MainCraft = {
             dirt:{
                 probability(){return n(100)},
                 base(){return n(0.75)},
-                float(){return n(0.75)},
+                float(){return n(1.5)},
                 unlocked(){return true},
             },
         },
