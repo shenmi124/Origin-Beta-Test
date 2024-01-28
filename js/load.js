@@ -1,9 +1,9 @@
-function mainLoad(){
+function loadMain(){
 	let buttonStr = ''
 	for(let i in mainButton){
-		buttonStr += `<span id="`+i+`MainTabID" class="maintab" onclick="showTab('`+i+`')">`+mainButton[i]['name']()+`</span>`
+		buttonStr += `<span id="`+i+`MainTabID" class="maintab `+i+`" onclick="showTab('`+i+`')">`+mainButton[i]['name']()+`</span>`
 	}
-	buttonStr += `<div style="border-top: 1px solid #000; margin-top: 10px"></div>`
+	buttonStr += `<div style="border-top: 1px solid #000; margin-top: 5px"></div>`
 	getByID('loadMainButton',buttonStr)
 	document.getElementById("mainMainTabID").style.color = 'rgb(0, 123, 255)'
 	document.getElementById("mainMainTabID").style.opacity = '0.8'
@@ -12,12 +12,12 @@ function mainLoad(){
 	for(let i in mainTab){
 		let text = '<a style="font-size: 14px;" id="'+mainTab[i]['id']()+'TextID"></a>'
 		let load = '<a id="'+mainTab[i]['id']()+'LoadID"></a>'
-		mainStr += text+load+'<br><br>'
+		mainStr += text+load
 	}
 	getByID('loadMain',mainStr)
 }
 
-function baseLoad(){
+function loadBase(){
 	let resourceStr = '<tooltip '+tooltipLoad('actionEfficient','else',null)+'><a style="font-size: 12px; color: #666">行动效率</tooltip>: <span id="actionEfficient"></span></a><br><br><br>'
 	for(let i in main['resource']){
 		if(main['resource'][i]['newType']!==undefined){
@@ -100,26 +100,34 @@ function baseLoad(){
 	canDraw = true
 }
 
-function gameLoad(){
-	getStage(null)
-}
-
-let gameLoading = function(){
-	mainLoad()
-
-	baseLoad()
-
+function loadGame(){
 	Close('tooltip')
 	Close('datePage')
 
-	getByID("countingMethodID", player.setting.countingMethod)
-
-	booleanSetting('mouseSetting')
-	booleanSetting('mouseSetting')
-	let set = ['autoSave','mouseSetting']
-	for(i in set){
-		getByID(set[i]+'ID',player['setting'][set[i]] ? '开启' : '关闭')
+	getStage(null)
+	if(player.data.stage<=2){
+		addLog('这是一个新的存档,要<u style="color: #000" onclick="importSave()">导入</u>吗?','#888')
 	}
 
-	gameLoad()
+    for(let i in main['action']){
+        if(main['action'][i]['cooldown']!==undefined){
+			player.action[i+'Cooldown'] = n(main['action'][i]['cooldown']())
+        }
+    }
+    for(let i in main['craft']){
+        if(main['craft'][i]['cooldown']!==undefined){
+			player.craft[i+'Cooldown'] = n(main['craft'][i]['cooldown']())
+        }
+    }
+}
+
+let loadingGame = function(){
+	calcPlayer()
+
+	loadMain()
+	loadBase()
+
+	loadGame()
+	
+	loadSetting()
 }

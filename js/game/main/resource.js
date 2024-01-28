@@ -1,40 +1,65 @@
 var MainResource = {
     explore:{
-        name(){return i18n("resource.explore")},
+        name(){return "探索"},
         color(){return '#2ca02c'},
         gain(){return n(0)},
-        mulResearch(){return n(1)},
-        unlocked(){return player.resource.explore.gte(1000)},
+        unlocked(){return false},
+    },
+    citizens:{
+        name(){return "居民"},
+        color(){return '#000'},
+        max(){return n(0)},
+        effect: {
+            gain: {
+                ideas(){return n(1)},
+                food(){return n(-0.25)}
+            }
+        },
+        unlockAction(){
+            getStage(3)
+            addLog('你招揽到了第一批原住民,看起来他们和普通的人类没什么区别,你也能与他们正常交流')
+            addLog('检查你的村庄选项卡','#888')
+        },
+        unlocked(){return getResourceUnlocked('citizens')},
+    },
+    ideas:{
+        name(){return "思想"},
+        color(){return 'rgb(186, 0, 192)'},
+        gain(){return n(0)},
+        tooltip(){return '默默收集散落的想法...'},
+        unlocked(){return getResourceUnlocked('citizens')},
     },
     dirt:{
-        name(){return i18n("resource.dirt")},
+        name(){return "泥土"},
         color(){return 'rgb(150, 108, 74)'},
         max(){return n(30)},
         gain(){return n(0)},
-        mulResearch(){return n(1)},
         unlocked(){return true},
     },
     wood:{
-        name(){return i18n("resource.wood")},
-        color(){return 'rgb(193 65 0)'},
+        name(){return "木材"},
+        color(){return 'rgb(180,144,90)'},
         max(){return n(30)},
         gain(){return n(0)},
-        mulResearch(){return n(1)},
-        unlocked(){return getResourceUnlocked('wood') && false},
+        unlockAction(){
+            addLog('但起码你可以确定这里是有木头的')
+            addLog('可见木材真的很稀有')
+            addLog('在这样的平原上你几乎找不到树')
+        },
+        unlocked(){return getResourceUnlocked('wood')},
     },
     stone:{
-        name(){return i18n("resource.stone")},
+        name(){return "石料"},
         color(){return '#666'},
         max(){return n(50)},
         gain(){return n(0)},
-        research(){return n(5)},
         unlockAction(){
             addLog('你从泥土中发现了一些石子')
         },
         unlocked(){return getResourceUnlocked('stone')},
     },
     food:{
-        name(){return '食物'},
+        name(){return "食物"},
         color(){return '#cf7004'},
         max(){return n(20)},
         gain(){return n(-0.2)},
@@ -46,53 +71,8 @@ var MainResource = {
         research(){return n(1)},
         unlocked(){return getResourceUnlocked('food')},
     },
-    coal:{
-        name(){return i18n("resource.coal")},
-        color(){return '#000'},
-        max(){return n(30)},
-        gain(){return n(0)},
-        research(){return n(10)},
-        unlockAction(){
-            addLog('你发现了一些煤炭','#000')
-        },
-        unlocked(){return getResourceUnlocked('coal')},
-    },
-    copper:{
-        name(){return i18n("resource.copper")},
-        color(){return 'rgb(256, 174, 58)'},
-        max(){return n(30)},
-        gain(){return n(0)},
-        research(){return n(20)},
-        unlockAction(){
-            addLog('你发现了一些金属','#000')
-        },
-        unlocked(){return getResourceUnlocked('copper')},
-    },
-    tin:{
-        name(){return i18n("resource.tin")},
-        color(){return '#999'},
-        max(){return n(30)},
-        gain(){return n(0)},
-        research(){return n(50)},
-        unlockAction(){
-            addLog('你发现了一些金属','#000')
-        },
-        unlocked(){return getResourceUnlocked('tin')},
-    },
-    gem:{
-        name(){return i18n("resource.gem")},
-        Class(){return 'box'},
-        color(){return '#15a1a9'},
-        max(){return n(5)},
-        gain(){return n(0)},
-        research(){return n(5)},
-        unlockAction(){
-            addLog('你发现了一种昂贵的宝石,或许可以用来贸易','#000')
-        },
-        unlocked(){return getResourceUnlocked('gem')},
-    },
+
     researchPoints:{
-        newType(){return '研究资源'},
         name(){return '科学'},
         color(){return 'rgb(74, 161, 254)'},
         max(){return researchRequire(player.research.conducted)},

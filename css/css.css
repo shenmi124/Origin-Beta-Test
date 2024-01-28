@@ -25,7 +25,7 @@ button {
     border-radius: 5px;
     border: 1px solid rgb(255, 255, 255);
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 button:hover {
@@ -116,27 +116,33 @@ tooltip {
 }
 
 #rightColumn {
-    width: var(--rightColumnWidth);
+    width: 450px;
     overflow-y: auto;
     transition-duration: 0.1s;
 }
 
 #game {
+    width: calc(100% - 16px);
     height: calc(100% - 63px);
     position: absolute;
     margin: 0 auto;
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .maintab {
     transition-duration: 0.2s;
-    padding: 12px;
-    cursor: pointer;
+    padding-right: 8px;
     font-size: 17px;
 }
 
 .maintab:hover {
     opacity: 0.8;
+}
+
+.maintab.setting {
+    float: right;
+    padding-right: 0px;
+    color: #888;
 }
 
 .canvas {

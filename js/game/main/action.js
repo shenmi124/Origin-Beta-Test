@@ -23,7 +23,9 @@ var MainAction = {
                         if(!main['action']['explore']['gain'][i]['instant']()){
                             let gain = n(main['action']['explore']['gain'][i]['base']()).add(n(Math.random()).mul(main['action']['explore']['gain'][i]['float']())).ceil()
                             player['action']['explore'][i] = player['action']['explore'][i].add(gain).min(main['craft'][i]['max']())
-                            player['action']['explore'][i+'Fined'] = true
+                            if(!player['action']['explore'][i+'Fined']){
+                                player['action']['explore'][i+'Fined'] = true
+                            }
                             find.push(i)
                         }else{
                             if(!player['action']['explore'][i+'Fined']){
@@ -43,14 +45,9 @@ var MainAction = {
             }
             if(special[0]!==undefined){
                 for(let i in special){
-                    if(special[i]=='colony'){
+                    if(special[i]=='civics'){
                         addLog('你找到了一片平坦的地方,这里貌似挺适合当做栖息地的')
                         addLog('你决定在此定居')
-                    }
-                    if(special[i]=='city'){
-                        addLog('出于某些原因,你并没有在此定居,而是在继续进行探索')
-                        addLog('不知走了多久,一座城邦映入你的眼帘...')
-                        addLog('守卫:我们这不养闲人','#222')
                     }
                 }
             }
@@ -58,14 +55,38 @@ var MainAction = {
                 addLog('*什么都没找到*','#888')
             }
 
-            player.resource.explore = player.resource.explore.add(n(Math.random() * 100).mul(actionEfficient()))
+            player.resource.explore = player.resource.explore.add(n(Math.random() * 100))
         },
         gain:{
+            citizens: {
+                name(){return '原住民'},
+                instant(){return false},
+                unlocked(){return player.building.civics.gte(1)},
+                probability(){return n(10)},
+                base(){return n(1)},
+                float(){return n(0)},
+            },
             collect: {
                 name(){return '泥土'},
                 instant(){return false},
                 unlocked(){return true},
                 probability(){return n(30)},
+                base(){return n(1)},
+                float(){return n(2)},
+            },
+            stone: {
+                name(){return '露天石料'},
+                instant(){return false},
+                unlocked(){return player.building.civics.gte(1)},
+                probability(){return n(5)},
+                base(){return n(1)},
+                float(){return n(2)},
+            },
+            drop: {
+                name(){return '树枝'},
+                instant(){return false},
+                unlocked(){return true},
+                probability(){return n(5)},
                 base(){return n(1)},
                 float(){return n(2)},
             },
@@ -77,18 +98,20 @@ var MainAction = {
                 base(){return n(1)},
                 float(){return n(2)},
             },
+            beast: {
+                name(){return '野兽'},
+                instant(){return false},
+                unlocked(){return player.building.civics.gte(1)},
+                probability(){return n(5)},
+                base(){return n(2)},
+                float(){return n(6)},
+            },
 
-            colony: {
+            civics: {
                 name(){return '定居地'},
                 instant(){return true},
                 unlocked(){return player.craft.harvestTimes.gte(1)},
                 probability(){return n(20)},
-            },
-            city: {
-                name(){return '进入城邦'},
-                instant(){return true},
-                unlocked(){return player.action.explore.colonyFined && player.resource.dirt.gte(10)},
-                probability(){return n(5)},
             },
         },
         tooltip(){
@@ -99,13 +122,20 @@ var MainAction = {
             return '寻找可用资源<br>即使没有工具与食物走不了多远'+con
         },
         data:{
+            citizens(){return n(0)},
+            citizensFined(){return false},
             collect(){return n(0)},
             collectFined(){return false},
+            stone(){return n(0)},
+            stoneFined(){return false},
             harvest(){return n(0)},
             harvestFined(){return false},
+            drop(){return n(0)},
+            dropFined(){return false},
+            beast(){return n(0)},
+            beastFined(){return false},
 
-            colonyFined(){return false},
-            cityFined(){return false},
+            civicsFined(){return false},
         },
         cooldown(){return n(7.5)},
         unlocked(){return player.data.stage.gte(1)},

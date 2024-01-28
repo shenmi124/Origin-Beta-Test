@@ -1,6 +1,6 @@
 function calcPlayer(){
     dataLoader()
-    baseLoader()
+    loaderBase()
     autoLoader()
     gameLoader()
 }
@@ -17,7 +17,7 @@ function dataLoader(){
 	loader(['setting','language'],undefined)
 }
 
-function baseLoader(){
+function loaderBase(){
     loader(['research','conducted'],undefined)
 
     loader(['events','time'],n(0))
@@ -56,6 +56,15 @@ function autoLoader(){
             }
         }
     }
+
+    for(let i in settings){
+        if(settings[i]['type']()=="boolean"){
+            loader(['setting',i],settings[i]['boolean']())
+        }
+        if(settings[i]['type']()=="choose"){
+            loader(['setting',i],'default')
+        }
+	}
 
     for(let i in mainResearch['main']){
 		loader(['research',i],n(0))

@@ -54,10 +54,12 @@ function unlockedLoad(id,unlocked){
 function showTab(id){
 	for(let i in mainButton){
 		Close('tab_'+i)
-		document.getElementById(i+"MainTabID").style.color = '#000'
+		document.getElementById(i+"MainTabID").style.color = ''
 		document.getElementById(i+"MainTabID").style.opacity = ''
+		document.getElementById(i+"MainTabID").style.cursor = 'pointer'
 	}
 	Open('tab_'+id)
 	document.getElementById(id+"MainTabID").style.color = 'rgb(0, 123, 255)'
 	document.getElementById(id+"MainTabID").style.opacity = '0.8'
+	document.getElementById(id+"MainTabID").style.cursor = 'default'
 }

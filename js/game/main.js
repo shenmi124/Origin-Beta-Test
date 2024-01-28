@@ -1,13 +1,16 @@
 var mainButton = {
     main:{
-        name(){return i18n('mainButton.main')},
+        name(){return "主页"},
+    },
+    civics:{
+        name(){return '村庄'},
     },
     research:{
-        name(){return i18n('mainButton.research')},
+        name(){return "研究"},
         unlocked(){return false}
     },
     setting:{
-        name(){return i18n('mainButton.setting')},
+        name(){return "设置"},
     },
 }
 
@@ -32,4 +35,8 @@ var main = {
     action: MainAction,
     building: MainBuilding,
     craft: MainCraft
+}
+
+var civics = {
+    employed: CivicsEmployed,
 }

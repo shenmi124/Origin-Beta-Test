@@ -1,2 +1,1 @@
-load('Origin')
-calcPlayer()
+load()

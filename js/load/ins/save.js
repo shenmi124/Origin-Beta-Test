@@ -1,5 +1,7 @@
 ﻿var player = {};
 var saveObj = {}//saveObj:存档字符串解密+JSON.parse(saveObj)后的结果.请将导入或从localStorage中读取的字符串在*解密和JSON.parse(saveObj)之后*放在这里.当然了,你也可以在这个后边加个等号设置默认值.
+var thisKey = 'OriginBeta'
+
 function n(number){//对于不同的数字库,请改变该函数!
     return new Decimal(number);
 };
@@ -61,12 +63,12 @@ function loader(place,item){
 }
 
 //本地存储player  key:存档id.以这个为索引读取/存储存档.请勿使用过于简单的key,防止混淆.多个key可以形成多存档机制.
-function save(key){
+function save(key=thisKey){
     let saveStr = LZString.compressToBase64(JSON.stringify(player));
     localStorage.setItem(key,saveStr)
 }
 //读取+解密player   会自动存储于saveObj中,可以直接跟着loader.
-function load(key){
+function load(key=thisKey){
     if(LZString.decompressFromBase64(localStorage.getItem(key))[0] != "{"){return}
     try{
         saveObj = JSON.parse(LZString.decompressFromBase64(localStorage.getItem(key)))
@@ -86,9 +88,10 @@ function exportSave(){
 }
 function importSave(saveStr = prompt("输入存档")){
     saveObj = JSON.parse(LZString.decompressFromBase64(saveStr))
+    localStorage.setItem(key,saveObj)
     window.location.reload()
 }
-function hardReset(key){
+function hardReset(key=thisKey){
     player = null;
     save(key);
     window.location.reload();

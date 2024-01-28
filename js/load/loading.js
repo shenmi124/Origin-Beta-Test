@@ -2,7 +2,7 @@ document.onreadystatechange=function(){
     if (document.readyState=="complete"){
         loadingFade();
     }else{
-        gameLoading()
+        loadingGame()
     }
 }
 

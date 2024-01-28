@@ -4,17 +4,11 @@ var offlineTime=new Date()
 var diff=0
 
 function getBr(){
-	let left = window.innerWidth-document.getElementById("leftColumn").offsetWidth-36
-	let right = 475
-	let mid = Math.floor((left-right)/206)
-	if(mid <= 2){
-		mid = 2
-		let differ = (mid*206)-(left-right)
-		right = 475-differ
-	}
-	document.getElementById('midColumn').style.width = Math.max(mid, 2)*206+'px'
-	document.body.style.setProperty('--rightColumnWidth', right + 'px');
+	let width = document.getElementById('game').offsetWidth-document.getElementById('leftColumn').offsetWidth-document.getElementById('rightColumn').offsetWidth-16
+	let mid = Math.floor(width/206)
+	document.getElementById('midColumn').style.width = mid*206 + 'px'
 
+	let u = false
 	for(let maini in mainTab){
 		let br = -1
 		for(let i in main[maini]){
@@ -24,7 +18,7 @@ function getBr(){
 			}
 			if(unlocked){
 				br += 1
-				getByID(mainTab[maini]['id']()+"TextID",mainTab[maini]['name']()+'<br>')
+				getByID(mainTab[maini]['id']()+"TextID",(u ? '<br><br>' : '')+mainTab[maini]['name']()+'<br>')
 			}
 			if(br%mid === 0 && br!=0){
 				document.getElementById(maini+i+'LoadBrID').style.display = ''
@@ -32,6 +26,7 @@ function getBr(){
 				document.getElementById(maini+i+'LoadBrID').style.display = 'none'
 			}
 		}
+		u = true
 	}
 	
 	document.getElementById('loadMainResearch').style.height = window.innerHeight-100 + 'px'

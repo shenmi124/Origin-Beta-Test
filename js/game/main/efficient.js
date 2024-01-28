@@ -8,7 +8,7 @@ let efficient = {
         home:{
             name(){return '缺少定居地'},
             effect(){return n(-25)},
-            active(){return player.building.colony.eq(0) && player.building.city.eq(0)}
+            active(){return player.building.civics.eq(0)}
         }
     }
 }

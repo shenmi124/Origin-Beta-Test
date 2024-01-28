@@ -4,11 +4,11 @@ function getResourceTitleID(id,res_name){
 		Class = main['resource'][res_name]['Class']()
 	}
 	getByID(id+'TitleID',`
-		<div style="height:1px"></div>
+		<div style="height: 2px"></div>
 		<div class="borderMax" id="`+res_name+`BorderMaxID" style="background: #999;"></div>
 		<tooltip onmouseenter='mouseLoad("`+res_name+`","TooltipLoadResource")' onmouseleave='document.getElementById("tooltip").style.display = "none";window.clearInterval(tooltipSel)' style="cursor: help;">
 			<div class="resource-title resource-name `+Class+`" style="color: `+colorText(res_name)[0]+`; position: relative;">
-			`+i18n('resource.'+res_name)+`
+			`+i18n(main['resource'][res_name]['name']())+`
 		</tooltip></div>
 		<div class="resource-title border" id="`+res_name+`BorderID" style="background: `+colorText(res_name)[0]+`; z-index: -1; transition-duration: 0.2s; clip-path: inset(0% 0% 0% 0%);"></div>`
 	)
@@ -25,9 +25,9 @@ function getResourceDoc(id){
 	if(main['resource'][id]['gain']!==undefined){
 		if(!getResourceBaseGain(id).eq(0)){
 			if(getResourceBaseGain(id).gt(0)){
-				getByID(id+'GainID','(＋'+format(getResourceBaseGain(id))+' /s)')
+				getByID(id+'GainID','(+ '+format(getResourceBaseGain(id))+' /s)')
 			}else{
-				getByID(id+'GainID','(－'+format(n(getResourceBaseGain(id)).abs())+' /s)')
+				getByID(id+'GainID','(- '+format(n(getResourceBaseGain(id)).abs())+' /s)')
 			}
 		}
 	}
@@ -36,8 +36,8 @@ function getResourceDoc(id){
 function getResourceID(res_name, id = res_name+'LoadResource'){
 	getByID(id+'ID',`
 		<div class="resource-title" id="`+res_name+`ID" style="width: 90px;"></div>
-		<div class="resource-title" style="width: 0px;">
-			<div class="resource-title" style="width: 0px; color: #888" id="`+res_name+`slashID">/</div>
+		<div class="resource-title" style="width: 12px;">
+			<div class="resource-title" style="width: 12px; color: #888" id="`+res_name+`slashID">/</div>
 		</div>
 		<div class="resource-title" style="width: 90px;">
 			<div class="resource-title" style="color: #888; width: 90px;" id="`+res_name+`MaxID"></div>

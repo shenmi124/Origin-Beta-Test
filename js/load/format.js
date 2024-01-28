@@ -49,7 +49,7 @@ function format(decimal, precision = 2, small) {
     if(decimal.sign<0){return "-"+format(decimal.neg(), precision, small)}
     if(decimal.mag == Number.POSITIVE_INFINITY){return "Infinity"}
 
-    if(player.setting.countingMethod=='scientific'){
+    if(player.setting.notation=='scientific'){
         if(decimal.gte(1e4)){
             return exponentialFormat(decimal, precision)
         }else if(decimal.gte(0.0001) || !small){
@@ -59,13 +59,13 @@ function format(decimal, precision = 2, small) {
         }else if(decimal.lt(0.01)){
             return '<0.01'
         }
-    }else if(player.setting.countingMethod=='standard'){
+    }else if(player.setting.notation=='default'){
         let e = n(decimal).log10().ceil()
         let log = n(decimal).log10()
         let m = n(decimal).div(Decimal.pow(10, e))
         let max = 1
         let txt = ''
-        let txtnum = ['','k','M','T','Qa','Qi','Sx','Sp','Oc','No','De','UnD','DD','TD','QaD','QiD','SxD','SpD','OcD','NoD','VT','UVT','DuT']
+        let txtnum = ['','K','M','T','Qa','Qi','Sx','Sp','Oc','No','De','UnD','DD','TD','QaD','QiD','SxD','SpD','OcD','NoD','VT','UVT','DuT']
         for(let i=1;i<=max;i++){   
             if(log >= (i*3)){
                 max += 1
@@ -85,7 +85,7 @@ function format(decimal, precision = 2, small) {
         if(decimal)
 
         return n(m).mul(n(10).pow(n(e).sub(n(max).sub(1).mul(3)))).toFixed(3) + txt
-    }else if(player.setting.countingMethod=='engineering'){
+    }else if(player.setting.notation=='engineering'){
         let e = n(decimal).log10().ceil()
         let log = n(decimal).log10()
         let m = n(decimal).div(Decimal.pow(10, e))
@@ -113,7 +113,7 @@ function format(decimal, precision = 2, small) {
         }
 
         return n(m).mul(n(10).pow(n(e).sub(n(max).sub(1).mul(3)))).toFixed(2) + show
-    }else if(player.setting.countingMethod=='letter'){
+    }else if(player.setting.notation=='letter'){
         let e = n(decimal).log10().ceil()
         let log = n(decimal).log10()
         let m = n(decimal).div(Decimal.pow(10, e))

@@ -4,7 +4,6 @@
 	<title>起源</title>
 	<link rel="icon" type="image/png" sizes="64x64" href="logo.png">
 	<meta charset="utf-8">
-	
 
 	<script src="js/game/main/action.js"></script>
 	<script src="js/game/main/building.js"></script>
@@ -12,6 +11,8 @@
 	<script src="js/game/main/research.js"></script>
 	<script src="js/game/main/craft.js"></script>
 	<script src="js/game/main/efficient.js"></script>
+
+	<script src="js/game/civics/citizens.js"></script>
 	
 	<script src="js/game/player.js"></script>
 	<script src="js/game/main.js"></script>
@@ -38,12 +39,11 @@
 	<script src="js/load/format.js"></script>
 
 	<script src="js/game/function/tooltip.js"></script>
-	<script src="js/game/function/buildingSystem.js"></script>
-	<script src="js/game/function/resourceSystem.js"></script>
-	<script src="js/game/function/researchSystem.js"></script>
-	<script src="js/game/function/actionSystem.js"></script>
-	<script src="js/game/function/craftSystem.js"></script>
 	<script src="js/game/function/events.js"></script>
+	<script src="js/game/function/resourceSystem.js"></script>
+	<script src="js/game/function/mainSystem.js"></script>
+	<script src="js/game/function/civicsSystem.js"></script>
+	<script src="js/game/function/researchSystem.js"></script>
 
 	<script src="js/setting/pointer.js"></script>
 	<script src="js/setting/setting.js"></script>
@@ -68,7 +68,7 @@
 	</div>
 	<canvas class="canvas"></canvas>
 	<div style="visibility: hidden;">
-		<a target="_blank" class="version">v0.5.5</a>
+		<a target="_blank" class="version">v0.6</a>
 		<a href="https://afdian.net/@Mysterious124" target="_blank" class="donate">点我捐助</a>
 	</div>
 	<div id="game">
@@ -80,19 +80,13 @@
 				<a id="loadMainButton"></a>
 			</mainTab>
 			<mainTab id="tab_setting" style="display: none;">
-				<br>
-				<button onclick="save('Origin');saveTime = n(60)" class="settingBto">保存</button><br>
-				<button onclick="booleanSetting('autoSave')" class="settingBto">自动保存:<a id="autoSaveID"></a> (<a id="autoSaveTimeID"></a>)</button><br>
-				<button onclick="exportSave('Origin')" id="export" class="settingBto">导出</button><br>
-				<button onclick="importSave()" id="import" class="settingBto">导入</button><br>
-				<button onclick="if(!!confirm('你确定要硬重置吗?这样你将失去一切!!!')){if(!!confirm('这个存档将永远失去!(很长时间!)')){hardReset('Origin')}}" id="export"  class="settingBto">硬重置</button><br>
-				<button onclick="countingMethod()" class="settingBto">计数法:<a id="countingMethodID"></a></button><br>
-				<button onclick="booleanSetting('mouseSetting')" class="settingBto">优化鼠标:<a id="mouseSettingID"></a></button><br>
 			</mainTab>
 			<mainTab id="tab_main">
 				<br>
 				<a id="loadMain"></a>
 			</mainTab>
+			<mainTab id="tab_civics">
+				<a id="loadCivics">
 			<mainTab id="tab_research" style="display: none;">
 				<a id="loadMainResearch" style="display: flow; overflow-y: scroll"></a>
 			</mainTab>

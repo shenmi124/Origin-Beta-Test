@@ -25,129 +25,59 @@ function mouseLoad(id,id2){
 
 function tooltip(id,id2){
 	if(id2=='TooltipLoadResource'){
-			let bas = ''
-			if(main['resource'][id]['tooltip']!=undefined){
-				bas = '<hr>'+main['resource'][id]['tooltip']()
+		let bas = ''
+		if(main['resource'][id]['tooltip']!=undefined){
+			bas = '<hr>'+main['resource'][id]['tooltip']()
+		}
+		let res = ''
+		if(main['resource'][id]['research']!=undefined){
+			if(false){
+				res += '<hr><span style="color:'+colorText('researchPoints')[0]+'">研究难度</span>: '+main['resource'][id]['research']()
 			}
-			let res = ''
-			if(main['resource'][id]['research']!=undefined){
-				if(false){
-					res += '<hr><span style="color:'+colorText('researchPoints')[0]+'">研究难度</span>: '+main['resource'][id]['research']()
+		}
+		let gain = ''
+		let cost = ''
+		let gainNumber = n(0)
+		let time = ''
+		if(main['resource'][id]['gain']!==undefined){
+			gainNumber = gainNumber.add(main['resource'][id]['gain']())
+			let now = tooltipU(gainNumber,id)
+			if(!gainNumber.eq(0)){
+				let gT = '基础'
+				let gN = n(main['resource'][id]['gain']()).gt(0) ? true : false
+				if(main['resource'][id]['gainTooltip']!==undefined){
+					gT = main['resource'][id]['gainTooltip']()
 				}
-			}
-			let gain = ''
-			let gainNumber = n(0)
-			let time = ''
-			if(main['resource'][id]['gain']!==undefined){
-				gainNumber = gainNumber.add(main['resource'][id]['gain']())
-				let now = tooltipU(gainNumber,id)
-				if(!gainNumber.eq(0)){
-					let gT = '基础'
-					let gN = n(main['resource'][id]['gain']()).gt(0) ? true : false
-					if(main['resource'][id]['gainTooltip']!==undefined){
-						gT = main['resource'][id]['gainTooltip']()
-					}
-					if(gN){
-						gain += `<left><span>
-							<div style="width: 160px; display: table-cell"><green>+</green></i> `+gT+`</div>
-							<div style="width: 160px; display: table-cell">+`+format(main['resource'][id]['gain']())+`</div>`+now+`
-						</span></left>`
-					}else{
-						gain = `<left><span style="color: red">
-							<div style="width: 160px; display: table-cell"><red>-</red> `+gT+`</div>
-							<div style="width: 160px; display: table-cell">`+format(main['resource'][id]['gain']())+`</div>`+now+`
-						</span></left>` + gain
-					}
-				}
-				for(let i in main['building']){
-					if(main['building'][i]['effect']!==undefined){
-						if(main['building'][i]['effect']['gain']!==undefined){
-							for(let ig in main['building'][i]['effect']['gain']){
-								if(id==ig && !n(main['building'][i]['effect']['gain'][ig]()).mul(player['building'][i]).eq(0)){
-									gainNumber = gainNumber.add(n(main['building'][i]['effect']['gain'][ig]()).mul(player['building'][i]))
-									now = tooltipU(gainNumber,id)
-									if(!gainNumber.eq(0)){
-										let gN = n(main['building'][i]['effect']['gain'][ig]()).mul(player['building'][i]).gt(0) ? true : false
-										if(gN){
-											gain += `<left><span>
-												<div style="width: 160px; display: table-cell"><green>+</green> `+main['building'][i]['name']()+`</div>
-												<div style="width: 160px; display: table-cell">+`+format(main['building'][i]['effect']['gain'][ig]())+` × `+formatWhole(player['building'][i])+`</div>`+now+`
-											</span></left>`
-										}else{
-											gain = `<left><span style="color: red">
-												<div style="width: 160px; display: table-cell"><green>+</green> `+main['building'][i]['name']()+`</div>
-												<div style="width: 160px; display: table-cell">+`+format(main['building'][i]['effect']['gain'][ig]())+` × `+formatWhole(player['building'][i])+`</div>`+now+`
-											</span></left>` + gain
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-
-				/*if(main['resource'][id]['mulResearch']!==undefined){
-					gainNumber = gainNumber.mul(main['resource'][id]['mulResearch']())
-					now = tooltipU(gainNumber,id)
-					if(!gainNumber.eq(0)){
-						gain += `<left><span>
-							<div style="width: 160px; display: table-cell"><i class="fa fa-flask"></i> 研究</div>
-							<div style="width: 160px; display: table-cell">×`+format(main['resource'][id]['mulResearch']())+`</div>`+now+`
-						</span></left>`
-					}
-				}*/
-
-				gain = "<hr><a style='font-size: 14px'>资源生产</a>" + gain
-
-				if(gainNumber.eq(0)){
-					gain = ''
-				}
-
-				if(main['resource'][id]['max']!==undefined){
-					time = '<hr>无法抵达上限'
-					if(player['resource'][id].gte(getResourceBaseMax(id))){
-						time = '<hr>已抵达上限'
-					}else if(main['resource'][id]['gain']!==undefined){
-						if(n(getResourceBaseGain(id)).gt(0)){
-							time = '<hr>'+formatTime(n(getResourceBaseMax(id)).sub(player['resource'][id]).div(getResourceBaseGain(id)))+'后抵达上限'
-						}else if(n(getResourceBaseGain(id)).lt(0) && !player['resource'][id].eq(0)){
-							time = '<hr>'+formatTime(player['resource'][id].div(getResourceBaseGain(id)).abs())+'后耗尽'
-						}
-					}
-				}
-			}
-			let max = ''
-			let maxNumber = n(0)
-			if(main['resource'][id]['max']!==undefined){
-				max += "<hr><a style='font-size: 14px'>资源储存</a>"
-				maxNumber = maxNumber.add(main['resource'][id]['max']())
-				let now = format(maxNumber)
-				if(maxNumber.eq(getResourceBaseMax(id))){
-					now = '<u>'+format(maxNumber)+'</u>'
+				if(gN){
+					gain += `<left><span>
+						<div style="width: 160px; display: table-cell"><green>+</green></i> `+gT+`</div>
+						<div style="width: 160px; display: table-cell">+`+format(main['resource'][id]['gain']())+`</div>`+now+`
+					</span></left>`
 				}else{
-					now = format(maxNumber)
-				}
-				if(!maxNumber.eq(0)){
-					max += `<left><span>
-						<div style="width: 160px; display: table-cell"><green>+</green> 基础</div>
-						<div style="width: 160px; display: table-cell">+`+format(main['resource'][id]['max']())+`</div>`+now+`
+					cost += `<left><span style="color: red">
+						<div style="width: 160px; display: table-cell"><red>-</red> `+gT+`</div>
+						<div style="width: 160px; display: table-cell">`+format(main['resource'][id]['gain']())+`</div>`+now+`
 					</span></left>`
 				}
-				for(let i in main['building']){
-					if(main['building'][i]['effect']!==undefined){
-						if(main['building'][i]['effect']['max']!==undefined){
-							for(let im in main['building'][i]['effect']['max']){
-								if(id==im && !n(main['building'][i]['effect']['max'][im]()).mul(player['building'][i]).eq(0)){
-									maxNumber = maxNumber.add(n(main['building'][i]['effect']['max'][im]()).mul(player['building'][i]))
-									if(maxNumber.eq(getResourceBaseMax(id))){
-										now = '<u>'+format(maxNumber)+'</u>'
+			}
+			for(let i in main['resource']){
+				if(main['resource'][i]['effect']!==undefined){
+					if(main['resource'][i]['effect']['gain']!==undefined){
+						for(let ig in main['resource'][i]['effect']['gain']){
+							if(id==ig && !n(main['resource'][i]['effect']['gain'][ig]()).mul(player['resource'][i]).eq(0)){
+								gainNumber = gainNumber.add(n(main['resource'][i]['effect']['gain'][ig]()).mul(player['resource'][i]))
+								now = tooltipU(gainNumber,id)
+								if(!gainNumber.eq(0)){
+									let gN = n(main['resource'][i]['effect']['gain'][ig]()).mul(player['resource'][i]).gt(0) ? true : false
+									if(gN){
+										gain += `<left><span>
+											<div style="width: 160px; display: table-cell"><green>+</green> `+main['resource'][i]['name']()+`</div>
+											<div style="width: 160px; display: table-cell">+`+format(main['resource'][i]['effect']['gain'][ig]())+` <a style="font-size: small">×</a> `+formatWhole(player['resource'][i])+`</div>`+now+`
+										</span></left>`
 									}else{
-										now = format(maxNumber)
-									}
-									if(!maxNumber.eq(0)){
-										max += `<left><span>
-											<div style="width: 160px; display: table-cell"><green>+</green> `+main['building'][i]['name']()+`</div>
-											<div style="width: 160px; display: table-cell">+`+format(main['building'][i]['effect']['max'][im]())+` × `+formatWhole(player['building'][i])+`</div>`+now+`
+										cost += `<left><span style="color: red">
+											<div style="width: 160px; display: table-cell">- `+main['resource'][i]['name']()+`</div>
+											<div style="width: 160px; display: table-cell">`+format(main['resource'][i]['effect']['gain'][ig]())+` <a style="font-size: small">×</a> `+formatWhole(player['resource'][i])+`</div>`+now+`
 										</span></left>`
 									}
 								}
@@ -155,32 +85,145 @@ function tooltip(id,id2){
 						}
 					}
 				}
-
-				if(maxNumber.eq(0)){
-					max = ''
+			}
+			for(let i in main['building']){
+				if(main['building'][i]['effect']!==undefined){
+					if(main['building'][i]['effect']['gain']!==undefined){
+						for(let ig in main['building'][i]['effect']['gain']){
+							if(id==ig && !n(main['building'][i]['effect']['gain'][ig]()).mul(player['building'][i]).eq(0)){
+								gainNumber = gainNumber.add(n(main['building'][i]['effect']['gain'][ig]()).mul(player['building'][i]))
+								now = tooltipU(gainNumber,id)
+								if(!gainNumber.eq(0)){
+									let gN = n(main['building'][i]['effect']['gain'][ig]()).mul(player['building'][i]).gt(0) ? true : false
+									if(gN){
+										gain += `<left><span>
+											<div style="width: 160px; display: table-cell"><green>+</green> `+main['building'][i]['name']()+`</div>
+											<div style="width: 160px; display: table-cell">+`+format(main['building'][i]['effect']['gain'][ig]())+` <a style="font-size: small">×</a> `+formatWhole(player['building'][i])+`</div>`+now+`
+										</span></left>`
+									}else{
+										gain = `<left><span style="color: red">
+											<div style="width: 160px; display: table-cell">- `+main['building'][i]['name']()+`</div>
+											<div style="width: 160px; display: table-cell">`+format(main['building'][i]['effect']['gain'][ig]())+` <a style="font-size: small">×</a> `+formatWhole(player['building'][i])+`</div>`+now+`
+										</span></left>` + gain
+									}
+								}
+							}
+						}
+					}
 				}
 			}
-			let num = ''
-			let numNumber = n(0)
-			if(main['resource'][id]['number']!==undefined){
-				num += "<hr><a style='font-size: 14px'>资源数量</a>"
-				numNumber = numNumber.add(main['resource'][id]['number']())
-				let now = format(numNumber)
-				if(numNumber.eq(getResourceBaseNumber(id))){
-					now = '<u>'+format(numNumber)+'</u>'
-				}
-				if(!numNumber.eq(0)){
-					num += `<left><span>
-						<div style="width: 160px; display: table-cell"><green>+</green></i> 基础</div>
-						<div style="width: 160px; display: table-cell">+`+format(main['resource'][id]['number']())+`</div>`+now+`
+			/*if(main['resource'][id]['mulResearch']!==undefined){
+				gainNumber = gainNumber.mul(main['resource'][id]['mulResearch']())
+				now = tooltipU(gainNumber,id)
+				if(!gainNumber.eq(0)){
+					gain += `<left><span>
+						<div style="width: 160px; display: table-cell"><i class="fa fa-flask"></i> 研究</div>
+						<div style="width: 160px; display: table-cell">×`+format(main['resource'][id]['mulResearch']())+`</div>`+now+`
 					</span></left>`
 				}
-
-				if(numNumber.eq(0)){
-					num = ''
+			}*/
+			gain = "<hr><a style='font-size: 14px'>资源生产</a>" + cost + gain
+			if(gainNumber.eq(0)){
+				gain = ''
+			}
+			if(main['resource'][id]['max']!==undefined){
+				time = '<hr>无法抵达上限'
+				if(player['resource'][id].gte(getResourceBaseMax(id))){
+					time = '<hr>已抵达上限'
+				}else if(main['resource'][id]['gain']!==undefined){
+					if(n(getResourceBaseGain(id)).gt(0)){
+						time = '<hr>'+formatTime(n(getResourceBaseMax(id)).sub(player['resource'][id]).div(getResourceBaseGain(id)))+'后抵达上限'
+					}else if(n(getResourceBaseGain(id)).lt(0) && !player['resource'][id].eq(0)){
+						time = '<hr>'+formatTime(player['resource'][id].div(getResourceBaseGain(id)).abs())+'后耗尽'
+					}
 				}
 			}
-			return getTooltipDoc(colorText(id)[1]+"<small>"+bas+res+gain+max+num+time+'</small>')
+		}
+		let max = ''
+		let maxNumber = n(0)
+		if(main['resource'][id]['max']!==undefined){
+			max += "<hr><a style='font-size: 14px'>资源储存</a>"
+			maxNumber = maxNumber.add(main['resource'][id]['max']())
+			let now = format(maxNumber)
+			if(maxNumber.eq(getResourceBaseMax(id))){
+				now = '<u>'+format(maxNumber)+'</u>'
+			}else{
+				now = format(maxNumber)
+			}
+			if(!maxNumber.eq(0)){
+				max += `<left><span>
+					<div style="width: 160px; display: table-cell"><green>+</green> 基础</div>
+					<div style="width: 160px; display: table-cell">+`+format(main['resource'][id]['max']())+`</div>`+now+`
+				</span></left>`
+			}
+			for(let i in main['resource']){
+				if(main['resource'][i]['effect']!==undefined){
+					if(main['resource'][i]['effect']['max']!==undefined){
+						for(let im in main['resource'][i]['effect']['max']){
+							if(id==im && !n(main['resource'][i]['effect']['max'][im]()).mul(player['resource'][i]).eq(0)){
+								maxNumber = maxNumber.add(n(main['resource'][i]['effect']['max'][im]()).mul(player['resource'][i]))
+								if(maxNumber.eq(getResourceBaseMax(id))){
+									now = '<u>'+format(maxNumber)+'</u>'
+								}else{
+									now = format(maxNumber)
+								}
+								if(!maxNumber.eq(0)){
+									max += `<left><span>
+										<div style="width: 160px; display: table-cell"><green>+</green> `+main['resource'][i]['name']()+`</div>
+										<div style="width: 160px; display: table-cell">+`+format(main['resource'][i]['effect']['max'][im]())+` <a style="font-size: small">×</a> `+formatWhole(player['resource'][i])+`</div>`+now+`
+									</span></left>`
+								}
+							}
+						}
+					}
+				}
+			}
+			for(let i in main['building']){
+				if(main['building'][i]['effect']!==undefined){
+					if(main['building'][i]['effect']['max']!==undefined){
+						for(let im in main['building'][i]['effect']['max']){
+							if(id==im && !n(main['building'][i]['effect']['max'][im]()).mul(player['building'][i]).eq(0)){
+								maxNumber = maxNumber.add(n(main['building'][i]['effect']['max'][im]()).mul(player['building'][i]))
+								if(maxNumber.eq(getResourceBaseMax(id))){
+									now = '<u>'+format(maxNumber)+'</u>'
+								}else{
+									now = format(maxNumber)
+								}
+								if(!maxNumber.eq(0)){
+									max += `<left><span>
+										<div style="width: 160px; display: table-cell"><green>+</green> `+main['building'][i]['name']()+`</div>
+										<div style="width: 160px; display: table-cell">+`+format(main['building'][i]['effect']['max'][im]())+` <a style="font-size: small">×</a> `+formatWhole(player['building'][i])+`</div>`+now+`
+									</span></left>`
+								}
+							}
+						}
+					}
+				}
+			}
+			if(maxNumber.eq(0)){
+				max = ''
+			}
+		}
+		let num = ''
+		let numNumber = n(0)
+		if(main['resource'][id]['number']!==undefined){
+			num += "<hr><a style='font-size: 14px'>资源数量</a>"
+			numNumber = numNumber.add(main['resource'][id]['number']())
+			let now = format(numNumber)
+			if(numNumber.eq(getResourceBaseNumber(id))){
+				now = '<u>'+format(numNumber)+'</u>'
+			}
+			if(!numNumber.eq(0)){
+				num += `<left><span>
+					<div style="width: 160px; display: table-cell"><green>+</green></i> 基础</div>
+					<div style="width: 160px; display: table-cell">+`+format(main['resource'][id]['number']())+`</div>`+now+`
+				</span></left>`
+			}
+			if(numNumber.eq(0)){
+				num = ''
+			}
+		}
+		return getTooltipDoc(colorText(id)[1]+"<small>"+bas+res+gain+max+num+time+'</small>')
 	}
 
 	if(id2=='TooltipLoadAction'){
@@ -266,7 +309,13 @@ function tooltip(id,id2){
 			}
 		}
 		max += '</left>'
-		return getTooltipDoc(name+"("+formatWhole(player['building'][id],0)+")"+'<small>'+bas+cost+gainhr+gain+maxhr+max+'</samll>')
+		let amount = '('+formatWhole(player['building'][id],0)+')'
+		if(main['building'][id]['instant']!==undefined){
+			if(main['building'][id]['instant']()){
+				amount = ''
+			}
+		}
+		return getTooltipDoc(name+amount+'<small>'+bas+cost+gainhr+gain+maxhr+max+'</samll>')
 	}
 
 	if(id2=='TooltipLoadCraft'){

@@ -17,6 +17,7 @@ function getStage(num){
 			document.getElementById("tab_button").style.opacity = 1
         },100)
 	}
+	showTab('main')
 }
 
 function actionEfficient(){

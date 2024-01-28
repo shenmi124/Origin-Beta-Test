@@ -1,8 +1,8 @@
 var MainBuilding = {
-    colony:{
+    civics:{
         name(){return '定居地'},
         tooltip(){return '决定定居?'},
-        unlocked(){return player.action.explore.colonyFined && player.building.colony.eq(0) && player.building.city.eq(0)},
+        unlocked(){return player.action.explore.civicsFined && player.building.civics.eq(0)},
         instant(){return true},
         onBuy(){
             addLog('除去杂草,踩平地面,就是这么简单')
@@ -15,38 +15,43 @@ var MainBuilding = {
         effect: {
             max:{
                 dirt(){return n(20)},
+                wood(){return n(20)},
                 stone(){return n(20)},
                 food(){return n(20)},
             }
         }
     },
-    city:{
-        name(){return '城邦'},
-        tooltip(){return '为这座城市卖命'},
-        unlocked(){return player.action.explore.city && player.building.colony.eq(0) && player.building.city.eq(0)},
-        instant(){return true},
-        onBuy(){
-            addLog('等待制作')
-        },
+
+    shelter:{
+        name(){return '庇护所'},
+        tooltip(){return '实在算不上家,但起码也能遮风避雨'},
+        unlocked(){return player.building.civics.eq(1)},
         cost: {
-            food(){return n(3)}
+            dirt(){return n(10)}
         },
-        costPower(){return n(0)}
+        costPower(){return n(0.1)},
+        effect: {
+            max:{
+                citizens(){return n(1)},
+            }
+        }
     },
+
     farm:{
         name(){return '农田'},
         tooltip(){return '起码先解决温饱'},
-        unlocked(){return player.building.colony.eq(1)},
+        unlocked(){return player.building.civics.eq(1)},
         cost: {
             dirt(){return n(2.5)}
         },
         costPower(){return n(0.05)},
         effect: {
             gain:{
-                food(){return n(0.06)},
+                food(){return n(0.1)},
             }
         }
     },
+    /*
     mine:{
         name(){return '采石场'},
         unlocked(){return false},
@@ -86,5 +91,5 @@ var MainBuilding = {
                 stone(){return n(30)},
             }
         }
-    },
+    },*/
 }
