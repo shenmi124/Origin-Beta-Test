@@ -34,9 +34,9 @@ var main = {
 
     action: MainAction,
     building: MainBuilding,
-    craft: MainCraft
+    craft: MainCraft,
 }
 
 var civics = {
-    employed: CivicsEmployed,
+    citizens: CivicsCitizens,
 }

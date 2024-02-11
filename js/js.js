@@ -34,10 +34,10 @@ function getBr(){
 
 function systemDiff(){
 	let color = ''
-	if(n(actionEfficient()).lt(1)){
+	if(n(getEfficient('action')).lt(1)){
 		color = 'red'
 	}
-	getByID('actionEfficient','<span style="color: '+color+'">'+formatScientific(n(actionEfficient()).mul(100),1)+'%</span>')
+	getByID('actionEfficient','<span style="color: '+color+'">'+formatScientific(n(getEfficient('action')).mul(100),1)+'%</span>')
 }
 
 function dataDiff(){
@@ -47,29 +47,44 @@ function dataDiff(){
 	for(let i in main['action']){
 		if(main['action'][i]['cooldown']!==undefined){
 			let unlocked = true
-			let canC = true
-			if(main['action'][i]['unlocked']!==undefined){
-				unlocked = main['action'][i]['unlocked']()
-			}
-			if(main['action'][i]['canCooldown']!==undefined){
-				canC = main['action'][i]['canCooldown']()
-			}
-			if(unlocked && canC){
-				player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].sub(n(actionEfficient()).mul(diff))
+			let auto = n(0)
+			let canCooldown = true
+			let click = false
+			if(main['action'][i]['unlocked']!==undefined){unlocked = main['action'][i]['unlocked']()}
+			if(main['action'][i]['auto']!==undefined){auto = main['action'][i]['auto']()}
+			if(main['action'][i]['canCooldown']!==undefined){canCooldown = main['action'][i]['canCooldown']()}
+			if(canCooldown && n(auto).gt(0)){click = player.action[i+'Click']}
+
+			player.action[i+'Cooldown'] = player.action[i+'Cooldown'].add(n(auto).mul(diff))
+			if(unlocked && canCooldown){
+				if(n(auto).lte(0) || click){
+					player.action[i+'Cooldown'] = player.action[i+'Cooldown'].add(n(getEfficient('action')).mul(diff))
+				}
 			}else{
-				player['action'][i+'Cooldown'] = n(main['action'][i]['cooldown']())
+				player.action[i+'Cooldown'] = n(0)
 			}
 
-			if(player['action'][i+'Cooldown'].lte(0)){
+			if(player.action[i+'Cooldown'].gte(main['action'][i]['cooldown']())){
+				if(n(auto).gt(0)){
+					$(main['action'][i]['onClick'])
+					player['action'][i+'Cooldown'] = n(0)
+					player['action'][i+'ClickTimes'] = player['action'][i+'ClickTimes'].add(1)
+					player['action'][i+'Click'] = false
+				}
 				removeCss("action"+i+"ButtonID",'complete')
 				document.getElementById("action"+i+"ButtonID").disabled = false
 			}else{
-				addedCss("action"+i+"ButtonID",'complete')
-				document.getElementById("action"+i+"ButtonID").disabled = true
+				if(n(auto).lte(0) || click){
+					addedCss("action"+i+"ButtonID",'complete')
+					document.getElementById("action"+i+"ButtonID").disabled = true
+				}else{
+					removeCss("action"+i+"ButtonID",'complete')
+					document.getElementById("action"+i+"ButtonID").disabled = false
+				}
 			}
 
 			document.getElementById("action"+i+"BorderID").style.transitionDuration = '0.2s'
-			let border = n(100).sub(player['action'][i+'Cooldown'].div(n(main['action'][i]['cooldown']()).max(0.01)).mul(100))
+			let border = player.action[i+'Cooldown'].div(n(main['action'][i]['cooldown']()).max(0.001)).min(1).mul(100)
 			document.getElementById("action"+i+"BorderID").style.clipPath = 'inset(0% '+border+'% 0% 0%)'
 		}
 	}
@@ -98,6 +113,51 @@ function dataDiff(){
 		}
 	}
 
+	for(let i in main['craft']){
+		if(main['craft'][i]['cooldown']!==undefined){
+			let unlocked = true
+			let auto = n(0)
+			let canCooldown = true
+			let click = false
+			if(main['craft'][i]['unlocked']!==undefined){unlocked = main['craft'][i]['unlocked']()}
+			if(main['craft'][i]['auto']!==undefined){auto = main['craft'][i]['auto']()}
+			if(main['craft'][i]['canCooldown']!==undefined){canCooldown = main['craft'][i]['canCooldown']()}
+			if(canCooldown && n(auto).gt(0)){click = player.craft[i+'Click']}
+
+			player.craft[i+'Cooldown'] = player.craft[i+'Cooldown'].add(n(auto).mul(diff))
+			if(unlocked && canCooldown){
+				if(n(auto).lte(0) || click){
+					player.craft[i+'Cooldown'] = player.craft[i+'Cooldown'].add(n(getEfficient('craft')).mul(diff))
+				}
+			}else{
+				player.craft[i+'Cooldown'] = n(0)
+			}
+
+			if(player.craft[i+'Cooldown'].gte(main['craft'][i]['cooldown']())){
+				if(n(auto).gt(0)){
+					$(main['craft'][i]['onClick'])
+					player['craft'][i+'Cooldown'] = n(0)
+					player['craft'][i+'ClickTimes'] = player['craft'][i+'ClickTimes'].add(1)
+					player['craft'][i+'Click'] = false
+				}
+				removeCss("craft"+i+"ButtonID",'complete')
+				document.getElementById("craft"+i+"ButtonID").disabled = false
+			}else{
+				if(n(auto).lte(0) || click){
+					addedCss("craft"+i+"ButtonID",'complete')
+					document.getElementById("craft"+i+"ButtonID").disabled = true
+				}else{
+					removeCss("craft"+i+"ButtonID",'complete')
+					document.getElementById("craft"+i+"ButtonID").disabled = false
+				}
+			}
+
+			document.getElementById("craft"+i+"BorderID").style.transitionDuration = '0.2s'
+			let border = player.craft[i+'Cooldown'].div(n(main['craft'][i]['cooldown']()).max(0.001)).min(1).mul(100)
+			document.getElementById("craft"+i+"BorderID").style.clipPath = 'inset(0% '+border+'% 0% 0%)'
+		}
+	}
+
 	if(player.research.conducted!==undefined && player.resource.researchPoints.gte(main['resource']['researchPoints']['max']())){
 		player.research[player.research.conducted] = player.research[player.research.conducted].add(1)
 		if(player.research[player.research.conducted].gte(mainResearch['main'][player.research.conducted]['max']())){
@@ -109,37 +169,6 @@ function dataDiff(){
 		}
 		player.research.conducted = undefined
 	}
-
-	for(let i in main['craft']){
-		if(main['craft'][i]['cooldown']!==undefined){
-			let unlocked = true
-			let canC = true
-			if(main['craft'][i]['unlocked']!==undefined){
-				unlocked = main['craft'][i]['unlocked']()
-			}
-			if(main['craft'][i]['canCooldown']!==undefined){
-				canC = main['craft'][i]['canCooldown']()
-			}
-			if(unlocked && canC){
-				player['craft'][i+'Cooldown'] = player['craft'][i+'Cooldown'].sub(n(actionEfficient()).mul(diff))
-			}else{
-				player['craft'][i+'Cooldown'] = n(main['craft'][i]['cooldown']())
-			}
-
-			if(player['craft'][i+'Cooldown'].lte(0)){
-				removeCss("craft"+i+"ButtonID",'complete')
-				document.getElementById("craft"+i+"ButtonID").disabled = false
-			}else{
-				addedCss("craft"+i+"ButtonID",'complete')
-				document.getElementById("craft"+i+"ButtonID").disabled = true
-			}
-
-			document.getElementById("craft"+i+"BorderID").style.transitionDuration = '0.2s'
-			let border = n(100).sub(player['craft'][i+'Cooldown'].div(n(main['craft'][i]['cooldown']()).max(0.01)).mul(100))
-			document.getElementById("craft"+i+"BorderID").style.clipPath = 'inset(0% '+border+'% 0% 0%)'
-		}
-	}
-
 	for(id in mainResearch['main']){
 		let canResearch = true
 		let maxRsearch = true
@@ -228,6 +257,33 @@ function getID(){
 			}
 			player['research'][i+'Unlocked'] = true
 		}
+	}
+
+	getByID('CitizensNumber',formatWhole(player.resource.citizens))
+	for(let i in civics['citizens']){
+		let unlocked = true
+		if(civics['citizens'][i]['unlocked']!==undefined){
+			unlocked = civics['citizens'][i]['unlocked']()
+		}
+		if(!unlocked){
+			player.citizens[i] = n(0)
+		}
+		if(civics['citizens'][i]['number']!==undefined){
+			player.citizens[i] = n(civics['citizens'][i]['number']())
+		}
+		if(n(getEmployedsNumber()).gt(player.resource.citizens)){
+			for(let ic in civics['citizens']){
+				if(ic=='unemployed'){
+					continue
+				}
+				if(player.citizens[ic].gte(1)){
+					player.citizens[ic] = player.citizens[ic].sub(1)
+					componentCitizens(ic)
+				}
+			}
+		}
+		componentCitizens('unemployed')
+		unlockedLoad(i+'LoadCitizensID',unlocked)
 	}
 
 	getBr()

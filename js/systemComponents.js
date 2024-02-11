@@ -47,3 +47,20 @@ function componentCraft(id){
     </tooltip>
     `)
 }
+
+function componentCitizens(id){
+	let component = '<br><li-log><div style="display: inline-grid; width: 80px; padding-top: 5px">'+civics['citizens'][id]['name']()+'</div>'
+	let al = false
+	if(civics['citizens'][id]['allocated']!==undefined){
+		al = civics['citizens'][id]['allocated']()
+	}
+	if(al){
+		component += `<a style="display: inline-grid; width: 40px;" id="`+id+`Citizens"></a>`
+		component += `<button onclick="changeCitizens('`+id+`','sub')" class="citizens"><</button>`
+		component += `<button onclick="changeCitizens('`+id+`','add')" class="citizens">></button>`
+	}else{
+		component += `<a style="display: inline-grid; width: 40px;" id="`+id+`Citizens"></a>`
+	}
+	getByID(id+'LoadCitizensID',component)
+    getCitizens(id)
+}

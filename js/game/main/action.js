@@ -110,7 +110,7 @@ var MainAction = {
             civics: {
                 name(){return '定居地'},
                 instant(){return true},
-                unlocked(){return player.craft.harvestTimes.gte(1)},
+                unlocked(){return player.craft.harvestClickTimes.gte(1)},
                 probability(){return n(20)},
             },
         },
@@ -138,6 +138,7 @@ var MainAction = {
             civicsFined(){return false},
         },
         cooldown(){return n(7.5)},
+        auto(){return getEmployedEffect('explorer')},
         unlocked(){return player.data.stage.gte(1)},
     },
 }

@@ -15,6 +15,7 @@ var MainResource = {
                 food(){return n(-0.25)}
             }
         },
+        tooltip(){return '一旦居民不再幸福他们很可能会离开你<br>同时居民的增加意味着安定度的降低'},
         unlockAction(){
             getStage(3)
             addLog('你招揽到了第一批原住民,看起来他们和普通的人类没什么区别,你也能与他们正常交流')

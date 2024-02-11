@@ -1,3 +1,6 @@
+
+
+
 function calcPlayer(){
     dataLoader()
     loaderBase()
@@ -10,11 +13,6 @@ function dataLoader(){
 
     loader(['data','devSpeed'],n(1))
     loader(['data','stage'],n(0))
-
-	loader(['setting','autoSave'],true)
-	loader(['setting','countingMethod'],"standard")
-	loader(['setting','mouseSetting'],true)
-	loader(['setting','language'],undefined)
 }
 
 function loaderBase(){
@@ -31,8 +29,10 @@ function autoLoader(){
 	}
 
     for(let i in main['action']){
+        loader(['action',i+'ClickTimes'],n(0))
         if(main['action'][i]['cooldown']!==undefined){
             loader(['action',i+'Cooldown'],main['action'][i]['cooldown']())
+            loader(['action',i+'Click'],false)
         }
         if(main['action'][i]['data']!==undefined){
             for(let id in main['action'][i]['data']){
@@ -46,15 +46,20 @@ function autoLoader(){
 	}
 
     for(let i in main['craft']){
-        loader(['craft',i+'Times'],n(0))
+        loader(['craft',i+'ClickTimes'],n(0))
         if(main['craft'][i]['cooldown']!==undefined){
             loader(['craft',i+'Cooldown'],main['craft'][i]['cooldown']())
+            loader(['craft',i+'Click'],false)
         }
         if(main['craft'][i]['data']!==undefined){
             for(let id in main['craft'][i]['data']){
                 loader(['craft',i,id],main['craft'][i]['data'][id]())
             }
         }
+    }
+
+    for(let i in civics['citizens']){
+        loader(['citizens',i],n(0))
     }
 
     for(let i in settings){

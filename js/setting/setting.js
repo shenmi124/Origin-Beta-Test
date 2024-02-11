@@ -26,6 +26,10 @@ var settings = {
 				getByID('autoSaveTime',formatScientific(autoSaveTime, 1))
 			}else{
 				autoSaveTime = 60
+				if(autoSave){
+					autoSave = false
+					save()
+				}
 			}
 		},
 	},
@@ -55,8 +59,23 @@ var settings = {
 			}
 		},
 	},
-	notation:{
+	language:{
 		title(){return '主题'},
+		name(){return '语言'},
+		type(){return 'choose'},
+		choose:{
+			default:{
+				name(){return '浏览器语言'},
+			},
+			en:{
+				name(){return '英文'}
+			},
+			zh:{
+				name(){return '中文'}
+			},
+		},
+	},
+	notation:{
 		name(){return '计数法'},
 		type(){return 'choose'},
 		choose:{
@@ -119,6 +138,7 @@ var settings = {
 }
 
 let autoSaveTime = 60
+let autoSave = true
 let hardResetClick = 6
 
 function loadSetting(){
@@ -184,18 +204,6 @@ function i18nLoad(){
 			player.setting.language = 'en'
 		}else{
 			player.setting.language = 'en'
-		}
-	}
-}
-
-function countingMethod(){
-	let coun = ['scientific','standard','engineering','letter']
-	for(let i in coun){
-		if(coun[i]==player.setting.countingMethod){
-			if(Number(i)===3){i = -1}
-			player.setting.countingMethod = coun[Number(i)+1]
-			getByID("countingMethodID", player.setting.countingMethod)
-			break
 		}
 	}
 }

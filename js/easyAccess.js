@@ -89,6 +89,38 @@ function getResourceUnlocked(resource){
     return player['resource'][resource].gt(0) || player['resource'][resource+'Unlocked']
 }
 
+function getUnemployedsNumber(){
+    let sub = n(0)
+    for(let i in civics['citizens']){
+        let mass = n(1)
+        if(civics['citizens'][i]['mass']!==undefined){
+            mass = n(civics['citizens'][i]['mass']())
+        }
+        sub = sub.add(player.citizens[i].mul(mass))
+    }
+    return player.resource.citizens.sub(sub)
+}
+
+function getEmployedsNumber(){
+    let add = n(0)
+    for(let i in civics['citizens']){
+        let mass = n(1)
+        if(civics['citizens'][i]['mass']!==undefined){
+            mass = n(civics['citizens'][i]['mass']())
+        }
+        add = add.add(player.citizens[i].mul(mass))
+    }
+    return add
+}
+
+function getActionEmployedEffect(id){
+    return player.citizens[id].mul(getEfficient('action'))
+}
+
+function getEmployedEffect(id){
+    return civics['citizens'][id]['effect']()
+}
+
 function colorText(id){
 	let color = '#c3c3c3'
 	let Text = '未命名'

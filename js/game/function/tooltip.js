@@ -405,29 +405,33 @@ function tooltip(id,id2){
 	if(id2=='else'){
 		if(id=='actionEfficient'){
 			let too = ''
-			let action = false
+			let active = false
 			for(i in efficient['action']){
+				if(i=='tooltip'){
+					too += efficient['action']['tooltip']()+'<hr>'
+					continue
+				}
 				if(efficient['action'][i]['active']()){
 					active = true
 					if(n(efficient['action'][i]['effect']()).lte(0)){
-						too += `<red><span>
-							<div style="width: 100px; display: table-cell">`+efficient['action'][i]['name']()+`:</div>
-							<span>`+formatScientific(n(efficient['action'][i]['effect']()),1)+`%</div>
-						</span></red><br>`
+						too += `<red><left><span>
+							<span style="width: 70px; display: table-cell">`+efficient['action'][i]['name']()+`:</span>
+							<span>`+formatScientific(n(efficient['action'][i]['effect']()),1)+`%</span>
+						</span></left></red>`
 					}else{
-						too += `<span>
-							<div style="width: 350px; display: table-cell">`+efficient['action'][i]['name']()+`:</div>
-							<div>`+formatScientific(n(efficient['action'][i]['effect']()),1)+`%</div>
-						</span><br>`
+						too += `<left><span>
+							<span style="width: 70px; display: table-cell">`+efficient['action'][i]['name']()+`:</span>
+							<span>`+formatScientific(n(efficient['action'][i]['effect']()),1)+`%</span>
+						</span></left>`
 					}
 				}
 			}
-			if(action){
+			if(active){
 				too += '<hr>'
 			}else{
 				too = ''
 			}
-			return getTooltipDoc('行动效率<hr><left><small>'+too+'<li-hid>- 总计: '+formatScientific(n(actionEfficient()).mul(100),1)+'%</left></small>')
+			return getTooltipDoc('行动效率<hr><small>'+too+'<left><li-hid>- 总计: '+formatScientific(n(getEfficient('action')).mul(100),1)+'%</left></small>')
 		}
 	}
 }

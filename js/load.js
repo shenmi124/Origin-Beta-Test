@@ -18,7 +18,11 @@ function loadMain(){
 }
 
 function loadBase(){
-	let resourceStr = '<tooltip '+tooltipLoad('actionEfficient','else',null)+'><a style="font-size: 12px; color: #666">行动效率</tooltip>: <span id="actionEfficient"></span></a><br><br><br>'
+	let resourceStr = `
+		<tooltip `+tooltipLoad(`actionEfficient`,`else`,null)+`><a style="font-size: 12px; color: #666">行动效率</tooltip>: <span id="actionEfficient"></span></a>
+		
+		<br><br><br>
+	`
 	for(let i in main['resource']){
 		if(main['resource'][i]['newType']!==undefined){
 			resourceStr += '<span id="'+i+'TypeID" style="color: #888; display: none"><br>'+main['resource'][i]['newType']()+'<br></span>'
@@ -98,6 +102,16 @@ function loadBase(){
         document.getElementById(player.research.conducted+"MainResearchButtonID").style.borderColor = 'rgb(74, 161, 254)'
     }
 	canDraw = true
+
+	let citizensStr = ''
+	citizensStr += `居民 <a id="CitizensNumber" style="color: grey"></a>`
+	for(let i in civics['citizens']){
+		citizensStr += '<a style="transition-duration: 1s;" id="'+i+'LoadCitizensID"></a>'
+	}
+	getByID('citizensLoadID',citizensStr)
+	for(let i in civics['citizens']){
+		componentCitizens(i)
+	}
 }
 
 function loadGame(){

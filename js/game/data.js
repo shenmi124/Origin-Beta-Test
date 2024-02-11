@@ -19,13 +19,3 @@ function getStage(num){
 	}
 	showTab('main')
 }
-
-function actionEfficient(){
-    let base = n(100)
-	for(i in efficient['action']){
-		if(efficient['action'][i]['active']()){
-			base = base.add(efficient['action'][i]['effect']())
-		}
-	}
-    return base.max(5).div(100)
-}

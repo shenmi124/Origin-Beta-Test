@@ -3,6 +3,8 @@ var width = (canvas.width = window.innerWidth-6);
 var height = (canvas.height = window.innerHeight-6);
 var ctx = canvas.getContext("2d");
 
+var canDraw = false
+
 function drawTree(id,id2,color){
 	ctx.strokeStyle = color;
 	ctx.lineWidth = 2;
