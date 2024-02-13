@@ -114,7 +114,11 @@ function getEmployedsNumber(){
 }
 
 function getActionEmployedEffect(id){
-    return player.citizens[id].mul(getEfficient('action'))
+    let base = n(1)
+    if(civics['citizens'][id]['base']!==undefined){
+        base = civics['citizens'][id]['base']()
+    }
+    return player.citizens[id].mul(getEfficient('action')).mul(base)
 }
 
 function getEmployedEffect(id){

@@ -21,9 +21,9 @@ function getBr(){
 				getByID(mainTab[maini]['id']()+"TextID",(u ? '<br><br>' : '')+mainTab[maini]['name']()+'<br>')
 			}
 			if(br%mid === 0 && br!=0){
-				document.getElementById(maini+i+'LoadBrID').style.display = ''
+				document.getElementById(i+maini+'BrID').style.display = ''
 			}else{
-				document.getElementById(maini+i+'LoadBrID').style.display = 'none'
+				document.getElementById(i+maini+'BrID').style.display = 'none'
 			}
 		}
 		u = true

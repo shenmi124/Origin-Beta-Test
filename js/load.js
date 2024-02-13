@@ -41,7 +41,7 @@ function loadBase(){
 	}
 	getByID('actionLoadID',actionStr)
 	for(let i in main['action']){
-		getByID(i+'LoadAction',`<br id="action`+i+`LoadBrID"><a id="`+i+`LoadActionID"></a><button id="action`+i+`BorderID" style="z-index: -1; background: #000; transition-duration: 0.05s; clip-path: inset(0% 0% 0% 0%);"></button>`)
+		getByID(i+'LoadAction',`<br id="`+i+`actionBrID"><a id="`+i+`LoadActionID"></a><button id="action`+i+`BorderID" style="z-index: -1; background: #000; transition-duration: 0.05s; clip-path: inset(0% 0% 0% 0%);"></button>`)
 		componentAction(i)
 	}
 
@@ -51,7 +51,7 @@ function loadBase(){
 	}
 	getByID('buildingLoadID',buildingStr)
 	for(let i in main['building']){
-		getByID(i+'LoadBuilding',`<br id="building`+i+`LoadBrID"><a id="`+i+`LoadBuildingID"></a> `)
+		getByID(i+'LoadBuilding',`<br id="`+i+`buildingBrID"><a id="`+i+`LoadBuildingID"></a> `)
 		componentBuilding(i)
 	}
 
@@ -61,7 +61,7 @@ function loadBase(){
 	}
 	getByID('craftLoadID',craftStr)
 	for(let i in main['craft']){
-		getByID(i+'LoadCraft',`<br id="craft`+i+`LoadBrID"><a id="`+i+`LoadCraftID"></a><button id="craft`+i+`BorderID" style="z-index: -1; background: #000; transition-duration: 0.05s; clip-path: inset(0% 0% 0% 0%);"></button>`)
+		getByID(i+'LoadCraft',`<br id="`+i+`craftBrID"><a id="`+i+`LoadCraftID"></a><button id="craft`+i+`BorderID" style="z-index: -1; background: #000; transition-duration: 0.05s; clip-path: inset(0% 0% 0% 0%);"></button>`)
 		componentCraft(i)
 	}
 
@@ -104,12 +104,18 @@ function loadBase(){
 	canDraw = true
 
 	let citizensStr = ''
-	citizensStr += `居民 <a id="CitizensNumber" style="color: grey"></a>`
+	citizensStr += `居民 <a id="CitizensNumber" style="color: grey"></a><br>`
 	for(let i in civics['citizens']){
-		citizensStr += '<a style="transition-duration: 1s;" id="'+i+'LoadCitizensID"></a>'
+		citizensStr += '<div style="transition-duration: 1s; margin-top: 3px; margin-left: 10px" id="'+i+'LoadCitizensID"></div>'
 	}
 	getByID('citizensLoadID',citizensStr)
 	for(let i in civics['citizens']){
+		getByID(i+'LoadCitizensID',`<a style="display: inline-flex" id="`+i+`CitizensNameLoadID"></a><a style="display: inline-flex"  id="`+i+`CitizensNumberLoadID">`)
+		getByID(i+'CitizensNameLoadID',`<tooltip `+tooltipLoad(i,'TooltipLoadCitizens',null)+`>
+			<div style="display: inline-grid; width: 80px">
+				`+civics['citizens'][i]['name']()+`
+			</div>
+		</tooltip>`)
 		componentCitizens(i)
 	}
 }
@@ -122,6 +128,7 @@ function loadGame(){
 	if(player.data.stage<=2){
 		addLog('这是一个新的存档,要<u style="color: #000" onclick="importSave()">导入</u>吗?','#888')
 	}
+	showTab('main')
 
     for(let i in main['action']){
         if(main['action'][i]['cooldown']!==undefined){

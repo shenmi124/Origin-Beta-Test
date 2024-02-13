@@ -49,7 +49,7 @@ function componentCraft(id){
 }
 
 function componentCitizens(id){
-	let component = '<br><li-log><div style="display: inline-grid; width: 80px; padding-top: 5px">'+civics['citizens'][id]['name']()+'</div>'
+	let component = ''
 	let al = false
 	if(civics['citizens'][id]['allocated']!==undefined){
 		al = civics['citizens'][id]['allocated']()
@@ -61,6 +61,6 @@ function componentCitizens(id){
 	}else{
 		component += `<a style="display: inline-grid; width: 40px;" id="`+id+`Citizens"></a>`
 	}
-	getByID(id+'LoadCitizensID',component)
+	getByID(id+'CitizensNumberLoadID',component)
     getCitizens(id)
 }

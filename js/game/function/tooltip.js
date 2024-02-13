@@ -402,6 +402,18 @@ function tooltip(id,id2){
 		return getTooltipDoc(mainResearch['main'][id]['name']()+'<hr><small>'+tooltip+effect+cost+'</small>')
 	}
 
+	if(id2=='TooltipLoadCitizens'){
+		let too = ''
+		let base = ''
+		if(civics['citizens'][id]['tooltip']!==undefined){
+			too += '<hr>'+efficient['action']['tooltip']()
+		}
+		if(civics['citizens'][id]['base']!==undefined){
+			base += '<hr>'+civics['citizens'][id]['name']()+'的基础效率为'+civics['citizens'][id]['base']()+'<br><grey>这相当于每个'+civics['citizens'][id]['name']()+'与'+civics['citizens'][id]['base']()+'个你效率相等</grey>'
+		}
+		return getTooltipDoc(civics['citizens'][id]['name']()+'<small>'+too+base)
+	}
+
 	if(id2=='else'){
 		if(id=='actionEfficient'){
 			let too = ''

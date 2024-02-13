@@ -74,6 +74,7 @@ let MainCraft = {
             return "泥土从你的手中漏出"+base+gain+hr+'<small>'+luck+mul+"</small></left>"+times
         },
         cooldown(){return n(5)},
+        auto(){return getEmployedEffect('collector')},
         canCooldown(){return player.action.explore.collect.gte(1)},
         data:{
             actionDirt(){return []},
@@ -197,6 +198,7 @@ let MainCraft = {
             player.action.explore.harvest = player.action.explore.harvest.sub(1)
         },
         cooldown(){return n(5)},
+        auto(){return getEmployedEffect('farm')},
         canCooldown(){return player.action.explore.harvest.gte(1)},
         unlocked(){return player.action.explore.harvestFined==true},
     },
