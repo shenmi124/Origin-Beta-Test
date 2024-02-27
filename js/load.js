@@ -19,9 +19,9 @@ function loadMain(){
 
 function loadBase(){
 	let resourceStr = `
-		<tooltip `+tooltipLoad(`actionEfficient`,`else`,null)+`><a style="font-size: 12px; color: #666">行动效率</tooltip>: <span id="actionEfficient"></span></a>
-		
-		<br><br><br>
+		<div id="actionEfficientID" style="font-size: 12px"><tooltip `+tooltipLoad(`action`,`efficient`,null)+`>效率</tooltip>: <span id="actionEfficient"></span></div>
+		<div id="citizensEfficientID" style="font-size: 12px"><tooltip `+tooltipLoad(`citizens`,`efficient`,null)+`>幸福度</tooltip>: <span id="citizensEfficient"></span></div>
+		<br>
 	`
 	for(let i in main['resource']){
 		if(main['resource'][i]['newType']!==undefined){

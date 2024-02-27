@@ -1,3 +1,7 @@
+function nc(Decimal){
+    return n(Decimal).mul(getEfficient('action'))
+}
+
 function getResourceBaseGain(resource){
     let gain = n(0)
     if(main['resource'][resource]['gain']!==undefined){
@@ -24,9 +28,17 @@ function getResourceBaseGain(resource){
                 }
             }
         }
-    }
-    if(main['resource'][resource]['mulResearch']!==undefined){
-        gain = gain.mul(main['resource'][resource]['mulResearch']())
+		for(let i in civics['citizens']){
+            if(civics['citizens'][i]['effect']!==undefined){
+                if(civics['citizens'][i]['effect']['gain']!==undefined){
+                    for(let im in civics['citizens'][i]['effect']['gain']){
+                        if(resource==im){
+                            gain = gain.add(nc(civics['citizens'][i]['effect']['gain'][im]()).mul(player.citizens[i]))
+                        }
+                    }
+                }
+            }
+        }
     }
     return gain
 }
@@ -111,18 +123,6 @@ function getEmployedsNumber(){
         add = add.add(player.citizens[i].mul(mass))
     }
     return add
-}
-
-function getActionEmployedEffect(id){
-    let base = n(1)
-    if(civics['citizens'][id]['base']!==undefined){
-        base = civics['citizens'][id]['base']()
-    }
-    return player.citizens[id].mul(getEfficient('action')).mul(base)
-}
-
-function getEmployedEffect(id){
-    return civics['citizens'][id]['effect']()
 }
 
 function colorText(id){

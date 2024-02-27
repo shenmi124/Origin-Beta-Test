@@ -33,11 +33,18 @@ function getBr(){
 }
 
 function systemDiff(){
-	let color = ''
-	if(n(getEfficient('action')).lt(1)){
-		color = 'red'
+	for(let i in efficient){
+		let color = ''
+		if(n(getEfficient(i)).lt(1)){
+			color = 'red'
+		}
+		getByID(i+'Efficient','<span style="color: '+color+'">'+formatScientific(n(getEfficient(i)).mul(100),1)+'%</span>')
+		if(efficient[i]['unlocked']()){
+			document.getElementById(i+'EfficientID').style.visibility = ''
+		}else{
+			document.getElementById(i+'EfficientID').style.visibility = 'hidden'
+		}
 	}
-	getByID('actionEfficient','<span style="color: '+color+'">'+formatScientific(n(getEfficient('action')).mul(100),1)+'%</span>')
 }
 
 function dataDiff(){

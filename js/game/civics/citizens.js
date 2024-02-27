@@ -5,24 +5,22 @@ var CivicsCitizens = {
         mass(){return n(0)}
     },
     explorer:{
-        name(){return '探索者'},
+        name(){return '开阔者'},
         allocated(){return true},
-        tooltip(){return '帮助你进行探索'},
-        base(){return n(0.25)},
-        effect(){return n(getActionEmployedEffect('explorer'))},
+        tooltip(){return '开阔者将自动进行探索行动'},
     },
     collector:{
-        name(){return '收集者'},
+        name(){return '劳工'},
         allocated(){return true},
-        tooltip(){return '帮助你进行收集'},
-        base(){return n(0.4)},
-        effect(){return n(getActionEmployedEffect('collector'))},
-    },
-    farm:{
-        name(){return '收割者'},
-        allocated(){return true},
-        tooltip(){return '帮助你进行收割'},
-        base(){return n(0.5)},
-        effect(){return n(getActionEmployedEffect('farm'))},
+        unlocked(){return false},
+        tooltip(){return '劳工会缓慢的自动采集泥土,同时也会缓慢进行收集行动'},
+        effect:{
+            craft:{
+                collect(){return n(0.15)},
+            },
+            gain:{
+                dirt(){return n(0.1)},
+            },
+        },
     }
 }

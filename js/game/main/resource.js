@@ -12,7 +12,7 @@ var MainResource = {
         effect: {
             gain: {
                 ideas(){return n(1)},
-                food(){return n(-0.25)}
+                food(){return n(-0.05)}
             }
         },
         tooltip(){return '一旦居民不再幸福他们很可能会离开你<br>同时居民的增加意味着安定度的降低'},
@@ -69,7 +69,6 @@ var MainResource = {
         unlockAction(){
             addLog('你找到了一些食物')
         },
-        research(){return n(1)},
         unlocked(){return getResourceUnlocked('food')},
     },
 

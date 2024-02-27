@@ -31,9 +31,7 @@ function tooltip(id,id2){
 		}
 		let res = ''
 		if(main['resource'][id]['research']!=undefined){
-			if(false){
-				res += '<hr><span style="color:'+colorText('researchPoints')[0]+'">研究难度</span>: '+main['resource'][id]['research']()
-			}
+			res += '<hr><span style="color:'+colorText('researchPoints')[0]+'">研究难度</span>: '+main['resource'][id]['research']()
 		}
 		let gain = ''
 		let cost = ''
@@ -64,21 +62,24 @@ function tooltip(id,id2){
 				if(main['resource'][i]['effect']!==undefined){
 					if(main['resource'][i]['effect']['gain']!==undefined){
 						for(let ig in main['resource'][i]['effect']['gain']){
-							if(id==ig && !n(main['resource'][i]['effect']['gain'][ig]()).mul(player['resource'][i]).eq(0)){
-								gainNumber = gainNumber.add(n(main['resource'][i]['effect']['gain'][ig]()).mul(player['resource'][i]))
+							let name = main['resource'][i]['name']()
+							let base = main['resource'][i]['effect']['gain'][ig]()
+							let mul = player['resource'][i]
+							if(id==ig && !n(base).mul(mul).eq(0)){
+								gainNumber = gainNumber.add(n(base).mul(mul))
 								now = tooltipU(gainNumber,id)
 								if(!gainNumber.eq(0)){
-									let gN = n(main['resource'][i]['effect']['gain'][ig]()).mul(player['resource'][i]).gt(0) ? true : false
+									let gN = n(base).mul(mul).gt(0) ? true : false
 									if(gN){
 										gain += `<left><span>
-											<div style="width: 160px; display: table-cell"><green>+</green> `+main['resource'][i]['name']()+`</div>
-											<div style="width: 160px; display: table-cell">+`+format(main['resource'][i]['effect']['gain'][ig]())+` <a style="font-size: small">×</a> `+formatWhole(player['resource'][i])+`</div>`+now+`
+											<div style="width: 160px; display: table-cell"><green>+</green> `+name+`</div>
+											<div style="width: 160px; display: table-cell">+`+format(base)+` <a style="font-size: small">×</a> `+formatWhole(mul)+`</div>`+now+`
 										</span></left>`
 									}else{
-										cost += `<left><span style="color: red">
-											<div style="width: 160px; display: table-cell">- `+main['resource'][i]['name']()+`</div>
-											<div style="width: 160px; display: table-cell">`+format(main['resource'][i]['effect']['gain'][ig]())+` <a style="font-size: small">×</a> `+formatWhole(player['resource'][i])+`</div>`+now+`
-										</span></left>`
+										gain = `<left><span style="color: red">
+											<div style="width: 160px; display: table-cell">- `+name+`</div>
+											<div style="width: 160px; display: table-cell">`+format(base)+` <a style="font-size: small">×</a> `+formatWhole(mul)+`</div>`+now+`
+										</span></left>` + gain
 									}
 								}
 							}
@@ -90,20 +91,52 @@ function tooltip(id,id2){
 				if(main['building'][i]['effect']!==undefined){
 					if(main['building'][i]['effect']['gain']!==undefined){
 						for(let ig in main['building'][i]['effect']['gain']){
-							if(id==ig && !n(main['building'][i]['effect']['gain'][ig]()).mul(player['building'][i]).eq(0)){
-								gainNumber = gainNumber.add(n(main['building'][i]['effect']['gain'][ig]()).mul(player['building'][i]))
+							let name = main['building'][i]['name']()
+							let base = main['building'][i]['effect']['gain'][ig]()
+							let mul = player['building'][i]
+							if(id==ig && !n(base).mul(mul).eq(0)){
+								gainNumber = gainNumber.add(n(base).mul(mul))
 								now = tooltipU(gainNumber,id)
 								if(!gainNumber.eq(0)){
-									let gN = n(main['building'][i]['effect']['gain'][ig]()).mul(player['building'][i]).gt(0) ? true : false
+									let gN = n(base).mul(mul).gt(0) ? true : false
 									if(gN){
 										gain += `<left><span>
-											<div style="width: 160px; display: table-cell"><green>+</green> `+main['building'][i]['name']()+`</div>
-											<div style="width: 160px; display: table-cell">+`+format(main['building'][i]['effect']['gain'][ig]())+` <a style="font-size: small">×</a> `+formatWhole(player['building'][i])+`</div>`+now+`
+											<div style="width: 160px; display: table-cell"><green>+</green> `+name+`</div>
+											<div style="width: 160px; display: table-cell">+`+format(base)+` <a style="font-size: small">×</a> `+formatWhole(mul)+`</div>`+now+`
 										</span></left>`
 									}else{
 										gain = `<left><span style="color: red">
-											<div style="width: 160px; display: table-cell">- `+main['building'][i]['name']()+`</div>
-											<div style="width: 160px; display: table-cell">`+format(main['building'][i]['effect']['gain'][ig]())+` <a style="font-size: small">×</a> `+formatWhole(player['building'][i])+`</div>`+now+`
+											<div style="width: 160px; display: table-cell">- `+name+`</div>
+											<div style="width: 160px; display: table-cell">`+format(base)+` <a style="font-size: small">×</a> `+formatWhole(mul)+`</div>`+now+`
+										</span></left>` + gain
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			for(let i in civics['citizens']){
+				if(civics['citizens'][i]['effect']!==undefined){
+					if(civics['citizens'][i]['effect']['gain']!==undefined){
+						for(let ig in civics['citizens'][i]['effect']['gain']){
+							let name = civics['citizens'][i]['name']()
+							let base = nc(civics['citizens'][i]['effect']['gain'][ig]())
+							let mul = player.citizens[i]
+							if(id==ig && !n(base).mul(mul).eq(0)){
+								gainNumber = gainNumber.add(n(base).mul(mul))
+								now = tooltipU(gainNumber,id)
+								if(!gainNumber.eq(0)){
+									let gN = n(base).mul(mul).gt(0) ? true : false
+									if(gN){
+										gain += `<left><span>
+											<div style="width: 160px; display: table-cell"><green>+</green> `+name+`</div>
+											<div style="width: 160px; display: table-cell">+`+format(base)+` <a style="font-size: small">×</a> `+formatWhole(mul)+`</div>`+now+`
+										</span></left>`
+									}else{
+										gain = `<left><span style="color: red">
+											<div style="width: 160px; display: table-cell">- `+name+`</div>
+											<div style="width: 160px; display: table-cell">`+format(nc(base))+` <a style="font-size: small">×</a> `+formatWhole(mul)+`</div>`+now+`
 										</span></left>` + gain
 									}
 								}
@@ -330,13 +363,88 @@ function tooltip(id,id2){
 		}
 	}
 
+	if(id2=='TooltipLoadCitizens'){
+		let too = ''
+		let action = ''
+		let actionhr = ''
+		let gain = ''
+		let gainhr = ''
+		if(civics['citizens'][id]['tooltip']!==undefined){
+			too += '<hr>'+civics['citizens'][id]['tooltip']()
+		}
+		if(civics['citizens'][id]['effect']!==undefined){
+			if(civics['citizens'][id]['effect']['action']!==undefined){
+				for(let ia in civics['citizens'][id]['effect']){
+					actionhr = '<hr>'
+					action += ``
+				}
+			}
+			if(civics['citizens'][id]['effect']['craft']!==undefined){
+				for(let ic in civics['citizens'][id]['effect']){
+					actionhr = '<hr>'
+					action += ``
+				}
+			}
+			if(civics['citizens'][id]['effect']['gain']!==undefined){
+				for(let i in civics['citizens'][id]['effect']['gain']){
+					gainhr = '<hr>'
+					gain += `<span>
+						<div style="width: 65px; display: table-cell">`+colorText(i)[1]+`</div>
+						+`+format(civics['citizens'][id]['effect']['gain'][i]())+`/s
+						<br><div style="width: 65px; display: table-cell"></div>
+						<tip><li-hid>(总计: `+format(nc(civics['citizens'][id]['effect']['gain'][i]()).mul(player.citizens[id]))+`/s)</tip>
+					</span><br>`
+				}
+			}
+		}
+		return getTooltipDoc(civics['citizens'][id]['name']()+'<small>'+too+actionhr+action+gainhr+'<left>'+gain+'</left>')
+	}
+
+	if(id2=='efficient'){
+		let name = ''
+		let too = ''
+		let active = false
+		for(let i in efficient[id]){
+			if(i=='name'){
+				name = efficient[id]['name']()
+				continue
+			}
+			if(i=='tooltip'){
+				too += efficient[id]['tooltip']()+'<hr>'
+				continue
+			}
+			if(i=='unlocked'){
+				continue
+			}
+			let act = true
+			if(efficient[id][i]['active']!==undefined){
+				act = efficient[id][i]['active']()
+			}
+			if(act){
+				active = true
+				if(n(efficient[id][i]['effect']()).lt(0)){
+					too += `<red><left><span>
+						<span style="width: 70px; display: table-cell">`+efficient[id][i]['name']()+`:</span>
+						<span>`+formatScientific(n(efficient[id][i]['effect']()),1)+`%</span>
+					</span></left></red>`
+				}else if(n(efficient[id][i]['effect']()).gt(0)){
+					too += `<left><span>
+						<span style="width: 70px; display: table-cell">`+efficient[id][i]['name']()+`:</span>
+						<span>`+formatScientific(n(efficient[id][i]['effect']()),1)+`%</span>
+					</span></left>`
+				}
+			}
+		}
+		return getTooltipDoc(name+'<hr><small>'+too+'<left><li-hid>- 总计: '+formatScientific(n(getEfficient(id)).mul(100),1)+'%</left></small>')
+	}
+	
 	if(id2=='TooltipLoadResearch'){
 		let cost = '<left><hr>'
 		let res = Number(player['research'][id])
 		for(i in mainResearch['main'][id]['cost'][res]){
 			let time = ''
+			if(n(getResourceBaseGain(i)).gt(0) && n(player['resource'][i]).lt(mainResearch['main'][id]['cost'][res][i]()) && n(getResourceBaseMax(i)).gte(mainResearch['main'][id]['cost'][res][i]())){
 			if(main['resource'][i]['gain']!==undefined){
-				if(n(getResourceBaseGain(i)).gt(0) && n(player['resource'][i]).lt(mainResearch['main'][id]['cost'][res][i]()) && n(getResourceBaseMax(i)).gte(mainResearch['main'][id]['cost'][res][i]())){
 					time = ' ( '+formatTime(n(mainResearch['main'][id]['cost'][res][i]()).sub(player['resource'][i]).div(getResourceBaseGain(i)))+' )'
 				}else if(n(getResourceBaseMax(i)).lt(mainResearch['main'][id]['cost'][res][i]())){
 					time = ' ( '+format(n(getResourceBaseMax(i)).sub(mainResearch['main'][id]['cost'][res][i]()))+' )'
@@ -402,48 +510,4 @@ function tooltip(id,id2){
 		return getTooltipDoc(mainResearch['main'][id]['name']()+'<hr><small>'+tooltip+effect+cost+'</small>')
 	}
 
-	if(id2=='TooltipLoadCitizens'){
-		let too = ''
-		let base = ''
-		if(civics['citizens'][id]['tooltip']!==undefined){
-			too += '<hr>'+efficient['action']['tooltip']()
-		}
-		if(civics['citizens'][id]['base']!==undefined){
-			base += '<hr>'+civics['citizens'][id]['name']()+'的基础效率为'+civics['citizens'][id]['base']()+'<br><grey>这相当于每个'+civics['citizens'][id]['name']()+'与'+civics['citizens'][id]['base']()+'个你效率相等</grey>'
-		}
-		return getTooltipDoc(civics['citizens'][id]['name']()+'<small>'+too+base)
-	}
-
-	if(id2=='else'){
-		if(id=='actionEfficient'){
-			let too = ''
-			let active = false
-			for(i in efficient['action']){
-				if(i=='tooltip'){
-					too += efficient['action']['tooltip']()+'<hr>'
-					continue
-				}
-				if(efficient['action'][i]['active']()){
-					active = true
-					if(n(efficient['action'][i]['effect']()).lte(0)){
-						too += `<red><left><span>
-							<span style="width: 70px; display: table-cell">`+efficient['action'][i]['name']()+`:</span>
-							<span>`+formatScientific(n(efficient['action'][i]['effect']()),1)+`%</span>
-						</span></left></red>`
-					}else{
-						too += `<left><span>
-							<span style="width: 70px; display: table-cell">`+efficient['action'][i]['name']()+`:</span>
-							<span>`+formatScientific(n(efficient['action'][i]['effect']()),1)+`%</span>
-						</span></left>`
-					}
-				}
-			}
-			if(active){
-				too += '<hr>'
-			}else{
-				too = ''
-			}
-			return getTooltipDoc('行动效率<hr><small>'+too+'<left><li-hid>- 总计: '+formatScientific(n(getEfficient('action')).mul(100),1)+'%</left></small>')
-		}
-	}
 }

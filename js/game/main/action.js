@@ -51,7 +51,7 @@ var MainAction = {
                     }
                 }
             }
-            if(special[0]===undefined && find[0]===undefined){
+            if(special[0]===undefined && find[0]===undefined && n(main.action.explore.auto).lte(0)){
                 addLog('*什么都没找到*','#888')
             }
 
@@ -138,7 +138,6 @@ var MainAction = {
             civicsFined(){return false},
         },
         cooldown(){return n(7.5)},
-        auto(){return getEmployedEffect('explorer')},
         unlocked(){return player.data.stage.gte(1)},
     },
 }
