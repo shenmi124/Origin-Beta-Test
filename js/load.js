@@ -20,7 +20,7 @@ function loadMain(){
 function loadBase(){
 	let resourceStr = `
 		<div id="actionEfficientID" style="font-size: 12px"><tooltip `+tooltipLoad(`action`,`efficient`,null)+`>效率</tooltip>: <span id="actionEfficient"></span></div>
-		<div id="citizensEfficientID" style="font-size: 12px"><tooltip `+tooltipLoad(`citizens`,`efficient`,null)+`>幸福度</tooltip>: <span id="citizensEfficient"></span></div>
+		<div id="happinessEfficientID" style="font-size: 12px"><tooltip `+tooltipLoad(`happiness`,`efficient`,null)+`>幸福度</tooltip>: <span id="happinessEfficient"></span></div>
 		<br>
 	`
 	for(let i in main['resource']){

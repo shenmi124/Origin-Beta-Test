@@ -1,5 +1,5 @@
 function nc(Decimal){
-    return n(Decimal).mul(getEfficient('action'))
+    return n(Decimal).mul(getEfficient('happiness'))
 }
 
 function getResourceBaseGain(resource){

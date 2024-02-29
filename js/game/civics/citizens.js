@@ -8,11 +8,16 @@ var CivicsCitizens = {
         name(){return '开阔者'},
         allocated(){return true},
         tooltip(){return '开阔者将自动进行探索行动'},
+        effect:{
+            action:{
+                explore(){return n(0.15)},
+            },
+        },
     },
     collector:{
         name(){return '劳工'},
         allocated(){return true},
-        unlocked(){return false},
+        unlocked(){return true},
         tooltip(){return '劳工会缓慢的自动采集泥土,同时也会缓慢进行收集行动'},
         effect:{
             craft:{
