@@ -16,5 +16,10 @@ function getStage(num){
         setTimeout(function(){
 			document.getElementById("tab_button").style.opacity = 1
         },100)
+
+		document.getElementById("bottomTab").style.visibility = ''
+        setTimeout(function(){
+			document.getElementById("bottomTab").style.opacity = 1
+        },100)
 	}
 }

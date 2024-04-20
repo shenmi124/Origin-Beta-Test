@@ -3,10 +3,10 @@
     left: 5px;
     bottom: 4px;
     text-align: right;
-	color:#000000;
-	text-shadow: 0 0 10px #000000;
+	color: grey;
 	border-radius: 9px;
-	font-size: 15px;
+	font-size: 14px;
+	font-family: cursive;
 }
 
 .donate {
@@ -14,11 +14,21 @@
     right: 5px;
     bottom: 4px;
     text-align: right;
-	font-family: verdana;
-	color:#000000;
-	text-shadow: 0 0 10px #000000;
+	color: grey;
 	border-radius: 9px;
 	font-size: 15px;
+	font-family: monospace;
+}
+
+.QQ {
+	position: absolute;
+    right: 45px;
+    bottom: 4px;
+    text-align: right;
+	color: grey;
+	border-radius: 9px;
+	font-size: 15px;
+	font-family: monospace;
 }
 
 .settingBto {

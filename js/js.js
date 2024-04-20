@@ -67,6 +67,7 @@ function dataDiff(){
 
 			if(player['action'][i+'Cooldown'].gte(getActionCooldown(i))){
 				$(main['action'][i]['onClick'])
+				player['action'][i+'Clicks'] = player['action'][i+'Clicks'].add(1)
 				NumberFix()
 				player['action'][i+'Cooldown'] = n(0)
 				player['action'][i+'Click'] = false
@@ -103,6 +104,7 @@ function dataDiff(){
 
 			if(player['craft'][i+'Cooldown'].gte(getCraftCooldown(i))){
 				$(main['craft'][i]['onClick'])
+				player['craft'][i+'Clicks'] = player['craft'][i+'Clicks'].add(1)
 				NumberFix()
 				player['craft'][i+'Cooldown'] = n(0)
 				player['craft'][i+'Click'] = false
