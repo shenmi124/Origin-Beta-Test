@@ -52,47 +52,74 @@ function dataDiff(){
 	gameDiff()
 	
 	for(let i in main['action']){
-		if(main['action'][i]['cooldown']!==undefined){
-			let unlocked = true
-			let auto = n(0)
-			let canCooldown = true
-			let click = false
-			if(main['action'][i]['unlocked']!==undefined){unlocked = main['action'][i]['unlocked']()}
-			if(main['action'][i]['auto']!==undefined){auto = main['action'][i]['auto']()}
-			if(main['action'][i]['canCooldown']!==undefined){canCooldown = main['action'][i]['canCooldown']()}
-			if(canCooldown && n(auto).gt(0)){click = player.action[i+'Click']}
-
-			player.action[i+'Cooldown'] = player.action[i+'Cooldown'].add(n(auto).mul(diff))
-			if(unlocked && canCooldown){
-				if(n(auto).lte(0) || click){
-					player.action[i+'Cooldown'] = player.action[i+'Cooldown'].add(n(getEfficient('action')).mul(diff))
-				}
-			}else{
-				player.action[i+'Cooldown'] = n(0)
+		if(getActionCooldown(i)!==undefined){
+			let autoSpeed = n(0)
+			autoSpeed = autoSpeed.add(getActionAuto(i))
+			if(hasActionClick(i)){
+				autoSpeed = autoSpeed.add(getEfficient('action'))
+			}
+			if(!getActionCanClick(i)){
+				autoSpeed = n(0)
+				player['action'][i+'Cooldown'] = n(0)
 			}
 
-			if(player.action[i+'Cooldown'].gte(main['action'][i]['cooldown']())){
-				if(n(auto).gt(0)){
-					$(main['action'][i]['onClick'])
-					player['action'][i+'Cooldown'] = n(0)
-					player['action'][i+'ClickTimes'] = player['action'][i+'ClickTimes'].add(1)
-					player['action'][i+'Click'] = false
-				}
+			player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].add(n(autoSpeed).mul(diff))
+
+			if(player['action'][i+'Cooldown'].gte(getActionCooldown(i))){
+				$(main['action'][i]['onClick'])
+				NumberFix()
+				player['action'][i+'Cooldown'] = n(0)
+				player['action'][i+'Click'] = false
+			}
+
+			if(hasActionClick(i) || !getActionCanClick(i)){
+				addedCss("action"+i+"ButtonID",'complete')
+				document.getElementById("action"+i+"ButtonID").disabled = true
+			}else{
 				removeCss("action"+i+"ButtonID",'complete')
 				document.getElementById("action"+i+"ButtonID").disabled = false
-			}else{
-				if(n(auto).lte(0) || click){
-					addedCss("action"+i+"ButtonID",'complete')
-					document.getElementById("action"+i+"ButtonID").disabled = true
-				}else{
-					removeCss("action"+i+"ButtonID",'complete')
-					document.getElementById("action"+i+"ButtonID").disabled = false
-				}
 			}
 
 			document.getElementById("action"+i+"BorderID").style.transitionDuration = '0.2s'
-			let border = player.action[i+'Cooldown'].div(n(main['action'][i]['cooldown']()).max(0.001)).min(1).mul(100)
+			let border = player.action[i+'Cooldown'].div(n(getActionCooldown(i)).max(0.001)).min(1).mul(100)
+			if(player['action'][i+'Cooldown'].lte(0)){border = 100}
 			document.getElementById("action"+i+"BorderID").style.clipPath = 'inset(0% '+border+'% 0% 0%)'
+		}
+	}
+
+	for(let i in main['craft']){
+		if(getCraftCooldown(i)!==undefined){
+			let autoSpeed = n(0)
+			autoSpeed = autoSpeed.add(getCraftAuto(i))
+			if(hasCraftClick(i)){
+				autoSpeed = autoSpeed.add(getEfficient('craft'))
+			}
+			if(!getCraftCanClick(i)){
+				autoSpeed = n(0)
+				player['craft'][i+'Cooldown'] = n(0)
+			}
+
+			player['craft'][i+'Cooldown'] = player['craft'][i+'Cooldown'].add(n(autoSpeed).mul(diff))
+
+			if(player['craft'][i+'Cooldown'].gte(getCraftCooldown(i))){
+				$(main['craft'][i]['onClick'])
+				NumberFix()
+				player['craft'][i+'Cooldown'] = n(0)
+				player['craft'][i+'Click'] = false
+			}
+
+			if(hasCraftClick(i) || !getCraftCanClick(i)){
+				addedCss("craft"+i+"ButtonID",'complete')
+				document.getElementById("craft"+i+"ButtonID").disabled = true
+			}else{
+				removeCss("craft"+i+"ButtonID",'complete')
+				document.getElementById("craft"+i+"ButtonID").disabled = false
+			}
+
+			document.getElementById("craft"+i+"BorderID").style.transitionDuration = '0.2s'
+			let border = player.craft[i+'Cooldown'].div(n(getCraftCooldown(i)).max(0.001)).min(1).mul(100)
+			if(player['craft'][i+'Cooldown'].lte(0)){border = 100}
+			document.getElementById("craft"+i+"BorderID").style.clipPath = 'inset(0% '+border+'% 0% 0%)'
 		}
 	}
 
@@ -117,51 +144,6 @@ function dataDiff(){
 		}
 		if(resCan){
 			removeCss(id+"BuildingButtonID",'res')
-		}
-	}
-
-	for(let i in main['craft']){
-		if(main['craft'][i]['cooldown']!==undefined){
-			let unlocked = true
-			let auto = n(0)
-			let canCooldown = true
-			let click = false
-			if(main['craft'][i]['unlocked']!==undefined){unlocked = main['craft'][i]['unlocked']()}
-			if(main['craft'][i]['auto']!==undefined){auto = main['craft'][i]['auto']()}
-			if(main['craft'][i]['canCooldown']!==undefined){canCooldown = main['craft'][i]['canCooldown']()}
-			if(canCooldown && n(auto).gt(0)){click = player.craft[i+'Click']}
-
-			player.craft[i+'Cooldown'] = player.craft[i+'Cooldown'].add(n(auto).mul(diff))
-			if(unlocked && canCooldown){
-				if(n(auto).lte(0) || click){
-					player.craft[i+'Cooldown'] = player.craft[i+'Cooldown'].add(n(getEfficient('craft')).mul(diff))
-				}
-			}else{
-				player.craft[i+'Cooldown'] = n(0)
-			}
-
-			if(player.craft[i+'Cooldown'].gte(main['craft'][i]['cooldown']())){
-				if(n(auto).gt(0)){
-					$(main['craft'][i]['onClick'])
-					player['craft'][i+'Cooldown'] = n(0)
-					player['craft'][i+'ClickTimes'] = player['craft'][i+'ClickTimes'].add(1)
-					player['craft'][i+'Click'] = false
-				}
-				removeCss("craft"+i+"ButtonID",'complete')
-				document.getElementById("craft"+i+"ButtonID").disabled = false
-			}else{
-				if(n(auto).lte(0) || click){
-					addedCss("craft"+i+"ButtonID",'complete')
-					document.getElementById("craft"+i+"ButtonID").disabled = true
-				}else{
-					removeCss("craft"+i+"ButtonID",'complete')
-					document.getElementById("craft"+i+"ButtonID").disabled = false
-				}
-			}
-
-			document.getElementById("craft"+i+"BorderID").style.transitionDuration = '0.2s'
-			let border = player.craft[i+'Cooldown'].div(n(main['craft'][i]['cooldown']()).max(0.001)).min(1).mul(100)
-			document.getElementById("craft"+i+"BorderID").style.clipPath = 'inset(0% '+border+'% 0% 0%)'
 		}
 	}
 

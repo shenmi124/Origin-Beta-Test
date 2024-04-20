@@ -51,7 +51,7 @@ var MainAction = {
                     }
                 }
             }
-            if(special[0]===undefined && find[0]===undefined && n(main.action.explore.auto).lte(0)){
+            if(special[0]===undefined && find[0]===undefined && getActionAuto(this).gt(0)){
                 addLog('*什么都没找到*','#888')
             }
 
@@ -110,7 +110,7 @@ var MainAction = {
             civics: {
                 name(){return '定居地'},
                 instant(){return true},
-                unlocked(){return player.craft.harvestClickTimes.gte(1)},
+                unlocked(){return player.craft.harvestClicks.gte(1)},
                 probability(){return n(20)},
             },
         },

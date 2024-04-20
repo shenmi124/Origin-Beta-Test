@@ -129,17 +129,6 @@ function loadGame(){
 		addLog('这是一个新的存档,要<u style="color: #000" onclick="importSave()">导入</u>吗?','#888')
 	}
 	showTab('main')
-
-    for(let i in main['action']){
-        if(main['action'][i]['cooldown']!==undefined){
-			player.action[i+'Cooldown'] = n(main['action'][i]['cooldown']())
-        }
-    }
-    for(let i in main['craft']){
-        if(main['craft'][i]['cooldown']!==undefined){
-			player.craft[i+'Cooldown'] = n(main['craft'][i]['cooldown']())
-        }
-    }
 }
 
 let loadingGame = function(){

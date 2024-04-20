@@ -1,6 +1,3 @@
-
-
-
 function calcPlayer(){
     dataLoader()
     loaderBase()
@@ -29,9 +26,9 @@ function autoLoader(){
 	}
 
     for(let i in main['action']){
-        loader(['action',i+'ClickTimes'],n(0))
+        loader(['action',i+'Clicks'],n(0))
         if(main['action'][i]['cooldown']!==undefined){
-            loader(['action',i+'Cooldown'],main['action'][i]['cooldown']())
+            loader(['action',i+'Cooldown'],n(0))
             loader(['action',i+'Click'],false)
         }
         if(main['action'][i]['data']!==undefined){
@@ -46,9 +43,9 @@ function autoLoader(){
 	}
 
     for(let i in main['craft']){
-        loader(['craft',i+'ClickTimes'],n(0))
+        loader(['craft',i+'Clicks'],n(0))
         if(main['craft'][i]['cooldown']!==undefined){
-            loader(['craft',i+'Cooldown'],main['craft'][i]['cooldown']())
+            loader(['craft',i+'Cooldown'],n(0))
             loader(['craft',i+'Click'],false)
         }
         if(main['craft'][i]['data']!==undefined){

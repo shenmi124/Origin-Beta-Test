@@ -1,3 +1,12 @@
+function NumberFix(){
+	for(i in main['resource']){
+		if(main['resource'][i]['max']!==undefined){
+			player['resource'][i] = player['resource'][i].min(getResourceBaseMax(i))
+			getResourceID(i)
+		}
+	}
+}
+
 function nc(Decimal){
     return n(Decimal).mul(getEfficient('happiness'))
 }
@@ -79,6 +88,86 @@ function getResourceBaseNumber(resource){
         num = num.add(main['resource'][resource]['num']())
     }
     return num
+}
+
+function hasActionClick(id){
+    return player['action'][id+'Click']
+}
+
+function hasCraftClick(id){
+    return player['craft'][id+'Click']
+}
+
+function getActionUnlocked(id){
+    let unlocked = true
+    if(main['action'][id]['unlocked']!==undefined){
+        unlocked = main['action'][id]['unlocked']()
+    }
+    return unlocked
+}
+
+function getCraftUnlocked(id){
+    let unlocked = true
+    if(main['craft'][id]['unlocked']!==undefined){
+        unlocked = main['craft'][id]['unlocked']()
+    }
+    return unlocked
+}
+
+function getActionCanClick(id){
+    let click = true
+    if(main['action'][id]['canClick']!==undefined){
+        click = main['action'][id]['canClick']()
+    }
+    return click && getActionUnlocked(id)
+}
+
+function getCraftCanClick(id){
+    let click = true
+    if(main['craft'][id]['canClick']!==undefined){
+        click = main['craft'][id]['canClick']()
+    }
+    return click && getCraftUnlocked(id)
+}
+
+function getActionCooldown(id){
+    return n(main['action'][id]['cooldown']())
+}
+
+function getCraftCooldown(id){
+    return n(main['craft'][id]['cooldown']())
+}
+
+function getActionAuto(action){
+    let auto = n(0)
+    for(let i in civics['citizens']){
+        if(civics['citizens'][i]['effect']!==undefined){
+            if(civics['citizens'][i]['effect']['action']!==undefined){
+                for(let im in civics['citizens'][i]['effect']['action']){
+                    if(action==im){
+                        auto = auto.add(nc(civics['citizens'][i]['effect']['action'][im]()).mul(player.citizens[i]))
+                    }
+                }
+            }
+        }
+    }
+    return auto
+}
+
+function getCraftAuto(craft){
+    let auto = n(0)
+    for(let i in civics['citizens']){
+        if(civics['citizens'][i]['effect']!==undefined){
+            if(civics['citizens'][i]['effect']['craft']!==undefined){
+                for(let im in civics['citizens'][i]['effect']['craft']){
+                    if(craft==im){
+                        auto = auto.add(nc(civics['citizens'][i]['effect']['craft'][im]()).mul(player.citizens[i]))
+                    }
+                }
+            }
+        }
+    }
+    return auto
 }
 
 function getBuildGain(building,resource){

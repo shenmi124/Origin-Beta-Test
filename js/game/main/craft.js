@@ -13,7 +13,7 @@ let MainCraft = {
             getStage(4)
         },
         cooldown(){return n(20)},
-        canCooldown(){return player.action.explore.citizens.gte(1) && player.resource.food.gt(0) && player.resource.citizens.lt(getResourceBaseMax('citizens'))},
+        canClick(){return player.action.explore.citizens.gte(1) && player.resource.food.gt(0) && player.resource.citizens.lt(getResourceBaseMax('citizens'))},
         unlocked(){return player.action.explore.citizensFined==true},
     },
     collect:{
@@ -76,7 +76,7 @@ let MainCraft = {
             return "泥土从你的手中漏出"+base+gain+hr+'<small>'+luck+mul+"</small></left>"+times
         },
         cooldown(){return n(5)},
-        canCooldown(){return player.action.explore.collect.gte(1)},
+        canClick(){return player.action.explore.collect.gte(1)},
         data:{
             actionDirt(){return []},
         },
@@ -115,7 +115,7 @@ let MainCraft = {
             player.action.explore.stone = player.action.explore.stone.sub(1)
         },
         cooldown(){return n(5)},
-        canCooldown(){return player.action.explore.stone.gte(1) && false},
+        canClick(){return player.action.explore.stone.gte(1) && false},
         unlocked(){return player.action.explore.stoneFined==true},
     },
     drop:{
@@ -157,7 +157,7 @@ let MainCraft = {
             player.action.explore.drop = player.action.explore.drop.sub(1)
         },
         cooldown(){return n(5)},
-        canCooldown(){return player.action.explore.drop.gte(1)},
+        canClick(){return player.action.explore.drop.gte(1)},
         unlocked(){return player.action.explore.dropFined==true},
     },
     harvest:{
@@ -200,7 +200,7 @@ let MainCraft = {
         },
         cooldown(){return n(5)},
         auto(){return n(0)},
-        canCooldown(){return player.action.explore.harvest.gte(1)},
+        canClick(){return player.action.explore.harvest.gte(1)},
         unlocked(){return player.action.explore.harvestFined==true},
     },
     beast:{
@@ -242,7 +242,7 @@ let MainCraft = {
             player.action.explore.beast = player.action.explore.beast.sub(1)
         },
         cooldown(){return n(5)},
-        canCooldown(){return player.action.explore.beast.gte(1) && false},
+        canClick(){return player.action.explore.beast.gte(1) && false},
         unlocked(){return player.action.explore.beastFined==true},
     },
 }
