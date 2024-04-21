@@ -7,14 +7,15 @@ function calcPlayer(){
 
 function dataLoader(){
     loader(['data','offline'],n(0))
-
+    loader(['data','offline'],n(0))
     loader(['data','devSpeed'],n(1))
-    loader(['data','stage'],n(0))
+    loader(['data','version'],'notplayed')
+    loader(['data','versiontimes'],n(0))
 }
 
 function loaderBase(){
     loader(['research','conducted'],undefined)
-
+    loader(['game','stage'],n(0))
     loader(['events','time'],n(0))
 }
 

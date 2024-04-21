@@ -21,11 +21,10 @@ var MainBuilding = {
             }
         }
     },
-
     shelter:{
         name(){return '庇护所'},
         tooltip(){return '实在算不上家,但起码也能遮风避雨'},
-        unlocked(){return player.building.civics.eq(1)},
+        unlocked(){return player.building.civics.gte(1)},
         cost: {
             dirt(){return n(10)}
         },
@@ -36,18 +35,19 @@ var MainBuilding = {
             }
         }
     },
-
     farm:{
         name(){return '农田'},
         tooltip(){return '起码先解决温饱'},
-        unlocked(){return player.building.civics.eq(1)},
+        unlocked(){return player.building.civics.gte(1)},
         cost: {
             dirt(){return n(2.5)}
         },
         costPower(){return n(0.05)},
         effect: {
             gain:{
-                food(){return n(0.1)},
+                add: {
+                    food(){return n(0.1)},
+                }
             }
         }
     },

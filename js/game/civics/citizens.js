@@ -2,7 +2,7 @@ var CivicsCitizens = {
     unemployed:{
         name(){return '失业者'},
         number(){return getUnemployedsNumber()},
-        mass(){return n(0)}
+        mass(){return n(1)}
     },
     explorer:{
         name(){return '开阔者'},
@@ -24,7 +24,9 @@ var CivicsCitizens = {
                 collect(){return n(0.15)},
             },
             gain:{
-                dirt(){return n(0.1)},
+                add: {
+                    dirt(){return n(0.1)},
+                }
             },
         },
     }

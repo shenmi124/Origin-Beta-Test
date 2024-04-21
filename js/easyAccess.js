@@ -18,9 +18,11 @@ function getResourceBaseGain(resource){
         for(let i in main['resource']){
             if(main['resource'][i]['effect']!==undefined){
                 if(main['resource'][i]['effect']['gain']!==undefined){
-                    for(let im in main['resource'][i]['effect']['gain']){
-                        if(resource==im){
-                            gain = gain.add(n(main['resource'][i]['effect']['gain'][im]()).mul(player['resource'][i]))
+                    if(main['resource'][i]['effect']['gain']['add']!==undefined){
+                        for(let im in main['resource'][i]['effect']['gain']['add']){
+                            if(resource==im){
+                                gain = gain.add(n(main['resource'][i]['effect']['gain']['add'][im]()).mul(player['resource'][i]))
+                            }
                         }
                     }
                 }
@@ -29,9 +31,11 @@ function getResourceBaseGain(resource){
         for(let i in main['building']){
             if(main['building'][i]['effect']!==undefined){
                 if(main['building'][i]['effect']['gain']!==undefined){
-                    for(let im in main['building'][i]['effect']['gain']){
-                        if(resource==im){
-                            gain = gain.add(n(main['building'][i]['effect']['gain'][im]()).mul(player['building'][i]))
+                    if(main['building'][i]['effect']['gain']['add']!==undefined){
+                        for(let im in main['building'][i]['effect']['gain']['add']){
+                            if(resource==im){
+                                gain = gain.add(n(main['building'][i]['effect']['gain']['add'][im]()).mul(player['building'][i]))
+                            }
                         }
                     }
                 }
@@ -40,9 +44,11 @@ function getResourceBaseGain(resource){
 		for(let i in civics['citizens']){
             if(civics['citizens'][i]['effect']!==undefined){
                 if(civics['citizens'][i]['effect']['gain']!==undefined){
-                    for(let im in civics['citizens'][i]['effect']['gain']){
-                        if(resource==im){
-                            gain = gain.add(nc(civics['citizens'][i]['effect']['gain'][im]()).mul(player.citizens[i]))
+                    if(civics['citizens'][i]['effect']['gain']['add']!==undefined){
+                        for(let im in civics['citizens'][i]['effect']['gain']['add']){
+                            if(resource==im){
+                                gain = gain.add(nc(civics['citizens'][i]['effect']['gain']['add'][im]()).mul(player.citizens[i]))
+                            }
                         }
                     }
                 }
@@ -171,7 +177,7 @@ function getCraftAuto(craft){
 }
 
 function getBuildGain(building,resource){
-    return n(main['building'][building]['effect']['gain'][resource]()).mul(player['building'][building])
+    return n(main['building'][building]['effect']['gain']['add'][resource]()).mul(player['building'][building])
 }
 
 function getBuildMax(building,resource){

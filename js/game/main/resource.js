@@ -11,8 +11,10 @@ var MainResource = {
         max(){return n(0)},
         effect: {
             gain: {
-                ideas(){return n(1)},
-                food(){return n(-0.05)}
+                add: {
+                    ideas(){return n(1)},
+                    food(){return n(-0.05)}
+                }
             }
         },
         tooltip(){return '一旦居民不再幸福他们很可能会离开你<br>同时居民的增加意味着安定度的降低'},

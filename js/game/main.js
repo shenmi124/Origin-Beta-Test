@@ -4,7 +4,7 @@ var mainButton = {
     },
     civics:{
         name(){return '村庄'},
-        unlocked(){return player.data.stage.gte(4)}
+        unlocked(){return player.game.stage.gte(5)}
     },
     research:{
         name(){return "研究"},

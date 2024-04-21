@@ -8,7 +8,7 @@ var MainAction = {
             addLog('除了无尽的草原什么都没有。')
         },
         tooltip(){return '苏醒...'},
-        unlocked(){return player.data.stage.eq(0)},
+        unlocked(){return player.game.stage.eq(0)},
         cooldown(){return n(2.5)},
     },
     explore:{
@@ -138,6 +138,6 @@ var MainAction = {
             civicsFined(){return false},
         },
         cooldown(){return n(7.5)},
-        unlocked(){return player.data.stage.gte(1)},
+        unlocked(){return player.game.stage.gte(1)},
     },
 }

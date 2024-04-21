@@ -6,7 +6,7 @@ function getResourceTitleID(id,res_name){
 	getByID(id+'TitleID',`
 		<div style="height: 2px"></div>
 		<div class="borderMax" id="`+res_name+`BorderMaxID" style="background: #999;"></div>
-		<tooltip onmouseenter='mouseLoad("`+res_name+`","TooltipLoadResource")' onmouseleave='document.getElementById("tooltip").style.display = "none";window.clearInterval(tooltipSel)' style="cursor: help;">
+		<tooltip onmouseenter='mouseLoad("`+res_name+`","TooltipLoadResource")' onmouseleave='document.getElementById("tooltip").style.display = "none";window.clearInterval(TOOLTIPSEL)' style="cursor: help;">
 			<div class="resource-title resource-name `+Class+`" style="color: `+colorText(res_name)[0]+`; position: relative;">
 			`+i18n(main['resource'][res_name]['name']())+`
 		</tooltip></div>
@@ -101,10 +101,10 @@ function resourceCompute(id){
 			if(main['resource'][id]['unlocked']!==undefined){
 				let unlocked = main['resource'][id]['unlocked']()
 				if(unlocked || unlocked==null){
-					player['resource'][id] = player['resource'][id].add(n(gain).mul(diff))
+					player['resource'][id] = player['resource'][id].add(n(gain).mul(DIFF))
 				}
 			}else{
-				player['resource'][id] = player['resource'][id].add(n(gain).mul(diff))
+				player['resource'][id] = player['resource'][id].add(n(gain).mul(DIFF))
 			}
 		}
 		if(main['resource'][id]['max']!==undefined){

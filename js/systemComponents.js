@@ -6,6 +6,14 @@ function componentAction(id){
     `)
 }
 
+function componentCraft(id){
+    getByID(id+"LoadCraftID",`
+    <tooltip `+tooltipLoad(id,'TooltipLoadCraft')+`>
+        <button id="craft`+id+`ButtonID" class="cold" onclick="getCraftClick('`+id+`')">`+main['craft'][id]['name']()+`</button>
+    </tooltip>
+    `)
+}
+
 function componentBuilding(id){
     let number = `(`+player['building'][id]+`)`
     if(main['building'][id]['instant']!==undefined){
@@ -38,14 +46,6 @@ function componentBuilding(id){
     if(resCan){
         removeCss(id+"BuildingButtonID",'res')
     }
-}
-
-function componentCraft(id){
-    getByID(id+"LoadCraftID",`
-    <tooltip `+tooltipLoad(id,'TooltipLoadCraft')+`>
-        <button id="craft`+id+`ButtonID" class="cold" onclick="getCraftClick('`+id+`')">`+main['craft'][id]['name']()+`</button>
-    </tooltip>
-    `)
 }
 
 function componentCitizens(id){

@@ -2,6 +2,7 @@ function changeCitizens(id,type){
     if(type=="add" && player.citizens.unemployed.gte(1)){
         player.citizens[id] = player.citizens[id].add(1)
     }else if(type=="sub"){
+        player.citizens['unemployed'] = player.citizens['unemployed'].add(1)
         player.citizens[id] = player.citizens[id].sub(1).max(0)
     }
     componentCitizens(id)

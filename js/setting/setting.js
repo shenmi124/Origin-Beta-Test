@@ -16,7 +16,7 @@ var settings = {
 		boolean(){return true},
 		effect(){
 			if(player.setting.autoSave){
-				autoSaveTime -= (1 * diff)
+				autoSaveTime -= (1 * DIFF)
 				if(autoSaveTime<=0){
 					autoSaveTime = 60
 					save()

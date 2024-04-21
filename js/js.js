@@ -1,8 +1,3 @@
-var t=new Date()
-var timestart=new Date()
-var offlineTime=new Date()
-var diff=0
-
 function getBr(){
 	let width = document.getElementById('game').offsetWidth-document.getElementById('leftColumn').offsetWidth-document.getElementById('rightColumn').offsetWidth-16
 	let mid = Math.floor(width/206)
@@ -63,7 +58,7 @@ function dataDiff(){
 				player['action'][i+'Cooldown'] = n(0)
 			}
 
-			player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].add(n(autoSpeed).mul(diff))
+			player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].add(n(autoSpeed).mul(DIFF))
 
 			if(player['action'][i+'Cooldown'].gte(getActionCooldown(i))){
 				$(main['action'][i]['onClick'])
@@ -100,7 +95,7 @@ function dataDiff(){
 				player['craft'][i+'Cooldown'] = n(0)
 			}
 
-			player['craft'][i+'Cooldown'] = player['craft'][i+'Cooldown'].add(n(autoSpeed).mul(diff))
+			player['craft'][i+'Cooldown'] = player['craft'][i+'Cooldown'].add(n(autoSpeed).mul(DIFF))
 
 			if(player['craft'][i+'Cooldown'].gte(getCraftCooldown(i))){
 				$(main['craft'][i]['onClick'])
@@ -281,13 +276,13 @@ function getID(){
 }
 
 setInterval(function(){
-	t = new Date()
-	offlineTimeGain = n((Number(offlineTime.getTime())-player.data.offline)/1000)
-	player.data.offline = n((Number(t.getTime())))
-	diff = n(Math.min((Number(t.getTime())-timestart)/1000,1e100))
-	var offlineBoost = n(1).mul(player.data.devSpeed)
-	diff=diff.mul(offlineBoost)
-	timestart=t.getTime()
+	T = new Date()
+	var OFFLINETIMEGAIN = n((Number(OFFLINETIME.getTime())-player.data.offline)/1000)
+	player.data.offline = n((Number(T.getTime())))
+	DIFF = n(Math.min((Number(T.getTime())-TIMESTART)/1000,1e100))
+	var OFFLINEBOOST = n(1).mul(player.data.devSpeed)
+	DIFF=DIFF.mul(OFFLINEBOOST)
+	TIMESTART=T.getTime()
 	
 	getID()
 }, 50)

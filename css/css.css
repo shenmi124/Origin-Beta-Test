@@ -69,20 +69,6 @@ button.max:hover {
     padding: 0px;
 }
 
-fun {
-    margin-top: 10px;
-    font-size: 12px;
-    font-style: italic;
-    color: rgb(32, 51, 112);
-    display: block;
-    text-align: right;
-}
-
-tip {
-    font-size: 12px;
-    color: rgb(31, 70, 71);
-}
-
 tooltip {
     cursor: help;
 }

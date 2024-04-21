@@ -1,3 +1,11 @@
+var T = new Date()
+var TIMESTART = new Date()
+var OFFLINETIME = new Date()
+var DIFF = 0
+
+var VERSION = '<span style="font-family: cursive;">v0.6.4.1</span>'
+var VERSIONTIMES = n(1)
+
 function loadMain(){
 	let buttonStr = ''
 	for(let i in mainButton){
@@ -110,7 +118,7 @@ function loadBase(){
 	}
 	getByID('citizensLoadID',citizensStr)
 	for(let i in civics['citizens']){
-		getByID(i+'LoadCitizensID',`<a style="display: inline-flex" id="`+i+`CitizensNameLoadID"></a><a style="display: inline-flex"  id="`+i+`CitizensNumberLoadID">`)
+		getByID(i+'LoadCitizensID',`<a style="display: inline-flex" id="`+i+`CitizensNameLoadID"></a><a style="display: inline-flex" id="`+i+`CitizensNumberLoadID">`)
 		getByID(i+'CitizensNameLoadID',`<tooltip `+tooltipLoad(i,'TooltipLoadCitizens',null)+`>
 			<div style="display: inline-grid; width: 80px">
 				`+civics['citizens'][i]['name']()+`
@@ -125,10 +133,38 @@ function loadGame(){
 	Close('datePage')
 
 	getStage(null)
-	if(player.data.stage<=2){
+	if(player.game.stage.lte(2)){
 		addLog('这是一个新的存档,要<u style="color: #000" onclick="importSave()">导入</u>吗?','#888')
 	}
 	showTab('main')
+
+    for(let i in main['action']){
+        if(main['action'][i]['cooldown']!==undefined){
+			player.action[i+'Cooldown'] = n(0)
+        }
+    }
+    for(let i in main['craft']){
+        if(main['craft'][i]['cooldown']!==undefined){
+			player.craft[i+'Cooldown'] = n(0)
+        }
+    }
+}
+
+function loadVersion(){
+	getByID('version',VERSION)
+
+	if(player.data.version=='notplayed' && player.building.civics.eq(1)){
+		getStage(4)
+	}
+
+	if(player.data.version=='notplayed'){
+		player.data.version = VERSION
+		player.data.versiontimes = VERSIONTIMES
+	}else if(player.data.version!==VERSION){
+		player.data.version = version
+		player.data.versiontimes = VERSIONTIMES
+		addLog('游戏已更新至'+VERSION,'#888')
+	}
 }
 
 let loadingGame = function(){
@@ -138,6 +174,8 @@ let loadingGame = function(){
 	loadBase()
 
 	loadGame()
+
+	loadVersion()
 	
 	loadSetting()
 }
