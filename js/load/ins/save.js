@@ -63,15 +63,15 @@ function loader(place,item){
 }
 
 //本地存储player  key:存档id.以这个为索引读取/存储存档.请勿使用过于简单的key,防止混淆.多个key可以形成多存档机制.
-function save(key=thisKey){
+function save(){
     let saveStr = LZString.compressToBase64(JSON.stringify(player));
-    localStorage.setItem(key,saveStr)
+    localStorage.setItem(thisKey,saveStr)
 }
 //读取+解密player   会自动存储于saveObj中,可以直接跟着loader.
-function load(key=thisKey){
-    if(LZString.decompressFromBase64(localStorage.getItem(key))[0] != "{"){return}
+function load(){
+    if(LZString.decompressFromBase64(localStorage.getItem(thisKey))[0] != "{"){return}
     try{
-        saveObj = JSON.parse(LZString.decompressFromBase64(localStorage.getItem(key)))
+        saveObj = JSON.parse(LZString.decompressFromBase64(localStorage.getItem(thisKey)))
     }catch(err){
         console.log(err)
     }
@@ -86,13 +86,13 @@ function exportSave(){
     document.execCommand("copy");
     document.body.removeChild(el)
 }
-function importSave(saveStr = prompt("输入存档")){
+function importSave(saveStr=prompt("输入存档")){
     saveObj = JSON.parse(LZString.decompressFromBase64(saveStr))
-    localStorage.setItem(key,saveObj)
+    localStorage.setItem(thisKey,saveObj)
     window.location.reload()
 }
-function hardReset(key=thisKey){
+function hardReset(){
     player = null;
-    save(key);
+    save();
     window.location.reload();
 }

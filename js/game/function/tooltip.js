@@ -50,6 +50,30 @@ function tooltipResourceMul(boolean,name,base,mul,gainAll,id){
 	}
 }
 
+function tooltipResourceMax(name,base,maxAll,id){
+	if(maxAll.eq(getResourceBaseMax(id))){
+		maxAll = '<u>'+format(maxAll)+'</u>'
+	}else{
+		maxAll = format(maxAll)
+	}
+	return `<left><span>
+		<div style="width: 160px; display: table-cell"><green>+</green> `+name+`</div>
+		<div style="width: 160px; display: table-cell">+`+format(base)+`</div>`+maxAll+`
+	</span></left>`
+}
+
+function tooltipResourceMaxMul(name,base,mul,maxAll,id){
+	if(maxAll.eq(getResourceBaseMax(id))){
+		maxAll = '<u>'+format(maxAll)+'</u>'
+	}else{
+		maxAll = format(maxAll)
+	}
+	return `<left><span>
+		<div style="width: 160px; display: table-cell"><green>+</green> `+name+`</div>
+		<div style="width: 160px; display: table-cell">+`+format(base)+` <a style="font-size: small">×</a> `+formatWhole(mul)+`</div>`+maxAll+`
+	</span></left>`
+}
+
 function tooltip(id,id2){
 	if(id2=='TooltipLoadResource'){
 		let bas = ''
@@ -83,14 +107,12 @@ function tooltip(id,id2){
 								let gainBase = main['resource'][i]['effect']['gain']['add'][ig]()
 								let gainMul = player['resource'][i]
 								if(id==ig && !n(gainBase).mul(gainMul).eq(0)){
-									gainAll = gainAll.add(n(gainBase).mul(gainMul))
-									if(!n(gainBase).eq(0)){
-										if(n(gainBase).mul(gainMul).gt(0)){
-											gain += tooltipResourceMul(true,gainName,gainBase,gainMul,gainAll,id)
-										}else{
-											cost += tooltipResourceMul(false,gainName,gainBase,gainMul,gainAll,id)
-										}
+									if(n(gainBase).mul(gainMul).gt(0)){
+										gain += tooltipResourceMul(true,gainName,gainBase,gainMul,gainAll,id)
+									}else{
+										cost += tooltipResourceMul(false,gainName,gainBase,gainMul,gainAll,id)
 									}
+									gainAll = gainAll.add(n(gainBase).mul(gainMul))
 								}
 							}
 						}
@@ -106,14 +128,12 @@ function tooltip(id,id2){
 								let gainBase = main['building'][i]['effect']['gain']['add'][ig]()
 								let gainMul = player['building'][i]
 								if(id==ig && !n(gainBase).mul(gainMul).eq(0)){
-									gainAll = gainAll.add(n(gainBase).mul(gainMul))
-									if(!n(gainBase).eq(0)){
-										if(n(gainBase).mul(gainMul).gt(0)){
-											gain += tooltipResourceMul(true,gainName,gainBase,gainMul,gainAll,id)
-										}else{
-											cost += tooltipResourceMul(false,gainName,gainBase,gainMul,gainAll,id)
-										}
+									if(n(gainBase).mul(gainMul).gt(0)){
+										gain += tooltipResourceMul(true,gainName,gainBase,gainMul,gainAll,id)
+									}else{
+										cost += tooltipResourceMul(false,gainName,gainBase,gainMul,gainAll,id)
 									}
+									gainAll = gainAll.add(n(gainBase).mul(gainMul))
 								}
 							}
 						}
@@ -129,14 +149,12 @@ function tooltip(id,id2){
 								let gainBase = nc(civics['citizens'][i]['effect']['gain']['add'][ig]())
 								let gainMul = player.citizens[i]
 								if(id==ig && !n(gainBase).mul(gainMul).eq(0)){
-									gainAll = gainAll.add(n(gainBase).mul(gainMul))
-									if(!n(gainBase).eq(0)){
-										if(n(gainBase).mul(gainMul).gt(0)){
-											gain += tooltipResourceMul(true,gainName,gainBase,gainMul,gainAll,id)
-										}else{
-											cost += tooltipResourceMul(false,gainName,gainBase,gainMul,gainAll,id)
-										}
+									if(n(gainBase).mul(gainMul).gt(0)){
+										gain += tooltipResourceMul(true,gainName,gainBase,gainMul,gainAll,id)
+									}else{
+										cost += tooltipResourceMul(false,gainName,gainBase,gainMul,gainAll,id)
 									}
+									gainAll = gainAll.add(n(gainBase).mul(gainMul))
 								}
 							}
 						}
@@ -161,38 +179,28 @@ function tooltip(id,id2){
 			}
 		}
 		let max = ''
-		let maxNumber = n(0)
+		let maxAll = n(0)
 		if(main['resource'][id]['max']!==undefined){
-			max += "<hr><a style='font-size: 14px'>资源储存</a>"
-			maxNumber = maxNumber.add(main['resource'][id]['max']())
-			let now = format(maxNumber)
-			if(maxNumber.eq(getResourceBaseMax(id))){
-				now = '<u>'+format(maxNumber)+'</u>'
-			}else{
-				now = format(maxNumber)
-			}
-			if(!maxNumber.eq(0)){
-				max += `<left><span>
-					<div style="width: 160px; display: table-cell"><green>+</green> 基础</div>
-					<div style="width: 160px; display: table-cell">+`+format(main['resource'][id]['max']())+`</div>`+now+`
-				</span></left>`
+			maxAll = maxAll.add(main['resource'][id]['max']())
+			if(!maxAll.eq(0)){
+				let maxName = '基础'
+				let maxBase = main['resource'][id]['max']()
+				if(main['resource'][id]['maxTooltip']!==undefined){
+					maxName = main['resource'][id]['maxTooltip']()
+				}
+				max += tooltipResourceMax(maxName,maxBase,maxAll,id)
 			}
 			for(let i in main['resource']){
 				if(main['resource'][i]['effect']!==undefined){
 					if(main['resource'][i]['effect']['max']!==undefined){
-						for(let im in main['resource'][i]['effect']['max']){
-							if(id==im && !n(main['resource'][i]['effect']['max'][im]()).mul(player['resource'][i]).eq(0)){
-								maxNumber = maxNumber.add(n(main['resource'][i]['effect']['max'][im]()).mul(player['resource'][i]))
-								if(maxNumber.eq(getResourceBaseMax(id))){
-									now = '<u>'+format(maxNumber)+'</u>'
-								}else{
-									now = format(maxNumber)
-								}
-								if(!maxNumber.eq(0)){
-									max += `<left><span>
-										<div style="width: 160px; display: table-cell"><green>+</green> `+main['resource'][i]['name']()+`</div>
-										<div style="width: 160px; display: table-cell">+`+format(main['resource'][i]['effect']['max'][im]())+` <a style="font-size: small">×</a> `+formatWhole(player['resource'][i])+`</div>`+now+`
-									</span></left>`
+						if(main['resource'][i]['effect']['max']['add']!==undefined){
+							for(let im in main['resource'][i]['effect']['max']['add']){
+								let maxName = main['resource'][i]['name']()
+								let maxBase = main['resource'][i]['effect']['max']['add'][im]()
+								let maxMul = player['resource'][i]
+								if(id==im && !n(maxBase).mul(maxMul).eq(0)){
+									maxAll = maxAll.add(n(maxBase).mul(maxMul))
+									max += tooltipResourceMaxMul(maxName,maxBase,maxMul,maxAll,id)
 								}
 							}
 						}
@@ -202,28 +210,24 @@ function tooltip(id,id2){
 			for(let i in main['building']){
 				if(main['building'][i]['effect']!==undefined){
 					if(main['building'][i]['effect']['max']!==undefined){
-						for(let im in main['building'][i]['effect']['max']){
-							if(id==im && !n(main['building'][i]['effect']['max'][im]()).mul(player['building'][i]).eq(0)){
-								maxNumber = maxNumber.add(n(main['building'][i]['effect']['max'][im]()).mul(player['building'][i]))
-								if(maxNumber.eq(getResourceBaseMax(id))){
-									now = '<u>'+format(maxNumber)+'</u>'
-								}else{
-									now = format(maxNumber)
-								}
-								if(!maxNumber.eq(0)){
-									max += `<left><span>
-										<div style="width: 160px; display: table-cell"><green>+</green> `+main['building'][i]['name']()+`</div>
-										<div style="width: 160px; display: table-cell">+`+format(main['building'][i]['effect']['max'][im]())+` <a style="font-size: small">×</a> `+formatWhole(player['building'][i])+`</div>`+now+`
-									</span></left>`
+						if(main['building'][i]['effect']['max']['add']!==undefined){
+							for(let im in main['building'][i]['effect']['max']['add']){
+								let maxName = main['building'][i]['name']()
+								let maxBase = main['building'][i]['effect']['max']['add'][im]()
+								let maxMul = player['building'][i]
+								if(id==im && !n(maxBase).mul(maxMul).eq(0)){
+									maxAll = maxAll.add(n(maxBase).mul(maxMul))
+									max += tooltipResourceMaxMul(maxName,maxBase,maxMul,maxAll,id)
 								}
 							}
 						}
 					}
 				}
 			}
-			if(maxNumber.eq(0)){
+			if(maxAll.eq(0)){
 				max = ''
 			}
+			max = "<hr><a style='font-size: 14px'>资源储存</a>" + max
 		}
 		let num = ''
 		let numNumber = n(0)

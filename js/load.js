@@ -3,8 +3,8 @@ var TIMESTART = new Date()
 var OFFLINETIME = new Date()
 var DIFF = 0
 
-var VERSION = '<span style="font-family: cursive;">v0.6.4.1</span>'
-var VERSIONTIMES = n(1)
+var VERSION = 'v0.6.4.2'
+var VERSIONTIMES = n(2)
 
 function loadMain(){
 	let buttonStr = ''
@@ -153,7 +153,7 @@ function loadGame(){
 function loadVersion(){
 	getByID('version',VERSION)
 
-	if(player.data.version=='notplayed' && player.building.civics.eq(1)){
+	if(player.data.versiontimes.lte(1) && player.resource.citizens.gte(1)){
 		getStage(4)
 	}
 
@@ -161,9 +161,9 @@ function loadVersion(){
 		player.data.version = VERSION
 		player.data.versiontimes = VERSIONTIMES
 	}else if(player.data.version!==VERSION){
-		player.data.version = version
+		player.data.version = VERSION
 		player.data.versiontimes = VERSIONTIMES
-		addLog('游戏已更新至'+VERSION,'#888')
+		addLog('游戏已更新至<span style="font-family: cursive;">'+VERSION+'</span>','#888')
 	}
 }
 

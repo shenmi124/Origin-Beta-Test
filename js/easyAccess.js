@@ -65,9 +65,11 @@ function getResourceBaseMax(resource){
         for(let i in main['resource']){
             if(main['resource'][i]['effect']!==undefined){
                 if(main['resource'][i]['effect']['max']!==undefined){
-                    for(let im in main['resource'][i]['effect']['max']){
-                        if(resource==im){
-                            max = max.add(n(main['resource'][i]['effect']['max'][im]()).mul(player['resource'][i]))
+                    if(main['resource'][i]['effect']['max']['add']!==undefined){
+                        for(let im in main['resource'][i]['effect']['max']['add']){
+                            if(resource==im){
+                                max = max.add(n(main['resource'][i]['effect']['max']['add'][im]()).mul(player['resource'][i]))
+                            }
                         }
                     }
                 }
@@ -76,9 +78,11 @@ function getResourceBaseMax(resource){
         for(let i in main['building']){
             if(main['building'][i]['effect']!==undefined){
                 if(main['building'][i]['effect']['max']!==undefined){
-                    for(let im in main['building'][i]['effect']['max']){
-                        if(resource==im){
-                            max = max.add(n(main['building'][i]['effect']['max'][im]()).mul(player['building'][i]))
+                    if(main['building'][i]['effect']['max']['add']!==undefined){
+                        for(let im in main['building'][i]['effect']['max']['add']){
+                            if(resource==im){
+                                max = max.add(n(main['building'][i]['effect']['max']['add'][im]()).mul(player['building'][i]))
+                            }
                         }
                     }
                 }

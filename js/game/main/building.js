@@ -14,10 +14,12 @@ var MainBuilding = {
         costPower(){return n(0)},
         effect: {
             max:{
-                dirt(){return n(20)},
-                wood(){return n(20)},
-                stone(){return n(20)},
-                food(){return n(20)},
+                add: {
+                    dirt(){return n(20)},
+                    wood(){return n(20)},
+                    stone(){return n(20)},
+                    food(){return n(20)},
+                }
             }
         }
     },
@@ -30,8 +32,10 @@ var MainBuilding = {
         },
         costPower(){return n(0.1)},
         effect: {
-            max:{
-                citizens(){return n(1)},
+            max: {
+                add: {
+                    citizens(){return n(1)},
+                }
             }
         }
     },
