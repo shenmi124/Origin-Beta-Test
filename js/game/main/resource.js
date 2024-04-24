@@ -21,7 +21,9 @@ var MainResource = {
         unlockAction(){
             getStage(3)
             addLog('你招揽到了第一批原住民,看起来他们和普通的人类没什么区别,你也能与他们正常交流')
-            addLog('检查你的村庄选项卡','#888')
+            addLog('检查村庄选项卡','#888')
+            addLog('居民产生思想,但思想也会枯竭')
+            addLog('检查右侧的数据选项卡','#888')
         },
         unlocked(){return getResourceUnlocked('citizens')},
     },
@@ -29,6 +31,8 @@ var MainResource = {
         name(){return "思想"},
         color(){return 'rgb(186, 0, 192)'},
         gain(){return n(0)},
+        mul(){return n(1).div(player.resource.ideas.max(1).log(10).add(1))},
+        mulTooltip(){return '思想枯竭'},
         tooltip(){return '默默收集散落的想法...'},
         unlocked(){return getResourceUnlocked('citizens')},
     },

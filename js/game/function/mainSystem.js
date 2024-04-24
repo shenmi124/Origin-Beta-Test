@@ -27,14 +27,14 @@ function Build(id){
             let res = n(main['building'][id]['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['costPower']()).add(1)).sub(1)
             player['resource'][i] = player['resource'][i].sub(res)
         }
+        if(main['building'][id]['onBuy']!==undefined){
+            $(main['building'][id]['onBuy'])
+        }
         player['building'][id] = player['building'][id].add(1)
     }else{
         addLog(logs,'#888')
     }
 
-    if(main['building'][id]['onBuy']!==undefined){
-        $(main['building'][id]['onBuy'])
-    }
     getID()
     componentBuilding(id)
 }

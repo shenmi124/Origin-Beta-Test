@@ -13,6 +13,9 @@ var mainButton = {
     setting:{
         name(){return "设置"},
     },
+    data:{
+        name(){return "数据"},
+    },
 }
 
 var mainTab = {

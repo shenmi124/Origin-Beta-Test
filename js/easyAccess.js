@@ -1,7 +1,7 @@
 function NumberFix(){
 	for(i in main['resource']){
 		if(main['resource'][i]['max']!==undefined){
-			player['resource'][i] = player['resource'][i].min(getResourceBaseMax(i))
+			player['resource'][i] = player['resource'][i].min(getResourceMaxBase(i))
 			getResourceID(i)
 		}
 	}
@@ -11,7 +11,11 @@ function nc(Decimal){
     return n(Decimal).mul(getEfficient('happiness'))
 }
 
-function getResourceBaseGain(resource){
+function getResourceGain(researce){
+    return n(getResourceGainBase(researce)).mul(getResourceGainMul(researce))
+}
+
+function getResourceGainBase(resource){
     let gain = n(0)
     if(main['resource'][resource]['gain']!==undefined){
         gain = gain.add(main['resource'][resource]['gain']())
@@ -58,7 +62,30 @@ function getResourceBaseGain(resource){
     return gain
 }
 
-function getResourceBaseMax(resource){
+function getResourceGainMul(resource){
+    let gain = n(1)
+    if(main['resource'][resource]['gain']!==undefined){
+        if(main['resource'][resource]['mul']!==undefined){
+            gain = gain.mul(n(main['resource'][resource]['mul']()))
+        }
+        for(let i in main['resource']){
+            if(main['resource'][i]['effect']!==undefined){
+                if(main['resource'][i]['effect']['gain']!==undefined){
+                    if(main['resource'][i]['effect']['gain']['mul']!==undefined){
+                        for(let im in main['resource'][i]['effect']['gain']['mul']){
+                            if(resource==im){
+                                gain = gain.mul(n(main['resource'][i]['effect']['gain']['mul'][im]()).mul(player['resource'][i]).add(1))
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return gain
+}
+
+function getResourceMaxBase(resource){
     let max = n(0)
     if(main['resource'][resource]['max']!==undefined){
         max = max.add(main['resource'][resource]['max']())
@@ -185,7 +212,7 @@ function getBuildGain(building,resource){
 }
 
 function getBuildMax(building,resource){
-    return n(main['building'][building]['effect']['max'][resource]()).mul(player['building'][building])
+    return n(main['building'][building]['effect']['max']['add'][resource]()).mul(player['building'][building])
 }
 
 function getTooltipLoot(resource,effect,start=n(0),type='research'){

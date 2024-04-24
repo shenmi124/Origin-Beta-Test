@@ -13,7 +13,7 @@ let MainCraft = {
             getStage(4)
         },
         cooldown(){return n(20)},
-        canClick(){return player.action.explore.citizens.gte(1) && player.resource.food.gt(0) && player.resource.citizens.lt(getResourceBaseMax('citizens'))},
+        canClick(){return player.action.explore.citizens.gte(1) && player.resource.food.gt(0) && player.resource.citizens.lt(getResourceMaxBase('citizens'))},
         unlocked(){return player.action.explore.citizensFined==true},
     },
     collect:{

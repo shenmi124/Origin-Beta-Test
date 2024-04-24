@@ -128,7 +128,7 @@ tooltip {
 
 .maintab {
     transition-duration: 0.2s;
-    padding-right: 8px;
+    padding-right: 2px;
     font-size: 17px;
 }
 
@@ -139,7 +139,14 @@ tooltip {
 .maintab.setting {
     float: right;
     padding-right: 0px;
+    padding-left: 2px;
     color: #888;
+}
+
+.maintab.data {
+    float: right;
+    padding-right: 0px;
+    padding-left: 2px;
 }
 
 .canvas {

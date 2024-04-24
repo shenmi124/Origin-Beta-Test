@@ -88,7 +88,7 @@ function dataDiff(){
 			let autoSpeed = n(0)
 			autoSpeed = autoSpeed.add(getCraftAuto(i))
 			if(hasCraftClick(i)){
-				autoSpeed = autoSpeed.add(getEfficient('craft'))
+				autoSpeed = autoSpeed.add(getEfficient('action'))
 			}
 			if(!getCraftCanClick(i)){
 				autoSpeed = n(0)
@@ -126,7 +126,7 @@ function dataDiff(){
 		for(let i in main['building'][id]['cost']){
 			let res = n(main['building'][id]['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['costPower']()).add(1)).sub(1)
 			if(n(main['resource'][i]['max']!==undefined)){
-				if(n(getResourceBaseMax(i)).lt(res)){
+				if(n(getResourceMaxBase(i)).lt(res)){
 					addedCss(id+"BuildingButtonID",'max')
 					maxCan = false
 				}
@@ -162,7 +162,7 @@ function dataDiff(){
 		for(i in mainResearch['main'][id]['cost'][research]){
 			let res = mainResearch['main'][id]['cost'][research][i]()
 			if(main['resource'][i]['max']!==undefined){
-				if(n(getResourceBaseMax(i)).lt(res)){
+				if(n(getResourceMaxBase(i)).lt(res)){
 					maxRsearch = false
 				}
 			}

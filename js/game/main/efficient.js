@@ -5,12 +5,12 @@ let efficient = {
         unlocked(){return true},
         food:{
             name(){return '缺少食物'},
-            effect(){return n(-25)},
+            effect(){return n(-20)},
             active(){return player.resource.food.lte(0) && player.game.stage.lte(3)}
         },
         home:{
             name(){return '缺少定居地'},
-            effect(){return n(-25)},
+            effect(){return n(-20)},
             active(){return player.building.civics.eq(0)}
         },
         citizens:{
@@ -29,7 +29,7 @@ let efficient = {
         },
         food:{
             name(){return '缺少食物'},
-            effect(){return n(-25)},
+            effect(){return n(-20)},
             active(){return player.resource.food.lte(0) && player.game.stage.gte(4)}
         },
     }
