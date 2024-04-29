@@ -4,7 +4,7 @@ var mainButton = {
     },
     civics:{
         name(){return '村庄'},
-        unlocked(){return player.game.stage.gte(5)}
+        unlocked(){return player.game.stage.gte(4)}
     },
     research:{
         name(){return "研究"},
@@ -43,4 +43,5 @@ var main = {
 
 var civics = {
     citizens: CivicsCitizens,
+    jobs: CivicsJobs,
 }

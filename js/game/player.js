@@ -7,9 +7,8 @@ function calcPlayer(){
 
 function dataLoader(){
     loader(['data','offline'],n(0))
-    loader(['data','offline'],n(0))
     loader(['data','devSpeed'],n(1))
-    loader(['data','version'],'notplayed')
+    loader(['data','version'],null)
     loader(['data','versiontimes'],n(0))
 }
 

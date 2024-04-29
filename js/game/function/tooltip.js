@@ -1,6 +1,6 @@
 var TOOLTIPSEL
 
-function tooltipLoad(id,id2,onClick=`onclick='document.getElementById("tooltip").style.display="none"`){
+function loadTooltip(id,id2,onClick=`onclick='document.getElementById("tooltip").style.display="none"`){
 	return `onmouseenter='mouseLoad("`+id+`","`+id2+`")' onmouseleave='document.getElementById("tooltip").style.display="none";window.clearInterval(TOOLTIPSEL)'`+onClick+`;window.clearInterval(TOOLTIPSEL)'`
 }
 
@@ -113,7 +113,7 @@ function tooltipResourceBaseMaxMul(name,base,mul,maxAll,id){
 }
 
 function tooltip(id,id2){
-	if(id2=='TooltipLoadResource'){
+	if(id2=='LoadTooltipResource'){
 		let bas = ''
 		if(main['resource'][id]['tooltip']!=undefined){
 			bas = '<hr>'+main['resource'][id]['tooltip']()
@@ -327,7 +327,7 @@ function tooltip(id,id2){
 		return getTooltipDoc(colorText(id)[1]+"<small>"+bas+gain+max+num+time+'</small>')
 	}
 
-	if(id2=='TooltipLoadAction'){
+	if(id2=='LoadTooltipAction'){
 		let name = '未命名'
 		if(main['action'][id]['name']!=undefined){
 			name = main['action'][id]['name']()
@@ -339,7 +339,7 @@ function tooltip(id,id2){
 		}
     }
 
-	if(id2=='TooltipLoadBuilding'){
+	if(id2=='LoadTooltipBuilding'){
 		let name = '未命名'
 		let bas = ''
 		let instant = false
@@ -423,7 +423,7 @@ function tooltip(id,id2){
 		return getTooltipDoc(name+amount+'<small>'+bas+cost+gainhr+gain+maxhr+max+'</samll>')
 	}
 
-	if(id2=='TooltipLoadCraft'){
+	if(id2=='LoadTooltipCraft'){
 		let name = '未命名'
 		if(main['craft'][id]['name']!=undefined){
 			name = main['craft'][id]['name']()
@@ -435,7 +435,7 @@ function tooltip(id,id2){
 		}
 	}
 
-	if(id2=='TooltipLoadCitizens'){
+	if(id2=='LoadTooltipCitizens'){
 		let too = ''
 		let action = ''
 		let actionhr = ''
@@ -475,6 +475,13 @@ function tooltip(id,id2){
 		}
 		return getTooltipDoc(civics['citizens'][id]['name']()+'<small>'+too+actionhr+action+gainhr+'<left>'+gain+'</left>')
 	}
+	if(id2=='LoadTooltipCitizenJobs'){
+		let too = ''
+		if(civics['jobs'][id]['tooltip']!==undefined){
+			too += '<hr>'+civics['jobs'][id]['tooltip']()
+		}
+		return getTooltipDoc(civics['jobs'][id]['name']()+'<small>'+too)
+	}
 
 	if(id2=='efficient'){
 		let name = ''
@@ -512,7 +519,7 @@ function tooltip(id,id2){
 		return getTooltipDoc(name+'<hr><small>'+too+'<left><li-hid>-> 总计: '+formatScientific(n(getEfficient(id)).mul(100),1)+'%</left></small>')
 	}
 	
-	if(id2=='TooltipLoadResearch'){
+	if(id2=='LoadTooltipResearch'){
 		let cost = '<left><hr>'
 		let res = Number(player['research'][id])
 		for(i in mainResearch['main'][id]['cost'][res]){

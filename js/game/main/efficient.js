@@ -27,6 +27,14 @@ let efficient = {
             name(){return '人口'},
             effect(){return n(0).sub(player.resource.citizens)},
         },
+        explorer:{
+            name(){return '开阔者'},
+            effect(){return n(0).sub(player.citizens.explorer)},
+        },
+        collector:{
+            name(){return '收集者'},
+            effect(){return n(0).sub(player.citizens.collector).mul(3)},
+        },
         food:{
             name(){return '缺少食物'},
             effect(){return n(-20)},

@@ -28,6 +28,10 @@ button {
     margin-bottom: 5px;
 }
 
+:focus-visible {
+    outline: none;
+}
+
 button:hover {
     background: rgb(219, 219, 219);
 }
@@ -61,12 +65,9 @@ button.max:hover {
 .citizens {
     width: 30px;
     height: 20px;
-    border-top: 1px #666;
-    border-bottom: 1px #666;
-    background-color: rgb(245, 245, 245);
-    border-radius: 0%;
-    margin: 0px;
-    padding: 0px;
+    border-radius: 0px;
+    margin-bottom: 0px;
+    border: 0;
 }
 
 tooltip {

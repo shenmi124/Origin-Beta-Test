@@ -245,30 +245,11 @@ function getID(){
 		}
 	}
 
-	getByID('CitizensNumber',formatWhole(player.resource.citizens))
 	for(let i in civics['citizens']){
 		let unlocked = true
 		if(civics['citizens'][i]['unlocked']!==undefined){
 			unlocked = civics['citizens'][i]['unlocked']()
 		}
-		if(!unlocked){
-			player.citizens[i] = n(0)
-		}
-		if(civics['citizens'][i]['number']!==undefined){
-			player.citizens[i] = n(civics['citizens'][i]['number']())
-		}
-		if(n(getEmployedsNumber()).gt(player.resource.citizens)){
-			for(let ic in civics['citizens']){
-				if(ic=='unemployed'){
-					continue
-				}
-				if(player.citizens[ic].gte(1)){
-					player.citizens[ic] = player.citizens[ic].sub(1)
-					componentCitizens(ic)
-				}
-			}
-		}
-		componentCitizens('unemployed')
 		unlockedLoad(i+'LoadCitizensID',unlocked)
 	}
 

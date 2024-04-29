@@ -9,6 +9,7 @@ let MainCraft = {
         onClick(){
             player.resource.citizens = player.resource.citizens.add(1)
             player.action.explore.citizens = player.action.explore.citizens.sub(1)
+            CitizensFix()
             
             getStage(4)
         },

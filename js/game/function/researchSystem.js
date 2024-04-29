@@ -39,7 +39,7 @@ function researchClick(id){
     }
 
     getByID(id+'MainResearchDivID',`
-        <tooltip `+tooltipLoad(id,'TooltipLoadResearch')+` style="text-align: -webkit-center" class="MainResearch">
+        <tooltip `+loadTooltip(id,'LoadTooltipResearch')+` style="text-align: -webkit-center" class="MainResearch">
             <button id="`+id+`MainResearchButtonID" class="MainResearch Button" onclick="researchClick('`+id+`')"></button>
         </tooltip>
         <div style="text-align: -webkit-center; font-size: 10px">

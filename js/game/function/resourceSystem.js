@@ -6,7 +6,7 @@ function getResourceTitleID(id,res_name){
 	getByID(id+'TitleID',`
 		<div style="height: 2px"></div>
 		<div class="borderMax" id="`+res_name+`BorderMaxID" style="background: #999;"></div>
-		<tooltip onmouseenter='mouseLoad("`+res_name+`","TooltipLoadResource")' onmouseleave='document.getElementById("tooltip").style.display = "none";window.clearInterval(TOOLTIPSEL)' style="cursor: help;">
+		<tooltip onmouseenter='mouseLoad("`+res_name+`","LoadTooltipResource")' onmouseleave='document.getElementById("tooltip").style.display = "none";window.clearInterval(TOOLTIPSEL)' style="cursor: help;">
 			<div class="resource-title resource-name `+Class+`" style="color: `+colorText(res_name)[0]+`; position: relative;">
 			`+i18n(main['resource'][res_name]['name']())+`
 		</tooltip></div>

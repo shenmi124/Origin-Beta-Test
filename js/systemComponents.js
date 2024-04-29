@@ -1,6 +1,6 @@
 function componentAction(id){
 	getByID(id+"LoadActionID",`
-	<tooltip `+tooltipLoad(id,'TooltipLoadAction')+`>
+	<tooltip `+loadTooltip(id,'LoadTooltipAction')+`>
 		<button id="action`+id+`ButtonID" class="cold" onclick="getActionClick('`+id+`')">`+main['action'][id]['name']()+`</button>
 	</tooltip>
     `)
@@ -8,7 +8,7 @@ function componentAction(id){
 
 function componentCraft(id){
     getByID(id+"LoadCraftID",`
-    <tooltip `+tooltipLoad(id,'TooltipLoadCraft')+`>
+    <tooltip `+loadTooltip(id,'LoadTooltipCraft')+`>
         <button id="craft`+id+`ButtonID" class="cold" onclick="getCraftClick('`+id+`')">`+main['craft'][id]['name']()+`</button>
     </tooltip>
     `)
@@ -20,7 +20,7 @@ function componentBuilding(id){
         number = main['building'][id]['instant']() ? `` : `(`+player['building'][id]+`)`
     }
     getByID(id+"LoadBuildingID",`
-    <tooltip `+tooltipLoad(id,'TooltipLoadBuilding')+`>
+    <tooltip `+loadTooltip(id,'LoadTooltipBuilding')+`>
         <button id="`+id+`BuildingButtonID" onclick="Build('`+id+`')">`+main['building'][id]['name']()+number+`</button>
     </tooltip>
     `)
@@ -48,19 +48,16 @@ function componentBuilding(id){
     }
 }
 
-function componentCitizens(id){
-	let component = ''
-	let al = false
-	if(civics['citizens'][id]['allocated']!==undefined){
-		al = civics['citizens'][id]['allocated']()
-	}
-	if(al){
-		component += `<a style="display: inline-grid; width: 40px;" id="`+id+`Citizens"></a>`
-		component += `<button onclick="changeCitizens('`+id+`','sub')" class="citizens"><</button>`
-		component += `<button onclick="changeCitizens('`+id+`','add')" class="citizens">></button>`
-	}else{
-		component += `<a style="display: inline-grid; width: 40px;" id="`+id+`Citizens"></a>`
-	}
-	getByID(id+'CitizensNumberLoadID',component)
-    getCitizens(id)
+function componentCitizens(id){		
+    getByID(id+'CitizensNameLoadID',`<tooltip `+loadTooltip(id,'LoadTooltipCitizens',null)+`><div style="display: inline-grid; width: 80px">`+civics['citizens'][id]['name']()+`</div></tooltip>`)
+    getByID(id+'CitizensAllocatedLoadID','<div style="display: inline-grid; width: 30px">'+formatWhole(player['citizens'][id])+'</div>')
+    getByID(id+'CitizensButtonLoadID',`
+        <div style="display: inline-grid; width: 30px"><button onclick="allocateCitizens('`+id+`', -1); CitizensFix()" style="display: inline-grid;" class="citizens"> < </button></div>
+        <div style="display: inline-grid; width: 30px"><button onclick="allocateCitizens('`+id+`', 1); CitizensFix()" style="display: inline-grid;" class="citizens"> > </button></div>
+    `)
+}
+
+function componentCitizenJobs(id){		
+    getByID(id+'CitizenJobsNameLoadID',`<tooltip `+loadTooltip(id,'LoadTooltipCitizenJobs',null)+`><div style="display: inline-grid; width: 80px">`+civics['jobs'][id]['name']()+`</div></tooltip>`)
+    getByID(id+'CitizenJobsAllocatedLoadID',formatWhole(getUnemployedJobs(id)))
 }

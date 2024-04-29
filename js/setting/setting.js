@@ -40,13 +40,13 @@ var settings = {
 			exportSave()
 		},
 	},
-	/*import:{
+	import:{
 		name(){return '导入'},
 		type(){return 'click'},
 		onClick(){
 			importSave()
 		},
-	},*/
+	},
 	hardReset:{
 		name(){return '<red>硬重置<a id="hardResetClick"></a></red>'},
 		type(){return 'click'},

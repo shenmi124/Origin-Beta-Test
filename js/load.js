@@ -3,8 +3,8 @@ var TIMESTART = new Date()
 var OFFLINETIME = new Date()
 var DIFF = 0
 
-var VERSION = 'v0.6.5'
-var VERSIONTIMES = n(2)
+var VERSION = 'v0.7'
+var VERSIONTIMES = n(3)
 
 function loadMain(){
 	let buttonStr = ''
@@ -27,8 +27,8 @@ function loadMain(){
 
 function loadBase(){
 	let resourceStr = `
-		<div id="actionEfficientID" style="font-size: 12px"><tooltip `+tooltipLoad(`action`,`efficient`,null)+`>效率</tooltip>: <span id="actionEfficient"></span></div>
-		<div id="happinessEfficientID" style="font-size: 12px"><tooltip `+tooltipLoad(`happiness`,`efficient`,null)+`>幸福度</tooltip>: <span id="happinessEfficient"></span></div>
+		<div id="actionEfficientID" style="font-size: 12px"><tooltip `+loadTooltip(`action`,`efficient`,null)+`>效率</tooltip>: <span id="actionEfficient"></span></div>
+		<div id="happinessEfficientID" style="font-size: 12px"><tooltip `+loadTooltip(`happiness`,`efficient`,null)+`>幸福度</tooltip>: <span id="happinessEfficient"></span></div>
 		<br>
 	`
 	for(let i in main['resource']){
@@ -88,7 +88,7 @@ function loadBase(){
 	for(let i in mainResearch['main']){
 		addByID(mainResearch['main'][i]['map']()+'LoadMainResearch',`
 			<div id="`+i+`MainResearchDivID" style="display: inline-grid; margin-left: 40px; margin-right: 40px;">
-				<tooltip `+tooltipLoad(i,'TooltipLoadResearch')+` style="text-align: -webkit-center" class="MainResearch">
+				<tooltip `+loadTooltip(i,'LoadTooltipResearch')+` style="text-align: -webkit-center" class="MainResearch">
 					<button id="`+i+`MainResearchButtonID" class="MainResearch Button" onclick="researchClick('`+i+`')"></button>
 				</tooltip>
 				<div style="text-align: -webkit-center; font-size: 11px">
@@ -112,20 +112,24 @@ function loadBase(){
 	canDraw = true
 
 	let citizensStr = ''
-	citizensStr += `居民 <a id="CitizensNumber" style="color: grey"></a><br>`
+	citizensStr += `居民 <a id="CitizensTip" style="color: grey"></a><br>`
 	for(let i in civics['citizens']){
 		citizensStr += '<div style="transition-duration: 1s; margin-top: 3px; margin-left: 10px" id="'+i+'LoadCitizensID"></div>'
 	}
+	citizensStr += `<br><a id="CitizenJobs">*未分配</a><br>`
+	for(let i in civics['jobs']){
+		citizensStr += '<div style="transition-duration: 1s; margin-top: 3px; margin-left: 10px" id="'+i+'LoadCitizenJobsID"></div>'
+	}
 	getByID('citizensLoadID',citizensStr)
 	for(let i in civics['citizens']){
-		getByID(i+'LoadCitizensID',`<a style="display: inline-flex" id="`+i+`CitizensNameLoadID"></a><a style="display: inline-flex" id="`+i+`CitizensNumberLoadID">`)
-		getByID(i+'CitizensNameLoadID',`<tooltip `+tooltipLoad(i,'TooltipLoadCitizens',null)+`>
-			<div style="display: inline-grid; width: 80px">
-				`+civics['citizens'][i]['name']()+`
-			</div>
-		</tooltip>`)
+		getByID(i+'LoadCitizensID',`<a style="display: inline-flex" id="`+i+`CitizensNameLoadID"></a><a style="display: inline-flex" id="`+i+`CitizensAllocatedLoadID"></a><a style="display: inline-flex" id="`+i+`CitizensButtonLoadID"></a>`)
 		componentCitizens(i)
 	}
+	for(let i in civics['jobs']){
+		getByID(i+'LoadCitizenJobsID',`<a style="display: inline-flex" id="`+i+`CitizenJobsNameLoadID"></a><a style="display: inline-flex" id="`+i+`CitizenJobsAllocatedLoadID"></a>`)
+		componentCitizenJobs(i)
+	}
+	getByID('CitizensTip',CitizensTip())
 }
 
 function loadGame(){
@@ -157,7 +161,7 @@ function loadVersion(){
 		getStage(4)
 	}
 
-	if(player.data.version=='notplayed'){
+	if(player.data.version==null){
 		player.data.version = VERSION
 		player.data.versiontimes = VERSIONTIMES
 	}else if(player.data.version!==VERSION){
