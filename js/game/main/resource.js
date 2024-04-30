@@ -12,8 +12,8 @@ var MainResource = {
         effect: {
             gain: {
                 add: {
-                    ideas(){return n(1)},
-                    food(){return n(-0.05)}
+                    ideas(){return n(1).mul(getEfficient('happiness'))},
+                    food(){return n(-0.1).mul(getEfficient('happiness').max(1))}
                 }
             }
         },
@@ -31,7 +31,7 @@ var MainResource = {
         name(){return "思想"},
         color(){return 'rgb(186, 0, 192)'},
         gain(){return n(0)},
-        mul(){return n(1).div(player.resource.ideas.max(1).log(10).add(1))},
+        mul(){return n(1).div(player.resource.ideas.pow(0.5).add(1))},
         mulTooltip(){return '思想枯竭'},
         tooltip(){return '默默收集散落的想法...'},
         unlocked(){return getResourceUnlocked('citizens')},
@@ -69,7 +69,7 @@ var MainResource = {
         name(){return "食物"},
         color(){return '#cf7004'},
         max(){return n(20)},
-        gain(){return n(-0.2)},
+        gain(){return n(-0.1)},
         gainTooltip(){return '食用'},
         tooltip(){return '在这样荒芜的地方植物确实是不常见的东西'},
         unlockAction(){
