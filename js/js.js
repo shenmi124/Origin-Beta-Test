@@ -1,7 +1,7 @@
 function getBr(){
 	let width = document.getElementById('game').offsetWidth-document.getElementById('leftColumn').offsetWidth-document.getElementById('rightColumn').offsetWidth-16
 	let mid = Math.floor(width/206)
-	document.getElementById('midColumn').style.width = mid*206 + 'px'
+	document.getElementById('midColumn').style.width = mid*206+16 + 'px'
 
 	let u = false
 	for(let maini in mainTab){

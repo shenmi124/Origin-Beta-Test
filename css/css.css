@@ -12,7 +12,7 @@ body {
 
 *::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: rgb(182, 182, 182);
+    background-color: #ddd;
 }
 
 button {
