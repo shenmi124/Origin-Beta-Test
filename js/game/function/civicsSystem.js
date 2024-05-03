@@ -7,6 +7,9 @@ function allocateCitizens(type,allocate){
     }
     if(canAllocate){
         player['citizens'][type] = player['citizens'][type].add(allocate).max(0)
+        if(civics['citizens'][type]['action']!==undefined){
+            $(civics['citizens'][type]['action'])
+        }
     }else{
         addLog('*无人任职','#888')
     }

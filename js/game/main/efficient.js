@@ -29,11 +29,11 @@ let efficient = {
         },
         explorer:{
             name(){return '开阔者'},
-            effect(){return n(0).sub(player.citizens.explorer)},
+            effect(){return civics['citizens']['explorer']['effect']['other']['happiness']()},
         },
         collector:{
             name(){return '收集者'},
-            effect(){return n(0).sub(player.citizens.collector).mul(3)},
+            effect(){return civics['citizens']['collector']['effect']['other']['happiness']()},
         },
         food:{
             name(){return '缺少食物'},

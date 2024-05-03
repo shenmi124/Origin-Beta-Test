@@ -448,15 +448,15 @@ function tooltip(id,id2){
 			if(civics['citizens'][id]['effect']['action']!==undefined){
 				for(let ia in civics['citizens'][id]['effect']['action']){
 					actionhr = '<hr>'
-					action += `<grey>每位`+civics['citizens'][id]['name']()+`将以`+format(civics['citizens'][id]['effect']['action'][ia]())+`的效率去自动进行`+main['action'][ia]['name']()+`</grey>`
-					action += `<br>(总计:`+format(nc(civics['citizens'][id]['effect']['action'][ia]()).mul(getEfficient('action')).mul(player.citizens[id]))+`)`
+					action += `<grey>每位`+civics['citizens'][id]['name']()+`将以`+format(civics['citizens'][id]['effect']['action'][ia]())+`的效率去自动进行`+main['action'][ia]['name']()+`</grey><br>`
+					action += `(总计:`+format(nc(civics['citizens'][id]['effect']['action'][ia]()).mul(getEfficient('action')).mul(player.citizens[id]))+`)<br>`
 				}
 			}
 			if(civics['citizens'][id]['effect']['craft']!==undefined){
 				for(let ic in civics['citizens'][id]['effect']['craft']){
 					actionhr = '<hr>'
-					action += `<grey>每位`+civics['citizens'][id]['name']()+`将以`+format(civics['citizens'][id]['effect']['craft'][ic]())+`的效率去自动进行`+main['craft'][ic]['name']()+`</grey>`
-					action += `<br>(总计:`+format(nc(civics['citizens'][id]['effect']['craft'][ic]()).mul(getEfficient('craft')).mul(player.citizens[id]))+`)`
+					action += `<grey>每位`+civics['citizens'][id]['name']()+`将以`+format(civics['citizens'][id]['effect']['craft'][ic]())+`的效率去自动进行`+main['craft'][ic]['name']()+`</grey><br>`
+					action += `(总计:`+format(nc(civics['citizens'][id]['effect']['craft'][ic]()).mul(getEfficient('craft')).mul(player.citizens[id]))+`)<br>`
 				}
 			}
 			if(civics['citizens'][id]['effect']['gain']!==undefined){

@@ -1,7 +1,7 @@
 let MainCraft = {
     citizens:{
         name(){return '原住民'},
-        max(){return n(2)},
+        max(){return n(2).mul(civics['citizens']['explorer']['effect']['other']['memory']()).floor()},
         tooltip(){
             let times = '<hr>已标记: '+formatWhole(player.action.explore.citizens,0)+' <a style="color: #888">/ '+formatWhole(this.max(),0)+' (遗忘)</a>'
             return '他们为你工作,而你给与他们住所与食物<br>公平的交易<hr><grey>你需要提供食物与住所,否则他们不会跟随你</grey>'+times
@@ -19,7 +19,7 @@ let MainCraft = {
     },
     collect:{
         name(){return '收集'},
-        max(){return n(5)},
+        max(){return n(5).mul(civics['citizens']['explorer']['effect']['other']['memory']()).floor()},
         gain:{
             dirt:{
                 probability(){return n(100)},
@@ -85,7 +85,7 @@ let MainCraft = {
     },
     stone:{
         name(){return '露天石料'},
-        max(){return n(10)},
+        max(){return n(10).mul(civics['citizens']['explorer']['effect']['other']['memory']()).floor()},
         gain:{
         },
         tooltip(){
@@ -121,7 +121,7 @@ let MainCraft = {
     },
     drop:{
         name(){return '树枝'},
-        max(){return n(4)},
+        max(){return n(4).mul(civics['citizens']['explorer']['effect']['other']['memory']()).floor()},
         gain:{
             wood:{
                 probability(){return n(100)},
@@ -163,7 +163,7 @@ let MainCraft = {
     },
     harvest:{
         name(){return '收割'},
-        max(){return n(5)},
+        max(){return n(5).mul(civics['citizens']['explorer']['effect']['other']['memory']()).floor()},
         gain:{
             food:{
                 probability(){return n(100)},
@@ -206,7 +206,7 @@ let MainCraft = {
     },
     beast:{
         name(){return '野兽'},
-        max(){return n(20)},
+        max(){return n(20).mul(civics['citizens']['explorer']['effect']['other']['memory']()).floor()},
         gain:{
             food:{
                 probability(){return n(100)},

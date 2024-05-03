@@ -14,3 +14,11 @@ function gameDiff(){
 function gameLoader(){
     loader(['game','time'],n(0))
 }
+
+function GameCraftFix(){
+    for(let i in main['action']['explore']['gain']){
+        if(!main['action']['explore']['gain'][i]['instant']()){
+            player['action']['explore'][i] = player['action']['explore'][i].min(main['craft'][i]['max']())
+        }
+    }
+}

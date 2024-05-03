@@ -39,7 +39,7 @@ var MainAction = {
             if(find[0]!==undefined){
                 let t = ''
                 for(let i in find){
-                    t += (i!=0 ? ' ' : '')+main['action']['explore']['gain'][find[i]]['name']()
+                    t += (i!==0 ? ' ' : '')+main['action']['explore']['gain'][find[i]]['name']()
                 }
                 addLog('*你找到了一些'+t+'*','#888')
             }
@@ -55,7 +55,7 @@ var MainAction = {
                 addLog('*什么都没找到*','#888')
             }
 
-            player.resource.explore = player.resource.explore.add(n(Math.random() * 100))
+            player.resource.explore = player.resource.explore.add(n(10).pow(n(Math.random() * 2)))
         },
         gain:{
             citizens: {
