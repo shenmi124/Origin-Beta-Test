@@ -6,8 +6,7 @@ body {
 }
 
 *::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 4px;
 }
 
 *::-webkit-scrollbar-thumb {
@@ -155,28 +154,6 @@ tooltip {
     left: 0;
     position: absolute;
     z-index: -999;
-}
-
-.border {
-    width:430px;
-    height:2px;
-    position: absolute;
-    transition-duration: .2s;
-}
-
-.borderType {
-    width:432px;
-    height:2px;
-    position: absolute;
-    transition-duration: .2s;
-}
-
-.borderMax {
-    width: 2px;
-    height: 20px;
-    position: absolute;
-    transition-duration: .2s;
-    left: 430px;
 }
 
 .MainResearch {

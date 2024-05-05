@@ -35,7 +35,6 @@ var mainTab = {
 
 var main = {
     resource: MainResource,
-
     action: MainAction,
     building: MainBuilding,
     craft: MainCraft,

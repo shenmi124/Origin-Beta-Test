@@ -20,14 +20,14 @@ function getTooltipDoc(id){
 }
 
 function Close(id){
-	if(document.getElementById(id)!=null){
-		document.getElementById(id).style.display = "none"
+	if(document.getElementById(id)!==null){
+		document.getElementById(id).style.display = 'none'
 	}
 }
 
-function Open(id){
-	if(document.getElementById(id)!=null){
-    	document.getElementById(id).style.display = ""
+function Open(id,id2=''){
+	if(document.getElementById(id)!==null){
+    	document.getElementById(id).style.display = id2
 	}
 }
 

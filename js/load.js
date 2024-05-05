@@ -3,7 +3,7 @@ var TIMESTART = new Date()
 var OFFLINETIME = new Date()
 var DIFF = 0
 
-var VERSION = 'v0.7.0.3'
+var VERSION = 'v0.7.1'
 var VERSIONTIMES = n(3)
 
 function loadMain(){
@@ -39,7 +39,7 @@ function loadBase(){
 	}
 	getByID('loadResource',resourceStr)
 	for(let i in main['resource']){
-		getByID(i+'LoadResource',`<a id="`+i+`LoadResourceTitleID"></a><a id="`+i+`LoadResourceID"></a><a id="`+i+`LoadResourceBrID"></a>`)
+		getByID(i+'LoadResource',`<div style="border-right: 2px solid #999"><a id="`+i+`LoadResourceTitleID"></a><a id="`+i+`LoadResourceID"></a><a id="`+i+`LoadResourceBorderID"></a></div>`)
 		getResourceTitleID(i+'LoadResource',i)
 	}
 

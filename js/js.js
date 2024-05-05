@@ -1,6 +1,17 @@
 function getBr(){
-	let width = document.getElementById('game').offsetWidth-document.getElementById('leftColumn').offsetWidth-document.getElementById('rightColumn').offsetWidth-16
+	let width = document.getElementById('game').offsetWidth-document.getElementById('leftColumn').offsetWidth-450-48
 	let mid = Math.floor(width/206)
+	if(width<=412){
+		let phone = document.getElementById('game').offsetWidth-document.getElementById('leftColumn').offsetWidth-48
+		mid = Math.floor(phone/206)
+		let right = document.getElementById('rightColumn').innerHTML
+		Open('loadRightColumn', 'block')
+		Close('rightColumn')
+		getByID('loadRightColumn','<br><br>'+right)
+	}else{
+		Open('rightColumn')
+		Close('loadRightColumn')
+	}
 	document.getElementById('midColumn').style.width = mid*206+16 + 'px'
 
 	let u = false

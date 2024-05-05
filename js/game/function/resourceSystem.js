@@ -4,14 +4,12 @@ function getResourceTitleID(id,res_name){
 		Class = main['resource'][res_name]['Class']()
 	}
 	getByID(id+'TitleID',`
-		<div style="height: 2px"></div>
-		<div class="borderMax" id="`+res_name+`BorderMaxID" style="background: #999;"></div>
-		<tooltip onmouseenter='mouseLoad("`+res_name+`","LoadTooltipResource")' onmouseleave='document.getElementById("tooltip").style.display = "none";window.clearInterval(TOOLTIPSEL)' style="cursor: help;">
-			<div class="resource-title resource-name `+Class+`" style="color: `+colorText(res_name)[0]+`; position: relative;">
+		<tooltip `+loadTooltip(res_name, 'LoadTooltipResource')+` style="cursor: help;">
+			<div class="resourceTitle resourceName `+Class+`" style="color: `+colorText(res_name)[0]+`; position: relative;">
 			`+i18n(main['resource'][res_name]['name']())+`
-		</tooltip></div>
-		<div class="resource-title border" id="`+res_name+`BorderID" style="background: `+colorText(res_name)[0]+`; z-index: -1; transition-duration: 0.2s; clip-path: inset(0% 0% 0% 0%);"></div>`
+		</tooltip></div>`
 	)
+	getByID(id+'BorderID',`<div class="resourceBorder" id="`+res_name+`BorderID" style="background: `+colorText(res_name)[0]+`; z-index: -1; transition-duration: 0.2s; clip-path: inset(0% 0% 0% 0%);"></div>`)
 }
 
 function getResourceDoc(id){
@@ -33,17 +31,17 @@ function getResourceDoc(id){
 	}
 }
 
-function getResourceID(res_name, id = res_name+'LoadResource'){
+function getResourceID(res_name, id=res_name+'LoadResource'){
 	getByID(id+'ID',`
-		<div class="resource-title" id="`+res_name+`ID" style="width: 90px;"></div>
-		<div class="resource-title" style="width: 12px;">
-			<div class="resource-title" style="width: 12px; color: #888" id="`+res_name+`slashID">/</div>
+		<div class="resourceTitle" id="`+res_name+`ID" style="width: 90px;"></div>
+		<div class="resourceTitle" style="width: 12px;">
+			<div class="resourceTitle" style="width: 12px; color: #888" id="`+res_name+`slashID">/</div>
 		</div>
-		<div class="resource-title" style="width: 90px;">
-			<div class="resource-title" style="color: #888; width: 90px;" id="`+res_name+`MaxID"></div>
+		<div class="resourceTitle" style="width: 90px;">
+			<div class="resourceTitle" style="color: #888; width: 90px;" id="`+res_name+`MaxID"></div>
 		</div>
-		<div class="resource-title" style="width: 140px;">
-			<div class="resource-title" id="`+res_name+`GainID" style="width: 140px;"></div>
+		<div class="resourceTitle" style="width: 130px;">
+			<div class="resourceTitle" id="`+res_name+`GainID" style="width: 140px;"></div>
 		</div>
 		`
 	)
@@ -53,11 +51,9 @@ function getResourceID(res_name, id = res_name+'LoadResource'){
 			document.getElementById(id+"TitleID").style.display = ''
 			document.getElementById(id+"ID").style.display = ''
 			document.getElementById(res_name+"BorderID").style.display = ''
-			document.getElementById(res_name+"BorderMaxID").style.display = ''
 			if(main['resource'][res_name]['newType']!==undefined){
 				document.getElementById(res_name+"TypeID").style.display = ''
 			}
-			getByID(id+'BrID',`<br>`)
 			player['resource'][res_name+'Unlock'] = true
 			if(unlocked && player['resource'][res_name+'Unlocked']==false){
 				if(main['resource'][res_name]['unlockAction']!==undefined){
@@ -69,17 +65,14 @@ function getResourceID(res_name, id = res_name+'LoadResource'){
 			document.getElementById(id+"TitleID").style.display = 'none'
 			document.getElementById(id+"ID").style.display = 'none'
 			document.getElementById(res_name+"BorderID").style.display = 'none'
-			document.getElementById(res_name+"BorderMaxID").style.display = 'none'
 			if(main['resource'][res_name]['newType']!==undefined){
 				document.getElementById(res_name+"TypeID").style.display = 'none'
 			}
-			getByID(id+'BrID',``)
 			player['resource'][res_name+'Unlock'] = false
 		}
     }else{
 		document.getElementById(id+"TitleID").style.display = ''
 		document.getElementById(id+"ID").style.display = ''
-		getByID(id+'BrID',`<br>`)
 		player['resource'][res_name+'Unlock'] = true
 		player['resource'][res_name+'Unlocked'] = true
 	}
