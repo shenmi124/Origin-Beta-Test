@@ -1,0 +1,54 @@
+@keyframes moveGradient {
+	50% {
+		background-position: 100% 0;
+	}
+}
+
+.points {
+	text-align: center;
+	font-size: 27px;
+	color:#000000;
+	text-shadow: 0 0 10px #000000;
+}
+
+.timespeed {
+	text-align: center;
+	font-size: 22px;
+	color:#67e1dd;
+	text-shadow: 0 0 10px #67e1dd;
+}
+
+.rooms {
+	text-align: center;
+	color:#a3a3a3;
+	text-shadow: 0 0 10px #a3a3a3;
+}
+
+.quarks {
+	background: linear-gradient(60deg, #FF0000, #00FF00, #0000FF, #FFFF00, #FF00FF, #00FFFF, #FFFFFF);
+    background-size: 300% 300%;
+    background-position: 0 100%;
+    animation: moveGradient 5s alternate infinite;
+    color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition-duration: 0s !important;
+}
+
+.time_spaces {
+	text-align: center;
+	color:rgb(0,100,0);
+	text-shadow: 0 0 10px rgb(0,206,0);
+}
+
+.time_challenge_1_points {
+	text-align: center;
+	color:#a5af16d7;
+	text-shadow: 0 0 10px #f0fc51;
+}
+
+.time_incrementals {
+	color: rgb(157, 26, 184);
+	text-align: center;
+	text-shadow: 0.166667em 0.166667em 0.3333333em rgb(224 69 255), 0.3333333em 0.3333333em 0.66666667em rgb(154 77 255);
+}

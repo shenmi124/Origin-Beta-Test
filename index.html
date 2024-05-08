@@ -13,6 +13,7 @@
 	<script src="js/game/main/efficient.js"></script>
 
 	<script src="js/game/civics/citizens.js"></script>
+	<script src="js/game/civics/workshop.js"></script>
 
 	<script src="js/setting/setting.js"></script>
 	<script src="js/setting/pointer.js" ></script>
@@ -74,9 +75,9 @@
 		<a href="https://qm.qq.com/q/uZSGcIjhKK" target="_blank" class="QQ">QQ群</a>
 	</div>
 	<div id="game">
-		<div id="leftColumn" class="column" style="vertical-align: top; opacity: 0; visibility: hidden;">
-			<a id="loadResource"></a>
-			<a id="loadRightColumn" style="display: block; width: 430px;"></a>
+		<div id="leftColumn" class="column">
+			<a id="loadResource" style="vertical-align: top; opacity: 0; visibility: hidden;"></a>
+			<a id="loadRightColumn" style="vertical-align: top; opacity: 0; display: block; width: 430px; padding-top: 50px;"></a>
 		</div>
 		<div id="midColumn" class="column" style="vertical-align: top;">
 			<mainTab id="tab_button" style="opacity: 0; visibility: hidden;">
@@ -90,7 +91,7 @@
 			</mainTab>
 			<mainTab id="tab_civics">
 				<a id="citizensLoadID"></a>
-				<a id="LoadID"></a>
+				<a id="workshopLoadID"></a>
 			</mainTab>
 			<mainTab id="tab_research" style="display: none;">
 				<a id="loadMainResearch" style="display: flow; overflow-y: scroll"></a>

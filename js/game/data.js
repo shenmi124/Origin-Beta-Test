@@ -4,11 +4,12 @@ function getStage(num){
 	}
 	if(player.game.stage.gte(1)){
 		document.getElementById("rightColumn").style.opacity = 1
+		document.getElementById("loadRightColumn").style.opacity = 1
 	}
 	if(player.game.stage.gte(2)){
-		document.getElementById("leftColumn").style.visibility = ''
+		document.getElementById("loadResource").style.visibility = ''
         setTimeout(function(){
-			document.getElementById("leftColumn").style.opacity = 1
+			document.getElementById("loadResource").style.opacity = 1
         },100)
 	}
 	if(player.game.stage.gte(3)){

@@ -17,7 +17,7 @@ var MainResource = {
                 }
             }
         },
-        tooltip(){return '一旦居民不再幸福他们很可能会离开你<br>同时居民的增加意味着安定度的降低'},
+        tooltip(){return `一旦居民不再幸福他们很可能会离开你<br>同时居民的增加意味着安定度的降低<hr><a style='font-size: 14px'>影响</a>`+buildingText(colorText('ideas')[1], '+', this.effect.gain.add.ideas(), '/s', player.resource.citizens)+buildingText(colorText('food')[1], '', this.effect.gain.add.food(), '/s', player.resource.citizens)+buildingText('幸福度', '-', n(1), '', player.resource.citizens)},
         unlockAction(){
             getStage(3)
             addLog('你招揽到了第一批原住民,看起来他们和普通的人类没什么区别,你也能与他们正常交流')
@@ -76,6 +76,30 @@ var MainResource = {
             addLog('你找到了一些食物')
         },
         unlocked(){return getResourceUnlocked('food')},
+    },
+    
+    stardust:{
+        name(){return "星尘"},
+        color(){return '#00ffff'},
+        Class(){return 'stardust'},
+        tooltip(){return '群星闪耀<hr>'+buildingText('陨石碎片上限', '<mul>×</mul>', n(10), '', player.resource.stardust)+buildingText('幸福度', '+', n(10), '', player.resource.stardust)},
+        unlockAction(){
+            addLog('这是你的第一颗<span class="stardust">星尘</span>')
+            addLog('它可以提高陨石碎片的储存上限与幸福度')
+        },
+        unlocked(){return getResourceUnlocked('stardust')},
+    },
+    star:{
+        name(){return "陨石碎片"},
+        color(){return '#000'},
+        Class(){return 'star'},
+        max(){return n(0.1)},
+        maxMul(){return n(10).pow(player.resource.stardust)},
+        tooltip(){return '陨石坠落'},
+        unlockAction(){
+            addLog('这些陨石碎片应该有特殊的用处')
+        },
+        unlocked(){return getResourceUnlocked('star')},
     },
 
     researchPoints:{

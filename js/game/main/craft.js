@@ -14,7 +14,7 @@ let MainCraft = {
             getStage(4)
         },
         cooldown(){return n(20)},
-        canClick(){return player.action.explore.citizens.gte(1) && player.resource.food.gt(0) && player.resource.citizens.lt(getResourceMaxBase('citizens'))},
+        canClick(){return player.action.explore.citizens.gte(1) && player.resource.food.gt(0) && player.resource.citizens.lt(getResourceMax('citizens'))},
         unlocked(){return player.action.explore.citizensFined==true},
     },
     collect:{
@@ -33,6 +33,14 @@ let MainCraft = {
                 float(){return n(0.5)},
                 unlocked(){return true},
             },
+            
+            star:{
+                probability(){return n(0.025)},
+                base(){return n(0.2)},
+                float(){return n(0.3)},
+                unlocked(){return true},
+                tooltip(){return '你在泥土中发现了一些<span class="star">陨石碎片</span>'}
+            },
         },
         luck(){
             let base = n(1)
@@ -50,6 +58,9 @@ let MainCraft = {
                 if(n(main['craft']['collect']['gain'][i]['probability']()).gte(exp)){
                     let random = n(Math.random()).mul(main['craft']['collect']['gain'][i]['float']())
                     player['resource'][i] = player['resource'][i].add(main['craft']['collect']['gain'][i]['base']()).add(random)
+                    if(main['craft']['collect']['gain'][i]['tooltip']!==undefined){
+                        addLog(main['craft']['collect']['gain'][i]['tooltip']())
+                    }
                 }
             }
             

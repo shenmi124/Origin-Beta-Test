@@ -23,6 +23,11 @@ let efficient = {
         name(){return '幸福度'},
         tooltip(){return '居民的幸福度决定了他们的行动能力<hr><grey>幸福度会影响村民的基础效率<br>幸福度小于100%时不会影响村民的消耗<br>幸福度与效率都会影响村民的行动速度</grey>'},
         unlocked(){return player.game.stage.gte(4)},
+        food:{
+            name(){return '缺少食物'},
+            effect(){return n(-20)},
+            active(){return player.resource.food.lte(0) && player.game.stage.gte(4)}
+        },
         citizens:{
             name(){return '人口'},
             effect(){return n(0).sub(player.resource.citizens)},
@@ -35,10 +40,9 @@ let efficient = {
             name(){return '收集者'},
             effect(){return civics['citizens']['collector']['effect']['other']['happiness']()},
         },
-        food:{
-            name(){return '缺少食物'},
-            effect(){return n(-20)},
-            active(){return player.resource.food.lte(0) && player.game.stage.gte(4)}
+        stardust:{
+            name(){return '星尘'},
+            effect(){return player.resource.stardust.mul(10)},
         },
     }
 }

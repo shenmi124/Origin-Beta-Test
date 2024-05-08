@@ -43,4 +43,5 @@ var main = {
 var civics = {
     citizens: CivicsCitizens,
     jobs: CivicsJobs,
+    workshop: CivicsWorkshop,
 }

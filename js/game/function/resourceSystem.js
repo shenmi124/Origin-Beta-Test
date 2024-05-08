@@ -15,7 +15,7 @@ function getResourceTitleID(id,res_name){
 function getResourceDoc(id){
 	getNumberByID(id,player['resource'][id])
 	if(main['resource'][id]['max']!==undefined){
-		getNumberByID(id+'Max',getResourceMaxBase(id))
+		getNumberByID(id+'Max',getResourceMax(id))
 		document.getElementById(id+"slashID").style.display = ''
 	}else{
 		document.getElementById(id+"slashID").style.display = 'none'
@@ -77,7 +77,7 @@ function getResourceID(res_name, id=res_name+'LoadResource'){
 		player['resource'][res_name+'Unlocked'] = true
 	}
 	if(main['resource'][res_name]['max']!==undefined){
-		let border = n(100).sub(player['resource'][res_name].div(n(getResourceMaxBase(res_name)).max(0.01)).mul(100))
+		let border = n(100).sub(player['resource'][res_name].div(n(getResourceMax(res_name)).max(0.01)).mul(100))
 		document.getElementById(res_name+"BorderID").style.clipPath = 'inset(0% '+border+'% 0% 0%)'
 	}else{
 		document.getElementById(res_name+"BorderID").style.clipPath = 'inset(0% 100% 0% 0%)'
@@ -101,7 +101,7 @@ function resourceCompute(id){
 			}
 		}
 		if(main['resource'][id]['max']!==undefined){
-			player['resource'][id] = player['resource'][id].min(getResourceMaxBase(id)).max(0)
+			player['resource'][id] = player['resource'][id].min(getResourceMax(id)).max(0)
 		}
 	}
 }

@@ -1,5 +1,5 @@
 var MainAction = {
-    wakeUp:{
+    wakeUp: {
         name(){return '醒来'},
         onClick(){
             getStage(1)
@@ -11,7 +11,7 @@ var MainAction = {
         unlocked(){return player.game.stage.eq(0)},
         cooldown(){return n(2.5)},
     },
-    explore:{
+    explore: {
         name(){return '探索'},
         onClick(){
             let find = []
@@ -140,4 +140,15 @@ var MainAction = {
         cooldown(){return n(7.5)},
         unlocked(){return player.game.stage.gte(1)},
     },
+    platingStar: {
+        name(){return '镀造星尘'},
+        onClick(){
+            player.resource.star = n(0)
+            player.resource.stardust = player.resource.stardust.add(1)
+        },
+        tooltip(){return '让世间接纳星尘<hr>将你的所有陨石碎片转化为星尘并获得加成<hr><grey>你必须保持陨石碎片在上限时才能进行这个行动</grey>'},
+        cooldown(){return n(600)},
+        canClick(){return player.resource.star.gte(getResourceMax('star'))},
+        unlocked(){return !player.resource.star.eq(0)},
+    }
 }

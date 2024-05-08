@@ -1,18 +1,27 @@
+let TICKWIDTH
+let MID
+
 function getBr(){
 	let width = document.getElementById('game').offsetWidth-document.getElementById('leftColumn').offsetWidth-450-48
-	let mid = Math.floor(width/206)
-	if(width<=412){
-		let phone = document.getElementById('game').offsetWidth-document.getElementById('leftColumn').offsetWidth-48
-		mid = Math.floor(phone/206)
-		let right = document.getElementById('rightColumn').innerHTML
-		Open('loadRightColumn', 'block')
-		Close('rightColumn')
-		getByID('loadRightColumn','<br><br>'+right)
-	}else{
-		Open('rightColumn')
-		Close('loadRightColumn')
+	if(width!==TICKWIDTH){
+		MID = Math.floor(width/206)
+		if(width<=412){
+			MID = Math.floor((width+450)/206)
+		}
+		if(width<=412 && (TICKWIDTH==undefined || TICKWIDTH>412)){
+			Open('loadRightColumn', 'block')
+			Close('rightColumn')
+			getByID('loadRightColumn', document.getElementById('rightColumn').innerHTML)
+			getByID('rightColumn', '')
+		}else if(width>=412 && (TICKWIDTH==undefined || TICKWIDTH<412)){
+			Open('rightColumn')
+			Close('loadRightColumn')
+			getByID('rightColumn', document.getElementById('loadRightColumn').innerHTML)
+			getByID('loadRightColumn', '')
+		}
+		TICKWIDTH = width
+		document.getElementById('midColumn').style.width = MID*206+16 + 'px'
 	}
-	document.getElementById('midColumn').style.width = mid*206+16 + 'px'
 
 	let u = false
 	for(let maini in mainTab){
@@ -26,7 +35,7 @@ function getBr(){
 				br += 1
 				getByID(mainTab[maini]['id']()+"TextID",(u ? '<br><br>' : '')+mainTab[maini]['name']()+'<br>')
 			}
-			if(br%mid === 0 && br!=0){
+			if(br%MID === 0 && br!=0){
 				document.getElementById(i+maini+'BrID').style.display = ''
 			}else{
 				document.getElementById(i+maini+'BrID').style.display = 'none'
@@ -137,7 +146,7 @@ function dataDiff(){
 		for(let i in main['building'][id]['cost']){
 			let res = n(main['building'][id]['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['costPower']()).add(1)).sub(1)
 			if(n(main['resource'][i]['max']!==undefined)){
-				if(n(getResourceMaxBase(i)).lt(res)){
+				if(n(getResourceMax(i)).lt(res)){
 					addedCss(id+"BuildingButtonID",'max')
 					maxCan = false
 				}
@@ -173,7 +182,7 @@ function dataDiff(){
 		for(i in mainResearch['main'][id]['cost'][research]){
 			let res = mainResearch['main'][id]['cost'][research][i]()
 			if(main['resource'][i]['max']!==undefined){
-				if(n(getResourceMaxBase(i)).lt(res)){
+				if(n(getResourceMax(i)).lt(res)){
 					maxRsearch = false
 				}
 			}

@@ -15,6 +15,10 @@ function getResourceGain(researce){
     return n(getResourceGainBase(researce)).mul(getResourceGainMul(researce))
 }
 
+function getResourceMax(researce){
+    return n(getResourceMaxBase(researce)).mul(getResourceMaxMul(researce))
+}
+
 function getResourceGainBase(resource){
     let gain = n(0)
     if(main['resource'][resource]['gain']!==undefined){
@@ -114,6 +118,16 @@ function getResourceMaxBase(resource){
                     }
                 }
             }
+        }
+    }
+    return max
+}
+
+function getResourceMaxMul(resource){
+    let max = n(1)
+    if(main['resource'][resource]['max']!==undefined){
+        if(main['resource'][resource]['maxMul']!==undefined){
+            max = max.mul(n(main['resource'][resource]['maxMul']()))
         }
     }
     return max
@@ -273,4 +287,12 @@ function colorText(id){
 	}
 	let color2 = tinycolor(color).setAlpha(.5);
 	return [color,"<a style='color:"+color+"' class='"+Class+"'>"+Text+"</a>",color2]
+}
+
+function buildingText(name,begin,resource,end,mul){
+    return `<left><span>
+        <div style="width: 90px; display: table-cell">`+name+`</div>`+begin+format(resource)+end+`
+        <br><div style="width: 90px; display: table-cell"></div>
+        <black><li-hid>(总计: `+begin+format(n(resource).mul(mul))+end+`)</black>
+    </span></left>`
 }
