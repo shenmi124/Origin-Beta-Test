@@ -35,7 +35,7 @@ let MainCraft = {
             },
             
             star:{
-                probability(){return n(0.025)},
+                probability(){return n(0.02)},
                 base(){return n(0.2)},
                 float(){return n(0.3)},
                 unlocked(){return true},
@@ -191,7 +191,7 @@ let MainCraft = {
                 hr = '<hr>'
             }
             let times = '<hr>已标记: '+formatWhole(player.action.explore.harvest,0)+' <a style="color: #888">/ '+formatWhole(this.max(),0)+' (遗忘)</a>'
-            return '起码还有食物可循'+hr+mul+times
+            return '收集食物'+hr+mul+times
         },
         mul(){
             let base = n(1)

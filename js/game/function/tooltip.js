@@ -342,9 +342,9 @@ function tooltip(id,id2){
 	if(id2=='LoadTooltipBuilding'){
 		let name = '未命名'
 		let bas = ''
-		let instant = false
+		let unique = false
 		if(main['building'][id]['instant']!==undefined){
-			instant = main['building'][id]['instant']()
+			unique = main['building'][id]['instant']()
 		}
 		let cost = '<hr><left>'
 		if(main['building'][id]['tooltip']!==undefined){
@@ -367,7 +367,7 @@ function tooltip(id,id2){
 				cost += `
 				<span>
 					<span>
-						<div style="width: 90px; display: table-cell">`+colorText(i)[1]+`</div>
+						<div style="width: 80px; display: table-cell">`+colorText(i)[1]+`</div>
 						<div style="width: 55px; display: table-cell; color: `+(player['resource'][i].gte(res) ? `rgb(31, 70, 71)` : `red` )+`">`+format(player['resource'][i])+`</div>
 					</span>
 					<span style="color: rgb(31, 70, 71);"> / 
@@ -385,12 +385,7 @@ function tooltip(id,id2){
 				for(let i in main['building'][id]['effect']['gain']['add']){
 					if(!n(main['building'][id]['effect']['gain']['add'][i]()).eq(0)){
 						gainhr = '<hr>'
-						gain += `<span>
-							<div style="width: 90px; display: table-cell">`+colorText(i)[1]+`</div>
-							+`+format(main['building'][id]['effect']['gain']['add'][i]())+`/s
-							<br><div style="width: 90px; display: table-cell"></div>
-							<black><li-hid>(总计: `+format(getBuildGain(id,i))+`/s)</black>
-						</span><br>`
+						gain += buildingText(colorText(i)[1], '+', n(main['building'][id]['effect']['gain']['add'][i]()), '/s', player['building'][id], null, !unique)
 					}
 				}
 			}
@@ -403,20 +398,15 @@ function tooltip(id,id2){
 				for(let i in main['building'][id]['effect']['max']['add']){
 					if(!n(main['building'][id]['effect']['max']['add'][i]()).eq(0)){
 						maxhr = '<hr>'
-						max += `<span>
-							<div style="width: 90px; display: table-cell">`+colorText(i)[1]+`上限</div>
-							+`+format(main['building'][id]['effect']['max']['add'][i]())+`
-							<br><div style="width: 90px; display: table-cell"></div>
-							`+(instant ? `` : `<black><li-hid>(总计: `+format(getBuildMax(id,i))+`)</black>`)+`
-						</span><br>`
+						max += buildingText(colorText(i)[1], '+', n(main['building'][id]['effect']['max']['add'][i]()), '上限', player['building'][id], null, !unique)
 					}
 				}
 			}
 		}
 		max += '</left>'
 		let amount = '('+formatWhole(player['building'][id],0)+')'
-		if(main['building'][id]['instant']!==undefined){
-			if(main['building'][id]['instant']()){
+		if(main['building'][id]['unique']!==undefined){
+			if(main['building'][id]['unique']()){
 				amount = ''
 			}
 		}
@@ -464,9 +454,9 @@ function tooltip(id,id2){
 					for(let i in civics['citizens'][id]['effect']['gain']['add']){
 						gainhr = '<hr>'
 						gain += `<span>
-							<div style="width: 90px; display: table-cell">`+colorText(i)[1]+`</div>
+							<div style="width: 80px; display: table-cell">`+colorText(i)[1]+`</div>
 							+`+format(civics['citizens'][id]['effect']['gain']['add'][i]())+`/s
-							<br><div style="width: 90px; display: table-cell"></div>
+							<br><div style="width: 80px; display: table-cell"></div>
 							<black><li-hid>(总计: `+format(nc(civics['citizens'][id]['effect']['gain']['add'][i]()).mul(player.citizens[id]))+`/s)</black>
 						</span><br>`
 					}
@@ -536,7 +526,7 @@ function tooltip(id,id2){
 			cost += `
 			<span>
 				<span>
-					<div style="width: 90px; display: table-cell">`+colorText(i)[1]+`</div>
+					<div style="width: 80px; display: table-cell">`+colorText(i)[1]+`</div>
 					<div style="width: 55px; display: table-cell; color: `+(player['resource'][i].gte(mainResearch['main'][id]['cost'][res][i]()) ? `rgb(31, 70, 71)` : `red` )+`">`+format(player['resource'][i])+`</div>
 				</span>
 				<span style="color: rgb(31, 70, 71);"> / 

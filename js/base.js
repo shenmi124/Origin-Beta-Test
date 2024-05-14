@@ -14,7 +14,6 @@ function misByID(id,id2){
 	document.getElementById(id).innerHTML = id2 + document.getElementById(id).innerHTML;
 }
 
-
 function getTooltipDoc(id){
 	document.getElementById('tooltip').innerHTML = id;
 }

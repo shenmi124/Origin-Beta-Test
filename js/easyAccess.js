@@ -271,13 +271,13 @@ function colorText(id){
 	let Class = ''
 	for(let resourceColor in main['resource']){
 		if(id==resourceColor){
-			if(main['resource'][resourceColor]['color']!=undefined){
+			if(main['resource'][resourceColor]['color']!==undefined){
 				color = main['resource'][resourceColor]['color']()
 			}
-			if(main['resource'][resourceColor]['name']!=undefined){
+			if(main['resource'][resourceColor]['name']!==undefined){
 				Text = main['resource'][resourceColor]['name']()
 			}
-			if(main['resource'][resourceColor]['Class']!=undefined){
+			if(main['resource'][resourceColor]['Class']!==undefined){
 				Class = main['resource'][resourceColor]['Class']()
 			}
 		}
@@ -289,10 +289,19 @@ function colorText(id){
 	return [color,"<a style='color:"+color+"' class='"+Class+"'>"+Text+"</a>",color2]
 }
 
-function buildingText(name,begin,resource,end,mul){
+function buildingText(name,begin,resource,end,mul,Class=null,display=true){
+    let unique = ``
+    let beginClass = ``
+    let endClass = ``
+    if(display){
+        unique = `<grey><li-hid>(`+begin+format(resource)+end+`)</grey>`
+    }
+    if(Class!==null){
+        beginClass = `<`+Class+`>`
+        endClass = `</`+Class+`>`
+    }
     return `<left><span>
-        <div style="width: 90px; display: table-cell">`+name+`</div>`+begin+format(resource)+end+`
-        <br><div style="width: 90px; display: table-cell"></div>
-        <black><li-hid>(总计: `+begin+format(n(resource).mul(mul))+end+`)</black>
+        <div style="width: 80px; display: table-cell">`+name+`</div><div style="width: 100px; display: table-cell">`+beginClass+begin+format(n(resource).mul(mul))+end+endClass+`</div>
+        `+unique+`
     </span></left>`
 }

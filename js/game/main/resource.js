@@ -17,7 +17,12 @@ var MainResource = {
                 }
             }
         },
-        tooltip(){return `一旦居民不再幸福他们很可能会离开你<br>同时居民的增加意味着安定度的降低<hr><a style='font-size: 14px'>影响</a>`+buildingText(colorText('ideas')[1], '+', this.effect.gain.add.ideas(), '/s', player.resource.citizens)+buildingText(colorText('food')[1], '', this.effect.gain.add.food(), '/s', player.resource.citizens)+buildingText('幸福度', '-', n(1), '', player.resource.citizens)},
+        tooltip(){
+            return `一旦居民不再幸福他们很可能会离开你<br>同时居民的增加意味着安定度的降低<hr><a style='font-size: 14px'>影响</a>`
+            +buildingText(colorText('ideas')[1], '+', this.effect.gain.add.ideas(), '/s', player.resource.citizens)
+            +buildingText(colorText('food')[1], '', this.effect.gain.add.food(), '/s', player.resource.citizens, 'red')
+            +buildingText('幸福度', '-', n(1), '', player.resource.citizens, 'red')
+        },
         unlockAction(){
             getStage(3)
             addLog('你招揽到了第一批原住民,看起来他们和普通的人类没什么区别,你也能与他们正常交流')
@@ -41,7 +46,7 @@ var MainResource = {
         color(){return 'rgb(150, 108, 74)'},
         max(){return n(30)},
         gain(){return n(0)},
-        unlocked(){return true},
+        unlocked(){return getResourceUnlocked('dirt')},
     },
     wood:{
         name(){return "木材"},
@@ -49,9 +54,8 @@ var MainResource = {
         max(){return n(30)},
         gain(){return n(0)},
         unlockAction(){
-            addLog('但起码你可以确定这里是有木头的')
-            addLog('可见木材真的很稀有')
             addLog('在这样的平原上你几乎找不到树')
+            addLog('但起码你可以确定这里是有木头的')
         },
         unlocked(){return getResourceUnlocked('wood')},
     },
@@ -75,14 +79,18 @@ var MainResource = {
         unlockAction(){
             addLog('你找到了一些食物')
         },
-        unlocked(){return getResourceUnlocked('food')},
+        unlocked(){return true},
     },
     
     stardust:{
         name(){return "星尘"},
         color(){return '#00ffff'},
         Class(){return 'stardust'},
-        tooltip(){return '群星闪耀<hr>'+buildingText('陨石碎片上限', '<mul>×</mul>', n(10), '', player.resource.stardust)+buildingText('幸福度', '+', n(10), '', player.resource.stardust)},
+        tooltip(){
+            return `群星闪耀<hr><a style='font-size: 14px'>影响</a>`
+            +buildingText('陨石碎片', '<mul>×</mul>', n(10), '上限', player.resource.stardust)
+            +buildingText('幸福度', '+', n(10), '', player.resource.stardust)
+        },
         unlockAction(){
             addLog('这是你的第一颗<span class="stardust">星尘</span>')
             addLog('它可以提高陨石碎片的储存上限与幸福度')

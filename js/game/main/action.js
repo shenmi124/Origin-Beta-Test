@@ -51,7 +51,7 @@ var MainAction = {
                     }
                 }
             }
-            if(special[0]===undefined && find[0]===undefined && getActionAuto(this).gt(0)){
+            if(special[0]===undefined && find[0]===undefined && n(getActionAuto('explore')).lte(0)){
                 addLog('*什么都没找到*','#888')
             }
 
@@ -141,7 +141,7 @@ var MainAction = {
         unlocked(){return player.game.stage.gte(1)},
     },
     platingStar: {
-        name(){return '镀造星尘'},
+        name(){return '研磨星尘'},
         onClick(){
             player.resource.star = n(0)
             player.resource.stardust = player.resource.stardust.add(1)
