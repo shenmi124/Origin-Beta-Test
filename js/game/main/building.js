@@ -15,7 +15,7 @@ var MainBuilding = {
         },
         costPower(){return n(0)},
         effect: {
-            max:{
+            capped:{
                 add: {
                     dirt(){return n(20)},
                     wood(){return n(20)},
@@ -34,7 +34,7 @@ var MainBuilding = {
         },
         costPower(){return n(0.1)},
         effect: {
-            max: {
+            capped: {
                 add: {
                     citizens(){return n(1)},
                 }
@@ -92,7 +92,7 @@ var MainBuilding = {
         },
         costPower(){return n(0.045)},
         effect: {
-            max:{
+            capped:{
                 dirt(){return n(50)},
                 stone(){return n(30)},
             }

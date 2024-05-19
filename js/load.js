@@ -3,7 +3,7 @@ var TIMESTART = new Date()
 var OFFLINETIME = new Date()
 var DIFF = 0
 
-var VERSION = 'v0.7.3.2'
+var VERSION = 'v0.8'
 var VERSIONTIMES = n(3)
 
 function loadMain(){
@@ -89,13 +89,20 @@ function loadBase(){
 	}
 	for(let i in civics['jobs']){
 		getByID(i+'LoadCitizenJobsID',`<a style="display: inline-flex" id="`+i+`CitizenJobsNameLoadID"></a><a style="display: inline-flex" id="`+i+`CitizenJobsAllocatedLoadID"></a>`)
-		componentCitizenJobs(i)
+		componentJobs(i)
 	}
 	getByID('CitizensTip',CitizensTip())
 	
 	let workshopStr = '<br><br>'
 	workshopStr += `工坊<br>`
+	for(let i in civics['workshop']){
+		workshopStr += '<a style="transition-duration: 1s;" id='+i+'LoadWorkshop></a>'
+	}
 	getByID('workshopLoadID',workshopStr)
+	for(let i in civics['workshop']){
+		getByID(i+'LoadWorkshop',`<br id="`+i+`workshopBrID"><a id="`+i+`LoadWorkshopID"></a> `)
+		componentWorkshop(i)
+	}
 
 	let researchStr = ''
 	let researchArray = []
@@ -126,7 +133,7 @@ function loadBase(){
 		if(player.canMainResearch[i]==true){
 			document.getElementById(i+"MainResearchButtonID").style.borderColor = 'rgb(73, 219, 189)'
 		}
-		if(player.research[i].gte(mainResearch['main'][i]['max']())){
+		if(player.research[i].gte(mainResearch['main'][i]['capped']())){
 			document.getElementById(i+"MainResearchButtonID").style.borderColor = 'rgb(174, 35, 252)'
 		}
 	}
@@ -139,12 +146,10 @@ function loadBase(){
 function loadGame(){
 	Close('tooltip')
 	Close('datePage')
-
-	getStage(null)
-	if(player.game.stage.lte(2)){
-		addLog('这是一个新的存档,要<u style="color: #000" onclick="importSave()">导入</u>吗?','#888')
-	}
 	showTab('main')
+
+	calcGame()
+	gameLoader()
 
     for(let i in main['action']){
         if(main['action'][i]['cooldown']!==undefined){

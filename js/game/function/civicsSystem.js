@@ -7,8 +7,8 @@ function allocateCitizens(type,allocate){
     }
     if(canAllocate){
         player['citizens'][type] = player['citizens'][type].add(allocate).max(0)
-        if(civics['citizens'][type]['action']!==undefined){
-            $(civics['citizens'][type]['action'])
+        if(civics['citizens'][type]['active']!==undefined){
+            $(civics['citizens'][type]['active'])
         }
     }else{
         addLog('*无人任职','#888')
@@ -63,8 +63,35 @@ function CitizensFix(){
 	}
 
 	for(let i in civics['jobs']){
-		componentCitizenJobs(i)
+		componentJobs(i)
 	}
 
 	getByID('CitizensTip',CitizensTip())
+}
+
+function Upgrade(id){
+    let canbuy = true
+    let logs = '*缺少资源:'
+    for(i in civics['workshop'][id]['cost']){
+        let res = n(civics['workshop'][id]['cost'][i]())
+        if(n(player['resource'][i]).lt(res)){
+            canbuy = false
+            logs += '<br><li-hid>*'+format(n(res).sub(player['resource'][i]))+colorText(i)[1]
+        }
+    }
+    if(canbuy){
+        for(i in civics['workshop'][id]['cost']){
+            let res = n(civics['workshop'][id]['cost'][i]())
+            player['resource'][i] = player['resource'][i].sub(res)
+        }
+        if(civics['workshop'][id]['onBuy']!==undefined){
+            $(civics['workshop'][id]['onBuy'])
+        }
+        player['workshop'][id] = true
+    }else{
+        addLog(logs,'#888')
+    }
+
+    getID()
+    componentWorkshop(id)
 }

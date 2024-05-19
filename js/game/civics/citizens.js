@@ -1,7 +1,7 @@
 var CivicsCitizens = {
     explorer: {
         name(){return '开阔者'},
-        tooltip(){return '开阔者将自动进行探索行动<hr><grey>每位开阔者-1幸福度</grey><br>(总计: '+format(this.effect.other.happiness())+')<hr><grey>每位开阔者+50%通过探索发现的行动的记忆</grey><br>(总计: '+format(n(this.effect.other.memory()).mul(100))+'%)'},
+        tooltip(){return '开阔者将自动进行探索行动'},
         allocated: {
             unemployed(){return n(1)},
         },
@@ -10,8 +10,14 @@ var CivicsCitizens = {
                 explore(){return n(0.15)},
             },
             other: {
-                happiness(){return n(0).sub(player['citizens']['explorer'].mul(1))},
-                memory(){return n(0.5).mul(player['citizens']['explorer']).add(1)},
+                happiness: {
+                    name(){return '幸福度'},
+                    effect(){return n(0).sub(1)},
+                },
+                memory: {
+                    name(){return '遗忘修正'},
+                    effect(){return n(0.5)},
+                }
             }
         },
         active(){
@@ -21,7 +27,7 @@ var CivicsCitizens = {
     collector: {
         name(){return '劳工'},
         unlocked(){return true},
-        tooltip(){return '劳工会缓慢的自动采集泥土<br>同时也会缓慢进行收集以及树枝行动<hr><grey>每位劳工-3幸福度</grey><br>(总计: '+format(this.effect.other.happiness())+')'},
+        tooltip(){return '劳工会缓慢的自动采集泥土<br>同时也会缓慢进行收集以及树枝行动'},
         allocated: {
             unemployed(){return n(1)},
         },
@@ -36,7 +42,10 @@ var CivicsCitizens = {
                 }
             },
             other: {
-                happiness(){return n(0).sub(player['citizens']['explorer'].mul(3))},
+                happiness: {
+                    name(){return '幸福度'},
+                    effect(){return n(0).sub(3)},
+                },
             }
         },
     }

@@ -14,8 +14,8 @@ function getResourceTitleID(id,res_name){
 
 function getResourceDoc(id){
 	getNumberByID(id,player['resource'][id])
-	if(main['resource'][id]['max']!==undefined){
-		getNumberByID(id+'Max',getResourceMax(id))
+	if(main['resource'][id]['capped']!==undefined){
+		getNumberByID(id+'Capped',getResourceCapped(id))
 		document.getElementById(id+"slashID").style.display = ''
 	}else{
 		document.getElementById(id+"slashID").style.display = 'none'
@@ -38,7 +38,7 @@ function getResourceID(res_name, id=res_name+'LoadResource'){
 			<div class="resourceTitle" style="width: 12px; color: #888" id="`+res_name+`slashID">/</div>
 		</div>
 		<div class="resourceTitle" style="width: 90px;">
-			<div class="resourceTitle" style="color: #888; width: 90px;" id="`+res_name+`MaxID"></div>
+			<div class="resourceTitle" style="color: #888; width: 90px;" id="`+res_name+`CappedID"></div>
 		</div>
 		<div class="resourceTitle" style="width: 130px;">
 			<div class="resourceTitle" id="`+res_name+`GainID" style="width: 140px;"></div>
@@ -76,8 +76,8 @@ function getResourceID(res_name, id=res_name+'LoadResource'){
 		player['resource'][res_name+'Unlock'] = true
 		player['resource'][res_name+'Unlocked'] = true
 	}
-	if(main['resource'][res_name]['max']!==undefined){
-		let border = n(100).sub(player['resource'][res_name].div(n(getResourceMax(res_name)).max(0.01)).mul(100))
+	if(main['resource'][res_name]['capped']!==undefined){
+		let border = n(100).sub(player['resource'][res_name].div(n(getResourceCapped(res_name)).max(0.01)).mul(100))
 		document.getElementById(res_name+"BorderID").style.clipPath = 'inset(0% '+border+'% 0% 0%)'
 	}else{
 		document.getElementById(res_name+"BorderID").style.clipPath = 'inset(0% 100% 0% 0%)'
@@ -100,8 +100,8 @@ function resourceCompute(id){
 				player['resource'][id] = player['resource'][id].add(n(gain).mul(DIFF))
 			}
 		}
-		if(main['resource'][id]['max']!==undefined){
-			player['resource'][id] = player['resource'][id].min(getResourceMax(id)).max(0)
+		if(main['resource'][id]['capped']!==undefined){
+			player['resource'][id] = player['resource'][id].min(getResourceCapped(id)).max(0)
 		}
 	}
 }

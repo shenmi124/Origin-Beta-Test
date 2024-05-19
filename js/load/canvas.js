@@ -28,9 +28,9 @@ setInterval(function(){
 			if((mainResearch['main'][i]['unlocked']===undefined || mainResearch['main'][i]['unlocked']()) && mainResearch['main'][i]['canvas']!==undefined){
 				for(ic in mainResearch['main'][i]['canvas']()){
 					let color = 'rgba(0, 0, 0, 0.3)'
-					if(player['research'][mainResearch['main'][i]['canvas']()[ic]].gte(n(mainResearch['main'][mainResearch['main'][i]['canvas']()[ic]]['max']()).min(1))){
+					if(player['research'][mainResearch['main'][i]['canvas']()[ic]].gte(n(mainResearch['main'][mainResearch['main'][i]['canvas']()[ic]]['capped']()).min(1))){
 						if(player['research'][i].gte(1)){color = 'rgb(246, 170, 255, 0.6)'}
-						if(player['research'][i].gte(mainResearch['main'][i]['max']())){color = 'rgba(174, 35, 252, 0.4)'}
+						if(player['research'][i].gte(mainResearch['main'][i]['capped']())){color = 'rgba(174, 35, 252, 0.4)'}
 					}
 					drawTree(mainResearch['main'][i]['canvas']()[ic],i,color)
 				}

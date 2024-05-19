@@ -20,11 +20,11 @@ function researchClick(id){
             logs += '<br><li-hid>'+format(n(res).sub(player['resource'][i]))+colorText(i)[1]+'</span>'
         }
     }
-    if(player.research[id].gte(mainResearch['main'][id]['max']())){
+    if(player.research[id].gte(mainResearch['main'][id]['capped']())){
 
     }else if(player.canMainResearch[id]==true && player.research.conducted==id){
         player.research.conducted = undefined
-        player.resource.researchPoints = player.resource.researchPoints.min(main['resource']['researchPoints']['max']())
+        player.resource.researchPoints = player.resource.researchPoints.min(main['resource']['researchPoints']['capped']())
     }else if(player.canMainResearch[id]==true){
         player.research.conducted = id
     }else if(canresearch){
@@ -50,7 +50,7 @@ function researchClick(id){
     if(player.research[id].gte(1)){
         document.getElementById(id+"MainResearchButtonID").style.borderColor = 'rgb(246, 170, 255)'
     }
-    if(player.research[id].gte(mainResearch['main'][id]['max']())){
+    if(player.research[id].gte(mainResearch['main'][id]['capped']())){
         document.getElementById(id+"MainResearchButtonID").style.borderColor = 'rgb(174, 35, 252)'
     }
     if(player.canMainResearch[id]==true){

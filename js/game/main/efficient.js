@@ -1,46 +1,42 @@
 let efficient = {
-    action:{
+    action: {
         name(){return '效率'},
         tooltip(){return '效率是基础的行动速度<hr><grey>效率影响探索与行动的基础速度</grey>'},
         unlocked(){return true},
-        food:{
+        food: {
             name(){return '缺少食物'},
             effect(){return n(-20)},
             active(){return player.resource.food.lte(0) && player.game.stage.lte(3)}
         },
-        home:{
+        home: {
             name(){return '缺少定居地'},
             effect(){return n(-20)},
             active(){return player.building.civics.eq(0)}
         },
-        citizens:{
+        citizens: {
             name(){return '幸福度'},
             effect(){return n(getEfficient('happiness')).sub(1).mul(100)},
             active(){return player.game.stage.gte(4)}
         },
     },
-    happiness:{
+    happiness: {
         name(){return '幸福度'},
         tooltip(){return '居民的幸福度决定了他们的行动能力<hr><grey>幸福度会影响村民的基础效率<br>幸福度小于100%时不会影响村民的消耗<br>幸福度与效率都会影响村民的行动速度</grey>'},
         unlocked(){return player.game.stage.gte(4)},
-        food:{
+        food: {
             name(){return '缺少食物'},
             effect(){return n(-20)},
             active(){return player.resource.food.lte(0) && player.game.stage.gte(4)}
         },
-        citizens:{
-            name(){return '人口'},
+        citizens: {
+            name(){return '人口过剩'},
             effect(){return n(0).sub(player.resource.citizens)},
         },
-        explorer:{
-            name(){return '开阔者'},
-            effect(){return civics['citizens']['explorer']['effect']['other']['happiness']()},
+        jobs: {
+            name(){return '职业满意度'},
+            effect(){return n(gameGetHappiness())}
         },
-        collector:{
-            name(){return '收集者'},
-            effect(){return civics['citizens']['collector']['effect']['other']['happiness']()},
-        },
-        stardust:{
+        stardust: {
             name(){return '星尘'},
             effect(){return player.resource.stardust.mul(10)},
         },

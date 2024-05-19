@@ -4,6 +4,7 @@ function getStage(num){
 	}
 	if(player.game.stage.gte(1)){
 		document.getElementById("rightColumn").style.opacity = 1
+		document.getElementById("loadRightColumn").style.height = 'auto'
 		document.getElementById("loadRightColumn").style.opacity = 1
 	}
 	if(player.game.stage.gte(2)){

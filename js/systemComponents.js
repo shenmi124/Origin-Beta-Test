@@ -16,8 +16,8 @@ function componentCraft(id){
 
 function componentBuilding(id){
     let number = `(`+player['building'][id]+`)`
-    if(main['building'][id]['instant']!==undefined){
-        number = main['building'][id]['instant']() ? `` : `(`+player['building'][id]+`)`
+    if(main['building'][id]['unique']!==undefined){
+        number = main['building'][id]['unique']() ? `` : `(`+player['building'][id]+`)`
     }
     getByID(id+"LoadBuildingID",`
     <tooltip `+loadTooltip(id,'LoadTooltipBuilding')+`>
@@ -26,13 +26,13 @@ function componentBuilding(id){
     `)
 
     let resCan = true
-    let maxCan = true
+    let cappedCan = true
     for(let i in main['building'][id]['cost']){
         let res = n(main['building'][id]['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['costPower']()).add(1)).sub(1)
-        if(n(main['resource'][i]['max']!==undefined)){
-            if(n(getResourceMax(i)).lt(res)){
-                addedCss(id+"BuildingButtonID",'max')
-                maxCan = false
+        if(n(main['resource'][i]['capped']!==undefined)){
+            if(n(getResourceCapped(i)).lt(res)){
+                addedCss(id+"BuildingButtonID",'capped')
+                cappedCan = false
             }
         }
         if(n(player['resource'][i]).lt(res)){
@@ -40,8 +40,8 @@ function componentBuilding(id){
             resCan = false
         }
     }
-    if(maxCan){
-        removeCss(id+"BuildingButtonID",'max')
+    if(cappedCan){
+        removeCss(id+"BuildingButtonID",'capped')
     }
     if(resCan){
         removeCss(id+"BuildingButtonID",'res')
@@ -57,7 +57,37 @@ function componentCitizens(id){
     `)
 }
 
-function componentCitizenJobs(id){		
+function componentJobs(id){		
     getByID(id+'CitizenJobsNameLoadID',`<tooltip `+loadTooltip(id,'LoadTooltipCitizenJobs',null)+`><div style="display: inline-grid; width: 80px">`+civics['jobs'][id]['name']()+`</div></tooltip>`)
     getByID(id+'CitizenJobsAllocatedLoadID',formatWhole(getUnemployedJobs(id)))
+}
+
+function componentWorkshop(id){
+    getByID(id+"LoadWorkshopID",`
+    <tooltip `+loadTooltip(id,'LoadTooltipWorkshop')+`>
+        <button id="`+id+`WorkshopButtonID" onclick="Upgrade('`+id+`')">`+civics['workshop'][id]['name']()+`</button>
+    </tooltip>
+    `)
+
+    let resCan = true
+    let cappedCan = true
+    for(let i in civics['workshop'][id]['cost']){
+        let res = n(civics['workshop'][id]['cost'][i]())
+        if(n(main['resource'][i]['capped']!==undefined)){
+            if(n(getResourceCapped(i)).lt(res)){
+                addedCss(id+"WorkshopButtonID",'capped')
+                cappedCan = false
+            }
+        }
+        if(n(player['resource'][i]).lt(res)){
+            addedCss(id+"WorkshopButtonID",'res')
+            resCan = false
+        }
+    }
+    if(cappedCan){
+        removeCss(id+"WorkshopButtonID",'capped')
+    }
+    if(resCan){
+        removeCss(id+"WorkshopButtonID",'res')
+    }
 }

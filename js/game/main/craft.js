@@ -1,9 +1,9 @@
 let MainCraft = {
     citizens:{
         name(){return '原住民'},
-        max(){return n(2).mul(civics['citizens']['explorer']['effect']['other']['memory']()).floor()},
+        capped(){return n(2).mul(getCitizensEffect('explorer', 'memory').add(1)).floor()},
         tooltip(){
-            let times = '<hr>已标记: '+formatWhole(player.action.explore.citizens,0)+' <a style="color: #888">/ '+formatWhole(this.max(),0)+' (遗忘)</a>'
+            let times = '<hr>已标记: '+formatWhole(player.action.explore.citizens,0)+' <a style="color: #888">/ '+formatWhole(this.capped(),0)+' (遗忘)</a>'
             return '他们为你工作,而你给与他们住所与食物<br>公平的交易<hr><grey>你需要提供食物与住所,否则他们不会跟随你</grey>'+times
         },
         onClick(){
@@ -14,12 +14,12 @@ let MainCraft = {
             getStage(4)
         },
         cooldown(){return n(20)},
-        canClick(){return player.action.explore.citizens.gte(1) && player.resource.food.gt(0) && player.resource.citizens.lt(getResourceMax('citizens'))},
+        canClick(){return player.action.explore.citizens.gte(1) && player.resource.food.gt(0) && player.resource.citizens.lt(getResourceCapped('citizens'))},
         unlocked(){return player.action.explore.citizensFined==true},
     },
     collect:{
         name(){return '收集'},
-        max(){return n(5).mul(civics['citizens']['explorer']['effect']['other']['memory']()).floor()},
+        capped(){return n(5).mul(getCitizensEffect('explorer', 'memory').add(1)).floor()},
         gain:{
             dirt:{
                 probability(){return n(100)},
@@ -84,7 +84,7 @@ let MainCraft = {
                 mul = '<left><small><div>产出倍率:<br><li-hid>×'+format(main.craft.harvest.mul())+'</div></small></left>'
                 hr = '<hr>'
             }
-            let times = '<hr>已标记: '+formatWhole(player.action.explore.collect,0)+' <a style="color: #888">/ '+formatWhole(this.max(),0)+' (遗忘)</a>'
+            let times = '<hr>已标记: '+formatWhole(player.action.explore.collect,0)+' <a style="color: #888">/ '+formatWhole(this.capped(),0)+' (遗忘)</a>'
             return "泥土从你的手中漏出"+base+gain+hr+'<small>'+luck+mul+"</small></left>"+times
         },
         cooldown(){return n(5)},
@@ -96,7 +96,7 @@ let MainCraft = {
     },
     stone:{
         name(){return '露天石料'},
-        max(){return n(10).mul(civics['citizens']['explorer']['effect']['other']['memory']()).floor()},
+        capped(){return n(10).mul(getCitizensEffect('explorer', 'memory').add(1)).floor()},
         gain:{
         },
         tooltip(){
@@ -106,7 +106,7 @@ let MainCraft = {
                 mul = '<left><small><div>产出倍率:<br><li-hid>×'+format(main.craft.stone.mul())+'</div></small></left>'
                 hr = '<hr>'
             }
-            let times = '<hr>已标记: '+formatWhole(player.action.explore.stone,0)+' <a style="color: #888">/ '+formatWhole(this.max(),0)+' (遗忘)</a>'
+            let times = '<hr>已标记: '+formatWhole(player.action.explore.stone,0)+' <a style="color: #888">/ '+formatWhole(this.capped(),0)+' (遗忘)</a>'
             return '蕴含矿石?也许<hr><grey>你需要工具才能去开采这些矿石</grey>'+hr+mul+times
         },
         mul(){
@@ -132,7 +132,7 @@ let MainCraft = {
     },
     drop:{
         name(){return '树枝'},
-        max(){return n(4).mul(civics['citizens']['explorer']['effect']['other']['memory']()).floor()},
+        capped(){return n(4).mul(getCitizensEffect('explorer', 'memory').add(1)).floor()},
         gain:{
             wood:{
                 probability(){return n(100)},
@@ -148,7 +148,7 @@ let MainCraft = {
                 mul = '<left><small><div>产出倍率:<br><li-hid>×'+format(main.craft.drop.mul())+'</div></small></left>'
                 hr = '<hr>'
             }
-            let times = '<hr>已标记: '+formatWhole(player.action.explore.drop,0)+' <a style="color: #888">/ '+formatWhole(this.max(),0)+' (遗忘)</a>'
+            let times = '<hr>已标记: '+formatWhole(player.action.explore.drop,0)+' <a style="color: #888">/ '+formatWhole(this.capped(),0)+' (遗忘)</a>'
             return '看起来目前这是你唯一的木头来源'+hr+mul+times
         },
         mul(){
@@ -174,7 +174,7 @@ let MainCraft = {
     },
     harvest:{
         name(){return '收割'},
-        max(){return n(5).mul(civics['citizens']['explorer']['effect']['other']['memory']()).floor()},
+        capped(){return n(5).mul(getCitizensEffect('explorer', 'memory').add(1)).floor()},
         gain:{
             food:{
                 probability(){return n(100)},
@@ -190,7 +190,7 @@ let MainCraft = {
                 mul = '<left><small><div>产出倍率:<br><li-hid>×'+format(main.craft.harvest.mul())+'</div></small></left>'
                 hr = '<hr>'
             }
-            let times = '<hr>已标记: '+formatWhole(player.action.explore.harvest,0)+' <a style="color: #888">/ '+formatWhole(this.max(),0)+' (遗忘)</a>'
+            let times = '<hr>已标记: '+formatWhole(player.action.explore.harvest,0)+' <a style="color: #888">/ '+formatWhole(this.capped(),0)+' (遗忘)</a>'
             return '收集食物'+hr+mul+times
         },
         mul(){
@@ -217,7 +217,7 @@ let MainCraft = {
     },
     beast:{
         name(){return '野兽'},
-        max(){return n(20).mul(civics['citizens']['explorer']['effect']['other']['memory']()).floor()},
+        capped(){return n(20).mul(getCitizensEffect('explorer', 'memory').add(1)).floor()},
         gain:{
             food:{
                 probability(){return n(100)},
@@ -233,7 +233,7 @@ let MainCraft = {
                 mul = '<left><small><div>产出倍率:<br><li-hid>×'+format(main.craft.beast.mul())+'</div></small></left>'
                 hr = '<hr>'
             }
-            let times = '<hr>已标记: '+formatWhole(player.action.explore.beast,0)+' <a style="color: #888">/ '+formatWhole(this.max(),0)+' (遗忘)</a>'
+            let times = '<hr>已标记: '+formatWhole(player.action.explore.beast,0)+' <a style="color: #888">/ '+formatWhole(this.capped(),0)+' (遗忘)</a>'
             return '兽群,收集它们身上的皮毛和血肉<br>但它们真的很强壮<hr><grey>你暂时拿它们无能为力</grey>'+hr+mul+times
         },
         mul(){

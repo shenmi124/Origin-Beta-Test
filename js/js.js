@@ -35,7 +35,7 @@ function getBr(){
 				br += 1
 				getByID(mainTab[maini]['id']()+"TextID",(u ? '<br><br>' : '')+mainTab[maini]['name']()+'<br>')
 			}
-			if(br%MID === 0 && br!=0){
+			if(br%MID===0 && br!==0){
 				document.getElementById(i+maini+'BrID').style.display = ''
 			}else{
 				document.getElementById(i+maini+'BrID').style.display = 'none'
@@ -43,7 +43,23 @@ function getBr(){
 		}
 		u = true
 	}
-	
+
+	let br = -1
+	for(let i in civics['workshop']){
+		let unlocked = true
+		if(civics['workshop'][i]['unlocked']!==undefined){
+			unlocked = civics['workshop'][i]['unlocked']()
+		}
+		if(unlocked){
+			br += 1
+		}
+		if(br%MID===0 && br!==0){
+			document.getElementById(i+'workshopBrID').style.display = ''
+		}else{
+			document.getElementById(i+'workshopBrID').style.display = 'none'
+		}
+	}
+
 	document.getElementById('loadMainResearch').style.height = window.innerHeight-100 + 'px'
 }
 
@@ -142,13 +158,13 @@ function dataDiff(){
 
 	for(let id in main['building']){
 		let resCan = true
-		let maxCan = true
+		let cappedCan = true
 		for(let i in main['building'][id]['cost']){
 			let res = n(main['building'][id]['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['costPower']()).add(1)).sub(1)
-			if(n(main['resource'][i]['max']!==undefined)){
-				if(n(getResourceMax(i)).lt(res)){
-					addedCss(id+"BuildingButtonID",'max')
-					maxCan = false
+			if(n(main['resource'][i]['capped']!==undefined)){
+				if(n(getResourceCapped(i)).lt(res)){
+					addedCss(id+"BuildingButtonID",'capped')
+					cappedCan = false
 				}
 			}
 			if(n(player['resource'][i]).lt(res)){
@@ -156,17 +172,41 @@ function dataDiff(){
 				resCan = false
 			}
 		}
-		if(maxCan){
-			removeCss(id+"BuildingButtonID",'max')
+		if(cappedCan){
+			removeCss(id+"BuildingButtonID",'capped')
 		}
 		if(resCan){
 			removeCss(id+"BuildingButtonID",'res')
 		}
 	}
 
-	if(player.research.conducted!==undefined && player.resource.researchPoints.gte(main['resource']['researchPoints']['max']())){
+	for(let id in civics['workshop']){
+		let resCan = true
+		let cappedCan = true
+		for(let i in civics['workshop'][id]['cost']){
+			let res = n(civics['workshop'][id]['cost'][i]())
+			if(n(main['resource'][i]['capped']!==undefined)){
+				if(n(getResourceCapped(i)).lt(res)){
+					addedCss(id+"WorkshopButtonID",'capped')
+					cappedCan = false
+				}
+			}
+			if(n(player['resource'][i]).lt(res)){
+				addedCss(id+"WorkshopButtonID",'res')
+				resCan = false
+			}
+		}
+		if(cappedCan){
+			removeCss(id+"WorkshopButtonID",'capped')
+		}
+		if(resCan){
+			removeCss(id+"WorkshopButtonID",'res')
+		}
+	}
+
+	if(player.research.conducted!==undefined && player.resource.researchPoints.gte(main['resource']['researchPoints']['capped']())){
 		player.research[player.research.conducted] = player.research[player.research.conducted].add(1)
-		if(player.research[player.research.conducted].gte(mainResearch['main'][player.research.conducted]['max']())){
+		if(player.research[player.research.conducted].gte(mainResearch['main'][player.research.conducted]['capped']())){
 			player.canMainResearch[player.research.conducted] = false
 			document.getElementById(player.research.conducted+"MainResearchButtonID").style.borderColor = 'rgb(174, 35, 252)'
 		}else{
@@ -177,24 +217,24 @@ function dataDiff(){
 	}
 	for(id in mainResearch['main']){
 		let canResearch = true
-		let maxRsearch = true
+		let cappedRsearch = true
 		let research = Number(player['research'][id])
 		for(i in mainResearch['main'][id]['cost'][research]){
 			let res = mainResearch['main'][id]['cost'][research][i]()
-			if(main['resource'][i]['max']!==undefined){
-				if(n(getResourceMax(i)).lt(res)){
-					maxRsearch = false
+			if(main['resource'][i]['capped']!==undefined){
+				if(n(getResourceCapped(i)).lt(res)){
+					cappedRsearch = false
 				}
 			}
 			if(player['resource'][i].lt(res)){
 				canResearch = false
 			}
 		}
-		if(player['research'][id].lt(mainResearch['main'][id]['max']()) && player.research.conducted!==id && player.canMainResearch[id]==false){
-			if(maxRsearch){
-				removeCss(id+"MainResearchButtonID",'max')
+		if(player['research'][id].lt(mainResearch['main'][id]['capped']()) && player.research.conducted!==id && player.canMainResearch[id]==false){
+			if(cappedRsearch){
+				removeCss(id+"MainResearchButtonID",'capped')
 			}else{
-				addedCss(id+"MainResearchButtonID",'max')
+				addedCss(id+"MainResearchButtonID",'capped')
 			}
 			if(canResearch){
 				document.getElementById(id+"MainResearchButtonID").style.borderColor = 'rgb(41, 192, 84)'
@@ -215,7 +255,7 @@ function getID(){
 		if(mainButton[i]['unlocked']!==undefined){
 			unlocked = mainButton[i]['unlocked']()
 		}
-		unlockedLoad(i+'MainTabID',unlocked)
+		unlockedLoad(i+'MainTabID', unlocked)
 	}
 
 	for(let i in main['resource']){
@@ -228,7 +268,7 @@ function getID(){
 		if(main['action'][i]['unlocked']!==undefined){
 			unlocked = main['action'][i]['unlocked']()
 		}
-		unlockedLoad(i+'LoadAction',unlocked)
+		unlockedLoad(i+'LoadAction', unlocked)
 	}
 
 	for(let i in main['building']){
@@ -236,7 +276,7 @@ function getID(){
 		if(main['building'][i]['unlocked']!==undefined){
 			unlocked = main['building'][i]['unlocked']()
 		}
-		unlockedLoad(i+'LoadBuilding',unlocked)
+		unlockedLoad(i+'LoadBuilding', unlocked)
 	}
 
 	for(let i in main['craft']){
@@ -244,7 +284,7 @@ function getID(){
 		if(main['craft'][i]['unlocked']!==undefined){
 			unlocked = main['craft'][i]['unlocked']()
 		}
-		unlockedLoad(i+'LoadCraft',unlocked)
+		unlockedLoad(i+'LoadCraft', unlocked)
 	}
 
 	for(let i in mainResearch['main']){
@@ -255,11 +295,11 @@ function getID(){
 			player['research'][i+'Unlock'] = true
 			player['research'][i+'Unlocked'] = true
 		}
-		unlockedLoad(i+'MainResearchDivID',unlocked,'inline-grid')
+		unlockedLoad(i+'MainResearchDivID', unlocked, 'inline-grid')
 		if(unlocked){
 			player['research'][i+'Unlock'] = true
 			if(player['research'][i+'Unlocked']==false){
-				addLog('你对研究有了一些新的启发','#888')
+				addLog('你对研究有了一些新的启发', '#888')
 			}
 			player['research'][i+'Unlocked'] = true
 		}
@@ -270,7 +310,15 @@ function getID(){
 		if(civics['citizens'][i]['unlocked']!==undefined){
 			unlocked = civics['citizens'][i]['unlocked']()
 		}
-		unlockedLoad(i+'LoadCitizensID',unlocked)
+		unlockedLoad(i+'LoadCitizensID', unlocked)
+	}
+
+	for(let i in civics['workshop']){
+		let unlocked = true
+		if(civics['workshop'][i]['unlocked']!==undefined){
+			unlocked = civics['workshop'][i]['unlocked']()
+		}
+		unlockedLoad(i+'LoadWorkshop', unlocked && !player['workshop'][i])
 	}
 
 	getBr()

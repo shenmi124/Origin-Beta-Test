@@ -1,11 +1,11 @@
 var CivicsWorkshop = {
+    /*
     pickaxe: {
         name(){return '燧石镐'},
-        tooltip(){return '<i>你需要用石头做出燧石稿以开采石头</i><br><gery>收集时有概率获得石头</gery>'},
+        tooltip(){return '用石头做出石稿以开采石头<br><grey>收集时有概率获得石头</grey><br><joker>开采石头做出石镐以开采石头</joker><hr>允许玩家采集露天石料'},
         cost: {
-            stone(){return n(1)}
+            stone(){return n(1)},
         },
-        costPower(){return n(0.05)},
         effect: {
             gain:{
                 add: {
@@ -13,5 +13,5 @@ var CivicsWorkshop = {
                 }
             }
         }
-    },
+    },*/
 }

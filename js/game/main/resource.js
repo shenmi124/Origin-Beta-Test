@@ -8,7 +8,7 @@ var MainResource = {
     citizens:{
         name(){return "居民"},
         color(){return '#000'},
-        max(){return n(0)},
+        capped(){return n(0)},
         effect: {
             gain: {
                 add: {
@@ -18,10 +18,11 @@ var MainResource = {
             }
         },
         tooltip(){
-            return `一旦居民不再幸福他们很可能会离开你<br>同时居民的增加意味着安定度的降低<hr><a style='font-size: 14px'>影响</a>`
-            +buildingText(colorText('ideas')[1], '+', this.effect.gain.add.ideas(), '/s', player.resource.citizens)
-            +buildingText(colorText('food')[1], '', this.effect.gain.add.food(), '/s', player.resource.citizens, 'red')
-            +buildingText('幸福度', '-', n(1), '', player.resource.citizens, 'red')
+            return `一旦居民不再幸福他们很可能会离开你<br>同时居民的增加意味着安定度的降低<hr>
+            <a style='font-size: 14px'>影响</a>`
+            +effectText(colorText('ideas')[1], '+', this.effect.gain.add.ideas(), '/s', player.resource.citizens)
+            +effectText(colorText('food')[1], '', this.effect.gain.add.food(), '/s', player.resource.citizens, 'red')
+            +effectText('幸福度', '-', n(1), '', player.resource.citizens, 'red')
         },
         unlockAction(){
             getStage(3)
@@ -44,14 +45,14 @@ var MainResource = {
     dirt:{
         name(){return "泥土"},
         color(){return 'rgb(150, 108, 74)'},
-        max(){return n(30)},
+        capped(){return n(30)},
         gain(){return n(0)},
         unlocked(){return getResourceUnlocked('dirt')},
     },
     wood:{
         name(){return "木材"},
         color(){return 'rgb(180,144,90)'},
-        max(){return n(30)},
+        capped(){return n(30)},
         gain(){return n(0)},
         unlockAction(){
             addLog('在这样的平原上你几乎找不到树')
@@ -62,7 +63,7 @@ var MainResource = {
     stone:{
         name(){return "石料"},
         color(){return '#666'},
-        max(){return n(50)},
+        capped(){return n(50)},
         gain(){return n(0)},
         unlockAction(){
             addLog('你从泥土中发现了一些石子')
@@ -72,7 +73,7 @@ var MainResource = {
     food:{
         name(){return "食物"},
         color(){return '#cf7004'},
-        max(){return n(20)},
+        capped(){return n(20)},
         gain(){return n(-0.1)},
         gainTooltip(){return '食用'},
         tooltip(){return '在这样荒芜的地方植物确实是不常见的东西'},
@@ -88,8 +89,8 @@ var MainResource = {
         Class(){return 'stardust'},
         tooltip(){
             return `群星闪耀<hr><a style='font-size: 14px'>影响</a>`
-            +buildingText('陨石碎片', '<mul>×</mul>', n(10), '上限', player.resource.stardust)
-            +buildingText('幸福度', '+', n(10), '', player.resource.stardust)
+            +effectText('陨石碎片', '<mul>×</mul>', n(10), '上限', player.resource.stardust)
+            +effectText('幸福度', '+', n(10), '', player.resource.stardust)
         },
         unlockAction(){
             addLog('这是你的第一颗<span class="stardust">星尘</span>')
@@ -101,8 +102,8 @@ var MainResource = {
         name(){return "陨石碎片"},
         color(){return '#000'},
         Class(){return 'star'},
-        max(){return n(0.1)},
-        maxMul(){return n(10).pow(player.resource.stardust)},
+        capped(){return n(0.1)},
+        cappedMul(){return n(10).pow(player.resource.stardust)},
         tooltip(){return '陨石坠落'},
         unlockAction(){
             addLog('这些陨石碎片应该有特殊的用处')
@@ -113,9 +114,9 @@ var MainResource = {
     researchPoints:{
         name(){return '科学'},
         color(){return 'rgb(74, 161, 254)'},
-        max(){return researchRequire(player.research.conducted)},
+        capped(){return researchRequire(player.research.conducted)},
         gain(){return n(1)},
         tooltip(){return '智慧最好的体现<hr>科学抵达基础上限后完成研究<hr>科学基础上限取决于[消耗数量×研究难度]'+(player.research.conducted!==undefined ? '<hr>'+mainResearch['main'][player.research.conducted]['name']() : '')},
-        unlocked(){return getResourceUnlocked('researchPoints') || main['resource']['researchPoints']['max']().gt(0)},
+        unlocked(){return getResourceUnlocked('researchPoints') || main['resource']['researchPoints']['capped']().gt(0)},
     },
 }

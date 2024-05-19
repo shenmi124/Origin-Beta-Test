@@ -22,7 +22,7 @@ var MainAction = {
                     if(main['action']['explore']['gain'][i]['unlocked']()){
                         if(!main['action']['explore']['gain'][i]['instant']()){
                             let gain = n(main['action']['explore']['gain'][i]['base']()).add(n(Math.random()).mul(main['action']['explore']['gain'][i]['float']())).ceil()
-                            player['action']['explore'][i] = player['action']['explore'][i].add(gain).min(main['craft'][i]['max']())
+                            player['action']['explore'][i] = player['action']['explore'][i].add(gain).min(main['craft'][i]['capped']())
                             if(!player['action']['explore'][i+'Fined']){
                                 player['action']['explore'][i+'Fined'] = true
                             }
@@ -148,7 +148,7 @@ var MainAction = {
         },
         tooltip(){return '让世间接纳星尘<hr>将你的所有陨石碎片转化为星尘并获得加成<hr><grey>你必须保持陨石碎片在上限时才能进行这个行动</grey>'},
         cooldown(){return n(600)},
-        canClick(){return player.resource.star.gte(getResourceMax('star'))},
+        canClick(){return player.resource.star.gte(getResourceCapped('star'))},
         unlocked(){return !player.resource.star.eq(0)},
     }
 }

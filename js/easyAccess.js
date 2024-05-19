@@ -1,7 +1,7 @@
 function NumberFix(){
 	for(i in main['resource']){
-		if(main['resource'][i]['max']!==undefined){
-			player['resource'][i] = player['resource'][i].min(getResourceMaxBase(i))
+		if(main['resource'][i]['capped']!==undefined){
+			player['resource'][i] = player['resource'][i].min(getResourceCappedBase(i))
 			getResourceID(i)
 		}
 	}
@@ -15,8 +15,8 @@ function getResourceGain(researce){
     return n(getResourceGainBase(researce)).mul(getResourceGainMul(researce))
 }
 
-function getResourceMax(researce){
-    return n(getResourceMaxBase(researce)).mul(getResourceMaxMul(researce))
+function getResourceCapped(researce){
+    return n(getResourceCappedBase(researce)).mul(getResourceCappedMul(researce))
 }
 
 function getResourceGainBase(resource){
@@ -89,17 +89,17 @@ function getResourceGainMul(resource){
     return gain
 }
 
-function getResourceMaxBase(resource){
-    let max = n(0)
-    if(main['resource'][resource]['max']!==undefined){
-        max = max.add(main['resource'][resource]['max']())
+function getResourceCappedBase(resource){
+    let capped = n(0)
+    if(main['resource'][resource]['capped']!==undefined){
+        capped = capped.add(main['resource'][resource]['capped']())
         for(let i in main['resource']){
             if(main['resource'][i]['effect']!==undefined){
-                if(main['resource'][i]['effect']['max']!==undefined){
-                    if(main['resource'][i]['effect']['max']['add']!==undefined){
-                        for(let im in main['resource'][i]['effect']['max']['add']){
+                if(main['resource'][i]['effect']['capped']!==undefined){
+                    if(main['resource'][i]['effect']['capped']['add']!==undefined){
+                        for(let im in main['resource'][i]['effect']['capped']['add']){
                             if(resource==im){
-                                max = max.add(n(main['resource'][i]['effect']['max']['add'][im]()).mul(player['resource'][i]))
+                                capped = capped.add(n(main['resource'][i]['effect']['capped']['add'][im]()).mul(player['resource'][i]))
                             }
                         }
                     }
@@ -108,11 +108,11 @@ function getResourceMaxBase(resource){
         }
         for(let i in main['building']){
             if(main['building'][i]['effect']!==undefined){
-                if(main['building'][i]['effect']['max']!==undefined){
-                    if(main['building'][i]['effect']['max']['add']!==undefined){
-                        for(let im in main['building'][i]['effect']['max']['add']){
+                if(main['building'][i]['effect']['capped']!==undefined){
+                    if(main['building'][i]['effect']['capped']['add']!==undefined){
+                        for(let im in main['building'][i]['effect']['capped']['add']){
                             if(resource==im){
-                                max = max.add(n(main['building'][i]['effect']['max']['add'][im]()).mul(player['building'][i]))
+                                capped = capped.add(n(main['building'][i]['effect']['capped']['add'][im]()).mul(player['building'][i]))
                             }
                         }
                     }
@@ -120,17 +120,17 @@ function getResourceMaxBase(resource){
             }
         }
     }
-    return max
+    return capped
 }
 
-function getResourceMaxMul(resource){
-    let max = n(1)
-    if(main['resource'][resource]['max']!==undefined){
-        if(main['resource'][resource]['maxMul']!==undefined){
-            max = max.mul(n(main['resource'][resource]['maxMul']()))
+function getResourceCappedMul(resource){
+    let capped = n(1)
+    if(main['resource'][resource]['capped']!==undefined){
+        if(main['resource'][resource]['cappedMul']!==undefined){
+            capped = capped.mul(n(main['resource'][resource]['cappedMul']()))
         }
     }
-    return max
+    return capped
 }
 
 function getResourceBaseNumber(resource){
@@ -225,44 +225,29 @@ function getBuildGain(building,resource){
     return n(main['building'][building]['effect']['gain']['add'][resource]()).mul(player['building'][building])
 }
 
-function getBuildMax(building,resource){
-    return n(main['building'][building]['effect']['max']['add'][resource]()).mul(player['building'][building])
+function getBuildCapped(building,resource){
+    return n(main['building'][building]['effect']['capped']['add'][resource]()).mul(player['building'][building])
 }
 
-function getTooltipLoot(resource,effect,start=n(0),type='research'){
-    return formatWhole(player[type][resource].sub(n(start)).max(1).mul(n(effect)))
+function getCitizensEffect(citizens,effect){
+    return player['citizens'][citizens].mul(civics['citizens'][citizens]['effect']['other'][effect]['effect']())
 }
 
-function getEffectLoot(resource,effect,start=n(0),type='research'){
-    return n(player[type][resource].sub(n(start)).max(0).mul(n(effect)).add(1))
-}
-
-function getResourceUnlocked(resource){
-    return player['resource'][resource].gt(0) || player['resource'][resource+'Unlocked']
-}
-
-function getUnemployedsNumber(){
-    let sub = n(0)
-    for(let i in civics['citizens']){
-        let mass = n(1)
-        if(civics['citizens'][i]['mass']!==undefined){
-            mass = n(civics['citizens'][i]['mass']())
-        }
-        sub = sub.add(player.citizens[i].mul(mass))
+function effectText(name,begin,resource,end,mul,Class=null,display=true){
+    let unique = ``
+    let beginClass = ``
+    let endClass = ``
+    if(display){
+        unique = `<grey><li-hid>(`+begin+format(resource)+end+`)</grey>`
     }
-    return player.resource.citizens.sub(sub)
-}
-
-function getEmployedsNumber(){
-    let add = n(0)
-    for(let i in civics['citizens']){
-        let mass = n(1)
-        if(civics['citizens'][i]['mass']!==undefined){
-            mass = n(civics['citizens'][i]['mass']())
-        }
-        add = add.add(player.citizens[i].mul(mass))
+    if(Class!==null){
+        beginClass = `<`+Class+`>`
+        endClass = `</`+Class+`>`
     }
-    return add
+    return `<left><span>
+        <div style="width: 80px; display: table-cell">`+name+`</div><div style="width: 100px; display: table-cell">`+beginClass+begin+format(n(resource).mul(mul))+end+endClass+`</div>
+        `+unique+`
+    </span></left>`
 }
 
 function colorText(id){
@@ -289,19 +274,16 @@ function colorText(id){
 	return [color,"<a style='color:"+color+"' class='"+Class+"'>"+Text+"</a>",color2]
 }
 
-function buildingText(name,begin,resource,end,mul,Class=null,display=true){
-    let unique = ``
-    let beginClass = ``
-    let endClass = ``
-    if(display){
-        unique = `<grey><li-hid>(`+begin+format(resource)+end+`)</grey>`
-    }
-    if(Class!==null){
-        beginClass = `<`+Class+`>`
-        endClass = `</`+Class+`>`
-    }
-    return `<left><span>
-        <div style="width: 80px; display: table-cell">`+name+`</div><div style="width: 100px; display: table-cell">`+beginClass+begin+format(n(resource).mul(mul))+end+endClass+`</div>
-        `+unique+`
-    </span></left>`
+
+
+function getTooltipLoot(resource,effect,start=n(0),type='research'){
+    return formatWhole(player[type][resource].sub(n(start)).capped(1).mul(n(effect)))
+}
+
+function getEffectLoot(resource,effect,start=n(0),type='research'){
+    return n(player[type][resource].sub(n(start)).capped(0).mul(n(effect)).add(1))
+}
+
+function getResourceUnlocked(resource){
+    return player['resource'][resource].gt(0) || player['resource'][resource+'Unlocked']
 }
