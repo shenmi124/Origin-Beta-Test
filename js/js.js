@@ -48,7 +48,7 @@ function getBr(){
 	for(let i in civics['workshop']){
 		let unlocked = true
 		if(civics['workshop'][i]['unlocked']!==undefined){
-			unlocked = civics['workshop'][i]['unlocked']()
+			unlocked = civics['workshop'][i]['unlocked']() && !player['workshop'][i]
 		}
 		if(unlocked){
 			br += 1
@@ -161,7 +161,7 @@ function dataDiff(){
 		let cappedCan = true
 		for(let i in main['building'][id]['cost']){
 			let res = n(main['building'][id]['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['costPower']()).add(1)).sub(1)
-			if(n(main['resource'][i]['capped']!==undefined)){
+			if(main['resource'][i]['capped']!==undefined){
 				if(n(getResourceCapped(i)).lt(res)){
 					addedCss(id+"BuildingButtonID",'capped')
 					cappedCan = false
@@ -185,7 +185,7 @@ function dataDiff(){
 		let cappedCan = true
 		for(let i in civics['workshop'][id]['cost']){
 			let res = n(civics['workshop'][id]['cost'][i]())
-			if(n(main['resource'][i]['capped']!==undefined)){
+			if(main['resource'][i]['capped']!==undefined){
 				if(n(getResourceCapped(i)).lt(res)){
 					addedCss(id+"WorkshopButtonID",'capped')
 					cappedCan = false
@@ -222,7 +222,7 @@ function dataDiff(){
 		for(i in mainResearch['main'][id]['cost'][research]){
 			let res = mainResearch['main'][id]['cost'][research][i]()
 			if(main['resource'][i]['capped']!==undefined){
-				if(n(getResourceCapped(i)).lt(res)){
+				if((n(getResourceCapped(i)).gte(res) || main['resource'][i]['capped']!==undefined)){
 					cappedRsearch = false
 				}
 			}

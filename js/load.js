@@ -14,7 +14,7 @@ function loadMain(){
 	buttonStr += `<div style="border-top: 1px solid #000; margin-top: 5px"></div>`
 	getByID('loadMainButton',buttonStr)
 	document.getElementById("mainMainTabID").style.color = 'rgb(0, 123, 255)'
-	document.getElementById("mainMainTabID").style.opacity = '0.8'
+	document.getElementById("mainMainTabID").style.opacity = '0.8.1'
 
 	let mainStr = ''
 	for(let i in mainTab){
@@ -174,7 +174,7 @@ function loadVersion(){
 	}else if(player.data.version!==VERSION){
 		
 		if(player.data.versiontimes.lte(2)){
-			player.resource.ideas = n(0)
+			player.resource.idea = n(0)
 		}
 		if(player.data.versiontimes.lte(1) && player.resource.citizens.gte(1)){
 			getStage(4)

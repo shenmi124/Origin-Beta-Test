@@ -12,7 +12,7 @@ var MainResource = {
         effect: {
             gain: {
                 add: {
-                    ideas(){return n(1).mul(getEfficient('happiness'))},
+                    idea(){return n(1).mul(getEfficient('happiness'))},
                     food(){return n(-0.1).mul(getEfficient('happiness').max(1))}
                 }
             }
@@ -20,7 +20,7 @@ var MainResource = {
         tooltip(){
             return `一旦居民不再幸福他们很可能会离开你<br>同时居民的增加意味着安定度的降低<hr>
             <a style='font-size: 14px'>影响</a>`
-            +effectText(colorText('ideas')[1], '+', this.effect.gain.add.ideas(), '/s', player.resource.citizens)
+            +effectText(colorText('idea')[1], '+', this.effect.gain.add.idea(), '/s', player.resource.citizens)
             +effectText(colorText('food')[1], '', this.effect.gain.add.food(), '/s', player.resource.citizens, 'red')
             +effectText('幸福度', '-', n(1), '', player.resource.citizens, 'red')
         },
@@ -33,11 +33,11 @@ var MainResource = {
         },
         unlocked(){return getResourceUnlocked('citizens')},
     },
-    ideas:{
+    idea:{
         name(){return "思想"},
         color(){return 'rgb(186, 0, 192)'},
         gain(){return n(0)},
-        mul(){return n(1).div(player.resource.ideas.pow(0.5).add(1))},
+        mul(){return n(1).div(player.resource.idea.pow(0.5).add(1))},
         mulTooltip(){return '思想枯竭'},
         tooltip(){return '默默收集散落的想法...'},
         unlocked(){return getResourceUnlocked('citizens')},
@@ -81,6 +81,13 @@ var MainResource = {
             addLog('你找到了一些食物')
         },
         unlocked(){return true},
+    },
+    leather:{
+        name(){return "皮革"},
+        color(){return '#763f00'},
+        capped(){return n(20)},
+        tooltip(){return '具有贸易价值'},
+        unlocked(){return getResourceUnlocked('leather')},
     },
     
     stardust:{

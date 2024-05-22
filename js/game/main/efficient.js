@@ -33,8 +33,12 @@ let efficient = {
             effect(){return n(0).sub(player.resource.citizens)},
         },
         jobs: {
-            name(){return '职业满意度'},
-            effect(){return n(gameGetHappiness())}
+            name(){return '职业影响'},
+            effect(){return n(gameGetJobHappiness())}
+        },
+        workshop: {
+            name(){return '工坊影响'},
+            effect(){return n(gameGetWorkshopHappiness())}
         },
         stardust: {
             name(){return '星尘'},

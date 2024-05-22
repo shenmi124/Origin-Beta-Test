@@ -29,7 +29,7 @@ function componentBuilding(id){
     let cappedCan = true
     for(let i in main['building'][id]['cost']){
         let res = n(main['building'][id]['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['costPower']()).add(1)).sub(1)
-        if(n(main['resource'][i]['capped']!==undefined)){
+        if(main['resource'][i]['capped']!==undefined){
             if(n(getResourceCapped(i)).lt(res)){
                 addedCss(id+"BuildingButtonID",'capped')
                 cappedCan = false
@@ -73,7 +73,7 @@ function componentWorkshop(id){
     let cappedCan = true
     for(let i in civics['workshop'][id]['cost']){
         let res = n(civics['workshop'][id]['cost'][i]())
-        if(n(main['resource'][i]['capped']!==undefined)){
+        if(main['resource'][i]['capped']!==undefined){
             if(n(getResourceCapped(i)).lt(res)){
                 addedCss(id+"WorkshopButtonID",'capped')
                 cappedCan = false

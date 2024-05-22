@@ -19,6 +19,22 @@ left {
     text-align: left;
 }
 
+right {
+    margin-left: 3px;
+    display: block;
+    text-align: right;
+}
+
+righttip {
+    margin-left: 3px;
+    display: block;
+    text-align: center;
+    margin-bottom: -5px;
+    font-size: 10px;
+    color: rgb(0, 0, 0);
+    display: block;
+}
+
 joker {
     margin-top: 2px;
     font-size: 10px;

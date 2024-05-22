@@ -239,15 +239,46 @@ function effectText(name,begin,resource,end,mul,Class=null,display=true){
     let endClass = ``
     if(display){
         unique = `<grey><li-hid>(`+begin+format(resource)+end+`)</grey>`
+    }else{
+        mul = n(1)
     }
     if(Class!==null){
         beginClass = `<`+Class+`>`
         endClass = `</`+Class+`>`
     }
     return `<left><span>
-        <div style="width: 80px; display: table-cell">`+name+`</div><div style="width: 100px; display: table-cell">`+beginClass+begin+format(n(resource).mul(mul))+end+endClass+`</div>
-        `+unique+`
-    </span></left>`
+                <div style="width: 80px; display: table-cell">`+name+`</div><div style="width: 100px; display: table-cell">`+beginClass+begin+format(n(resource).mul(mul))+end+endClass+`</div>
+                `+unique+`
+            </span></left>`
+}
+
+function costText(name,resource,cost){
+    let time = ''
+    if(main['resource'][resource]['gain']!==undefined){
+        if(n(getResourceGain(resource)).gt(0) && player['resource'][resource].lt(cost) && (n(getResourceCapped(resource)).gte(cost) || main['resource'][resource]['capped']==undefined)){
+            time = ' ( '+formatTime(n(cost).sub(player['resource'][resource]).div(getResourceGain(resource)))+' )'
+        }else if(n(getResourceCapped(resource)).lt(cost)){
+            time = ' ( '+format(n(getResourceCapped(resource)).sub(cost))+' )'
+        }
+    }
+    if(main['resource'][resource]['unlocked']!==undefined){
+        if(!main['resource'][resource]['unlocked']()){
+            name = '<gery>???</gery>'
+            time = ''
+        }
+    }
+    return `<span>
+				<span>
+					<div style="width: 80px; display: table-cell">`+name+`</div>
+					<div style="width: 55px; display: table-cell; color: `+(player['resource'][resource].gte(cost) ? `rgb(31, 70, 71)` : `red` )+`">`+format(player['resource'][resource])+`</div>
+				</span>
+				<span style="width: 30px; display: table-cell; color: rgb(31, 70, 71);"> / 
+				</span>
+				<span style="width: 55px; display: table-cell; color: rgb(31, 70, 71);">
+					<div style="color: `+((n(getResourceCapped(resource)).gte(cost) || main['resource'][resource]['capped']==undefined) ? `` : `red` )+`">`+format(cost)+`</div>
+				</span>
+			</span><black>
+			`+time+`</black><br>`
 }
 
 function colorText(id){

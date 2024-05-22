@@ -12,13 +12,29 @@ function gameDiff(){
     }
 }
 
-function gameGetHappiness(){
+function gameGetJobHappiness(){
     let happy = n(0)
     for(let i in civics['citizens']){
         if(civics['citizens'][i]['effect']!==undefined){
             if(civics['citizens'][i]['effect']['other']!==undefined){
                 if(civics['citizens'][i]['effect']['other']['happiness']!==undefined){
                     happy = happy.add(n(civics['citizens'][i]['effect']['other']['happiness']['effect']()).mul(player['citizens'][i]))
+                }
+            }
+        }
+    }
+    return happy
+}
+
+function gameGetWorkshopHappiness(){
+    let happy = n(0)
+    for(let i in civics['workshop']){
+        if(civics['workshop'][i]['effect']!==undefined){
+            if(civics['workshop'][i]['effect']['other']!==undefined){
+                if(civics['workshop'][i]['effect']['other']['happiness']!==undefined){
+                    if(player['workshop'][i]){
+                        happy = happy.add(civics['workshop'][i]['effect']['other']['happiness']['effect']())
+                    }
                 }
             }
         }

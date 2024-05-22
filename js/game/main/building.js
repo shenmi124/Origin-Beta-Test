@@ -50,7 +50,7 @@ var MainBuilding = {
         },
         costPower(){return n(0.05)},
         effect: {
-            gain:{
+            gain: {
                 add: {
                     food(){return n(0.1)},
                 }

@@ -1,7 +1,7 @@
 var CivicsCitizens = {
     explorer: {
-        name(){return '开阔者'},
-        tooltip(){return '开阔者将自动进行探索行动'},
+        name(){return '探险家'},
+        tooltip(){return '探险家将自动进行探索行动'},
         allocated: {
             unemployed(){return n(1)},
         },
@@ -13,10 +13,12 @@ var CivicsCitizens = {
                 happiness: {
                     name(){return '幸福度'},
                     effect(){return n(0).sub(1)},
+                    display(){return ['','%']},
                 },
                 memory: {
-                    name(){return '遗忘修正'},
+                    name(){return '遗忘延迟'},
                     effect(){return n(0.5)},
+                    display(){return ['<mul>×</mul>+','']},
                 }
             }
         },
@@ -45,6 +47,7 @@ var CivicsCitizens = {
                 happiness: {
                     name(){return '幸福度'},
                     effect(){return n(0).sub(3)},
+                    display(){return ['','%']},
                 },
             }
         },

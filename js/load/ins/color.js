@@ -711,7 +711,7 @@
   
     // Combination Functions
     // ---------------------
-    // Thanks to jQuery xColor for some of the ideas behind these
+    // Thanks to jQuery xColor for some of the idea behind these
     // <https://github.com/infusion/jQuery-xcolor/blob/master/jquery.xcolor.js>
   
     function complement(color) {

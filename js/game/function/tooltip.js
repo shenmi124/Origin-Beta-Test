@@ -342,7 +342,7 @@ function tooltip(id,id2){
 	if(id2=='LoadTooltipBuilding'){
 		let name = '未命名'
 		let bas = ''
-		let cost = '<hr><left>'
+		let cost = `<hr><a style='font-size: 14px'>需求</a><left>`
 		if(main['building'][id]['tooltip']!==undefined){
 			bas = '<hr>'+main['building'][id]['tooltip']()
 		}
@@ -351,26 +351,7 @@ function tooltip(id,id2){
 		}
 		if(main['building'][id]['cost']!==undefined){
 			for(let i in main['building'][id]['cost']){
-				let res = n(main['building'][id]['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['costPower']()).add(1)).sub(1)
-				let time = ''
-				if(main['resource'][i]['gain']!==undefined){
-					if(n(getResourceGain(i)).gt(0) && player['resource'][i].lt(res) && n(getResourceCapped(i)).gte(res)){
-						time = ' ( '+formatTime(n(res).sub(player['resource'][i]).div(getResourceGain(i)))+' )'
-					}else if(n(getResourceCapped(i)).lt(res)){
-						time = ' ( '+format(n(getResourceCapped(i)).sub(res))+' )'
-					}
-				}
-				cost += `
-				<span>
-					<span>
-						<div style="width: 80px; display: table-cell">`+colorText(i)[1]+`</div>
-						<div style="width: 55px; display: table-cell; color: `+(player['resource'][i].gte(res) ? `rgb(31, 70, 71)` : `red` )+`">`+format(player['resource'][i])+`</div>
-					</span>
-					<span style="color: rgb(31, 70, 71);"> / 
-						<div style="text-align: right; width: 55px; display: table-cell; color: `+(n(getResourceCapped(i)).gte(res) ? `` : `red` )+`">`+format(res)+`</div>
-					</span>
-				</span><black>
-				`+time+`</black><br>`
+				cost += costText(colorText(i)[1], i, n(main['building'][id]['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['costPower']()).add(1)).sub(1))
 			}
 		}
 		cost += '</left>'
@@ -380,7 +361,7 @@ function tooltip(id,id2){
 			if(main['building'][id]['effect']['gain']['add']!==undefined){
 				for(let i in main['building'][id]['effect']['gain']['add']){
 					if(!n(main['building'][id]['effect']['gain']['add'][i]()).eq(0)){
-						gainhr = '<hr>'
+						gainhr = `<hr><a style='font-size: 14px'>生产</a>`
 						gain += effectText(colorText(i)[1], '+', n(main['building'][id]['effect']['gain']['add'][i]()), '/s', player['building'][id], null)
 					}
 				}
@@ -393,7 +374,7 @@ function tooltip(id,id2){
 			if(main['building'][id]['effect']['capped']['add']!==undefined){
 				for(let i in main['building'][id]['effect']['capped']['add']){
 					if(!n(main['building'][id]['effect']['capped']['add'][i]()).eq(0)){
-						cappedhr = '<hr>'
+						cappedhr = `<hr><a style='font-size: 14px'>上限</a>`
 						capped += effectText(colorText(i)[1], '+', n(main['building'][id]['effect']['capped']['add'][i]()), '上限', player['building'][id], null)
 					}
 				}
@@ -427,6 +408,8 @@ function tooltip(id,id2){
 		let actionhr = ''
 		let gain = ''
 		let gainhr = ''
+		let other = ''
+		let otherhr = ''
 		if(civics['citizens'][id]['tooltip']!==undefined){
 			too += '<hr>'+civics['citizens'][id]['tooltip']()
 		}
@@ -451,8 +434,14 @@ function tooltip(id,id2){
 					}
 				}
 			}
+			if(civics['citizens'][id]['effect']['other']!==undefined){
+				for(let i in civics['citizens'][id]['effect']['other']){
+					otherhr = `<hr><a style='font-size: 14px'>特殊</a>`
+					other += effectText(civics['citizens'][id]['effect']['other'][i]['name'](), civics['citizens'][id]['effect']['other'][i]['display']()[0], civics['citizens'][id]['effect']['other'][i]['effect'](), civics['citizens'][id]['effect']['other'][i]['display']()[1], player.citizens[id])
+				}
+			}
 		}
-		return getTooltipDoc(civics['citizens'][id]['name']()+'<small>'+too+actionhr+action+gainhr+gain)
+		return getTooltipDoc(civics['citizens'][id]['name']()+'<small>'+too+actionhr+action+gainhr+gain+otherhr+other+'</small>')
 	}
 
 	if(id2=='LoadTooltipCitizenJobs'){
@@ -460,45 +449,46 @@ function tooltip(id,id2){
 		if(civics['jobs'][id]['tooltip']!==undefined){
 			too += '<hr>'+civics['jobs'][id]['tooltip']()
 		}
-		return getTooltipDoc(civics['jobs'][id]['name']()+'<small>'+too)
+		return getTooltipDoc(civics['jobs'][id]['name']()+'<small>'+too+'</small>')
 	}
 
 	if(id2=='LoadTooltipWorkshop'){
-		let name = '未命名'
-		let bas = ''
-		let cost = '<hr><left>'
+		let too = ''
+		let keep = ''
+		let cost = `<hr><a style='font-size: 14px'>需求</a><left>`
+		let unlocked = ''
+		let unlockedhr = ''
+		let other = ''
+		let otherhr = ''
 		if(civics['workshop'][id]['tooltip']!==undefined){
-			bas = '<hr>'+civics['workshop'][id]['tooltip']()
+			too = '<hr>'+civics['workshop'][id]['tooltip']()
 		}
-		if(civics['workshop'][id]['name']!==undefined){
-			name = civics['workshop'][id]['name']()
+		if(civics['workshop'][id]['keep']!==undefined){
+			if(civics['workshop'][id]['keep']()){
+				keep = '<righttip>文化遗传</righttip>'
+			}
 		}
 		if(civics['workshop'][id]['cost']!==undefined){
 			for(let i in civics['workshop'][id]['cost']){
-				let res =  n(civics['workshop'][id]['cost'][i]())
-				let time = ''
-				if(main['resource'][i]['gain']!==undefined){
-					if(n(getResourceGain(i)).gt(0) && player['resource'][i].lt(res) && n(getResourceCapped(i)).gte(res)){
-						time = ' ( '+formatTime(n(res).sub(player['resource'][i]).div(getResourceGain(i)))+' )'
-					}else if(n(getResourceCapped(i)).lt(res)){
-						time = ' ( '+format(n(getResourceCapped(i)).sub(res))+' )'
-					}
+				cost += costText(colorText(i)[1], i, civics['workshop'][id]['cost'][i]())
+			}
+		}
+		if(civics['workshop'][id]['effect']!==undefined){
+			if(civics['workshop'][id]['effect']['other']!==undefined){
+				for(let i in civics['workshop'][id]['effect']['other']){
+					otherhr = `<hr><a style='font-size: 14px'>特殊</a>`
+					other += effectText(civics['workshop'][id]['effect']['other'][i]['name'](), civics['workshop'][id]['effect']['other'][i]['display']()[0], civics['workshop'][id]['effect']['other'][i]['effect'](), civics['workshop'][id]['effect']['other'][i]['display']()[1], null, null, false)
 				}
-				cost += `
-				<span>
-					<span>
-						<div style="width: 80px; display: table-cell">`+colorText(i)[1]+`</div>
-						<div style="width: 55px; display: table-cell; color: `+(player['resource'][i].gte(res) ? `rgb(31, 70, 71)` : `red` )+`">`+format(player['resource'][i])+`</div>
-					</span>
-					<span style="color: rgb(31, 70, 71);"> / 
-						<div style="text-align: right; width: 55px; display: table-cell; color: `+(n(getResourceCapped(i)).gte(res) ? `` : `red` )+`">`+format(res)+`</div>
-					</span>
-				</span><black>
-				`+time+`</black><br>`
+			}
+			if(civics['workshop'][id]['effect']['unlocked']!==undefined){
+				for(let i in civics['workshop'][id]['effect']['unlocked']){
+					unlockedhr = `<hr><a style='font-size: 14px'>解锁</a>`
+					unlocked += `<left><green>+</green> `+civics['workshop'][id]['effect']['unlocked'][i]()+`</left>`
+				}
 			}
 		}
 		cost += '</left>'
-		return getTooltipDoc(name+'<small>'+bas+cost+'</samll>')
+		return getTooltipDoc(civics['workshop'][id]['name']()+keep+'<small>'+too+cost+otherhr+other+unlockedhr+unlocked+'</samll>')
 	}
 
 	if(id2=='efficient'){
