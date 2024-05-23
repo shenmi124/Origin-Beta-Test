@@ -3,7 +3,7 @@ var TIMESTART = new Date()
 var OFFLINETIME = new Date()
 var DIFF = 0
 
-var VERSION = 'v0.8'
+var VERSION = 'v0.8.1'
 var VERSIONTIMES = n(3)
 
 function loadMain(){
@@ -14,7 +14,7 @@ function loadMain(){
 	buttonStr += `<div style="border-top: 1px solid #000; margin-top: 5px"></div>`
 	getByID('loadMainButton',buttonStr)
 	document.getElementById("mainMainTabID").style.color = 'rgb(0, 123, 255)'
-	document.getElementById("mainMainTabID").style.opacity = '0.8.1'
+	document.getElementById("mainMainTabID").style.opacity = '0.8'
 
 	let mainStr = ''
 	for(let i in mainTab){
