@@ -1,5 +1,6 @@
 function gameDiff(){
 	player.game.time = player.game.time.add(n(1).mul(DIFF))
+    getGametime()
 
     if(player.resource.food.lte(0) && player.resource.citizens.gte(1)){
         let leave = n(Math.random() * 100000).round()

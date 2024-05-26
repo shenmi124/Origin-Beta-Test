@@ -1,7 +1,7 @@
 let MainCraft = {
-    citizens:{
+    citizens: {
         name(){return '原住民'},
-        capped(){return n(2).mul(getCitizensEffect('explorer', 'memory').add(1)).floor()},
+        capped(){return n(2).mul(n(getCitizensEffect('explorer', 'memory')).add(1)).floor()},
         tooltip(){
             let times = '<hr>已标记: '+formatWhole(player.action.explore.citizens,0)+' <a style="color: #888">/ '+formatWhole(this.capped(),0)+' (遗忘)</a>'
             return '他们为你工作,而你给与他们住所与食物<br>公平的交易<hr><grey>你需要提供食物与住所,否则他们不会跟随你</grey>'+times
@@ -17,24 +17,30 @@ let MainCraft = {
         canClick(){return player.action.explore.citizens.gte(1) && player.resource.food.gt(0) && player.resource.citizens.lt(getResourceCapped('citizens'))},
         unlocked(){return player.action.explore.citizensFined==true},
     },
-    collect:{
+    collect: {
         name(){return '收集'},
-        capped(){return n(5).mul(getCitizensEffect('explorer', 'memory').add(1)).floor()},
-        gain:{
-            dirt:{
+        capped(){return n(5).mul(n(getCitizensEffect('explorer', 'memory')).add(1)).floor()},
+        gain: {
+            dirt: {
                 probability(){return n(100)},
                 base(){return n(1)},
                 float(){return n(1.5)},
                 unlocked(){return true},
             },
-            stone:{
+            stone: {
                 probability(){return n(10)},
                 base(){return n(0.25)},
                 float(){return n(0.5)},
                 unlocked(){return true},
             },
+            copper: {
+                probability(){return n(2.5)},
+                base(){return n(0.05)},
+                float(){return n(0.1)},
+                unlocked(){return true},
+            },
             
-            star:{
+            star: {
                 probability(){return n(0.02)},
                 base(){return n(0.2)},
                 float(){return n(0.3)},
@@ -55,11 +61,17 @@ let MainCraft = {
 
             for(i in main['craft']['collect']['gain']){
                 let exp = n(Math.random() * 100)
-                if(n(main['craft']['collect']['gain'][i]['probability']()).gte(exp)){
-                    let random = n(Math.random()).mul(main['craft']['collect']['gain'][i]['float']())
-                    player['resource'][i] = player['resource'][i].add(main['craft']['collect']['gain'][i]['base']()).add(random)
-                    if(main['craft']['collect']['gain'][i]['tooltip']!==undefined){
-                        addLog(main['craft']['collect']['gain'][i]['tooltip']())
+                let unlocked = true
+                if(main['craft']['collect']['gain'][i]['unlocked']!==undefined){
+                    unlocked = main['craft']['collect']['gain'][i]['unlocked']
+                }
+                if(unlocked){
+                    if(n(main['craft']['collect']['gain'][i]['probability']()).gte(exp)){
+                        let random = n(Math.random()).mul(main['craft']['collect']['gain'][i]['float']())
+                        player['resource'][i] = player['resource'][i].add(main['craft']['collect']['gain'][i]['base']()).add(random)
+                        if(main['craft']['collect']['gain'][i]['tooltip']!==undefined){
+                            addLog(main['craft']['collect']['gain'][i]['tooltip']())
+                        }
                     }
                 }
             }
@@ -94,10 +106,28 @@ let MainCraft = {
         },
         unlocked(){return player.action.explore.collectFined==true},
     },
-    stone:{
+    stone: {
         name(){return '露天石料'},
-        capped(){return n(10).mul(getCitizensEffect('explorer', 'memory').add(1)).floor()},
-        gain:{
+        capped(){return n(10).mul(n(getCitizensEffect('explorer', 'memory')).add(1)).floor()},
+        gain: {
+            dirt: {
+                probability(){return n(100)},
+                base(){return n(0.5)},
+                float(){return n(0.5)},
+                unlocked(){return true},
+            },
+            stone: {
+                probability(){return n(100)},
+                base(){return n(3)},
+                float(){return n(7)},
+                unlocked(){return true},
+            },
+            copper: {
+                probability(){return n(5)},
+                base(){return n(2)},
+                float(){return n(2)},
+                unlocked(){return true},
+            },
         },
         tooltip(){
             let mul = ''
@@ -118,21 +148,27 @@ let MainCraft = {
 
             for(i in main['craft']['stone']['gain']){
                 let exp = n(Math.random() * 100)
-                if(n(main['craft']['stone']['gain'][i]['probability']()).gte(exp)){
-                    let random = n(Math.random()).mul(main['craft']['stone']['gain'][i]['float']())
-                    player['resource'][i] = player['resource'][i].add(main['craft']['stone']['gain'][i]['base']()).add(random)
+                let unlocked = true
+                if(main['craft']['stone']['gain'][i]['unlocked']!==undefined){
+                    unlocked = main['craft']['stone']['gain'][i]['unlocked']
+                }
+                if(unlocked){
+                    if(n(main['craft']['stone']['gain'][i]['probability']()).gte(exp)){
+                        let random = n(Math.random()).mul(main['craft']['stone']['gain'][i]['float']())
+                        player['resource'][i] = player['resource'][i].add(main['craft']['stone']['gain'][i]['base']()).add(random)
+                    }
                 }
             }
 
             player.action.explore.stone = player.action.explore.stone.sub(1)
         },
-        cooldown(){return n(5)},
-        canClick(){return player.action.explore.stone.gte(1) && false},
+        cooldown(){return n(30)},
+        canClick(){return player.action.explore.stone.gte(1) && player.workshop.pickaxe},
         unlocked(){return player.action.explore.stoneFined==true},
     },
-    drop:{
+    drop: {
         name(){return '树枝'},
-        capped(){return n(4).mul(getCitizensEffect('explorer', 'memory').add(1)).floor()},
+        capped(){return n(4).mul(n(getCitizensEffect('explorer', 'memory')).add(1)).floor()},
         gain:{
             wood:{
                 probability(){return n(100)},
@@ -172,9 +208,9 @@ let MainCraft = {
         canClick(){return player.action.explore.drop.gte(1)},
         unlocked(){return player.action.explore.dropFined==true},
     },
-    harvest:{
+    harvest: {
         name(){return '收割'},
-        capped(){return n(5).mul(getCitizensEffect('explorer', 'memory').add(1)).floor()},
+        capped(){return n(5).mul(n(getCitizensEffect('explorer', 'memory')).add(1)).floor()},
         gain:{
             food:{
                 probability(){return n(100)},
@@ -215,9 +251,9 @@ let MainCraft = {
         canClick(){return player.action.explore.harvest.gte(1)},
         unlocked(){return player.action.explore.harvestFined==true},
     },
-    beast:{
+    beast: {
         name(){return '野兽'},
-        capped(){return n(20).mul(getCitizensEffect('explorer', 'memory').add(1)).floor()},
+        capped(){return n(20).mul(n(getCitizensEffect('explorer', 'memory')).add(1)).floor()},
         gain:{
             food:{
                 probability(){return n(100)},

@@ -1,3 +1,34 @@
+function getGametime(){
+    let time = player.game.time.mul(600)
+    let year = n(time).div(31104000)
+    let month = n(time).div(2592000)
+    let day = n(time).div(86400)
+    let hour = n(time).div(3600)
+    let minute = n(time).div(60)
+    let logYear = ''
+    let logMonth = ''
+    let logDay = n(day).floor()+' 天 '
+    let logHour = ''
+    let logMinute = ''
+    if(player.workshop.logMinute){
+        logMinute = n(minute%60).floor()+' 分 '
+    }
+    if(player.workshop.hour){
+        logHour = n(hour%24).floor()+' 时 '
+    }
+    if(player.workshop.month){
+        logMonth = n(month).floor()+' 月 '
+        logDay = n(day%30).floor()+' 天 '
+    }
+    if(player.workshop.year){
+        logYear = n(year).floor()+' 年 '
+        logMonth = n(month%12).floor()+' 月 '
+    }
+    if(player.workshop.day){
+        getByID('logTime', ' - '+logYear+logMonth+logDay+logHour+logMinute)
+    }
+}
+
 function getStage(num){
 	if(num!==null){
 		player.game.stage = player.game.stage.max(num)

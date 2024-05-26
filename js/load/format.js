@@ -163,6 +163,10 @@ function formatWhole(decimal) {
     return formatScientific(decimal, 0)
 }
 
+function formatA(decimal) {
+    return decimal.gt(0) ? '+'+format(decimal) : format(decimal)
+}
+
 function formatTime(s) {
     if (s < 60) return formatScientific(s) + "秒"
     else if (s < 3600) return formatWhole(Math.floor(s / 60)) + "分" + formatScientific(s % 60) + "秒"

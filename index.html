@@ -4,7 +4,6 @@
 	<title>起源</title>
 	<link rel="icon" type="image/png" sizes="64x64" href="logo.png">
 	<meta charset="utf-8">
-
 	<script src="js/game/main/action.js"></script>
 	<script src="js/game/main/building.js"></script>
 	<script src="js/game/main/resource.js"></script>
@@ -20,8 +19,8 @@
 	
 	<script src="js/game/player.js"></script>
 	<script src="js/game/main.js"></script>
-	<script src="js/game/game.js"></script>
 	<script src="js/game/data.js"></script>
+	<script src="js/game/game.js"></script>
 	
 	<script src="js/load/ins/break_eternity.js"></script>
 	<script src="js/load/ins/LZString.js"></script>
@@ -37,7 +36,6 @@
 	<script src="js/load.js"></script>
 	<script src="js/js.js"></script>
 
-	<script src="js/load/canvas.js" defer></script>
 	<script src="js/load/loading.js"></script>
 	<script src="js/load/log.js"></script>
 	<script src="js/load/format.js"></script>
@@ -68,7 +66,6 @@
 			</div>
 		</div>
 	</div>
-	<canvas class="canvas"></canvas>
 	<div id="bottomTab" style="opacity: 0; visibility: hidden; transition-duration: 0.1s;">
 		<a target="_blank" id="version" class="version"></a>
 		<a href="https://afdian.net/@Mysterious124" target="_blank" class="donate">捐助</a>
@@ -83,8 +80,6 @@
 			<mainTab id="tab_button" style="opacity: 0; visibility: hidden;">
 				<a id="loadMainButton"></a>
 			</mainTab>
-			<mainTab id="tab_setting" style="display: none;">
-			</mainTab>
 			<mainTab id="tab_main">
 				<br>
 				<a id="loadMain"></a>
@@ -93,6 +88,8 @@
 				<a id="citizensLoadID"></a>
 				<a id="workshopLoadID"></a>
 			</mainTab>
+			<mainTab id="tab_data" style="display: none;"></mainTab>
+			<mainTab id="tab_setting" style="display: none;"></mainTab>
 			<mainTab id="tab_research" style="display: none;">
 				<a id="loadMainResearch" style="display: flow; overflow-y: scroll"></a>
 			</mainTab>
@@ -101,7 +98,7 @@
 			<div id="datePage">
 				<div>标记</div>
 			</div>
-			<div>日志</div>
+			<div>日志 <a id="logTime"></a></div>
 			<div id="logPage" class="log">
 				<div id="logLoadID"></div>
 			</div>

@@ -29,7 +29,6 @@ var MainResource = {
             addLog('你招揽到了第一批原住民,看起来他们和普通的人类没什么区别,你也能与他们正常交流')
             addLog('检查村庄选项卡','#888')
             addLog('居民产生思想,但思想也会枯竭')
-            addLog('检查右侧的数据选项卡#未制作','#888')
         },
         unlocked(){return getResourceUnlocked('citizens')},
     },
@@ -69,6 +68,13 @@ var MainResource = {
             addLog('你从泥土中发现了一些石子')
         },
         unlocked(){return getResourceUnlocked('stone')},
+    },
+    copper:{
+        name(){return "铜"},
+        color(){return '#FF9224'},
+        capped(){return n(50)},
+        gain(){return n(0)},
+        unlocked(){return getResourceUnlocked('copper')},
     },
     food:{
         name(){return "食物"},
@@ -116,14 +122,5 @@ var MainResource = {
             addLog('这些陨石碎片应该有特殊的用处')
         },
         unlocked(){return getResourceUnlocked('star')},
-    },
-
-    researchPoints:{
-        name(){return '科学'},
-        color(){return 'rgb(74, 161, 254)'},
-        capped(){return researchRequire(player.research.conducted)},
-        gain(){return n(1)},
-        tooltip(){return '智慧最好的体现<hr>科学抵达基础上限后完成研究<hr>科学基础上限取决于[消耗数量×研究难度]'+(player.research.conducted!==undefined ? '<hr>'+mainResearch['main'][player.research.conducted]['name']() : '')},
-        unlocked(){return getResourceUnlocked('researchPoints') || main['resource']['researchPoints']['capped']().gt(0)},
     },
 }

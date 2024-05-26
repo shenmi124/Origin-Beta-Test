@@ -17,7 +17,6 @@
 	color: grey;
 	border-radius: 9px;
 	font-size: 15px;
-	font-family: monospace;
 }
 
 .QQ {
@@ -28,15 +27,14 @@
 	color: grey;
 	border-radius: 9px;
 	font-size: 15px;
-	font-family: monospace;
 }
 
 .settingBto {
-	font-family: monospace;
     width: 50%;
     height: 20px;
     text-align: left;
     margin-bottom: 0px;
+	font-family: monospace, serif;
 }
 
 .settingText {

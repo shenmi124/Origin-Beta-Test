@@ -48,9 +48,9 @@ function getBr(){
 	for(let i in civics['workshop']){
 		let unlocked = true
 		if(civics['workshop'][i]['unlocked']!==undefined){
-			unlocked = civics['workshop'][i]['unlocked']() && !player['workshop'][i]
+			unlocked = civics['workshop'][i]['unlocked']()
 		}
-		if(unlocked){
+		if(unlocked && !player['workshop'][i]){
 			br += 1
 		}
 		if(br%MID===0 && br!==0){
@@ -96,11 +96,11 @@ function dataDiff(){
 
 			player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].add(n(autoSpeed).mul(DIFF))
 
-			if(player['action'][i+'Cooldown'].gte(getActionCooldown(i))){
+			if(player['action'][i+'Cooldown'].gte(getActionCooldown(i)) && getActionCanClick(i)){
 				$(main['action'][i]['onClick'])
 				player['action'][i+'Clicks'] = player['action'][i+'Clicks'].add(1)
 				NumberFix()
-				player['action'][i+'Cooldown'] = n(0)
+				player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].sub(getActionCooldown(i))
 				player['action'][i+'Click'] = false
 			}
 
@@ -133,11 +133,11 @@ function dataDiff(){
 
 			player['craft'][i+'Cooldown'] = player['craft'][i+'Cooldown'].add(n(autoSpeed).mul(DIFF))
 
-			if(player['craft'][i+'Cooldown'].gte(getCraftCooldown(i))){
+			if(player['craft'][i+'Cooldown'].gte(getCraftCooldown(i)) && getCraftCanClick(i)){
 				$(main['craft'][i]['onClick'])
 				player['craft'][i+'Clicks'] = player['craft'][i+'Clicks'].add(1)
 				NumberFix()
-				player['craft'][i+'Cooldown'] = n(0)
+				player['craft'][i+'Cooldown'] = player['craft'][i+'Cooldown'].sub(getCraftCooldown(i))
 				player['craft'][i+'Click'] = false
 			}
 
@@ -203,49 +203,6 @@ function dataDiff(){
 			removeCss(id+"WorkshopButtonID",'res')
 		}
 	}
-
-	if(player.research.conducted!==undefined && player.resource.researchPoints.gte(main['resource']['researchPoints']['capped']())){
-		player.research[player.research.conducted] = player.research[player.research.conducted].add(1)
-		if(player.research[player.research.conducted].gte(mainResearch['main'][player.research.conducted]['capped']())){
-			player.canMainResearch[player.research.conducted] = false
-			document.getElementById(player.research.conducted+"MainResearchButtonID").style.borderColor = 'rgb(174, 35, 252)'
-		}else{
-			player.canMainResearch[player.research.conducted] = false
-			document.getElementById(player.research.conducted+"MainResearchButtonID").style.borderColor = ''
-		}
-		player.research.conducted = undefined
-	}
-	for(id in mainResearch['main']){
-		let canResearch = true
-		let cappedRsearch = true
-		let research = Number(player['research'][id])
-		for(i in mainResearch['main'][id]['cost'][research]){
-			let res = mainResearch['main'][id]['cost'][research][i]()
-			if(main['resource'][i]['capped']!==undefined){
-				if((n(getResourceCapped(i)).gte(res) || main['resource'][i]['capped']!==undefined)){
-					cappedRsearch = false
-				}
-			}
-			if(player['resource'][i].lt(res)){
-				canResearch = false
-			}
-		}
-		if(player['research'][id].lt(mainResearch['main'][id]['capped']()) && player.research.conducted!==id && player.canMainResearch[id]==false){
-			if(cappedRsearch){
-				removeCss(id+"MainResearchButtonID",'capped')
-			}else{
-				addedCss(id+"MainResearchButtonID",'capped')
-			}
-			if(canResearch){
-				document.getElementById(id+"MainResearchButtonID").style.borderColor = 'rgb(41, 192, 84)'
-			}else{
-				document.getElementById(id+"MainResearchButtonID").style.borderColor = ''
-				if(player['research'][id].gte(1)){
-					document.getElementById(id+"MainResearchButtonID").style.borderColor = 'rgb(246, 170, 255)'
-				}
-			}
-		}
-	}
 }
 
 function getID(){
@@ -285,24 +242,6 @@ function getID(){
 			unlocked = main['craft'][i]['unlocked']()
 		}
 		unlockedLoad(i+'LoadCraft', unlocked)
-	}
-
-	for(let i in mainResearch['main']){
-		let unlocked = true
-		if(mainResearch['main'][i]['unlocked']!==undefined){
-			unlocked = mainResearch['main'][i]['unlocked']()
-		}else{
-			player['research'][i+'Unlock'] = true
-			player['research'][i+'Unlocked'] = true
-		}
-		unlockedLoad(i+'MainResearchDivID', unlocked, 'inline-grid')
-		if(unlocked){
-			player['research'][i+'Unlock'] = true
-			if(player['research'][i+'Unlocked']==false){
-				addLog('你对研究有了一些新的启发', '#888')
-			}
-			player['research'][i+'Unlocked'] = true
-		}
 	}
 
 	for(let i in civics['citizens']){

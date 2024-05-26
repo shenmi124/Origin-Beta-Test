@@ -65,9 +65,10 @@ black {
 }
 
 mul {
-    margin-left: -2px;
+    margin-left: -3px;
     margin-right: -3px;
     font-size: small;
+    vertical-align: middle;
 }
 
 @keyframes moveGradient {

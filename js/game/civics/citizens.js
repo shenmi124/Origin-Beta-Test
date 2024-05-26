@@ -1,7 +1,7 @@
 var CivicsCitizens = {
     explorer: {
-        name(){return '探险家'},
-        tooltip(){return '探险家将自动进行探索行动'},
+        name(){return '开括者'},
+        tooltip(){return '开括者将自动进行探索行动'},
         allocated: {
             unemployed(){return n(1)},
         },

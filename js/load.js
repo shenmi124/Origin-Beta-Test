@@ -3,7 +3,7 @@ var TIMESTART = new Date()
 var OFFLINETIME = new Date()
 var DIFF = 0
 
-var VERSION = 'v0.8.1'
+var VERSION = 'v0.8.2'
 var VERSIONTIMES = n(3)
 
 function loadMain(){
@@ -103,44 +103,6 @@ function loadBase(){
 		getByID(i+'LoadWorkshop',`<br id="`+i+`workshopBrID"><a id="`+i+`LoadWorkshopID"></a> `)
 		componentWorkshop(i)
 	}
-
-	let researchStr = ''
-	let researchArray = []
-	researchStr += '<br><br><div id="topLoadMainResearch" style="text-align: -webkit-center; display: block; height: 20px"></div>'
-	for(let i in mainResearch['main']){
-		let y = mainResearch['main'][i]['map']()
-		if(!researchArray.includes(y)){
-			researchArray.push(y)
-			researchStr += '<br><br><br><br><div id="'+y+'LoadMainResearch" style="text-align: -webkit-center"></div>'
-		}
-	}
-	researchStr += '<br><br><div id="bottomLoadMainResearch" style="text-align: -webkit-center; display: block; height: 80px"></div>'
-	getByID('loadMainResearch',researchStr)
-	for(let i in mainResearch['main']){
-		addByID(mainResearch['main'][i]['map']()+'LoadMainResearch',`
-			<div id="`+i+`MainResearchDivID" style="display: inline-grid; margin-left: 40px; margin-right: 40px;">
-				<tooltip `+loadTooltip(i,'LoadTooltipResearch')+` style="text-align: -webkit-center" class="MainResearch">
-					<button id="`+i+`MainResearchButtonID" class="MainResearch Button" onclick="researchClick('`+i+`')"></button>
-				</tooltip>
-				<div style="text-align: -webkit-center; font-size: 11px">
-					`+mainResearch['main'][i]['name']()+`
-				</div>
-			</div>
-		`)
-		if(player.research[i].gte(1)){
-			document.getElementById(i+"MainResearchButtonID").style.borderColor = 'rgb(246, 170, 255)'
-		}
-		if(player.canMainResearch[i]==true){
-			document.getElementById(i+"MainResearchButtonID").style.borderColor = 'rgb(73, 219, 189)'
-		}
-		if(player.research[i].gte(mainResearch['main'][i]['capped']())){
-			document.getElementById(i+"MainResearchButtonID").style.borderColor = 'rgb(174, 35, 252)'
-		}
-	}
-    if(player.research.conducted!==undefined){
-        document.getElementById(player.research.conducted+"MainResearchButtonID").style.borderColor = 'rgb(74, 161, 254)'
-    }
-	canDraw = true
 }
 
 function loadGame(){

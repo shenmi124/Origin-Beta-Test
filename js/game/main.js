@@ -6,15 +6,8 @@ var mainButton = {
         name(){return '村庄'},
         unlocked(){return player.game.stage.gte(4)}
     },
-    research:{
-        name(){return "研究"},
-        unlocked(){return false}
-    },
     setting:{
         name(){return "设置"},
-    },
-    data:{
-        name(){return "数据"},
     },
 }
 
