@@ -84,23 +84,28 @@ function dataDiff(){
 	
 	for(let i in main['action']){
 		if(getActionCooldown(i)!==undefined){
-			let autoSpeed = n(0)
-			autoSpeed = autoSpeed.add(getActionAuto(i))
+			let activeSpeed = n(0)
+			let autoSpeed = n(getActionAuto(i))
 			if(hasActionClick(i)){
-				autoSpeed = autoSpeed.add(getEfficient('action'))
+				activeSpeed = activeSpeed.add(getEfficient('action'))
 			}
+			let actionSpeed = activeSpeed.add(autoSpeed)
 			if(!getActionCanClick(i)){
-				autoSpeed = n(0)
+				actionSpeed = n(0)
 				player['action'][i+'Cooldown'] = n(0)
 			}
 
-			player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].add(n(autoSpeed).mul(DIFF))
+			player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].add(n(actionSpeed).mul(DIFF))
 
 			if(player['action'][i+'Cooldown'].gte(getActionCooldown(i)) && getActionCanClick(i)){
-				$(main['action'][i]['onClick'])
+				main['action'][i]['onClick']()
 				player['action'][i+'Clicks'] = player['action'][i+'Clicks'].add(1)
 				NumberFix()
-				player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].sub(getActionCooldown(i))
+				if(autoSpeed.gt(0)){
+					player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].sub(getActionCooldown(i))
+				}else{
+					player['action'][i+'Cooldown'] = n(0)
+				}
 				player['action'][i+'Click'] = false
 			}
 
@@ -121,25 +126,31 @@ function dataDiff(){
 
 	for(let i in main['craft']){
 		if(getCraftCooldown(i)!==undefined){
-			let autoSpeed = n(0)
-			autoSpeed = autoSpeed.add(getCraftAuto(i))
+			let activeSpeed = n(0)
+			let autoSpeed = n(getCraftAuto(i))
 			if(hasCraftClick(i)){
-				autoSpeed = autoSpeed.add(getEfficient('action'))
+				activeSpeed = activeSpeed.add(getEfficient('action'))
 			}
+			let actionSpeed = activeSpeed.add(autoSpeed)
 			if(!getCraftCanClick(i)){
-				autoSpeed = n(0)
+				actionSpeed = n(0)
 				player['craft'][i+'Cooldown'] = n(0)
 			}
 
-			player['craft'][i+'Cooldown'] = player['craft'][i+'Cooldown'].add(n(autoSpeed).mul(DIFF))
+			player['craft'][i+'Cooldown'] = player['craft'][i+'Cooldown'].add(n(actionSpeed).mul(DIFF))
 
 			if(player['craft'][i+'Cooldown'].gte(getCraftCooldown(i)) && getCraftCanClick(i)){
-				$(main['craft'][i]['onClick'])
+				main['craft'][i]['onClick']()
 				player['craft'][i+'Clicks'] = player['craft'][i+'Clicks'].add(1)
 				NumberFix()
-				player['craft'][i+'Cooldown'] = player['craft'][i+'Cooldown'].sub(getCraftCooldown(i))
+				if(autoSpeed.gt(0)){
+					player['craft'][i+'Cooldown'] = player['craft'][i+'Cooldown'].sub(getCraftCooldown(i))
+				}else{
+					player['craft'][i+'Cooldown'] = n(0)
+				}
 				player['craft'][i+'Click'] = false
 			}
+
 
 			if(hasCraftClick(i) || !getCraftCanClick(i)){
 				addedCss("craft"+i+"ButtonID",'complete')

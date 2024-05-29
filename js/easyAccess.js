@@ -78,10 +78,10 @@ function getResourceGainMul(resource){
             }
         }
         for(let i in civics['workshop']){
-            if(civics['workshop'][i]['effect']!==undefined){
-                if(civics['workshop'][i]['effect']['resource']!==undefined){
-                    for(let iw in civics['workshop'][i]['effect']['resource']){
-                        if(player['workshop'][i]){
+            if(player['workshop'][i]){
+                if(civics['workshop'][i]['effect']!==undefined){
+                    if(civics['workshop'][i]['effect']['resource']!==undefined){
+                        for(let iw in civics['workshop'][i]['effect']['resource']){
                             if(civics['workshop'][i]['effect']['resource'][iw]['gain']!==undefined){
                                 if(civics['workshop'][i]['effect']['resource'][iw]['gain']['mul']!==undefined){
                                     if(resource==iw){

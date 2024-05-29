@@ -116,6 +116,29 @@ var CivicsWorkshop = {
             stone(){return n(1)},
         },
     },
+    mountaineeringPickaxe: {
+        name(){return '登山镐'},
+        tooltip(){return '提供探索加成,同时允许玩家进一步的探索'},
+        effect: {
+            other:{
+                speed: {
+                    name(){return '行动探索'},
+                    effect(){return n(10)},
+                    display(){return ['速度+','%']},
+                },
+                lucky: {
+                    name(){return '行动探索'},
+                    effect(){return n(10)},
+                    display(){return ['幸运+','%']},
+                }
+            },
+        },
+        cost: {
+            stone(){return n(50)},
+            copper(){return n(3)},
+        },
+        unlocked(){return player.workshop.pickaxe}
+    },
     axe: {
         name(){return '燧石斧'},
         effect: {
@@ -145,7 +168,7 @@ var CivicsWorkshop = {
             stone(){return n(50)},
         },
     },
-    sword: {
+    knife: {
         name(){return '燧石小刀'},
         effect: {
             unlocked: {
@@ -159,7 +182,8 @@ var CivicsWorkshop = {
     },
     campfire: {
         name(){return '营火'},
-        tooltip(){return '人民聚在一起谈论自己的想法<br>真正的开始'},
+        keep(){return true},
+        tooltip(){return '人们聚在一起谈论自己的想法<br>真正的开始'},
         effect: {
             resource: {
                 idea: {
@@ -170,7 +194,11 @@ var CivicsWorkshop = {
             },
             unlocked: {
                 1(){return '阶段1'},
-                2(){return '解锁后续内容'},
+                2(){return '解锁建筑 货仓'},
+                3(){return '解锁建筑 粮仓'},
+                4(){return '建筑修正 庇护所->小屋'},
+                5(){return '职业修正 开括者->探险家'},
+                6(){return '以及更多...'},
             },
         },
         cost: {

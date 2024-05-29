@@ -13,7 +13,7 @@ function mouseLoad(id,id2){
 }
 
 function tooltipResourceGain(boolean,name,number,gainAll,id){
-	if(gainAll.eq(getResourceGain(id))){
+	if(n(format(gainAll)).eq(format(getResourceGain(id)))){
 		gainAll = '<u>'+formatA(gainAll)+'</u>'
 	}else{
 		gainAll = formatA(gainAll)
@@ -32,7 +32,7 @@ function tooltipResourceGain(boolean,name,number,gainAll,id){
 }
 
 function tooltipResourceGainMultiplication(boolean,name,base,mul,gainAll,id){
-	if(gainAll.eq(getResourceGain(id))){
+	if(n(format(gainAll)).eq(format(getResourceGain(id)))){
 		gainAll = '<u>'+formatA(gainAll)+'</u>'
 	}else{
 		gainAll = formatA(gainAll)
@@ -51,7 +51,7 @@ function tooltipResourceGainMultiplication(boolean,name,base,mul,gainAll,id){
 }
 
 function tooltipResourceMulGain(boolean,name,number,gainAll,id){
-	if(gainAll.eq(getResourceGain(id))){
+	if(n(format(gainAll)).eq(format(getResourceGain(id)))){
 		gainAll = '<u>'+formatA(gainAll)+'</u>'
 	}else{
 		gainAll = formatA(gainAll)
@@ -70,7 +70,7 @@ function tooltipResourceMulGain(boolean,name,number,gainAll,id){
 }
 
 function tooltipResourceMulGainMultiplication(boolean,name,base,mul,gainAll,id){
-	if(gainAll.eq(getResourceGain(id))){
+	if(n(format(gainAll)).eq(format(getResourceGain(id)))){
 		gainAll = '<u>'+formatA(gainAll)+'</u>'
 	}else{
 		gainAll = formatA(gainAll)
@@ -89,7 +89,7 @@ function tooltipResourceMulGainMultiplication(boolean,name,base,mul,gainAll,id){
 }
 
 function tooltipResourceBaseCapped(name,base,cappedAll,id){
-	if(cappedAll.eq(getResourceCapped(id))){
+	if(n(format(cappedAll)).eq(format(getResourceGain(id)))){
 		cappedAll = '<u>'+formatA(cappedAll)+'</u>'
 	}else{
 		cappedAll = formatA(cappedAll)
@@ -101,7 +101,7 @@ function tooltipResourceBaseCapped(name,base,cappedAll,id){
 }
 
 function tooltipResourceBaseCappedMultiplication(name,base,mul,cappedAll,id){
-	if(cappedAll.eq(getResourceCapped(id))){
+	if(n(format(cappedAll)).eq(format(getResourceGain(id)))){
 		cappedAll = '<u>'+formatA(cappedAll)+'</u>'
 	}else{
 		cappedAll = formatA(cappedAll)
@@ -121,7 +121,6 @@ function tooltip(id,id2){
 		let gain = ''
 		let cost = ''
 		let mul = ''
-		let div = ''
 		let time = ''
 		let gainAll = n(0)
 		if(main['resource'][id]['gain']!==undefined){
@@ -132,11 +131,7 @@ function tooltip(id,id2){
 				if(main['resource'][id]['gainTooltip']!==undefined){
 					gainName = main['resource'][id]['gainTooltip']()
 				}
-				if(n(gainBase).gt(0)){
-					gain += tooltipResourceGain(true,gainName,gainBase,gainAll,id)
-				}else{
-					cost += tooltipResourceGain(false,gainName,gainBase,gainAll,id)
-				}
+				gain += tooltipResourceGain(n(gainBase).gte(0), gainName, gainBase, gainAll, id)
 			}
 			for(let i in main['resource']){
 				if(main['resource'][i]['effect']!==undefined){
@@ -148,11 +143,7 @@ function tooltip(id,id2){
 								let gainMul = player['resource'][i]
 								if(id==ig && !n(gainBase).mul(gainMul).eq(0)){
 									gainAll = gainAll.add(n(gainBase).mul(gainMul))
-									if(n(gainBase).mul(gainMul).gt(0)){
-										gain += tooltipResourceGainMultiplication(true,gainName,gainBase,gainMul,gainAll,id)
-									}else{
-										cost += tooltipResourceGainMultiplication(false,gainName,gainBase,gainMul,gainAll,id)
-									}
+									gain += tooltipResourceGainMultiplication(n(gainBase).mul(gainMul).gte(0), gainName, gainBase, gainMul, gainAll, id)
 								}
 							}
 						}
@@ -169,11 +160,7 @@ function tooltip(id,id2){
 								let gainMul = player['building'][i]
 								if(id==ig && !n(gainBase).mul(gainMul).eq(0)){
 									gainAll = gainAll.add(n(gainBase).mul(gainMul))
-									if(n(gainBase).mul(gainMul).gt(0)){
-										gain += tooltipResourceGainMultiplication(true,gainName,gainBase,gainMul,gainAll,id)
-									}else{
-										cost += tooltipResourceGainMultiplication(false,gainName,gainBase,gainMul,gainAll,id)
-									}
+									gain += tooltipResourceGainMultiplication(n(gainBase).mul(gainMul).gte(0), gainName, gainBase, gainMul, gainAll, id)
 								}
 							}
 						}
@@ -190,11 +177,7 @@ function tooltip(id,id2){
 								let gainMul = player.citizens[i]
 								if(id==ig && !n(gainBase).mul(gainMul).eq(0)){
 									gainAll = gainAll.add(n(gainBase).mul(gainMul))
-									if(n(gainBase).mul(gainMul).gt(0)){
-										gain += tooltipResourceGainMultiplication(true,gainName,gainBase,gainMul,gainAll,id)
-									}else{
-										cost += tooltipResourceGainMultiplication(false,gainName,gainBase,gainMul,gainAll,id)
-									}
+									gain += tooltipResourceGainMultiplication(n(gainBase).mul(gainMul).gte(0), gainName, gainBase, gainMul, gainAll, id)
 								}
 							}
 						}
@@ -209,11 +192,7 @@ function tooltip(id,id2){
 					if(main['resource'][id]['mulTooltip']!==undefined){
 						gainName = main['resource'][id]['mulTooltip']()
 					}
-					if(n(gainBase).gt(1)){
-						div += tooltipResourceMulGain(true,gainName,gainBase,gainAll,id)
-					}else{
-						mul += tooltipResourceMulGain(false,gainName,gainBase,gainAll,id)
-					}
+					mul += tooltipResourceMulGain(n(gainBase).gt(1), gainName, gainBase, gainAll, id)
 				}
 			}
 			for(let i in main['resource']){
@@ -225,19 +204,35 @@ function tooltip(id,id2){
 								let gainBase = main['resource'][i]['effect']['gain']['mul'][ig]()
 								let gainMul = player['resource'][i]
 								if(id==ig && !n(gainBase).mul(gainMul).eq(1)){
-									gainAll = gainAll.mul(n(gainBase).mul(gainMul).add(1))
-									if(n(gainBase).mul(gainMul).gt(1)){
-										div += tooltipResourceMulGainMultiplication(true,gainName,gainBase,gainMul,gainAll,id)
-									}else{
-										mul += tooltipResourceMulGainMultiplication(false,gainName,gainBase,gainMul,gainAll,id)
+									gainAll = gainAll.mul(n(gainBase).mul(gainMul))
+									mul += tooltipResourceMulGainMultiplication(n(gainBase).mul(gainMul).gt(1), gainName, gainBase, gainMul, gainAll, id)
+								}
+							}
+						}
+					}
+				}
+			}
+			for(let i in civics['workshop']){
+				if(player['workshop'][i]){
+					if(civics['workshop'][i]['effect']!==undefined){
+						if(civics['workshop'][i]['effect']['resource']!==undefined){
+							for(let iw in civics['workshop'][i]['effect']['resource']){
+								if(civics['workshop'][i]['effect']['resource'][iw]['gain']!==undefined){
+									if(civics['workshop'][i]['effect']['resource'][iw]['gain']['mul']!==undefined){
+										let gainName = '工坊: '+civics['workshop'][i]['name']()
+										let gainBase = civics['workshop'][i]['effect']['resource'][iw]['gain']['mul']()
+										if(id==iw && !n(gainBase).eq(1)){
+											gainAll = gainAll.mul(gainBase)
+											mul += tooltipResourceMulGain(n(gainBase).gt(1), gainName, gainBase, gainAll, id)
+										}
 									}
 								}
 							}
 						}
 					}
 				}
-			}/*
-			for(let i in civics['workshop']){
+			}
+			/*for(let i in civics['workshop']){
 				if(civics['workshop'][i]['effect']!==undefined){
 					if(civics['workshop'][i]['effect']['resource']!==undefined){
 						let gainBase = n(1)
@@ -255,16 +250,12 @@ function tooltip(id,id2){
 						let gainName = '工坊'
 						if(!n(gainBase).eq(1)){
 							gainAll = gainAll.mul(gainBase)
-							if(n(gainBase).gt(1)){
-								div += tooltipResourceMulGain(true,gainName,gainBase,gainAll,id)
-							}else{
-								mul += tooltipResourceMulGain(false,gainName,gainBase,gainAll,id)
-							}
+							mul += tooltipResourceMulGain(n(gainBase).mul(gainMul).gt(1), gainName, gainBase, gainAll, id)
 						}
 					}
 				}
 			}*/
-			gain = "<hr><a style='font-size: 14px'>资源生产</a>" + cost + gain + div + mul
+			gain = "<hr><a style='font-size: 14px'>资源生产</a>" + cost + gain + mul
 			if(gainAll.eq(0)){
 				gain = ''
 			}
