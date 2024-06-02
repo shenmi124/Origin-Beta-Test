@@ -87,7 +87,11 @@ function dataDiff(){
 			let activeSpeed = n(0)
 			let autoSpeed = n(getActionAuto(i))
 			if(hasActionClick(i)){
-				activeSpeed = activeSpeed.add(getEfficient('action'))
+				let base = n(1)
+				if(main['action'][i]['player']!==undefined){
+					base = main['action'][i]['player']()
+				}
+				activeSpeed = activeSpeed.add(n(base).mul(getEfficient('action')))
 			}
 			let actionSpeed = activeSpeed.add(autoSpeed)
 			if(!getActionCanClick(i)){
@@ -101,6 +105,7 @@ function dataDiff(){
 				main['action'][i]['onClick']()
 				player['action'][i+'Clicks'] = player['action'][i+'Clicks'].add(1)
 				NumberFix()
+				let autoSpeed = n(getActionAuto(i))
 				if(autoSpeed.gt(0)){
 					player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].sub(getActionCooldown(i))
 				}else{
@@ -109,7 +114,7 @@ function dataDiff(){
 				player['action'][i+'Click'] = false
 			}
 
-			if(hasActionClick(i) || !getActionCanClick(i)){
+			if((hasActionClick(i) || !getActionCanClick(i)) && !getActionCoerciveClick(i)){
 				addedCss("action"+i+"ButtonID",'complete')
 				document.getElementById("action"+i+"ButtonID").disabled = true
 			}else{
@@ -129,7 +134,11 @@ function dataDiff(){
 			let activeSpeed = n(0)
 			let autoSpeed = n(getCraftAuto(i))
 			if(hasCraftClick(i)){
-				activeSpeed = activeSpeed.add(getEfficient('action'))
+				let base = n(1)
+				if(main['craft'][i]['player']!==undefined){
+					base = main['craft'][i]['player']()
+				}
+				activeSpeed = activeSpeed.add(n(base).mul(getEfficient('action')))
 			}
 			let actionSpeed = activeSpeed.add(autoSpeed)
 			if(!getCraftCanClick(i)){
@@ -139,10 +148,11 @@ function dataDiff(){
 
 			player['craft'][i+'Cooldown'] = player['craft'][i+'Cooldown'].add(n(actionSpeed).mul(DIFF))
 
-			if(player['craft'][i+'Cooldown'].gte(getCraftCooldown(i)) && getCraftCanClick(i)){
+			if(player['craft'][i+'Cooldown'].gte(getCraftCooldown(i)) && !getCraftCanClick(i)){
 				main['craft'][i]['onClick']()
 				player['craft'][i+'Clicks'] = player['craft'][i+'Clicks'].add(1)
 				NumberFix()
+				autoSpeed = n(getCraftAuto(i))
 				if(autoSpeed.gt(0)){
 					player['craft'][i+'Cooldown'] = player['craft'][i+'Cooldown'].sub(getCraftCooldown(i))
 				}else{
@@ -152,7 +162,7 @@ function dataDiff(){
 			}
 
 
-			if(hasCraftClick(i) || !getCraftCanClick(i)){
+			if((hasCraftClick(i) || !getCraftCanClick(i)) && !getCraftCoerciveClick(i)){
 				addedCss("craft"+i+"ButtonID",'complete')
 				document.getElementById("craft"+i+"ButtonID").disabled = true
 			}else{

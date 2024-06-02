@@ -3,7 +3,7 @@ var TIMESTART = new Date()
 var OFFLINETIME = new Date()
 var DIFF = 0
 
-var VERSION = 'v0.9.0.2'
+var VERSION = 'v0.9.0.5'
 var VERSIONTIMES = n(3)
 
 function loadMain(){

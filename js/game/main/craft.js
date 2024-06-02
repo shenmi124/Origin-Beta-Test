@@ -304,7 +304,7 @@ let MainCraft = {
             return '兽群,收集它们身上的皮毛和血肉<br>但它们真的很强壮'+unl+mul+times
         },
         onClick(){
-            let mul = formatWhole(gameGetPower())
+            let mul = formatWhole(n(gameGetPower()).min(player.action.explore.beast))
             mul = n(Math.random()).mul(mul).ceil()
 
             let food = n(0)
@@ -354,11 +354,11 @@ let MainCraft = {
             },
         },
         tooltip(){
-            let unl = '<grey>没有斧子是砍不了树的</grey>'
+            let unl = '<hr><grey>没有斧子是砍不了树的</grey>'
             if(player.workshop.axe){
                 unl = ''
             }
-            let times = '<hr>已标记: '+formatWhole(player.action.explore.tree,0)+' <grey>/ '+formatWhole(this.capped(),0)+' (遗忘)</grey>'
+            let times = '已标记: '+formatWhole(player.action.explore.tree,0)+' <grey>/ '+formatWhole(this.capped(),0)+' (遗忘)</grey>'
             return unl+times
         },
         onClick(){

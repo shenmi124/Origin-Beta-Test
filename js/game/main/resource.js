@@ -101,21 +101,21 @@ var MainResource = {
 
     woodenBeams:{
         name(){return "木梁"},
-        tooltip(){return '<hr>锻造资源'},
+        tooltip(){return '锻造资源'},
         color(){return 'rgb(158 103 19)'},
         gain(){return n(0)},
         unlocked(){return getResourceUnlocked('woodenBeams')},
     },
     stoneBricks:{
         name(){return "石砖"},
-        tooltip(){return '<hr>锻造资源'},
+        tooltip(){return '锻造资源'},
         color(){return '#000'},
         gain(){return n(0)},
         unlocked(){return getResourceUnlocked('stoneBricks')},
     },
     tile:{
         name(){return "瓦"},
-        tooltip(){return '<hr>锻造资源'},
+        tooltip(){return '锻造资源'},
         color(){return '#000'},
         gain(){return n(0)},
         unlocked(){return getResourceUnlocked('tile')},

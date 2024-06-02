@@ -2,6 +2,9 @@ function getActionClick(id){
 	if(getActionCanClick(id)){
 		player['action'][id+'Click'] = true
 	}
+    if(main['action'][id]['handoff']!==undefined){
+        main['action'][id]['handoff']()
+    }
 	componentAction(id)
 }
 
@@ -9,6 +12,9 @@ function getCraftClick(id){
 	if(getCraftCanClick(id)){
 		player['craft'][id+'Click'] = true
 	}
+    if(main['craft'][id]['handoff']!==undefined){
+        main['craft'][id]['handoff']()
+    }
 	componentCraft(id)
 }
 

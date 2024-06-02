@@ -158,14 +158,6 @@ function getResourceBaseNumber(resource){
     return num
 }
 
-function hasActionClick(id){
-    return player['action'][id+'Click']
-}
-
-function hasCraftClick(id){
-    return player['craft'][id+'Click']
-}
-
 function getActionUnlocked(id){
     let unlocked = true
     if(main['action'][id]['unlocked']!==undefined){
@@ -174,12 +166,8 @@ function getActionUnlocked(id){
     return unlocked
 }
 
-function getCraftUnlocked(id){
-    let unlocked = true
-    if(main['craft'][id]['unlocked']!==undefined){
-        unlocked = main['craft'][id]['unlocked']()
-    }
-    return unlocked
+function hasActionClick(id){
+    return player['action'][id+'Click']
 }
 
 function getActionCanClick(id){
@@ -190,24 +178,23 @@ function getActionCanClick(id){
     return click && getActionUnlocked(id)
 }
 
-function getCraftCanClick(id){
-    let click = true
-    if(main['craft'][id]['canClick']!==undefined){
-        click = main['craft'][id]['canClick']()
+function getActionCoerciveClick(id){
+    let coercive = false
+    if(main['action'][id]['coerciveClick']!==undefined){
+        coercive = main['action'][id]['coerciveClick']()
     }
-    return click && getCraftUnlocked(id)
+    return coercive
 }
 
 function getActionCooldown(id){
     return n(main['action'][id]['cooldown']())
 }
 
-function getCraftCooldown(id){
-    return n(main['craft'][id]['cooldown']())
-}
-
 function getActionAuto(action){
     let auto = n(0)
+    if(main['action'][action]['auto']!==undefined){
+        auto = auto.add(main['action'][action]['auto']())
+    }
     for(let i in civics['citizens']){
         if(civics['citizens'][i]['effect']!==undefined){
             if(civics['citizens'][i]['effect']['action']!==undefined){
@@ -222,8 +209,43 @@ function getActionAuto(action){
     return auto
 }
 
+function getCraftUnlocked(id){
+    let unlocked = true
+    if(main['craft'][id]['unlocked']!==undefined){
+        unlocked = main['craft'][id]['unlocked']()
+    }
+    return unlocked
+}
+
+function hasCraftClick(id){
+    return player['craft'][id+'Click']
+}
+
+function getCraftCanClick(id){
+    let click = true
+    if(main['craft'][id]['canClick']!==undefined){
+        click = main['craft'][id]['canClick']()
+    }
+    return click && getCraftUnlocked(id)
+}
+
+function getCraftCoerciveClick(id){
+    let coercive = false
+    if(main['craft'][id]['coerciveClick']!==undefined){
+        coercive = main['craft'][id]['coerciveClick']()
+    }
+    return coercive
+}
+
+function getCraftCooldown(id){
+    return n(main['craft'][id]['cooldown']())
+}
+
 function getCraftAuto(craft){
     let auto = n(0)
+    if(main['craft'][craft]['auto']!==undefined){
+        auto = auto.add(main['craft'][craft]['auto']())
+    }
     for(let i in civics['citizens']){
         if(civics['citizens'][i]['effect']!==undefined){
             if(civics['citizens'][i]['effect']['craft']!==undefined){

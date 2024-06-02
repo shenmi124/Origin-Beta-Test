@@ -59,7 +59,7 @@ var MainBuilding = {
         effect: {
             capped: {
                 add: {
-                    food(){return n(40)},
+                    food(){return n(120)},
                 }
             }
         },
@@ -72,7 +72,7 @@ var MainBuilding = {
         cost: {
             woodenBeams(){return n(10)},
         },
-        costPower(){return n(0.2)},
+        costPower(){return n(0.18)},
         effect: {
             capped: {
                 add: {

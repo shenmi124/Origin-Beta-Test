@@ -146,12 +146,12 @@ var CivicsWorkshop = {
             other: {
                 speed: {
                     name(){return '行动探索'},
-                    effect(){return n(10)},
+                    effect(){return n(20)},
                     display(){return ['速度+','%']},
                 },
                 lucky: {
                     name(){return '行动探索'},
-                    effect(){return n(10)},
+                    effect(){return n(20)},
                     display(){return ['幸运+','%']},
                 }
             },

@@ -16,14 +16,14 @@ var MainAction = {
         speed(){
             let base = n(1)
             if(player.workshop.mountaineeringPickaxe){
-                base = base.add(0.1)
+                base = base.add(0.2)
             }
             return base
         },
         lucky(){
             let base = n(1)
             if(player.workshop.mountaineeringPickaxe){
-                base = base.add(0.1)
+                base = base.add(0.2)
             }
             return base
         },
@@ -41,15 +41,15 @@ var MainAction = {
             let speed = ''
             let lucky = ''
             let hr = ''
-            if(n(main['craft']['stone']['speed']()).gt(1)){
-                speed = '<left>速度倍率: <mul>×</mul>'+format(main['craft']['stone']['speed']())+'</left>'
+            if(n(main['action']['explore']['speed']()).gt(1)){
+                speed = '<left>速度倍率: <mul>×</mul>'+format(main['action']['explore']['speed']())+'</left>'
                 hr = '<hr>'
             }
-            if(n(main['craft']['stone']['lucky']()).gt(1)){
-                lucky = '<left>幸运倍率: <mul>×</mul>'+format(main['craft']['stone']['lucky']())+'</left>'
+            if(n(main['action']['explore']['lucky']()).gt(1)){
+                lucky = '<left>幸运倍率: <mul>×</mul>'+format(main['action']['explore']['lucky']())+'</left>'
                 hr = '<hr>'
             }
-            return '寻找可用资源'+con+speed+lucky+hr
+            return '寻找可用资源'+con+hr+speed+lucky
         },
         onClick(){
             let find = []
@@ -164,7 +164,7 @@ var MainAction = {
                 probability(){return n(20)},
             },
         },
-        data:{
+        data: {
             citizens(){return n(0)},
             citizensFined(){return false},
             collect(){return n(0)},
@@ -187,14 +187,42 @@ var MainAction = {
     },
     woodenBeams: {
         name(){return '加工木梁'},
-        onClick(){
-            player.resource.wood = player.resource.wood.sub(main['action']['woodenBeams']['cost']())
-            player.resource.woodenBeams = player.resource.woodenBeams.add(main['action']['woodenBeams']['gain']())
+        tooltip(){
+            let effect = ''
+            if(player.action.woodenBeams.make){
+                effect = '持续'
+            }else{
+                effect = '暂停'
+            }
+            return '将木材加工<hr>点击切换制造状态<br>当前: '+effect+'<left><hr>'+format(main['action']['woodenBeams']['cost']())+colorText('wood')[1]+' -> '+format(main['action']['woodenBeams']['gain']())+colorText('woodenBeams')[1]+'</left>'
         },
         cost(){return n(20)},
         gain(){return n(1)},
-        tooltip(){return '将木材加工<hr><left>'+format(main['action']['woodenBeams']['cost']())+colorText('wood')[1]+' -> '+format(main['action']['woodenBeams']['gain']())+colorText('woodenBeams')[1]+'</left>'},
+        onClick(){
+            player.resource.wood = player.resource.wood.sub(main['action']['woodenBeams']['cost']())
+            player.resource.woodenBeams = player.resource.woodenBeams.add(main['action']['woodenBeams']['gain']())
+            if(player.resource.wood.lt(main['action']['woodenBeams']['cost']())){
+                player.action.woodenBeams.make = false
+            }
+        },
+        data: {
+            make(){return false}
+        },
+        auto(){
+            if(player.action.woodenBeams.make){
+                return getEfficient('action')
+            }
+            return n(0)
+        },
+        handoff(){
+            player.action.woodenBeams.make = !player.action.woodenBeams.make
+            if(player.resource.wood.lt(main['action']['woodenBeams']['cost']())){
+                player.action.woodenBeams.make = false
+            }
+        },
         cooldown(){return n(20)},
+        coerciveClick(){return player.resource.wood.gte(main['action']['woodenBeams']['cost']()) || hasActionClick('woodenBeams')},
+        player(){return n(0)},
         canClick(){return player.resource.wood.gte(main['action']['woodenBeams']['cost']())},
         unlocked(){return player.workshop.axe},
     },
