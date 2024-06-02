@@ -52,14 +52,15 @@ var MainBuilding = {
         tooltip(){return '储存食物<joker>鼠鼠我呀...</joker>'},
         unlocked(){return player.building.civics.gte(1)},
         cost: {
+            food(){return n(20)},
             dirt(){return n(10)},
-            wood(){return n(20)},
+            wood(){return n(10)},
         },
-        costPower(){return n(0.15)},
+        costPower(){return n(0.05)},
         effect: {
             capped: {
                 add: {
-                    food(){return n(120)},
+                    food(){return n(180)},
                 }
             }
         },
@@ -72,13 +73,14 @@ var MainBuilding = {
         cost: {
             woodenBeams(){return n(5)},
         },
-        costPower(){return n(0.1)},
+        costPower(){return n(0.05)},
         effect: {
             capped: {
                 add: {
-                    dirt(){return n(60)},
-                    wood(){return n(60)},
-                    stone(){return n(60)},
+                    leather(){return n(25)},
+                    dirt(){return n(80)},
+                    wood(){return n(80)},
+                    stone(){return n(80)},
                 }
             }
         },
@@ -107,7 +109,7 @@ var MainBuilding = {
             wood(){return n(20)},
             dirt(){return n(25)}
         },
-        costPower(){return n(0.08)},
+        costPower(){return n(0.04)},
         effect: {
             gain: {
                 add: {
