@@ -3,13 +3,13 @@ function getResourceTitleID(id,res_name){
 	if(main['resource'][res_name]['Class']!==undefined){
 		Class = main['resource'][res_name]['Class']()
 	}
-	getByID(id+'TitleID',`
-		<tooltip `+loadTooltip(res_name, 'LoadTooltipResource')+` style="cursor: help;">
+	getByID(id+'TitleID', `
+		<tooltip `+loadTooltip(res_name, 'LoadTooltipResource', null)+` style="cursor: help;">
 			<div class="resourceTitle resourceName `+Class+`" style="color: `+colorText(res_name)[0]+`; position: relative;">
 			`+i18n(main['resource'][res_name]['name']())+`
 		</tooltip></div>`
 	)
-	getByID(id+'BorderID',`<div class="resourceBorder" id="`+res_name+`BorderID" style="background: `+colorText(res_name)[0]+`; z-index: -1; transition-duration: 0.2s; clip-path: inset(0% 0% 0% 0%);"></div>`)
+	getByID(id+'BorderID', `<div class="resourceBorder" id="`+res_name+`BorderID" style="background: `+colorText(res_name)[0]+`; z-index: -1; transition-duration: 0.2s; clip-path: inset(0% 0% 0% 0%);"></div>`)
 }
 
 function getResourceDoc(id){

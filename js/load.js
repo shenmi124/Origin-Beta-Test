@@ -3,7 +3,7 @@ var TIMESTART = new Date()
 var OFFLINETIME = new Date()
 var DIFF = 0
 
-var VERSION = 'v0.9.0.8'
+var VERSION = 'v0.9.0.10'
 var VERSIONTIMES = n(3)
 
 function loadMain(){
@@ -27,8 +27,8 @@ function loadMain(){
 
 function loadBase(){
 	let resourceStr = `
-		<div id="actionEfficientID" style="font-size: 12px"><tooltip `+loadTooltip(`action`,`efficient`,null)+`>效率</tooltip>: <span id="actionEfficient"></span></div>
-		<div id="happinessEfficientID" style="font-size: 12px"><tooltip `+loadTooltip(`happiness`,`efficient`,null)+`>幸福度</tooltip>: <span id="happinessEfficient"></span></div>
+		<div id="actionEfficientID" style="font-size: 12px"><tooltip `+loadTooltip(`action`, `efficient`, null)+`>效率</tooltip>: <span id="actionEfficient"></span></div>
+		<div id="happinessEfficientID" style="font-size: 12px"><tooltip `+loadTooltip(`happiness`, `efficient`, null)+`>幸福度</tooltip>: <span id="happinessEfficient"></span></div>
 		<br>
 	`
 	for(let i in main['resource']){

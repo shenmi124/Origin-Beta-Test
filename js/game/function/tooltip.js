@@ -89,7 +89,7 @@ function tooltipResourceMulGainMultiplication(boolean,name,base,mul,gainAll,id){
 }
 
 function tooltipResourceBaseCapped(name,base,cappedAll,id){
-	if(n(format(cappedAll)).eq(format(getResourceGain(id)))){
+	if(n(format(cappedAll)).eq(format(getResourceCapped(id)))){
 		cappedAll = '<u>'+formatA(cappedAll)+'</u>'
 	}else{
 		cappedAll = formatA(cappedAll)
@@ -101,7 +101,7 @@ function tooltipResourceBaseCapped(name,base,cappedAll,id){
 }
 
 function tooltipResourceBaseCappedMultiplication(name,base,mul,cappedAll,id){
-	if(n(format(cappedAll)).eq(format(getResourceGain(id)))){
+	if(n(format(cappedAll)).eq(format(getResourceCapped(id)))){
 		cappedAll = '<u>'+formatA(cappedAll)+'</u>'
 	}else{
 		cappedAll = formatA(cappedAll)
@@ -282,7 +282,7 @@ function tooltip(id,id2){
 				if(main['resource'][id]['cappedTooltip']!==undefined){
 					cappedName = main['resource'][id]['cappedTooltip']()
 				}
-				capped += tooltipResourceBaseCapped(cappedName,cappedBase,cappedAll,id)
+				capped += tooltipResourceBaseCapped(cappedName, cappedBase, cappedAll, id)
 			}
 			for(let i in main['resource']){
 				if(main['resource'][i]['effect']!==undefined){
@@ -294,7 +294,7 @@ function tooltip(id,id2){
 								let cappedMul = player['resource'][i]
 								if(id==im && !n(cappedBase).mul(cappedMul).eq(0)){
 									cappedAll = cappedAll.add(n(cappedBase).mul(cappedMul))
-									capped += tooltipResourceBaseCappedMultiplication(cappedName,cappedBase,cappedMul,cappedAll,id)
+									capped += tooltipResourceBaseCappedMultiplication(cappedName, cappedBase, cappedMul, cappedAll, id)
 								}
 							}
 						}
