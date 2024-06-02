@@ -297,7 +297,7 @@ let MainCraft = {
             let mul = ''
             let unl = '<hr><grey>你暂时拿它们无能为力</grey>'
             if(n(gameGetPower()).gte(1)){
-                mul = '<hr><left>力量倍率:~'+formatWhole(gameGetPower())+'<grey> | '+format(gameGetPower())+'><'+format(1)+'</grey></left>'
+                mul = '<hr><left>力量倍率: ~'+formatWhole(gameGetPower())+'<grey> | '+format(gameGetPower())+'><'+format(1)+'</grey></left>'
                 unl = ''
             }
             let times = '<hr>已标记: '+formatWhole(player.action.explore.beast,0)+' <grey>/ '+formatWhole(this.capped(),0)+' (遗忘)</grey>'
