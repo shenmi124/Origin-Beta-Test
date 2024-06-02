@@ -192,6 +192,7 @@ var CivicsWorkshop = {
         },
         onBuy(){
             player.building.lumberyards = player.building.lumberyards.add(1)
+            componentBuilding('lumberyards')
         },
         unlocked(){return player.workshop.axe && player.action.explore.treeFined}
     },
