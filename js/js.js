@@ -148,7 +148,7 @@ function dataDiff(){
 
 			player['craft'][i+'Cooldown'] = player['craft'][i+'Cooldown'].add(n(actionSpeed).mul(DIFF))
 
-			if(player['craft'][i+'Cooldown'].gte(getCraftCooldown(i)) && !getCraftCanClick(i)){
+			if(player['craft'][i+'Cooldown'].gte(getCraftCooldown(i)) && getCraftCanClick(i)){
 				main['craft'][i]['onClick']()
 				player['craft'][i+'Clicks'] = player['craft'][i+'Clicks'].add(1)
 				NumberFix()
