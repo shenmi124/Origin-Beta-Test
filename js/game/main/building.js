@@ -70,9 +70,9 @@ var MainBuilding = {
         tooltip(){return '储存物资<joker>鼠鼠我呀...???</joker>'},
         unlocked(){return player.building.civics.gte(1)},
         cost: {
-            woodenBeams(){return n(10)},
+            woodenBeams(){return n(5)},
         },
-        costPower(){return n(0.18)},
+        costPower(){return n(0.1)},
         effect: {
             capped: {
                 add: {
