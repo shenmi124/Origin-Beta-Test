@@ -13,6 +13,13 @@ function gameDiff(){
     }
 }
 
+function gameGetPower(){
+    let power = n(0)
+    if(player.workshop.knife){power = power.add(3)}
+    if(player.workshop.armor){power = power.add(2)}
+    return power
+}
+
 function gameGetJobHappiness(){
     let happy = n(0)
     for(let i in civics['citizens']){
@@ -25,6 +32,22 @@ function gameGetJobHappiness(){
         }
     }
     return happy
+}
+
+function gameGetWorkshopAction(){
+    let action = n(0)
+    for(let i in civics['workshop']){
+        if(civics['workshop'][i]['effect']!==undefined){
+            if(civics['workshop'][i]['effect']['other']!==undefined){
+                if(civics['workshop'][i]['effect']['other']['action']!==undefined){
+                    if(player['workshop'][i]){
+                        action = action.add(civics['workshop'][i]['effect']['other']['action']['effect']())
+                    }
+                }
+            }
+        }
+    }
+    return action
 }
 
 function gameGetWorkshopHappiness(){

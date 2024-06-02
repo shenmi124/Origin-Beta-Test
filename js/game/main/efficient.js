@@ -13,6 +13,10 @@ let efficient = {
             effect(){return n(-20)},
             active(){return player.building.civics.eq(0)}
         },
+        workshop: {
+            name(){return '工坊影响'},
+            effect(){return n(gameGetWorkshopAction())}
+        },
         citizens: {
             name(){return '幸福度'},
             effect(){return n(getEfficient('happiness')).sub(1).mul(100)},
@@ -32,6 +36,10 @@ let efficient = {
             name(){return '人口过剩'},
             effect(){return n(0).sub(player.resource.citizens)},
         },
+        stardust: {
+            name(){return '星尘'},
+            effect(){return player.resource.stardust.mul(10)},
+        },
         jobs: {
             name(){return '职业影响'},
             effect(){return n(gameGetJobHappiness())}
@@ -39,10 +47,6 @@ let efficient = {
         workshop: {
             name(){return '工坊影响'},
             effect(){return n(gameGetWorkshopHappiness())}
-        },
-        stardust: {
-            name(){return '星尘'},
-            effect(){return player.resource.stardust.mul(10)},
         },
     }
 }

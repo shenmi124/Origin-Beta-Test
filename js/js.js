@@ -174,44 +174,51 @@ function dataDiff(){
 			let res = n(main['building'][id]['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['costPower']()).add(1)).sub(1)
 			if(main['resource'][i]['capped']!==undefined){
 				if(n(getResourceCapped(i)).lt(res)){
-					addedCss(id+"BuildingButtonID",'capped')
+					addedCss(id+"BuildingButtonID", 'capped')
 					cappedCan = false
 				}
 			}
 			if(n(player['resource'][i]).lt(res)){
-				addedCss(id+"BuildingButtonID",'res')
+				addedCss(id+"BuildingButtonID", 'res')
 				resCan = false
 			}
 		}
 		if(cappedCan){
-			removeCss(id+"BuildingButtonID",'capped')
+			removeCss(id+"BuildingButtonID", 'capped')
 		}
 		if(resCan){
-			removeCss(id+"BuildingButtonID",'res')
+			removeCss(id+"BuildingButtonID", 'res')
 		}
 	}
 
 	for(let id in civics['workshop']){
-		let resCan = true
-		let cappedCan = true
-		for(let i in civics['workshop'][id]['cost']){
-			let res = n(civics['workshop'][id]['cost'][i]())
-			if(main['resource'][i]['capped']!==undefined){
-				if(n(getResourceCapped(i)).lt(res)){
-					addedCss(id+"WorkshopButtonID",'capped')
-					cappedCan = false
+		if(!WORKSHOPBOUGHT){
+			let resCan = true
+			let cappedCan = true
+			removeCss(id+"WorkshopButtonID", 'bought')
+			for(let i in civics['workshop'][id]['cost']){
+				let res = n(civics['workshop'][id]['cost'][i]())
+				if(main['resource'][i]['capped']!==undefined){
+					if(n(getResourceCapped(i)).lt(res)){
+						addedCss(id+"WorkshopButtonID", 'capped')
+						cappedCan = false
+					}
+				}
+				if(n(player['resource'][i]).lt(res)){
+					addedCss(id+"WorkshopButtonID", 'res')
+					resCan = false
 				}
 			}
-			if(n(player['resource'][i]).lt(res)){
-				addedCss(id+"WorkshopButtonID",'res')
-				resCan = false
+			if(cappedCan){
+				removeCss(id+"WorkshopButtonID", 'capped')
 			}
-		}
-		if(cappedCan){
-			removeCss(id+"WorkshopButtonID",'capped')
-		}
-		if(resCan){
-			removeCss(id+"WorkshopButtonID",'res')
+			if(resCan){
+				removeCss(id+"WorkshopButtonID", 'res')
+			}
+		}else{
+			addedCss(id+"WorkshopButtonID", 'bought')
+			removeCss(id+"WorkshopButtonID", 'capped')
+			removeCss(id+"WorkshopButtonID", 'res')
 		}
 	}
 }
@@ -265,10 +272,14 @@ function getID(){
 
 	for(let i in civics['workshop']){
 		let unlocked = true
+		let bought = !player['workshop'][i]
 		if(civics['workshop'][i]['unlocked']!==undefined){
 			unlocked = civics['workshop'][i]['unlocked']()
 		}
-		unlockedLoad(i+'LoadWorkshop', unlocked && !player['workshop'][i])
+		if(WORKSHOPBOUGHT){
+			bought = !bought
+		}
+		unlockedLoad(i+'LoadWorkshop', unlocked && bought)
 	}
 
 	getBr()

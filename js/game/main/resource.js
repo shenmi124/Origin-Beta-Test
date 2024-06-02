@@ -41,6 +41,22 @@ var MainResource = {
         tooltip(){return '默默收集散落的想法...'},
         unlocked(){return getResourceUnlocked('citizens')},
     },
+    food:{
+        name(){return "食物"},
+        color(){return '#cf7004'},
+        capped(){return n(20)},
+        gain(){return n(-0.1)},
+        gainTooltip(){return '食用'},
+        tooltip(){return '在这样荒芜的地方植物确实是不常见的东西'},
+        unlocked(){return true},
+    },
+    leather:{
+        name(){return "皮革"},
+        color(){return '#763f00'},
+        capped(){return n(50)},
+        tooltip(){return '具有贸易价值'},
+        unlocked(){return getResourceUnlocked('leather')},
+    },
     dirt:{
         name(){return "泥土"},
         color(){return 'rgb(150, 108, 74)'},
@@ -76,26 +92,47 @@ var MainResource = {
         gain(){return n(0)},
         unlocked(){return getResourceUnlocked('copper')},
     },
-    food:{
-        name(){return "食物"},
-        color(){return '#cf7004'},
-        capped(){return n(20)},
-        gain(){return n(-0.1)},
-        gainTooltip(){return '食用'},
-        tooltip(){return '在这样荒芜的地方植物确实是不常见的东西'},
-        unlockAction(){
-            addLog('你找到了一些食物')
-        },
-        unlocked(){return true},
+    iron:{
+        name(){return "铁"},
+        color(){return '#999'},
+        capped(){return n(0)},
+        unlocked(){return getResourceUnlocked('iron')},
     },
-    leather:{
-        name(){return "皮革"},
-        color(){return '#763f00'},
-        capped(){return n(20)},
-        tooltip(){return '具有贸易价值'},
-        unlocked(){return getResourceUnlocked('leather')},
+
+    woodenBeams:{
+        name(){return "木梁"},
+        tooltip(){return '<hr>锻造资源'},
+        color(){return 'rgb(158 103 19)'},
+        gain(){return n(0)},
+        unlocked(){return getResourceUnlocked('woodenBeams')},
+    },
+    stoneBricks:{
+        name(){return "石砖"},
+        tooltip(){return '<hr>锻造资源'},
+        color(){return '#000'},
+        gain(){return n(0)},
+        unlocked(){return getResourceUnlocked('stoneBricks')},
+    },
+    tile:{
+        name(){return "瓦"},
+        tooltip(){return '<hr>锻造资源'},
+        color(){return '#000'},
+        gain(){return n(0)},
+        unlocked(){return getResourceUnlocked('tile')},
     },
     
+    star:{
+        name(){return "陨石碎片"},
+        color(){return '#000'},
+        Class(){return 'star'},
+        capped(){return n(0.1)},
+        cappedMul(){return n(10).pow(player.resource.stardust)},
+        tooltip(){return '陨石坠落'},
+        unlockAction(){
+            addLog('这些陨石碎片应该有特殊的用处')
+        },
+        unlocked(){return getResourceUnlocked('star')},
+    },
     stardust:{
         name(){return "星尘"},
         color(){return '#00ffff'},
@@ -110,17 +147,5 @@ var MainResource = {
             addLog('它可以提高陨石碎片的储存上限与幸福度')
         },
         unlocked(){return getResourceUnlocked('stardust')},
-    },
-    star:{
-        name(){return "陨石碎片"},
-        color(){return '#000'},
-        Class(){return 'star'},
-        capped(){return n(0.1)},
-        cappedMul(){return n(10).pow(player.resource.stardust)},
-        tooltip(){return '陨石坠落'},
-        unlockAction(){
-            addLog('这些陨石碎片应该有特殊的用处')
-        },
-        unlocked(){return getResourceUnlocked('star')},
     },
 }

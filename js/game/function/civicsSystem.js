@@ -69,29 +69,47 @@ function CitizensFix(){
 	getByID('CitizensTip',CitizensTip())
 }
 
+function switchWorkshopBought(){
+    WORKSHOPBOUGHT = !WORKSHOPBOUGHT
+	for(let i in civics['workshop']){
+		let unlocked = true
+		let bought = !player['workshop'][i]
+		if(civics['workshop'][i]['unlocked']!==undefined){
+			unlocked = civics['workshop'][i]['unlocked']()
+		}
+		if(WORKSHOPBOUGHT){
+			bought = !bought
+		}
+		unlockedLoad(i+'LoadWorkshop', unlocked && bought)
+	}
+}
+
 function Upgrade(id){
-    let canbuy = true
-    let logs = '*缺少资源:'
-    for(i in civics['workshop'][id]['cost']){
-        let res = n(civics['workshop'][id]['cost'][i]())
-        if(n(player['resource'][i]).lt(res)){
-            canbuy = false
-            logs += '<br><li-hid>*'+format(n(res).sub(player['resource'][i]))+colorText(i)[1]
-        }
-    }
-    if(canbuy){
+    if(!WORKSHOPBOUGHT){
+        let canbuy = true
+        let logs = '缺少资源'
         for(i in civics['workshop'][id]['cost']){
             let res = n(civics['workshop'][id]['cost'][i]())
-            player['resource'][i] = player['resource'][i].sub(res)
+            if(n(player['resource'][i]).lt(res)){
+                canbuy = false
+                logs += '<br><li-hid>'+format(n(res).sub(player['resource'][i]))+colorText(i)[1]
+            }
         }
-        if(civics['workshop'][id]['onBuy']!==undefined){
-            $(civics['workshop'][id]['onBuy'])
+        if(canbuy){
+            for(i in civics['workshop'][id]['cost']){
+                let res = n(civics['workshop'][id]['cost'][i]())
+                player['resource'][i] = player['resource'][i].sub(res)
+            }
+            if(civics['workshop'][id]['onBuy']!==undefined){
+                civics['workshop'][id]['onBuy']()
+            }
+            player['workshop'][id] = true
+        }else{
+            addLog(logs, '#888')
         }
-        player['workshop'][id] = true
     }else{
-        addLog(logs,'#888')
+        addLog('已购买', '#888')
     }
-
     getID()
     componentWorkshop(id)
 }

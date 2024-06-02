@@ -53,6 +53,10 @@ button.res {
     color: red;
 }
 
+button.bought {
+    color:black;
+}
+
 button.capped {
     background-color: rgba(255, 0, 0, 0.1);
 }

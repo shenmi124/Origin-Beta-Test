@@ -17,20 +17,26 @@ var MainBuilding = {
         effect: {
             capped:{
                 add: {
+                    food(){return n(20)},
                     dirt(){return n(20)},
                     wood(){return n(20)},
                     stone(){return n(20)},
-                    food(){return n(20)},
                 }
             }
         }
     },
     shelter:{
-        name(){return '庇护所'},
+        name(){
+            if(player.workshop.campfire){
+                return '小屋'
+            }
+            return '庇护所'
+        },
         tooltip(){return '实在算不上家,但好歹也能遮风避雨'},
         unlocked(){return player.building.civics.gte(1)},
         cost: {
-            dirt(){return n(10)}
+            food(){return n(10)},
+            dirt(){return n(8)},
         },
         costPower(){return n(0.1)},
         effect: {
@@ -41,6 +47,43 @@ var MainBuilding = {
             }
         }
     },
+    granary:{
+        name(){return '粮仓'},
+        tooltip(){return '储存食物<joker>鼠鼠我呀...</joker>'},
+        unlocked(){return player.building.civics.gte(1)},
+        cost: {
+            dirt(){return n(10)},
+            wood(){return n(20)},
+        },
+        costPower(){return n(0.15)},
+        effect: {
+            capped: {
+                add: {
+                    food(){return n(40)},
+                }
+            }
+        },
+        unlocked(){return player.workshop.campfire},
+    },
+    warehouse:{
+        name(){return '货仓'},
+        tooltip(){return '储存物资<joker>鼠鼠我呀...???</joker>'},
+        unlocked(){return player.building.civics.gte(1)},
+        cost: {
+            woodenBeams(){return n(10)},
+        },
+        costPower(){return n(0.2)},
+        effect: {
+            capped: {
+                add: {
+                    dirt(){return n(60)},
+                    wood(){return n(60)},
+                    stone(){return n(60)},
+                }
+            }
+        },
+        unlocked(){return player.workshop.campfire},
+    },
     farm:{
         name(){return '农田'},
         tooltip(){return '先解决温饱'},
@@ -48,11 +91,27 @@ var MainBuilding = {
         cost: {
             dirt(){return n(2.5)}
         },
-        costPower(){return n(0.05)},
+        costPower(){return n(0.15)},
         effect: {
             gain: {
                 add: {
                     food(){return n(0.1)},
+                }
+            }
+        }
+    },
+    lumberyards:{
+        name(){return '伐木场'},
+        unlocked(){return player.workshop.lumberyards},
+        cost: {
+            wood(){return n(20)},
+            dirt(){return n(25)}
+        },
+        costPower(){return n(0.08)},
+        effect: {
+            gain: {
+                add: {
+                    wood(){return n(0.25)},
                 }
             }
         }

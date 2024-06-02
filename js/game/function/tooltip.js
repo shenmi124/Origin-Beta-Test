@@ -393,7 +393,7 @@ function tooltip(id,id2){
 				for(let i in main['building'][id]['effect']['capped']['add']){
 					if(!n(main['building'][id]['effect']['capped']['add'][i]()).eq(0)){
 						cappedhr = `<hr><a style='font-size: 14px'>上限</a>`
-						capped += effectText(colorText(i)[1], '+', getBuildCappedBase(id, i), '上限', player['building'][id], null)
+						capped += effectText(colorText(i)[1], '+', getBuildCappedBase(id, i), '', player['building'][id], null)
 					}
 				}
 			}
@@ -492,7 +492,7 @@ function tooltip(id,id2){
 		}
 		if(civics['workshop'][id]['cost']!==undefined){
 			for(let i in civics['workshop'][id]['cost']){
-				cost += costText(colorText(i)[1], i, civics['workshop'][id]['cost'][i]())
+				cost += costText(colorText(i)[1], i, civics['workshop'][id]['cost'][i](), 'workshop')
 			}
 		}
 		if(civics['workshop'][id]['effect']!==undefined){

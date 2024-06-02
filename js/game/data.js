@@ -26,6 +26,7 @@ function getGametime(){
     }
     if(player.workshop.day){
         getByID('logTime', ' - '+logYear+logMonth+logDay+logHour+logMinute)
+        document.title = '起源 - '+logYear+logMonth+logDay+logHour
     }
 }
 

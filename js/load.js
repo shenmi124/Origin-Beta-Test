@@ -3,7 +3,7 @@ var TIMESTART = new Date()
 var OFFLINETIME = new Date()
 var DIFF = 0
 
-var VERSION = 'v0.8.2.3'
+var VERSION = 'v0.9'
 var VERSIONTIMES = n(3)
 
 function loadMain(){
@@ -94,7 +94,7 @@ function loadBase(){
 	getByID('CitizensTip',CitizensTip())
 	
 	let workshopStr = '<br><br>'
-	workshopStr += `工坊<br>`
+	workshopStr += `工坊<input type="checkbox" onclick="switchWorkshopBought()"><br>`
 	for(let i in civics['workshop']){
 		workshopStr += '<a style="transition-duration: 1s;" id='+i+'LoadWorkshop></a>'
 	}
@@ -144,7 +144,7 @@ function loadVersion(){
 
 		player.data.version = VERSION
 		player.data.versiontimes = VERSIONTIMES
-		addLog('游戏已更新至<span style="font-family: cursive;">'+VERSION+'</span>','#888')
+		addLog('已更新至<span style="font-family: cursive;">'+VERSION+'</span>','#888')
 		save()
 	}
 }

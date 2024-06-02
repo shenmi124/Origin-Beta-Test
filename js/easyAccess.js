@@ -310,7 +310,7 @@ function effectText(name,begin,resource,end,mul,Class=null,display=true){
             </span></left>`
 }
 
-function costText(name,resource,cost){
+function costText(name,resource,cost,type){
     let time = ''
     if(main['resource'][resource]['gain']!==undefined){
         if(n(getResourceGain(resource)).gt(0) && player['resource'][resource].lt(cost) && (n(getResourceCapped(resource)).gte(cost) || main['resource'][resource]['capped']==undefined)){
@@ -325,6 +325,12 @@ function costText(name,resource,cost){
             time = ''
         }
     }
+    if(type=="workshop" && WORKSHOPBOUGHT){
+        return `<span>
+                    <div style="width: 80px; display: table-cell">`+name+`</div>
+                    <div style="width: 55px; display: table-cell; color: rgb(31, 70, 71)">`+format(cost)+`</div>
+                </span><br>`
+    }
     return `<span>
 				<span>
 					<div style="width: 80px; display: table-cell">`+name+`</div>
@@ -336,6 +342,15 @@ function costText(name,resource,cost){
 					<div style="color: `+((n(getResourceCapped(resource)).gte(cost) || main['resource'][resource]['capped']==undefined) ? `` : `red` )+`">`+format(cost)+`</div>
 				</span>
 			</span>`+time+`<br>`
+}
+
+function nameCorrection(type,old,name){
+    if(type=='building'){
+        getByID(old+'BuildingButtonID', name+'('+formatWhole(player['building'][old])+')')
+    }
+    if(type=='citiznes'){
+        getByID(old+'CitizensNameID', name)
+    }
 }
 
 function colorText(id){

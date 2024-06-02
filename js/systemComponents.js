@@ -31,39 +31,39 @@ function componentBuilding(id){
         let res = n(main['building'][id]['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['costPower']()).add(1)).sub(1)
         if(main['resource'][i]['capped']!==undefined){
             if(n(getResourceCapped(i)).lt(res)){
-                addedCss(id+"BuildingButtonID",'capped')
+                addedCss(id+"BuildingButtonID", 'capped')
                 cappedCan = false
             }
         }
         if(n(player['resource'][i]).lt(res)){
-            addedCss(id+"BuildingButtonID",'res')
+            addedCss(id+"BuildingButtonID", 'res')
             resCan = false
         }
     }
     if(cappedCan){
-        removeCss(id+"BuildingButtonID",'capped')
+        removeCss(id+"BuildingButtonID", 'capped')
     }
     if(resCan){
-        removeCss(id+"BuildingButtonID",'res')
+        removeCss(id+"BuildingButtonID", 'res')
     }
 }
 
 function componentCitizens(id){		
-    getByID(id+'CitizensNameLoadID',`<tooltip `+loadTooltip(id,'LoadTooltipCitizens',null)+`><div style="display: inline-grid; width: 80px">`+civics['citizens'][id]['name']()+`</div></tooltip>`)
-    getByID(id+'CitizensAllocatedLoadID','<div style="display: inline-grid; width: 30px">'+formatWhole(player['citizens'][id])+'</div>')
-    getByID(id+'CitizensButtonLoadID',`
+    getByID(id+'CitizensNameLoadID', `<tooltip `+loadTooltip(id,'LoadTooltipCitizens',null)+`><div id="`+id+`CitizensNameID" style="display: inline-grid; width: 80px">`+civics['citizens'][id]['name']()+`</div></tooltip>`)
+    getByID(id+'CitizensAllocatedLoadID', '<div style="display: inline-grid; width: 30px">'+formatWhole(player['citizens'][id])+'</div>')
+    getByID(id+'CitizensButtonLoadID', `
         <div style="display: inline-grid; width: 30px"><button onclick="allocateCitizens('`+id+`', -1); CitizensFix()" style="display: inline-grid;" class="citizens"> < </button></div>
         <div style="display: inline-grid; width: 30px"><button onclick="allocateCitizens('`+id+`', 1); CitizensFix()" style="display: inline-grid;" class="citizens"> > </button></div>
     `)
 }
 
 function componentJobs(id){		
-    getByID(id+'CitizenJobsNameLoadID',`<tooltip `+loadTooltip(id,'LoadTooltipCitizenJobs',null)+`><div style="display: inline-grid; width: 80px">`+civics['jobs'][id]['name']()+`</div></tooltip>`)
-    getByID(id+'CitizenJobsAllocatedLoadID',formatWhole(getUnemployedJobs(id)))
+    getByID(id+'CitizenJobsNameLoadID', `<tooltip `+loadTooltip(id,'LoadTooltipCitizenJobs',null)+`><div id="`+id+`JobsNameID" style="display: inline-grid; width: 80px">`+civics['jobs'][id]['name']()+`</div></tooltip>`)
+    getByID(id+'CitizenJobsAllocatedLoadID', formatWhole(getUnemployedJobs(id)))
 }
 
 function componentWorkshop(id){
-    getByID(id+"LoadWorkshopID",`
+    getByID(id+"LoadWorkshopID", `
     <tooltip `+loadTooltip(id,'LoadTooltipWorkshop')+`>
         <button id="`+id+`WorkshopButtonID" onclick="Upgrade('`+id+`')">`+civics['workshop'][id]['name']()+`</button>
     </tooltip>
@@ -75,19 +75,19 @@ function componentWorkshop(id){
         let res = n(civics['workshop'][id]['cost'][i]())
         if(main['resource'][i]['capped']!==undefined){
             if(n(getResourceCapped(i)).lt(res)){
-                addedCss(id+"WorkshopButtonID",'capped')
+                addedCss(id+"WorkshopButtonID", 'capped')
                 cappedCan = false
             }
         }
         if(n(player['resource'][i]).lt(res)){
-            addedCss(id+"WorkshopButtonID",'res')
+            addedCss(id+"WorkshopButtonID", 'res')
             resCan = false
         }
     }
     if(cappedCan){
-        removeCss(id+"WorkshopButtonID",'capped')
+        removeCss(id+"WorkshopButtonID", 'capped')
     }
     if(resCan){
-        removeCss(id+"WorkshopButtonID",'res')
+        removeCss(id+"WorkshopButtonID", 'res')
     }
 }

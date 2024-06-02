@@ -106,7 +106,7 @@ var CivicsWorkshop = {
     },
     pickaxe: {
         name(){return '燧石镐'},
-        tooltip(){return '用石头做出石稿以开采石头<br><grey>收集时有概率获得石头</grey><joker>开采石头做出石镐以开采石头</joker>'},
+        tooltip(){return '用石头做出石镐以开采石头<br><grey>收集时有概率获得石头</grey><joker>开采石头做出石镐以开采石头</joker>'},
         effect: {
             unlocked: {
                 1(){return '允许玩开采露天石料'}
@@ -116,11 +116,34 @@ var CivicsWorkshop = {
             stone(){return n(1)},
         },
     },
+    binding: {
+        name(){return '绑定结'},
+        tooltip(){return '绑定好你的燧石镐'},
+        effect: {
+            other: {
+                speed: {
+                    name(){return '行动石堆'},
+                    effect(){return n(25)},
+                    display(){return ['速度+','%']},
+                },
+                lucky: {
+                    name(){return '行动石堆'},
+                    effect(){return n(50)},
+                    display(){return ['幸运+','%']},
+                }
+            },
+        },
+        cost: {
+            wood(){return n(5)},
+            stone(){return n(10)},
+        },
+        unlocked(){return player.workshop.pickaxe}
+    },
     mountaineeringPickaxe: {
         name(){return '登山镐'},
         tooltip(){return '提供探索加成,同时允许玩家进一步的探索'},
         effect: {
-            other:{
+            other: {
                 speed: {
                     name(){return '行动探索'},
                     effect(){return n(10)},
@@ -132,10 +155,13 @@ var CivicsWorkshop = {
                     display(){return ['幸运+','%']},
                 }
             },
+            unlocked: {
+                1(){return '探索可以找到更多事物'}
+            }
         },
         cost: {
-            stone(){return n(50)},
-            copper(){return n(3)},
+            stone(){return n(30)},
+            copper(){return n(2)},
         },
         unlocked(){return player.workshop.pickaxe}
     },
@@ -143,14 +169,31 @@ var CivicsWorkshop = {
         name(){return '燧石斧'},
         effect: {
             unlocked: {
-                1(){return '允许玩家将木头加工成木板'},
+                1(){return '允许玩家将木头加工成木梁'},
                 2(){return '允许玩家砍树<grey>#你需要先找到树</gery>'},
             }
         },
         cost: {
-            wood(){return n(10)},
-            stone(){return n(20)},
+            wood(){return n(5)},
+            stone(){return n(30)},
         },
+    },
+    lumberyards: {
+        name(){return '伐木场'},
+        effect: {
+            unlocked: {
+                1(){return '解锁建筑 伐木场'},
+                2(){return '获得建筑伐木场'},
+            },
+        },
+        cost: {
+            wood(){return n(20)},
+            dirt(){return n(25)}
+        },
+        onBuy(){
+            player.building.lumberyards = player.building.lumberyards.add(1)
+        },
+        unlocked(){return player.workshop.axe && player.action.explore.treeFined}
     },
     hoe: {
         name(){return '燧石锄头'},
@@ -168,16 +211,67 @@ var CivicsWorkshop = {
             stone(){return n(50)},
         },
     },
+    landImprovement: {
+        name(){return '土地改良'},
+        effect: {
+            building: {
+                farm: {
+                    effect: {
+                        mul(){return n(1.5)}
+                    }
+                }
+            }
+        },
+        cost: {
+            food(){return n(1000)},
+            dirt(){return n(5000)},
+        },
+        unlocked(){return player.workshop.hoe}
+    },
     knife: {
         name(){return '燧石小刀'},
         effect: {
-            unlocked: {
-                1(){return '允许玩家追猎野兽'},
+            other: {
+                power: {
+                    name(){return '力量'},
+                    effect(){return n(3)},
+                    display(){return ['+','']},
+                }
             }
         },
         cost: {
             wood(){return n(5)},
             stone(){return n(30)},
+        },
+    },
+    armor: {
+        name(){return '护甲'},
+        effect: {
+            other: {
+                power: {
+                    name(){return '力量'},
+                    effect(){return n(2)},
+                    display(){return ['+','']},
+                }
+            }
+        },
+        cost: {
+            leather(){return n(30)},
+        },
+    },
+    clothes: {
+        name(){return '皮衣'},
+        effect: {
+            other: {
+                action: {
+                    name(){return '效率'},
+                    effect(){return n(15)},
+                    display(){return ['+','%']},
+                }
+            }
+        },
+        cost: {
+            leather(){return n(20)},
         },
     },
     campfire: {
@@ -203,10 +297,33 @@ var CivicsWorkshop = {
         },
         cost: {
             dirt(){return n(50)},
-            wood(){return n(15)},
-            stone(){return n(30)},
+            wood(){return n(20)},
+            stone(){return n(20)},
         },
+        onBuy(){
+            nameCorrection('building', 'shelter', '小屋')
+            nameCorrection('citiznes', 'explorer', '探险家')
+        }
+    },
+    camp: {
+        name(){return '营地'},
+        keep(){return true},
+        tooltip(){return '逐渐形成一个部落<br>入口逐渐增多'},
+        effect: {
+            unlocked: {
+                1(){return '阶段2'},
+                2(){return '以及更多...'},
+            },
+        },
+        cost: {
+            copper(){return Infinity},
+            iron(){return Infinity},
+            woodenBeams(){return Infinity},
+            stoneBricks(){return Infinity},
+            tile(){return Infinity},
+        },
+        unlocked(){return player.workshop.campfire}
     },
 }
 
-let WORKSHOPBOUGHT = true
+let WORKSHOPBOUGHT = false

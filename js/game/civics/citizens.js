@@ -1,6 +1,11 @@
 var CivicsCitizens = {
     explorer: {
-        name(){return '开括者'},
+        name(){
+            if(player.workshop.campfire){
+                return '探险家'
+            }
+            return '开括者'
+        },
         tooltip(){return '开括者将自动进行探索行动'},
         allocated: {
             unemployed(){return n(1)},
