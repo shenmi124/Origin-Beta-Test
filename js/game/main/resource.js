@@ -47,7 +47,7 @@ var MainResource = {
         capped(){return n(20)},
         gain(){return n(-0.1)},
         gainTooltip(){return '食用'},
-        tooltip(){return '在这样荒芜的地方植物确实是不常见的东西'},
+        tooltip(){return '在这样荒芜的地方,植物确实是不常见的东西'},
         unlocked(){return true},
     },
     leather:{

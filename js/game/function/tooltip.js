@@ -13,6 +13,7 @@ function mouseLoad(id,id2){
 }
 
 function tooltipResourceGain(boolean,name,number,gainAll,id){
+	gainAll = formatScientific(gainAll, 8)
 	if(n(format(gainAll)).eq(format(getResourceGain(id)))){
 		gainAll = '<u>'+formatA(gainAll)+'</u>'
 	}else{
@@ -32,6 +33,7 @@ function tooltipResourceGain(boolean,name,number,gainAll,id){
 }
 
 function tooltipResourceGainMultiplication(boolean,name,base,mul,gainAll,id){
+	gainAll = formatScientific(gainAll, 8)
 	if(n(format(gainAll)).eq(format(getResourceGain(id)))){
 		gainAll = '<u>'+formatA(gainAll)+'</u>'
 	}else{
@@ -51,6 +53,7 @@ function tooltipResourceGainMultiplication(boolean,name,base,mul,gainAll,id){
 }
 
 function tooltipResourceMulGain(boolean,name,number,gainAll,id){
+	gainAll = formatScientific(gainAll, 8)
 	if(n(format(gainAll)).eq(format(getResourceGain(id)))){
 		gainAll = '<u>'+formatA(gainAll)+'</u>'
 	}else{
@@ -70,6 +73,7 @@ function tooltipResourceMulGain(boolean,name,number,gainAll,id){
 }
 
 function tooltipResourceMulGainMultiplication(boolean,name,base,mul,gainAll,id){
+	gainAll = formatScientific(gainAll, 8)
 	if(n(format(gainAll)).eq(format(getResourceGain(id)))){
 		gainAll = '<u>'+formatA(gainAll)+'</u>'
 	}else{
@@ -89,6 +93,7 @@ function tooltipResourceMulGainMultiplication(boolean,name,base,mul,gainAll,id){
 }
 
 function tooltipResourceBaseCapped(name,base,cappedAll,id){
+	cappedAll = formatScientific(cappedAll, 8)
 	if(n(format(cappedAll)).eq(format(getResourceCapped(id)))){
 		cappedAll = '<u>'+formatA(cappedAll)+'</u>'
 	}else{
@@ -101,6 +106,7 @@ function tooltipResourceBaseCapped(name,base,cappedAll,id){
 }
 
 function tooltipResourceBaseCappedMultiplication(name,base,mul,cappedAll,id){
+	cappedAll = formatScientific(cappedAll, 8)
 	if(n(format(cappedAll)).eq(format(getResourceCapped(id)))){
 		cappedAll = '<u>'+formatA(cappedAll)+'</u>'
 	}else{
@@ -255,8 +261,9 @@ function tooltip(id,id2){
 					}
 				}
 			}*/
+			gainAll = formatScientific(gainAll, 8)
 			gain = "<hr><a style='font-size: 14px'>资源生产</a>" + cost + gain + mul
-			if(gainAll.eq(0)){
+			if(n(gainAll).eq(0)){
 				gain = ''
 			}
 			if(main['resource'][id]['capped']!==undefined){
@@ -369,7 +376,8 @@ function tooltip(id,id2){
 		}
 		if(main['building'][id]['cost']!==undefined){
 			for(let i in main['building'][id]['cost']){
-				cost += costText(colorText(i)[1], i, n(main['building'][id]['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['costPower']()).add(1)).sub(1))
+				let res = getBuildCost(id, i)
+				cost += costText(colorText(i)[1], i, res)
 			}
 		}
 		cost += '</left>'

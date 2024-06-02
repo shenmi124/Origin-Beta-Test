@@ -1,5 +1,5 @@
 var MainBuilding = {
-    civics:{
+    civics: {
         name(){return '定居地'},
         tooltip(){return '决定定居?'},
         unlocked(){return player.action.explore.civicsFined && player.building.civics.eq(0)},
@@ -25,7 +25,7 @@ var MainBuilding = {
             }
         }
     },
-    shelter:{
+    shelter: {
         name(){
             if(player.workshop.campfire){
                 return '小屋'
@@ -47,7 +47,7 @@ var MainBuilding = {
             }
         }
     },
-    granary:{
+    granary: {
         name(){return '粮仓'},
         tooltip(){return '储存食物<joker>鼠鼠我呀...</joker>'},
         unlocked(){return player.building.civics.gte(1)},
@@ -56,37 +56,37 @@ var MainBuilding = {
             dirt(){return n(10)},
             wood(){return n(10)},
         },
-        costPower(){return n(0.05)},
+        costPower(){return n(0.1)},
         effect: {
             capped: {
                 add: {
-                    food(){return n(180)},
+                    food(){return n(140)},
                 }
             }
         },
         unlocked(){return player.workshop.campfire},
     },
-    warehouse:{
+    warehouse: {
         name(){return '货仓'},
         tooltip(){return '储存物资<joker>鼠鼠我呀...???</joker>'},
         unlocked(){return player.building.civics.gte(1)},
         cost: {
             woodenBeams(){return n(5)},
         },
-        costPower(){return n(0.05)},
+        costPower(){return n(0.15)},
         effect: {
             capped: {
                 add: {
                     leather(){return n(25)},
-                    dirt(){return n(80)},
-                    wood(){return n(80)},
-                    stone(){return n(80)},
+                    dirt(){return n(60)},
+                    wood(){return n(60)},
+                    stone(){return n(60)},
                 }
             }
         },
         unlocked(){return player.workshop.campfire},
     },
-    farm:{
+    farm: {
         name(){return '农田'},
         tooltip(){return '先解决温饱'},
         unlocked(){return player.building.civics.gte(1)},
@@ -102,14 +102,14 @@ var MainBuilding = {
             }
         }
     },
-    lumberyards:{
+    lumberyards: {
         name(){return '伐木场'},
         unlocked(){return player.workshop.lumberyards},
         cost: {
             wood(){return n(20)},
             dirt(){return n(25)}
         },
-        costPower(){return n(0.04)},
+        costPower(){return n(0.05)},
         effect: {
             gain: {
                 add: {

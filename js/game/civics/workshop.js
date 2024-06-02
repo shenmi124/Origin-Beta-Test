@@ -224,8 +224,8 @@ var CivicsWorkshop = {
             }
         },
         cost: {
-            food(){return n(1000)},
-            dirt(){return n(5000)},
+            food(){return n(5000)},
+            dirt(){return n(1000)},
         },
         unlocked(){return player.workshop.hoe}
     },
