@@ -18,8 +18,14 @@ function Build(id){
     for(i in main['building'][id]['cost']){
         let res = n(main['building'][id]['cost'][i]()).add(1).mul(player['building'][id].add(1)).pow(player['building'][id].mul(main['building'][id]['costPower']()).add(1)).sub(1)
         if(n(player['resource'][i]).lt(res)){
+            let name = colorText(i)[1]
             canbuy = false
-            logs += '<br><li-hid>'+format(n(res).sub(player['resource'][i]))+colorText(i)[1]
+            if(main['resource'][i]['unlocked']!==undefined){
+                if(!main['resource'][i]['unlocked']()){
+                    name = '<gery>???</gery>'
+                }
+            }
+            logs += '<br><li-hid>'+format(n(res).sub(player['resource'][i]))+name
         }
     }
     if(canbuy){

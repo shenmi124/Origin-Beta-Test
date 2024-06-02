@@ -196,7 +196,7 @@ var MainAction = {
         tooltip(){return '将木材加工<hr><left>'+format(main['action']['woodenBeams']['cost']())+colorText('wood')[1]+' -> '+format(main['action']['woodenBeams']['gain']())+colorText('woodenBeams')[1]+'</left>'},
         cooldown(){return n(20)},
         canClick(){return player.resource.wood.gte(main['action']['woodenBeams']['cost']())},
-        unlocked(){return player.workshop.woodenBeams},
+        unlocked(){return player.workshop.axe},
     },
     platingStar: {
         name(){return '研磨星尘'},

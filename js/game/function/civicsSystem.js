@@ -91,8 +91,14 @@ function Upgrade(id){
         for(i in civics['workshop'][id]['cost']){
             let res = n(civics['workshop'][id]['cost'][i]())
             if(n(player['resource'][i]).lt(res)){
+                let name = colorText(i)[1]
                 canbuy = false
-                logs += '<br><li-hid>'+format(n(res).sub(player['resource'][i]))+colorText(i)[1]
+                if(main['resource'][i]['unlocked']!==undefined){
+                    if(!main['resource'][i]['unlocked']()){
+                        name = '<gery>???</gery>'
+                    }
+                }
+                logs += '<br><li-hid>'+format(n(res).sub(player['resource'][i]))+name
             }
         }
         if(canbuy){

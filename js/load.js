@@ -3,7 +3,7 @@ var TIMESTART = new Date()
 var OFFLINETIME = new Date()
 var DIFF = 0
 
-var VERSION = 'v0.9'
+var VERSION = 'v0.9.0.2'
 var VERSIONTIMES = n(3)
 
 function loadMain(){
@@ -22,7 +22,7 @@ function loadMain(){
 		let load = '<a id="'+mainTab[i]['id']()+'LoadID"></a>'
 		mainStr += text+load
 	}
-	getByID('loadMain',mainStr)
+	getByID('loadMain', mainStr)
 }
 
 function loadBase(){
@@ -37,10 +37,10 @@ function loadBase(){
 		}
 		resourceStr += `<a id=`+i+`LoadResource></a>`
 	}
-	getByID('loadResource',resourceStr)
+	getByID('loadResource', resourceStr)
 	for(let i in main['resource']){
-		getByID(i+'LoadResource',`<div style="border-right: 2px solid #999"><a id="`+i+`LoadResourceTitleID"></a><a id="`+i+`LoadResourceID"></a><a id="`+i+`LoadResourceBorderID"></a></div>`)
-		getResourceTitleID(i+'LoadResource',i)
+		getByID(i+'LoadResource', `<div style="border-right: 2px solid #999"><a id="`+i+`LoadResourceTitleID"></a><a id="`+i+`LoadResourceID"></a><a id="`+i+`LoadResourceBorderID"></a></div>`)
+		getResourceTitleID(i+'LoadResource', i)
 	}
 
 	let actionStr = ''
