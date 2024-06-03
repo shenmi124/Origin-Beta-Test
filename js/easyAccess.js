@@ -198,7 +198,7 @@ function getBuildCappedBase(building,resource){
                 for(let ib in civics['workshop'][i]['effect']['building']){
                     if(civics['workshop'][i]['effect']['building'][ib]['effect']!==undefined){
                         if(civics['workshop'][i]['effect']['building'][ib]['effect']['mul']!==undefined){
-                            if(player['workshop'][i]){
+                            if(ib==i && player['workshop'][i]){
                                 mul = mul.mul(civics['workshop'][i]['effect']['building'][ib]['effect']['mul']())
                             }
                         }
