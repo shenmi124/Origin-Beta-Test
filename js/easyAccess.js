@@ -174,7 +174,7 @@ function getBuildGainBase(building,resource){
                 for(let ib in civics['workshop'][i]['effect']['building']){
                     if(civics['workshop'][i]['effect']['building'][ib]['effect']!==undefined){
                         if(civics['workshop'][i]['effect']['building'][ib]['effect']['mul']!==undefined){
-                            if(player['workshop'][i]){
+                            if(ib==i && player['workshop'][i]){
                                 mul = mul.mul(civics['workshop'][i]['effect']['building'][ib]['effect']['mul']())
                             }
                         }
@@ -241,9 +241,9 @@ function effectText(name,begin,resource,end,mul,Class=null,display=true){
 function costText(name,resource,cost,type){
     let time = ''
     if(main['resource'][resource]['gain']!==undefined){
-        if(n(getResourceGain(resource)).gt(0) && player['resource'][resource].lt(cost) && (n(getResourceCapped(resource)).gte(cost) || main['resource'][resource]['capped']==undefined)){
+        if(n(getResourceGain(resource)).gt(0) && player['resource'][resource].lt(cost) && n(getResourceCapped(resource)).gte(cost)){
             time = '( '+formatTime(n(cost).sub(player['resource'][resource]).div(getResourceGain(resource)))+' )'
-        }else if(n(getResourceCapped(resource)).lt(cost)){
+        }else if(n(getResourceCapped(resource)).lt(cost) && main['resource'][resource]['capped']!==undefined){
             time = '( '+format(n(getResourceCapped(resource)).sub(cost))+' )'
         }
     }

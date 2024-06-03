@@ -78,9 +78,9 @@ var MainBuilding = {
             capped: {
                 add: {
                     leather(){return n(25)},
-                    dirt(){return n(60)},
-                    wood(){return n(60)},
-                    stone(){return n(60)},
+                    dirt(){return n(80)},
+                    wood(){return n(40)},
+                    stone(){return n(40)},
                 }
             }
         },

@@ -144,7 +144,7 @@ function tooltip(id,id2){
 					if(main['resource'][i]['effect']['gain']!==undefined){
 						if(main['resource'][i]['effect']['gain']['add']!==undefined){
 							for(let ig in main['resource'][i]['effect']['gain']['add']){
-								let gainName = main['resource'][i]['name']()
+								let gainName = '资源: '+main['resource'][i]['name']()
 								let gainBase = main['resource'][i]['effect']['gain']['add'][ig]()
 								let gainMul = player['resource'][i]
 								if(id==ig && !n(gainBase).mul(gainMul).eq(0)){
@@ -161,7 +161,7 @@ function tooltip(id,id2){
 					if(main['building'][i]['effect']['gain']!==undefined){
 						if(main['building'][i]['effect']['gain']['add']!==undefined){
 							for(let ig in main['building'][i]['effect']['gain']['add']){
-								let gainName = main['building'][i]['name']()
+								let gainName = '建筑: '+main['building'][i]['name']()
 								let gainBase = getBuildGainBase(i, ig)
 								let gainMul = player['building'][i]
 								if(id==ig && !n(gainBase).mul(gainMul).eq(0)){
@@ -178,7 +178,7 @@ function tooltip(id,id2){
 					if(civics['citizens'][i]['effect']['gain']!==undefined){
 						if(civics['citizens'][i]['effect']['gain']['add']!==undefined){
 							for(let ig in civics['citizens'][i]['effect']['gain']['add']){
-								let gainName = civics['citizens'][i]['name']()
+								let gainName = '村民: '+civics['citizens'][i]['name']()
 								let gainBase = nc(civics['citizens'][i]['effect']['gain']['add'][ig]())
 								let gainMul = player.citizens[i]
 								if(id==ig && !n(gainBase).mul(gainMul).eq(0)){
@@ -296,7 +296,7 @@ function tooltip(id,id2){
 					if(main['resource'][i]['effect']['capped']!==undefined){
 						if(main['resource'][i]['effect']['capped']['add']!==undefined){
 							for(let im in main['resource'][i]['effect']['capped']['add']){
-								let cappedName = main['resource'][i]['name']()
+								let cappedName = '资源: '+main['resource'][i]['name']()
 								let cappedBase = main['resource'][i]['effect']['capped']['add'][im]()
 								let cappedMul = player['resource'][i]
 								if(id==im && !n(cappedBase).mul(cappedMul).eq(0)){
@@ -313,7 +313,7 @@ function tooltip(id,id2){
 					if(main['building'][i]['effect']['capped']!==undefined){
 						if(main['building'][i]['effect']['capped']['add']!==undefined){
 							for(let im in main['building'][i]['effect']['capped']['add']){
-								let cappedName = main['building'][i]['name']()
+								let cappedName = '建筑: '+main['building'][i]['name']()
 								let cappedBase = main['building'][i]['effect']['capped']['add'][im]()
 								let cappedMul = player['building'][i]
 								if(id==im && !n(cappedBase).mul(cappedMul).eq(0)){

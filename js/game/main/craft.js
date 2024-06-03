@@ -372,7 +372,7 @@ let MainCraft = {
 
             player.action.explore.tree = player.action.explore.tree.sub(1)
         },
-        cooldown(){return n(5)},
+        cooldown(){return n(15)},
         canClick(){return player.action.explore.tree.gte(1) && player.workshop.axe},
         unlocked(){return player.action.explore.treeFined==true},
     },

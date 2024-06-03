@@ -45,7 +45,7 @@ var CivicsCitizens = {
             },
             gain: {
                 add: {
-                    dirt(){return n(0.1)},
+                    dirt(){return n(0.5)},
                 }
             },
             other: {
@@ -56,7 +56,32 @@ var CivicsCitizens = {
                 },
             }
         },
-    }
+    },
+    lumberjack: {
+        name(){return '伐木工'},
+        unlocked(){return player.workshop.lumberyards},
+        tooltip(){return '伐木工可以收集木材并加工它们'},
+        allocated: {
+            unemployed(){return n(1)},
+        },
+        effect: {
+            action: {
+                woodenBeams(){return n(0.5)},
+            },
+            gain: {
+                add: {
+                    wood(){return n(0.5)},
+                }
+            },
+            other: {
+                happiness: {
+                    name(){return '幸福度'},
+                    effect(){return n(0).sub(5)},
+                    display(){return ['','%']},
+                },
+            }
+        },
+    },
 }
 
 var CivicsJobs = {
