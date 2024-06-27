@@ -63,6 +63,7 @@ var CivicsCitizens = {
         tooltip(){return '伐木工可以收集木材并加工它们'},
         allocated: {
             unemployed(){return n(1)},
+            lumberyards(){return n(1)},
         },
         effect: {
             action: {
@@ -88,7 +89,12 @@ var CivicsJobs = {
     unemployed: {
         name(){return '无业游民'},
         number(){return n(player.resource.citizens)},
-    }
+    },
+    lumberyards: {
+        name(){return '空闲伐木场'},
+        tooltip(){return '每个伐木场可以就业一名伐木工'},
+        number(){return n(player.building.lumberyards)},
+    },
 }
 
 var CitizensTip = function(){

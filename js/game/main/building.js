@@ -5,10 +5,9 @@ var MainBuilding = {
         unlocked(){return player.action.explore.civicsFined && player.building.civics.eq(0)},
         unique(){return true},
         onBuy(){
-            addLog('事实上你现在压根没有条件去修一座庇护所')
-            addLog('所以你只是除了除草,填平了地面而已')
-            addLog('不过起码也算有了一个定居地')
-            addLog('你决定探索更远的地方')
+            addLog('你找到了一片平地')
+            addLog('你决定将此地作为暂时的定居点')
+            addLog('以此为基础你可以探索更远的地方')
         },
         cost: {
             dirt(){return n(10)}
@@ -32,7 +31,12 @@ var MainBuilding = {
             }
             return '庇护所'
         },
-        tooltip(){return '实在算不上家,但好歹也能遮风避雨'},
+        tooltip(){
+            if(player.workshop.campfire){
+                return '用泥土搭建起来的简易小屋'
+            }
+            return '一个用泥土搭建的临时庇护所,无法提供什么安全感,但是可以遮风挡雨'
+        },
         unlocked(){return player.building.civics.gte(1)},
         cost: {
             food(){return n(10)},
@@ -88,7 +92,6 @@ var MainBuilding = {
     },
     farm: {
         name(){return '农田'},
-        tooltip(){return '先解决温饱'},
         unlocked(){return player.building.civics.gte(1)},
         cost: {
             dirt(){return n(2.5)}

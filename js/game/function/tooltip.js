@@ -121,31 +121,31 @@ function tooltipResourceBaseCappedMultiplication(name,base,mul,cappedAll,id){
 function tooltip(id,id2){
 	if(id2=='LoadTooltipResource'){
 		let bas = ''
-		if(main['resource'][id]['tooltip']!=undefined){
-			bas = '<hr>'+main['resource'][id]['tooltip']()
+		if(resource['main'][id]['tooltip']!=undefined){
+			bas = '<hr>'+resource['main'][id]['tooltip']()
 		}
 		let gain = ''
 		let cost = ''
 		let mul = ''
 		let time = ''
 		let gainAll = n(0)
-		if(main['resource'][id]['gain']!==undefined){
-			gainAll = gainAll.add(main['resource'][id]['gain']())
+		if(resource['main'][id]['gain']!==undefined){
+			gainAll = gainAll.add(resource['main'][id]['gain']())
 			if(!gainAll.eq(0)){
 				let gainName = '基础'
-				let gainBase = main['resource'][id]['gain']()
-				if(main['resource'][id]['gainTooltip']!==undefined){
-					gainName = main['resource'][id]['gainTooltip']()
+				let gainBase = resource['main'][id]['gain']()
+				if(resource['main'][id]['gainTooltip']!==undefined){
+					gainName = resource['main'][id]['gainTooltip']()
 				}
 				gain += tooltipResourceGain(n(gainBase).gte(0), gainName, gainBase, gainAll, id)
 			}
-			for(let i in main['resource']){
-				if(main['resource'][i]['effect']!==undefined){
-					if(main['resource'][i]['effect']['gain']!==undefined){
-						if(main['resource'][i]['effect']['gain']['add']!==undefined){
-							for(let ig in main['resource'][i]['effect']['gain']['add']){
-								let gainName = '资源: '+main['resource'][i]['name']()
-								let gainBase = main['resource'][i]['effect']['gain']['add'][ig]()
+			for(let i in resource['main']){
+				if(resource['main'][i]['effect']!==undefined){
+					if(resource['main'][i]['effect']['gain']!==undefined){
+						if(resource['main'][i]['effect']['gain']['add']!==undefined){
+							for(let ig in resource['main'][i]['effect']['gain']['add']){
+								let gainName = '资源: '+resource['main'][i]['name']()
+								let gainBase = resource['main'][i]['effect']['gain']['add'][ig]()
 								let gainMul = player['resource'][i]
 								if(id==ig && !n(gainBase).mul(gainMul).eq(0)){
 									gainAll = gainAll.add(n(gainBase).mul(gainMul))
@@ -190,24 +190,24 @@ function tooltip(id,id2){
 					}
 				}
 			}
-			if(main['resource'][id]['mul']!==undefined){
-				gainAll = gainAll.mul(main['resource'][id]['mul']())
+			if(resource['main'][id]['mul']!==undefined){
+				gainAll = gainAll.mul(resource['main'][id]['mul']())
 				if(!gainAll.eq(1)){
 					let gainName = '基础'
-					let gainBase = main['resource'][id]['mul']()
-					if(main['resource'][id]['mulTooltip']!==undefined){
-						gainName = main['resource'][id]['mulTooltip']()
+					let gainBase = resource['main'][id]['mul']()
+					if(resource['main'][id]['mulTooltip']!==undefined){
+						gainName = resource['main'][id]['mulTooltip']()
 					}
 					mul += tooltipResourceMulGain(n(gainBase).gt(1), gainName, gainBase, gainAll, id)
 				}
 			}
-			for(let i in main['resource']){
-				if(main['resource'][i]['effect']!==undefined){
-					if(main['resource'][i]['effect']['gain']!==undefined){
-						if(main['resource'][i]['effect']['gain']['mul']!==undefined){
-							for(let ig in main['resource'][i]['effect']['gain']['mul']){
-								let gainName = main['resource'][i]['name']()
-								let gainBase = main['resource'][i]['effect']['gain']['mul'][ig]()
+			for(let i in resource['main']){
+				if(resource['main'][i]['effect']!==undefined){
+					if(resource['main'][i]['effect']['gain']!==undefined){
+						if(resource['main'][i]['effect']['gain']['mul']!==undefined){
+							for(let ig in resource['main'][i]['effect']['gain']['mul']){
+								let gainName = resource['main'][i]['name']()
+								let gainBase = resource['main'][i]['effect']['gain']['mul'][ig]()
 								let gainMul = player['resource'][i]
 								if(id==ig && !n(gainBase).mul(gainMul).eq(1)){
 									gainAll = gainAll.mul(n(gainBase).mul(gainMul))
@@ -266,11 +266,11 @@ function tooltip(id,id2){
 			if(n(gainAll).eq(0)){
 				gain = ''
 			}
-			if(main['resource'][id]['capped']!==undefined){
+			if(resource['main'][id]['capped']!==undefined){
 				time = '<hr>无法抵达上限'
 				if(player['resource'][id].gte(getResourceCapped(id))){
 					time = '<hr>已抵达上限'
-				}else if(main['resource'][id]['gain']!==undefined){
+				}else if(resource['main'][id]['gain']!==undefined){
 					if(n(getResourceGain(id)).gt(0)){
 						time = '<hr>'+formatTime(n(getResourceCapped(id)).sub(player['resource'][id]).div(getResourceGain(id)))+'后抵达上限'
 					}else if(n(getResourceGain(id)).lt(0) && !player['resource'][id].eq(0)){
@@ -281,23 +281,23 @@ function tooltip(id,id2){
 		}
 		let capped = ''
 		let cappedAll = n(0)
-		if(main['resource'][id]['capped']!==undefined){
-			cappedAll = cappedAll.add(main['resource'][id]['capped']())
+		if(resource['main'][id]['capped']!==undefined){
+			cappedAll = cappedAll.add(resource['main'][id]['capped']())
 			if(!cappedAll.eq(0)){
 				let cappedName = '基础'
-				let cappedBase = main['resource'][id]['capped']()
-				if(main['resource'][id]['cappedTooltip']!==undefined){
-					cappedName = main['resource'][id]['cappedTooltip']()
+				let cappedBase = resource['main'][id]['capped']()
+				if(resource['main'][id]['cappedTooltip']!==undefined){
+					cappedName = resource['main'][id]['cappedTooltip']()
 				}
 				capped += tooltipResourceBaseCapped(cappedName, cappedBase, cappedAll, id)
 			}
-			for(let i in main['resource']){
-				if(main['resource'][i]['effect']!==undefined){
-					if(main['resource'][i]['effect']['capped']!==undefined){
-						if(main['resource'][i]['effect']['capped']['add']!==undefined){
-							for(let im in main['resource'][i]['effect']['capped']['add']){
-								let cappedName = '资源: '+main['resource'][i]['name']()
-								let cappedBase = main['resource'][i]['effect']['capped']['add'][im]()
+			for(let i in resource['main']){
+				if(resource['main'][i]['effect']!==undefined){
+					if(resource['main'][i]['effect']['capped']!==undefined){
+						if(resource['main'][i]['effect']['capped']['add']!==undefined){
+							for(let im in resource['main'][i]['effect']['capped']['add']){
+								let cappedName = '资源: '+resource['main'][i]['name']()
+								let cappedBase = resource['main'][i]['effect']['capped']['add'][im]()
 								let cappedMul = player['resource'][i]
 								if(id==im && !n(cappedBase).mul(cappedMul).eq(0)){
 									cappedAll = cappedAll.add(n(cappedBase).mul(cappedMul))
@@ -332,9 +332,9 @@ function tooltip(id,id2){
 		}
 		let num = ''
 		let numNumber = n(0)
-		if(main['resource'][id]['number']!==undefined){
+		if(resource['main'][id]['number']!==undefined){
 			num += "<hr><a style='font-size: 14px'>资源数量</a>"
-			numNumber = numNumber.add(main['resource'][id]['number']())
+			numNumber = numNumber.add(resource['main'][id]['number']())
 			let now = format(numNumber)
 			if(numNumber.eq(getResourceBaseNumber(id))){
 				now = '<u>'+format(numNumber)+'</u>'
@@ -342,7 +342,7 @@ function tooltip(id,id2){
 			if(!numNumber.eq(0)){
 				num += `<left><span>
 					<div style="width: 160px; display: table-cell"><green>+</green></i> 基础</div>
-					<div style="width: 160px; display: table-cell">+`+format(main['resource'][id]['number']())+`</div>`+now+`
+					<div style="width: 160px; display: table-cell">+`+format(resource['main'][id]['number']())+`</div>`+now+`
 				</span></left>`
 			}
 			if(numNumber.eq(0)){

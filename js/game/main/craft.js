@@ -7,7 +7,7 @@ let MainCraft = {
             return '他们为你工作,而你给与他们住所与食物<br>公平的交易<hr><grey>你需要提供食物与住所,否则他们不会跟随你</grey>'+times
         },
         onClick(){
-            player.resource.citizens = player.resource.citizens.add(1)
+            gainResource('citizens', n(1))
             player.action.explore.citizens = player.action.explore.citizens.sub(1)
             CitizensFix()
             
@@ -68,7 +68,7 @@ let MainCraft = {
                 if(unlocked){
                     if(n(main['craft']['collect']['gain'][i]['probability']()).gte(exp)){
                         let random = n(Math.random()).mul(main['craft']['collect']['gain'][i]['float']())
-                        player['resource'][i] = player['resource'][i].add(main['craft']['collect']['gain'][i]['base']()).add(random)
+                        gainResource(i, n(main['craft']['collect']['gain'][i]['base']()).add(random))
                         if(main['craft']['collect']['gain'][i]['tooltip']!==undefined){
                             addLog(main['craft']['collect']['gain'][i]['tooltip']())
                         }
@@ -176,7 +176,7 @@ let MainCraft = {
                 if(unlocked){
                     if(n(main['craft']['stone']['gain'][i]['probability']()).gte(exp)){
                         let random = n(Math.random()).mul(main['craft']['stone']['gain'][i]['float']())
-                        player['resource'][i] = player['resource'][i].add(main['craft']['stone']['gain'][i]['base']()).add(random)
+                        gainResource(i, n(main['craft']['stone']['gain'][i]['base']()).add(random))
                     }
                 }
             }
@@ -219,7 +219,7 @@ let MainCraft = {
                 let exp = n(Math.random() * 100)
                 if(n(main['craft']['drop']['gain'][i]['probability']()).gte(exp)){
                     let random = n(Math.random()).mul(main['craft']['drop']['gain'][i]['float']())
-                    player['resource'][i] = player['resource'][i].add(main['craft']['drop']['gain'][i]['base']()).add(random)
+                    gainResource(i, n(main['craft']['drop']['gain'][i]['base']()).add(random))
                 }
             }
 
@@ -261,7 +261,7 @@ let MainCraft = {
                 let exp = n(Math.random() * 100)
                 if(n(main['craft']['harvest']['gain'][i]['probability']()).gte(exp)){
                     let random = n(Math.random()).mul(main['craft']['harvest']['gain'][i]['float']())
-                    player['resource'][i] = player['resource'][i].add(main['craft']['harvest']['gain'][i]['base']()).add(random)
+                    gainResource(i, n(main['craft']['harvest']['gain'][i]['base']()).add(random))
                 }
             }
 
@@ -301,7 +301,7 @@ let MainCraft = {
                 unl = ''
             }
             let times = '<hr>已标记: '+formatWhole(player.action.explore.beast,0)+' <grey>/ '+formatWhole(this.capped(),0)+' (遗忘)</grey>'
-            return '兽群,收集它们身上的皮毛和血肉<br>但它们真的很强壮'+unl+mul+times
+            return '你从未见过这种动物<br>它们真的很强壮<br>不过你可以剥夺它们的血和肉'+unl+mul+times
         },
         onClick(){
             let mul = formatWhole(n(gameGetPower()).min(player.action.explore.beast))
@@ -316,7 +316,7 @@ let MainCraft = {
                     if(n(main['craft']['beast']['gain'][i]['probability']()).gte(exp)){
                         let random = n(Math.random()).mul(main['craft']['beast']['gain'][i]['float']())
                         let gain = n(main['craft']['beast']['gain'][i]['base']()).add(random)
-                        player['resource'][i] = player['resource'][i].add(gain)
+                        gainResource(i, n(gain))
                         if(i=='food'){
                             food = food.add(gain)
                         }
@@ -366,7 +366,7 @@ let MainCraft = {
                 let exp = n(Math.random() * 100)
                 if(n(main['craft']['tree']['gain'][i]['probability']()).gte(exp)){
                     let random = n(Math.random()).mul(main['craft']['tree']['gain'][i]['float']())
-                    player['resource'][i] = player['resource'][i].add(main['craft']['tree']['gain'][i]['base']()).add(random)
+                    gainResource(i, n(main['craft']['tree']['gain'][i]['base']()).add(random))
                 }
             }
 

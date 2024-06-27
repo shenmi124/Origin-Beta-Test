@@ -5,6 +5,7 @@ function calcPlayer(){
 }
 
 function calcData(){
+    loader(['data','click'], n(0))
     loader(['data','offline'], n(0))
     loader(['data','devSpeed'], n(1))
     loader(['data','version'], null)
@@ -12,14 +13,15 @@ function calcData(){
 }
 
 function calcAutomator(){
-    for(let i in main['resource']){
+    for(let i in resource['main']){
 		loader(['resource',i],n(0))
-        loader(['resource',i+'Unlock'], false)
+		loader(['resource',i+'Total'],n(0))
+		loader(['resource',i+'Best'],n(0))
         loader(['resource',i+'Unlocked'], false)
 	}
 
     for(let i in main['action']){
-        loader(['action',i+'Clicks'], n(0))
+        loader(['action',i+'Total'], n(0))
         if(main['action'][i]['cooldown']!==undefined){
             loader(['action',i+'Cooldown'], n(0))
             loader(['action',i+'Click'], false)
@@ -36,7 +38,7 @@ function calcAutomator(){
 	}
 
     for(let i in main['craft']){
-        loader(['craft',i+'Clicks'], n(0))
+        loader(['craft',i+'Total'], n(0))
         if(main['craft'][i]['cooldown']!==undefined){
             loader(['craft',i+'Cooldown'], n(0))
             loader(['craft',i+'Click'], false)

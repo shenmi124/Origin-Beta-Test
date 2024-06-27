@@ -131,8 +131,8 @@ function Build(id){
         if(n(player['resource'][i]).lt(res)){
             let name = colorText(i)[1]
             canbuy = false
-            if(main['resource'][i]['unlocked']!==undefined){
-                if(!main['resource'][i]['unlocked']()){
+            if(resource['main'][i]['unlocked']!==undefined){
+                if(!resource['main'][i]['unlocked']()){
                     name = '<gery>???</gery>'
                 }
             }

@@ -29,7 +29,7 @@ function componentBuilding(id){
     let cappedCan = true
     for(let i in main['building'][id]['cost']){
         let res = getBuildCost(id, i)
-        if(main['resource'][i]['capped']!==undefined){
+        if(resource['main'][i]['capped']!==undefined){
             if(n(getResourceCapped(i)).lt(res)){
                 addedCss(id+"BuildingButtonID", 'capped')
                 cappedCan = false
@@ -49,8 +49,8 @@ function componentBuilding(id){
 }
 
 function componentCitizens(id){		
-    getByID(id+'CitizensNameLoadID', `<tooltip `+loadTooltip(id,'LoadTooltipCitizens',null)+`><div id="`+id+`CitizensNameID" style="display: inline-grid; width: 80px">`+civics['citizens'][id]['name']()+`</div></tooltip>`)
-    getByID(id+'CitizensAllocatedLoadID', '<div style="display: inline-grid; width: 30px">'+formatWhole(player['citizens'][id])+'</div>')
+    getByID(id+'CitizensNameLoadID', `<tooltip `+loadTooltip(id,'LoadTooltipCitizens',null)+`><div id="`+id+`CitizensNameID" style="display: inline-grid; width: 120px">`+civics['citizens'][id]['name']()+`</div></tooltip>`)
+    getByID(id+'CitizensAllocatedLoadID', '<div style="display: inline-grid; width: 60px">'+formatWhole(player['citizens'][id])+'</div>')
     getByID(id+'CitizensButtonLoadID', `
         <div style="display: inline-grid; width: 30px"><button onclick="allocateCitizens('`+id+`', -1); CitizensFix()" style="display: inline-grid;" class="citizens"> < </button></div>
         <div style="display: inline-grid; width: 30px"><button onclick="allocateCitizens('`+id+`', 1); CitizensFix()" style="display: inline-grid;" class="citizens"> > </button></div>
@@ -58,7 +58,7 @@ function componentCitizens(id){
 }
 
 function componentJobs(id){		
-    getByID(id+'CitizenJobsNameLoadID', `<tooltip `+loadTooltip(id,'LoadTooltipCitizenJobs',null)+`><div id="`+id+`JobsNameID" style="display: inline-grid; width: 80px">`+civics['jobs'][id]['name']()+`</div></tooltip>`)
+    getByID(id+'CitizenJobsNameLoadID', `<tooltip `+loadTooltip(id,'LoadTooltipCitizenJobs',null)+`><div id="`+id+`JobsNameID" style="display: inline-grid; width: 120px">`+civics['jobs'][id]['name']()+`</div></tooltip>`)
     getByID(id+'CitizenJobsAllocatedLoadID', formatWhole(getUnemployedJobs(id)))
 }
 
@@ -73,7 +73,7 @@ function componentWorkshop(id){
     let cappedCan = true
     for(let i in civics['workshop'][id]['cost']){
         let res = n(civics['workshop'][id]['cost'][i]())
-        if(main['resource'][i]['capped']!==undefined){
+        if(resource['main'][i]['capped']!==undefined){
             if(n(getResourceCapped(i)).lt(res)){
                 addedCss(id+"WorkshopButtonID", 'capped')
                 cappedCan = false

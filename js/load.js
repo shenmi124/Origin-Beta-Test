@@ -3,16 +3,26 @@ var TIMESTART = new Date()
 var OFFLINETIME = new Date()
 var DIFF = 0
 
-var VERSION = 'v0.9.2.0'
-var VERSIONTIMES = n(3)
+var VERSION = '10w 02a'
+var VERSIONTIMES = n(4)
 
 function loadMain(){
 	let buttonStr = ''
 	for(let i in mainButton){
 		buttonStr += `<span id="`+i+`MainTabID" class="maintab `+i+`" onclick="showTab('`+i+`')">`+mainButton[i]['name']()+`</span>`
+		if(mainButton[i]['subTab']!==undefined){
+			let subTab = ''
+			let subMain = ''
+			subTab += `<div style="margin-top: 5px"></div>`
+			for(let is in mainButton[i]['subTab']){
+				subTab += `<span id="`+is+`SubMainTabID" class="maintab subtab sub_`+is+`" onclick="showSubTab('`+i+`', '`+is+`')">`+mainButton[i]['subTab'][is]()+`</span>`
+				subMain += `<div id="subtab_`+is+`"></div>`
+			}
+			getByID('tab_'+i, subTab+subMain)
+		}
 	}
 	buttonStr += `<div style="border-top: 1px solid #000; margin-top: 5px"></div>`
-	getByID('loadMainButton',buttonStr)
+	getByID('loadMainButton', buttonStr)
 	document.getElementById("mainMainTabID").style.color = 'rgb(0, 123, 255)'
 	document.getElementById("mainMainTabID").style.opacity = '0.8'
 
@@ -31,14 +41,14 @@ function loadBase(){
 		<div id="happinessEfficientID" style="font-size: 12px"><tooltip `+loadTooltip(`happiness`, `efficient`, null)+`>幸福度</tooltip>: <span id="happinessEfficient"></span></div>
 		<br>
 	`
-	for(let i in main['resource']){
-		if(main['resource'][i]['newType']!==undefined){
-			resourceStr += '<span id="'+i+'TypeID" style="color: #888; display: none"><br>'+main['resource'][i]['newType']()+'<br></span>'
+	for(let i in resource['main']){
+		if(resource['main'][i]['newType']!==undefined){
+			resourceStr += '<span id="'+i+'TypeID" style="color: #888; display: none"><br>'+resource['main'][i]['newType']()+'<br></span>'
 		}
 		resourceStr += `<a id=`+i+`LoadResource></a>`
 	}
 	getByID('loadResource', resourceStr)
-	for(let i in main['resource']){
+	for(let i in resource['main']){
 		getByID(i+'LoadResource', `<div style="border-right: 2px solid #999"><a id="`+i+`LoadResourceTitleID"></a><a id="`+i+`LoadResourceID"></a><a id="`+i+`LoadResourceBorderID"></a></div>`)
 		getResourceTitleID(i+'LoadResource', i)
 	}
@@ -109,6 +119,14 @@ function loadGame(){
 	Close('tooltip')
 	Close('datePage')
 	showTab('main')
+	for(let i in mainButton){
+		if(mainButton[i]['subTab']!==undefined){
+			for(let is in mainButton[i]['subTab']){
+				showSubTab(i, is)
+				break
+			}
+		}
+	}
 
 	calcGame()
 	gameLoader()
@@ -128,24 +146,32 @@ function loadGame(){
 }
 
 function loadVersion(){
-	getByID('version',VERSION)
+	getByID('version', VERSION)
 
 	if(player.data.version==null){
 		player.data.version = VERSION
 		player.data.versiontimes = VERSIONTIMES
 	}else if(player.data.version!==VERSION){
+		addLog('已更新至<span style="font-family: cursive;">'+VERSION+'</span>','#888')
+		addLog('此版本为测试版,请自行备份存档','#888')
+		addLog('<br>')
+		save()
 		
-		if(player.data.versiontimes.lte(2)){
-			player.resource.idea = n(0)
-		}
-		if(player.data.versiontimes.lte(1) && player.resource.citizens.gte(1)){
-			getStage(4)
+		if(!player.data.versiontimes.eq(VERSIONTIMES)){
+			addLog('版本迁移:<br>&nbsp;- 部分游戏已改变,已根据你的进度对存档进行了迁移')
+			addLog('<br>')
+
+			if(player.data.versiontimes.lte(3)){
+				for(let i in resource['main']){
+					player['resource'][i+'Best'] = player['resource'][i]
+					player['resource'][i+'Total'] = player['resource'][i]
+				}
+			}
+
 		}
 
 		player.data.version = VERSION
 		player.data.versiontimes = VERSIONTIMES
-		addLog('已更新至<span style="font-family: cursive;">'+VERSION+'</span>','#888')
-		save()
 	}
 }
 

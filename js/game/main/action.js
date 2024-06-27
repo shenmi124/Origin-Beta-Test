@@ -3,9 +3,9 @@ var MainAction = {
         name(){return '醒来'},
         onClick(){
             getStage(1)
-            addLog('头痛欲裂。')
-            addLog('你醒在一片荒地。')
-            addLog('除了无尽的草原什么都没有。')
+            addLog('头痛欲裂')
+            addLog('你醒在一片草原上')
+            addLog('你貌似损失了一些记忆,尤其是关于你的“身世”')
         },
         tooltip(){return '苏醒...'},
         unlocked(){return player.game.stage.eq(0)},
@@ -49,7 +49,7 @@ var MainAction = {
                 lucky = '<left>幸运倍率: <mul>×</mul>'+format(main['action']['explore']['lucky']())+'</left>'
                 hr = '<hr>'
             }
-            return '寻找可用资源'+con+hr+speed+lucky
+            return '在茫茫无际的草原中中寻找可用资源'+con+hr+speed+lucky
         },
         onClick(){
             let find = []
@@ -97,7 +97,7 @@ var MainAction = {
                 addLog('*什么都没找到*','#888')
             }
 
-            player.resource.explore = player.resource.explore.add(n(10).pow(n(Math.random() * 2)))
+            gainResource('explore', n(10).pow(n(Math.random() * 2)))
         },
         gain:{
             citizens: {
@@ -160,7 +160,7 @@ var MainAction = {
             civics: {
                 name(){return '定居地'},
                 instant(){return true},
-                unlocked(){return player.craft.harvestClicks.gte(1)},
+                unlocked(){return player.craft.harvestTotal.gte(1)},
                 probability(){return n(20)},
             },
         },
@@ -200,13 +200,13 @@ var MainAction = {
         gain(){return n(1)},
         onClick(){
             player.resource.wood = player.resource.wood.sub(main['action']['woodenBeams']['cost']())
-            player.resource.woodenBeams = player.resource.woodenBeams.add(main['action']['woodenBeams']['gain']())
+            gainResource('woodenBeams', n(main['action']['woodenBeams']['gain']()))
             if(player.resource.wood.lt(main['action']['woodenBeams']['cost']())){
                 player.action.woodenBeams.make = false
             }
         },
         data: {
-            make(){return false}
+            make(){return false},
         },
         auto(){
             if(player.action.woodenBeams.make){
@@ -230,7 +230,7 @@ var MainAction = {
         name(){return '研磨星尘'},
         onClick(){
             player.resource.star = n(0)
-            player.resource.stardust = player.resource.stardust.add(1)
+            gainResource('stardust', n(1))
         },
         tooltip(){return '让世间接纳星尘<hr>将你的所有陨石碎片转化为星尘并获得加成<hr><grey>你必须保持陨石碎片在上限时才能进行这个行动</grey>'},
         cooldown(){return n(600)},

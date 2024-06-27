@@ -8,12 +8,16 @@ var mainButton = {
     },
     setting:{
         name(){return "设置"},
+        subTab: {
+            setting(){return "设置"},
+            stats(){return "统计"}
+        }
     },
 }
 
 var mainTab = {
     action:{
-        name(){return '探索'},
+        name(){return '行动'},
         id(){return 'action'},
     },
     building:{
@@ -21,16 +25,19 @@ var mainTab = {
         id(){return 'building'},
     },
     craft:{
-        name(){return '行动'},
+        name(){return '采集'},
         id(){return 'craft'},
     },
 }
 
 var main = {
-    resource: MainResource,
     action: MainAction,
     building: MainBuilding,
     craft: MainCraft,
+}
+
+var resource = {
+    main: ResourceMain,
 }
 
 var civics = {

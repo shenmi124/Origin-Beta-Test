@@ -59,8 +59,6 @@ function getBr(){
 			document.getElementById(i+'workshopBrID').style.display = 'none'
 		}
 	}
-
-	document.getElementById('loadMainResearch').style.height = window.innerHeight-100 + 'px'
 }
 
 function systemDiff(){
@@ -76,6 +74,8 @@ function systemDiff(){
 			document.getElementById(i+'EfficientID').style.visibility = 'hidden'
 		}
 	}
+
+	statsDiff()
 }
 
 function dataDiff(){
@@ -103,7 +103,7 @@ function dataDiff(){
 
 			if(player['action'][i+'Cooldown'].gte(getActionCooldown(i)) && getActionCanClick(i)){
 				main['action'][i]['onClick']()
-				player['action'][i+'Clicks'] = player['action'][i+'Clicks'].add(1)
+				player['action'][i+'Total'] = player['action'][i+'Total'].add(1)
 				NumberFix()
 				let autoSpeed = n(getActionAuto(i))
 				if(autoSpeed.gt(0)){
@@ -150,7 +150,7 @@ function dataDiff(){
 
 			if(player['craft'][i+'Cooldown'].gte(getCraftCooldown(i)) && getCraftCanClick(i)){
 				main['craft'][i]['onClick']()
-				player['craft'][i+'Clicks'] = player['craft'][i+'Clicks'].add(1)
+				player['craft'][i+'Total'] = player['craft'][i+'Total'].add(1)
 				NumberFix()
 				autoSpeed = n(getCraftAuto(i))
 				if(autoSpeed.gt(0)){
@@ -160,7 +160,6 @@ function dataDiff(){
 				}
 				player['craft'][i+'Click'] = false
 			}
-
 
 			if((hasCraftClick(i) || !getCraftCanClick(i)) && !getCraftCoerciveClick(i)){
 				addedCss("craft"+i+"ButtonID",'complete')
@@ -182,7 +181,7 @@ function dataDiff(){
 		let cappedCan = true
 		for(let i in main['building'][id]['cost']){
             let res = getBuildCost(id, i)
-			if(main['resource'][i]['capped']!==undefined){
+			if(resource['main'][i]['capped']!==undefined){
 				if(n(getResourceCapped(i)).lt(res)){
 					addedCss(id+"BuildingButtonID", 'capped')
 					cappedCan = false
@@ -208,7 +207,7 @@ function dataDiff(){
 			removeCss(id+"WorkshopButtonID", 'bought')
 			for(let i in civics['workshop'][id]['cost']){
 				let res = n(civics['workshop'][id]['cost'][i]())
-				if(main['resource'][i]['capped']!==undefined){
+				if(resource['main'][i]['capped']!==undefined){
 					if(n(getResourceCapped(i)).lt(res)){
 						addedCss(id+"WorkshopButtonID", 'capped')
 						cappedCan = false
@@ -243,7 +242,7 @@ function getID(){
 		unlockedLoad(i+'MainTabID', unlocked)
 	}
 
-	for(let i in main['resource']){
+	for(let i in resource['main']){
 		resourceCompute(i)
 		getResourceID(i)
 	}

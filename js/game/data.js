@@ -28,6 +28,7 @@ function getGametime(){
         getByID('logTime', ' - '+logYear+logMonth+logDay+logHour+logMinute)
         document.title = '起源 - '+logYear+logMonth+logDay+logHour
     }
+    return logYear+logMonth+logDay+logHour
 }
 
 function getStage(num){
@@ -35,9 +36,6 @@ function getStage(num){
 		player.game.stage = player.game.stage.max(num)
 	}
 	if(player.game.stage.gte(1)){
-		document.getElementById("rightColumn").style.opacity = 1
-		document.getElementById("loadRightColumn").style.height = 'auto'
-		document.getElementById("loadRightColumn").style.opacity = 1
 	}
 	if(player.game.stage.gte(2)){
 		document.getElementById("loadResource").style.visibility = ''
@@ -56,4 +54,8 @@ function getStage(num){
 			document.getElementById("bottomTab").style.opacity = 1
         },100)
 	}
+}
+
+function getBodyOnclick(){
+    player.data.click = player.data.click.add(1)
 }

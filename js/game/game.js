@@ -77,10 +77,9 @@ function calcGame(){
 
 function gameLoader(){
 	getStage(null)
-	if(player.game.stage.lte(2)){
+	if(player.game.stage.lte(1)){
 		addLog('这是一个新的存档,要<u style="color: #000" onclick="importSave()">导入</u>吗?','#888')
-		addLog('此版本为测试版,数值并未平衡,同时有可能出现存档损坏的问题','#888')
-		addLog('无论你从哪里发现了这个游戏,请勿大范围外传','#888')
+		addLog('此版本为测试版,请自行备份存档','#888')
 	}
 }
 

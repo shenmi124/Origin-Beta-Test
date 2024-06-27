@@ -5,29 +5,28 @@ var settings = {
 		type(){return 'click'},
 		onClick(){
 			save()
-			hardResetClick = 6
-			getByID('hardResetClick', '')
+			addLog('游戏已保存', '#888')
+			HARDRESTCLICK = 6
 		},
 	},
 	autoSave:{
 		name(){return '自动保存'},
-		display(){return player.setting.autoSave ? ' - <a id="autoSaveTime"></a>s' : ''},
+		display(){return player.setting.autoSave ? ' - <a id="AUTOSAVETIME"></a>s' : ''},
 		type(){return 'boolean'},
 		boolean(){return true},
 		effect(){
 			if(player.setting.autoSave){
-				autoSaveTime -= (1 * DIFF)
-				if(autoSaveTime<=0){
-					autoSaveTime = 60
+				AUTOSAVETIME -= (1 * DIFF)
+				if(AUTOSAVETIME<=0){
+					AUTOSAVETIME = 60
 					save()
-					hardResetClick = 6
-					getByID('hardResetClick', '')
+					HARDRESTCLICK = 6
 				}
-				getByID('autoSaveTime',formatScientific(autoSaveTime, 1))
+				getByID('AUTOSAVETIME',formatScientific(AUTOSAVETIME, 1))
 			}else{
-				autoSaveTime = 60
-				if(autoSave){
-					autoSave = false
+				AUTOSAVETIME = 60
+				if(AUTOSAVET){
+					AUTOSAVET = false
 					save()
 				}
 			}
@@ -38,6 +37,7 @@ var settings = {
 		type(){return 'click'},
 		onClick(){
 			exportSave()
+			addLog('已导出到接切板', '#888')
 		},
 	},
 	import:{
@@ -48,13 +48,12 @@ var settings = {
 		},
 	},
 	hardReset:{
-		name(){return '<red>硬重置<a id="hardResetClick"></a></red>'},
+		name(){return '<red>硬重置</red>'},
+		display(){return HARDRESTCLICK!==6 ? '<red> - !重复点击'+HARDRESTCLICK+'次!</red>' : ''},
 		type(){return 'click'},
 		onClick(){
-			hardResetClick -= 1
-			loadSetting()
-			getByID('hardResetClick', ' - !重复点击'+hardResetClick+'次!')
-			if(hardResetClick==0){
+			HARDRESTCLICK -= 1
+			if(HARDRESTCLICK==0){
 				hardReset()
 			}
 		},
@@ -137,9 +136,9 @@ var settings = {
 	},
 }
 
-let autoSaveTime = 60
-let autoSave = true
-let hardResetClick = 6
+let AUTOSAVETIME = 60
+let AUTOSAVET = true
+let HARDRESTCLICK = 6
 
 function loadSetting(){
 	let set = ''
@@ -157,9 +156,9 @@ function loadSetting(){
 		}
 
 		if(settings[i]['type']()=='click'){
-			set += `<button class="settingBto" onclick="$(settings['`+i+`']['onClick']())">`+settings[i]['name']()+display+`</button>`
+			set += `<button class="settingBto" onclick="$(settings['`+i+`']['onClick']()); loadSetting()">`+settings[i]['name']()+display+`</button>`
 		}else if(settings[i]['type']()=='boolean'){
-			set += `<button class="settingBto" onclick="player.setting['`+i+`'] = !player.setting['`+i+`'];loadSetting()">`+settings[i]['name']()+`: `+(player.setting[i] ? '开启' : '关闭')+display+`</button>`
+			set += `<button class="settingBto" onclick="player.setting['`+i+`'] = !player.setting['`+i+`']; loadSetting()">`+settings[i]['name']()+`: `+(player.setting[i] ? '开启' : '关闭')+display+`</button>`
 		}else if(settings[i]['type']()=='choose'){
 			let choose = '｜'
 			let sc = null
@@ -176,13 +175,13 @@ function loadSetting(){
 			if(next && sc==null){
 				sc = 'default'
 			}
-			set += `<button class="settingBto" onclick="player.setting['`+i+`']='`+sc+`';loadSetting()">`+settings[i]['name']()+`: <grey>`+choose+`</grey>`+display+`</button>`
+			set += `<button class="settingBto" onclick="player.setting['`+i+`']='`+sc+`'; loadSetting()">`+settings[i]['name']()+`: <grey>`+choose+`</grey>`+display+`</button>`
 		}
 	}
-	getByID('tab_setting', set)
+	getByID('subtab_setting', set)
 	for(let i in settings){
 		if(settings[i]['effect']!==undefined){
-			$(settings[i]['effect']())
+			settings[i]['effect']()
 		}
 	}
 }
@@ -190,7 +189,7 @@ function loadSetting(){
 setInterval(function(){
 	for(let i in settings){
 		if(settings[i]['effect']!==undefined){
-			$(settings[i]['effect']())
+			settings[i]['effect']()
 		}
 	}
 }, 50)
