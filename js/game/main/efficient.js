@@ -36,9 +36,13 @@ let efficient = {
             name(){return '人口过剩'},
             effect(){return n(0).sub(player.resource.citizens)},
         },
-        stardust: {
-            name(){return '星尘'},
+        resource: {
+            name(){return '资源影响'},
             effect(){return player.resource.stardust.mul(10)},
+        },
+        building: {
+            name(){return '建筑影响'},
+            effect(){return n(gameGetBuildingHappiness())}
         },
         jobs: {
             name(){return '职业影响'},

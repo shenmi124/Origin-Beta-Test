@@ -65,15 +65,15 @@ function showTab(tab){
 
 function showSubTab(tab, subTab){
 	for(let i in mainButton[tab]['subTab']){
-		Close('subtab_'+i)
-		document.getElementById(i+"SubMainTabID").style.color = ''
-		document.getElementById(i+"SubMainTabID").style.opacity = ''
-		document.getElementById(i+"SubMainTabID").style.cursor = 'pointer'
+		Close('subtab_'+tab+'_'+i)
+		document.getElementById(tab+'_'+i+"SubMainTabID").style.color = ''
+		document.getElementById(tab+'_'+i+"SubMainTabID").style.opacity = ''
+		document.getElementById(tab+'_'+i+"SubMainTabID").style.cursor = 'pointer'
 	}
-	Open('subtab_'+subTab)
-	document.getElementById(subTab+"SubMainTabID").style.color = 'rgb(0 145 255)'
-	document.getElementById(subTab+"SubMainTabID").style.opacity = '0.8'
-	document.getElementById(subTab+"SubMainTabID").style.cursor = 'default'
+	Open('subtab_'+tab+'_'+subTab)
+	document.getElementById(tab+'_'+subTab+"SubMainTabID").style.color = 'rgb(0 145 255)'
+	document.getElementById(tab+'_'+subTab+"SubMainTabID").style.opacity = '0.8'
+	document.getElementById(tab+'_'+subTab+"SubMainTabID").style.cursor = 'default'
 }
 
 function getResourceGain(res){

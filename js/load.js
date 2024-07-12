@@ -3,7 +3,7 @@ var TIMESTART = new Date()
 var OFFLINETIME = new Date()
 var DIFF = 0
 
-var VERSION = '10w 02a'
+var VERSION = '10w 03a'
 var VERSIONTIMES = n(4)
 
 function loadMain(){
@@ -15,8 +15,8 @@ function loadMain(){
 			let subMain = ''
 			subTab += `<div style="margin-top: 5px"></div>`
 			for(let is in mainButton[i]['subTab']){
-				subTab += `<span id="`+is+`SubMainTabID" class="maintab subtab sub_`+is+`" onclick="showSubTab('`+i+`', '`+is+`')">`+mainButton[i]['subTab'][is]()+`</span>`
-				subMain += `<div id="subtab_`+is+`"></div>`
+				subTab += `<span id="`+i+'_'+is+`SubMainTabID" class="maintab subtab sub_`+is+`" onclick="showSubTab('`+i+`', '`+is+`')">`+mainButton[i]['subTab'][is]['name']()+`</span>`
+				subMain += `<div id="subtab_`+i+'_'+is+`">`+mainButton[i]['subTab'][is]['data']()+`</div>`
 			}
 			getByID('tab_'+i, subTab+subMain)
 		}
@@ -32,7 +32,7 @@ function loadMain(){
 		let load = '<a id="'+mainTab[i]['id']()+'LoadID"></a>'
 		mainStr += text+load
 	}
-	getByID('loadMain', mainStr)
+	getByID('subtab_main_action', mainStr)
 }
 
 function loadBase(){
@@ -69,8 +69,9 @@ function loadBase(){
 	}
 	getByID('buildingLoadID',buildingStr)
 	for(let i in main['building']){
-		getByID(i+'LoadBuilding',`<br id="`+i+`buildingBrID"><a id="`+i+`LoadBuildingID"></a> `)
+		getByID(i+'LoadBuilding',`<br id="`+i+`buildingBrID"><a id="`+i+`LoadBuildingID"></a><a id="`+i+`LoadBuildingAllocationID"></a>`)
 		componentBuilding(i)
+		componentBuildingAllocation(i)
 	}
 
 	let craftStr = ''
@@ -94,7 +95,7 @@ function loadBase(){
 	}
 	getByID('citizensLoadID',citizensStr)
 	for(let i in civics['citizens']){
-		getByID(i+'LoadCitizensID',`<a style="display: inline-flex" id="`+i+`CitizensNameLoadID"></a><a style="display: inline-flex" id="`+i+`CitizensAllocatedLoadID"></a><a style="display: inline-flex" id="`+i+`CitizensButtonLoadID"></a>`)
+		getByID(i+'LoadCitizensID',`<a style="display: inline-flex" id="`+i+`LoadCitizensNameID"></a><a style="display: inline-flex" id="`+i+`LoadCitizensAllocatedID"></a><a style="display: inline-flex" id="`+i+`LoadCitizensButtonID"></a>`)
 		componentCitizens(i)
 	}
 	for(let i in civics['jobs']){

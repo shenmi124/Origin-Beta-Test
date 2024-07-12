@@ -3,13 +3,13 @@ function statsDiff(){
     game += `<div style="display: inline-grid; width: 100px">统计</div>
             <br>
             <div style="display: inline-grid; width: 100px">真实时间</div>
-            <div style="display: inline-grid; width: 400px">`+formatTime(player.game.time)+`</div>
+            <div style="display: inline-grid; width: 500px">`+formatTime(player.game.time)+`</div>
             <br>
             <div style="display: inline-grid; width: 100px">游戏时间</div>
-            <div style="display: inline-grid; width: 400px">`+getGametime()+`</div>
+            <div style="display: inline-grid; width: 500px">`+getGametime()+`</div>
             <br>
             <div style="display: inline-grid; width: 100px">点击次数</div>
-            <div style="display: inline-grid; width: 400px">`+formatWhole(player.data.click)+`</div>
+            <div style="display: inline-grid; width: 500px">`+formatWhole(player.data.click)+`</div>
             <br>
             `
 
@@ -173,5 +173,5 @@ function statsDiff(){
     if(!buildingU){building = ''}
     if(!craftU){craft = ''}
     if(!workshopU){workshop = ''}
-	getByID('subtab_stats', game+'<br>'+res+'<br>'+action+'<br>'+building+'<br>'+craft+'<br>'+workshop)
+	getByID('subtab_setting_stats', game+'<br>'+res+'<br>'+action+'<br>'+building+'<br>'+craft+'<br>'+workshop)
 }

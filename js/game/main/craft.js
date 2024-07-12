@@ -40,12 +40,12 @@ let MainCraft = {
                 unlocked(){return true},
             },
             
-            star: {
+            meteorite: {
                 probability(){return n(0.02)},
                 base(){return n(0.2)},
                 float(){return n(0.3)},
                 unlocked(){return true},
-                tooltip(){return '你在泥土中发现了一些<span class="star">陨石碎片</span>'}
+                tooltip(){return '你在泥土中发现了一些<span class="meteorite">陨石碎片</span>'}
             },
         },
         luck(){

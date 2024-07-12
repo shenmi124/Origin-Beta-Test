@@ -109,7 +109,7 @@ var CivicsWorkshop = {
         tooltip(){return '用石头做出石镐以开采石头<br><grey>收集时有概率获得石头</grey><joker>开采石头做出石镐以开采石头</joker>'},
         effect: {
             unlocked: {
-                1(){return '允许玩开采露天石料'}
+                1(){return '允许开采露天石料'}
             }
         },
         cost: {
@@ -169,8 +169,8 @@ var CivicsWorkshop = {
         name(){return '燧石斧'},
         effect: {
             unlocked: {
-                1(){return '允许玩家将木头加工成木梁'},
-                2(){return '允许玩家砍树<grey>#你需要先找到树</gery>'},
+                1(){return '允许将木头加工成木梁'},
+                2(){return '允许砍树<grey>#你需要先找到树</gery>'},
             }
         },
         cost: {
@@ -225,8 +225,7 @@ var CivicsWorkshop = {
             }
         },
         cost: {
-            food(){return n(5000)},
-            dirt(){return n(1000)},
+            dirt(){return n(1000)}
         },
         unlocked(){return player.workshop.hoe}
     },
@@ -307,6 +306,41 @@ var CivicsWorkshop = {
             nameCorrection('citiznes', 'explorer', '探险家')
         }
     },
+    huts: {
+        name(){return '木屋'},
+        tooltip(){return '用木板搭建而成的小屋'},
+        effect: {
+            unlocked: {
+                1(){return '解锁建筑 木屋'},
+            },
+        },
+        cost: {
+            plank(){return n(50)}
+        },
+        onBuy(){
+            player.building.huts = player.building.huts.add(1)
+            componentBuilding('huts')
+        },
+        unlocked(){return player.workshop.campfire && false}
+    },
+    brewery: {
+        name(){return '酿酒厂'},
+        tooltip(){return '多余粮食将被用于酿酒以免浪费'},
+        effect: {
+            unlocked: {
+                1(){return '解锁建筑 酿酒厂'},
+            },
+        },
+        cost: {
+            plank(){return n(40)},
+            food(){return n(800)}
+        },
+        onBuy(){
+            player.building.brewery = player.building.brewery.add(1)
+            componentBuilding('brewery')
+        },
+        unlocked(){return player.workshop.campfire && false}
+    },
     camp: {
         name(){return '营地'},
         keep(){return true},
@@ -320,8 +354,8 @@ var CivicsWorkshop = {
         cost: {
             copper(){return Infinity},
             iron(){return Infinity},
-            woodenBeams(){return Infinity},
-            stoneBricks(){return Infinity},
+            plank(){return Infinity},
+            bricks(){return Infinity},
             tile(){return Infinity},
         },
         unlocked(){return player.workshop.campfire}

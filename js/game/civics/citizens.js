@@ -67,7 +67,7 @@ var CivicsCitizens = {
         },
         effect: {
             action: {
-                woodenBeams(){return n(0.5)},
+                plank(){return n(0.5)},
             },
             gain: {
                 add: {

@@ -178,21 +178,13 @@ function loadSetting(){
 			set += `<button class="settingBto" onclick="player.setting['`+i+`']='`+sc+`'; loadSetting()">`+settings[i]['name']()+`: <grey>`+choose+`</grey>`+display+`</button>`
 		}
 	}
-	getByID('subtab_setting', set)
+	getByID('subtab_setting_setting', set)
 	for(let i in settings){
 		if(settings[i]['effect']!==undefined){
 			settings[i]['effect']()
 		}
 	}
 }
-
-setInterval(function(){
-	for(let i in settings){
-		if(settings[i]['effect']!==undefined){
-			settings[i]['effect']()
-		}
-	}
-}, 50)
 
 function i18nLoad(){
 	if(player.setting.language==undefined){

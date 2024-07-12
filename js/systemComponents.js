@@ -16,12 +16,18 @@ function componentCraft(id){
 
 function componentBuilding(id){
     let number = `(`+player['building'][id]+`)`
+    let style = ''
+    if(main['building'][id]['allocation']!==undefined){
+        if(main['building'][id]['allocation']()){
+            style = ''
+        }
+    }
     if(main['building'][id]['unique']!==undefined){
         number = main['building'][id]['unique']() ? `` : `(`+player['building'][id]+`)`
     }
     getByID(id+"LoadBuildingID",`
     <tooltip `+loadTooltip(id,'LoadTooltipBuilding')+`>
-        <button id="`+id+`BuildingButtonID" onclick="Build('`+id+`')">`+main['building'][id]['name']()+number+`</button>
+        <button style="`+style+`" id="`+id+`BuildingButtonID" onclick="Build('`+id+`')">`+main['building'][id]['name']()+number+`</button>
     </tooltip>
     `)
 
@@ -48,10 +54,18 @@ function componentBuilding(id){
     }
 }
 
+function componentBuildingAllocation(id){
+    if(main['building'][id]['allocation']!==undefined){
+        if(main['building'][id]['allocation']()){
+            getByID(id+'LoadBuildingAllocationID', `<div class="allocation">+</div>`)
+        }
+    }
+}
+
 function componentCitizens(id){		
-    getByID(id+'CitizensNameLoadID', `<tooltip `+loadTooltip(id,'LoadTooltipCitizens',null)+`><div id="`+id+`CitizensNameID" style="display: inline-grid; width: 120px">`+civics['citizens'][id]['name']()+`</div></tooltip>`)
-    getByID(id+'CitizensAllocatedLoadID', '<div style="display: inline-grid; width: 60px">'+formatWhole(player['citizens'][id])+'</div>')
-    getByID(id+'CitizensButtonLoadID', `
+    getByID(id+'LoadCitizensNameID', `<tooltip `+loadTooltip(id,'LoadTooltipCitizens',null)+`><div id="`+id+`CitizensNameID" style="display: inline-grid; width: 120px">`+civics['citizens'][id]['name']()+`</div></tooltip>`)
+    getByID(id+'LoadCitizensAllocatedID', '<div style="display: inline-grid; width: 60px">'+formatWhole(player['citizens'][id])+'</div>')
+    getByID(id+'LoadCitizensButtonID', `
         <div style="display: inline-grid; width: 30px"><button onclick="allocateCitizens('`+id+`', -1); CitizensFix()" style="display: inline-grid;" class="citizens"> < </button></div>
         <div style="display: inline-grid; width: 30px"><button onclick="allocateCitizens('`+id+`', 1); CitizensFix()" style="display: inline-grid;" class="citizens"> > </button></div>
     `)

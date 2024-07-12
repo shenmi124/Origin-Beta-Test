@@ -20,6 +20,21 @@ function gameGetPower(){
     return power
 }
 
+function gameGetBuildingHappiness(){
+    let happy = n(0)
+    for(let i in main['building']){
+        if(main['building'][i]['effect']!==undefined){
+            if(main['building'][i]['effect']['other']!==undefined){
+                if(main['building'][i]['effect']['other']['happiness']!==undefined){
+                    happy = happy.add(n(main['building'][i]['effect']['other']['happiness']['effect']()).mul(player['building'][i]))
+                }
+            }
+        }
+    }
+    return happy
+}
+
+
 function gameGetJobHappiness(){
     let happy = n(0)
     for(let i in civics['citizens']){

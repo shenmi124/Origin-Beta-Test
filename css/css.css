@@ -1,5 +1,5 @@
 body {
-	font-family: monospace, serif;
+	font-family: serif, monospace;
 	font-size: 16px;
 	cursor: default;
     background: rgb(255, 255, 255);
@@ -63,6 +63,18 @@ button.capped {
 
 button.capped:hover {
     background-color: rgba(255, 0, 0, 0.2);
+}
+
+.allocation {
+    display: inline-block;
+    position: relative;
+    width: 16px;
+    background: rgb(245, 245, 245);
+    cursor: pointer;
+    transition-duration: 0.2s;
+    font-size: 14px;
+    border-radius: 5px;
+    text-align: center;
 }
 
 .citizens {

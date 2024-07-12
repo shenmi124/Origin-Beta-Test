@@ -240,6 +240,15 @@ function getID(){
 			unlocked = mainButton[i]['unlocked']()
 		}
 		unlockedLoad(i+'MainTabID', unlocked)
+		if(mainButton[i]['subTab']!==undefined){
+			for(let is in mainButton[i]['subTab']){
+				let subUnlocked = true
+				if(mainButton[i]['subTab'][is]['unlocked']!==undefined){
+					subUnlocked = mainButton[i]['subTab'][is]['unlocked']()
+				}
+				unlockedLoad(i+'_'+is+'SubMainTabID', subUnlocked)
+			}
+		}
 	}
 
 	for(let i in resource['main']){
@@ -303,5 +312,10 @@ setInterval(function(){
 	DIFF=DIFF.mul(OFFLINEBOOST)
 	TIMESTART=T.getTime()
 	
+	for(let i in settings){
+		if(settings[i]['effect']!==undefined){
+			settings[i]['effect']()
+		}
+	}
 	getID()
 }, 50)

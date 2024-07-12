@@ -14,9 +14,9 @@ function calcData(){
 
 function calcAutomator(){
     for(let i in resource['main']){
-		loader(['resource',i],n(0))
-		loader(['resource',i+'Total'],n(0))
-		loader(['resource',i+'Best'],n(0))
+		loader(['resource',i], n(0))
+		loader(['resource',i+'Total'], n(0))
+		loader(['resource',i+'Best'], n(0))
         loader(['resource',i+'Unlocked'], false)
 	}
 
@@ -34,7 +34,12 @@ function calcAutomator(){
     }
 
     for(let i in main['building']){
-		loader(['building',i],n(0))
+		loader(['building',i], n(0))
+        if(main['building'][i]['allocation']!==undefined){
+            if(main['building'][i]['allocation']()){
+                loader(['building',i+'Allocation'], n(0))
+            }
+        }
 	}
 
     for(let i in main['craft']){

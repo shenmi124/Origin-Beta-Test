@@ -114,7 +114,7 @@ function tooltipResourceBaseCappedMultiplication(name,base,mul,cappedAll,id){
 	}
 	return `<left><span>
 		<div style="width: 160px; display: table-cell"><green>+</green> `+name+`</div>
-		<div style="width: 160px; display: table-cell">+`+format(base)+` <a style="font-size: small">×</a> `+formatWhole(mul)+`</div>`+cappedAll+`
+		<div style="width: 160px; display: table-cell">+`+format(base)+` <mul style="font-size: small">×</mul> `+formatWhole(mul)+`</div>`+cappedAll+`
 	</span></left>`
 }
 
@@ -381,8 +381,8 @@ function tooltip(id,id2){
 			}
 		}
 		cost += '</left>'
-		let gain = ''
 		let gainhr = ''
+		let gain = ''
 		if(main['building'][id]['effect']['gain']!==undefined){
 			if(main['building'][id]['effect']['gain']['add']!==undefined){
 				for(let i in main['building'][id]['effect']['gain']['add']){
@@ -394,8 +394,8 @@ function tooltip(id,id2){
 			}
 		}
 		gain += ''
-		let capped = ''
 		let cappedhr = ''
+		let capped = ''
 		if(main['building'][id]['effect']['capped']!==undefined){
 			if(main['building'][id]['effect']['capped']['add']!==undefined){
 				for(let i in main['building'][id]['effect']['capped']['add']){
@@ -407,13 +407,21 @@ function tooltip(id,id2){
 			}
 		}
 		capped += ''
+		let otherhr = ''
+		let other = ''
+		if(main['building'][id]['effect']['other']!==undefined){
+			for(let i in main['building'][id]['effect']['other']){
+				otherhr = `<hr><a style='font-size: 14px'>特殊</a>`
+				other += effectText(main['building'][id]['effect']['other'][i]['name'](), main['building'][id]['effect']['other'][i]['display']()[0], main['building'][id]['effect']['other'][i]['effect'](), main['building'][id]['effect']['other'][i]['display']()[1], player['building'][id], null, true)
+			}
+		}
 		let amount = '('+formatWhole(player['building'][id],0)+')'
 		if(main['building'][id]['unique']!==undefined){
 			if(main['building'][id]['unique']()){
 				amount = ''
 			}
 		}
-		return getTooltipDoc(name+amount+'<small>'+bas+cost+gainhr+gain+cappedhr+capped+'</samll>')
+		return getTooltipDoc(name+amount+'<small>'+bas+cost+gainhr+gain+cappedhr+capped+otherhr+other+'</samll>')
 	}
 
 	if(id2=='LoadTooltipCraft'){
@@ -480,8 +488,21 @@ function tooltip(id,id2){
 
 	if(id2=='LoadTooltipWorkshop'){
 		let too = ''
+		if(civics['workshop'][id]['tooltip']!==undefined){
+			too = '<hr>'+civics['workshop'][id]['tooltip']()
+		}
 		let keep = ''
+		if(civics['workshop'][id]['keep']!==undefined){
+			if(civics['workshop'][id]['keep']()){
+				keep = '<righttip>文化遗传</righttip>'
+			}
+		}
 		let cost = `<hr><a style='font-size: 14px'>需求</a><left>`
+		if(civics['workshop'][id]['cost']!==undefined){
+			for(let i in civics['workshop'][id]['cost']){
+				cost += costText(colorText(i)[1], i, civics['workshop'][id]['cost'][i](), 'workshop')
+			}
+		}
 		let gainhr = ''
 		let gain = ''
 		let buildinghr = ''
@@ -490,19 +511,6 @@ function tooltip(id,id2){
 		let other = ''
 		let unlockedhr = ''
 		let unlocked = ''
-		if(civics['workshop'][id]['tooltip']!==undefined){
-			too = '<hr>'+civics['workshop'][id]['tooltip']()
-		}
-		if(civics['workshop'][id]['keep']!==undefined){
-			if(civics['workshop'][id]['keep']()){
-				keep = '<righttip>文化遗传</righttip>'
-			}
-		}
-		if(civics['workshop'][id]['cost']!==undefined){
-			for(let i in civics['workshop'][id]['cost']){
-				cost += costText(colorText(i)[1], i, civics['workshop'][id]['cost'][i](), 'workshop')
-			}
-		}
 		if(civics['workshop'][id]['effect']!==undefined){
 			if(civics['workshop'][id]['effect']['resource']!==undefined){
 				for(let i in civics['workshop'][id]['effect']['resource']){

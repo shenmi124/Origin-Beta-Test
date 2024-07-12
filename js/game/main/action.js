@@ -79,11 +79,16 @@ var MainAction = {
                 let t = ''
                 for(let i in find){
                     t += (i!==0 ? ' ' : '')+main['action']['explore']['gain'][find[i]]['name']()
+                    if(find[i]=='stone' && !player.action.explore.stoneFined){
+                        addLog('你找到了一处裸露的矿石,或许你可以从中开采到石料和矿石')
+                    }
                     if(find[i]=='tree' && !player.action.explore.treeFined){
                         addLog('你找到了一片山丘,零零落落的有几棵树在山尖上')
                     }
                 }
-                addLog('*你找到了一些'+t+'*','#888')
+                if(n(getActionAuto('explore')).lte(0)){
+                    addLog('*你找到了一些'+t+'*','#888')
+                }
             }
             if(special[0]!==undefined){
                 for(let i in special){
@@ -128,7 +133,7 @@ var MainAction = {
                 name(){return '树枝'},
                 instant(){return false},
                 unlocked(){return true},
-                probability(){return n(5)},
+                probability(){return n(7.5)},
                 base(){return n(1)},
                 float(){return n(2)},
             },
@@ -185,56 +190,56 @@ var MainAction = {
         cooldown(){return n(7.5).div(main['action']['explore']['speed']())},
         unlocked(){return player.game.stage.gte(1)},
     },
-    woodenBeams: {
+    plank: {
         name(){return '加工木梁'},
         tooltip(){
             let effect = ''
-            if(player.action.woodenBeams.make){
+            if(player.action.plank.make){
                 effect = '持续'
             }else{
                 effect = '暂停'
             }
-            return '将木材加工<hr>点击切换制造状态<br>当前: '+effect+'<left><hr>'+format(main['action']['woodenBeams']['cost']())+colorText('wood')[1]+' -> '+format(main['action']['woodenBeams']['gain']())+colorText('woodenBeams')[1]+'</left>'
+            return '将木材加工<hr>点击切换制造状态<br>当前: '+effect+'<left><hr>'+format(main['action']['plank']['cost']())+colorText('wood')[1]+' -> '+format(main['action']['plank']['gain']())+colorText('plank')[1]+'</left>'
         },
         cost(){return n(20)},
         gain(){return n(1)},
         onClick(){
-            player.resource.wood = player.resource.wood.sub(main['action']['woodenBeams']['cost']())
-            gainResource('woodenBeams', n(main['action']['woodenBeams']['gain']()))
-            if(player.resource.wood.lt(main['action']['woodenBeams']['cost']())){
-                player.action.woodenBeams.make = false
+            player.resource.wood = player.resource.wood.sub(main['action']['plank']['cost']())
+            gainResource('plank', n(main['action']['plank']['gain']()))
+            if(player.resource.wood.lt(main['action']['plank']['cost']())){
+                player.action.plank.make = false
             }
         },
         data: {
             make(){return false},
         },
         auto(){
-            if(player.action.woodenBeams.make){
+            if(player.action.plank.make){
                 return getEfficient('action')
             }
             return n(0)
         },
         handoff(){
-            player.action.woodenBeams.make = !player.action.woodenBeams.make
-            if(player.resource.wood.lt(main['action']['woodenBeams']['cost']())){
-                player.action.woodenBeams.make = false
+            player.action.plank.make = !player.action.plank.make
+            if(player.resource.wood.lt(main['action']['plank']['cost']())){
+                player.action.plank.make = false
             }
         },
         cooldown(){return n(20)},
-        coerciveClick(){return player.resource.wood.gte(main['action']['woodenBeams']['cost']()) || hasActionClick('woodenBeams')},
+        coerciveClick(){return player.resource.wood.gte(main['action']['plank']['cost']()) || hasActionClick('plank')},
         player(){return n(0)},
-        canClick(){return player.resource.wood.gte(main['action']['woodenBeams']['cost']())},
+        canClick(){return player.resource.wood.gte(main['action']['plank']['cost']())},
         unlocked(){return player.workshop.axe},
     },
     platingStar: {
         name(){return '研磨星尘'},
         onClick(){
-            player.resource.star = n(0)
+            player.resource.meteorite = n(0)
             gainResource('stardust', n(1))
         },
         tooltip(){return '让世间接纳星尘<hr>将你的所有陨石碎片转化为星尘并获得加成<hr><grey>你必须保持陨石碎片在上限时才能进行这个行动</grey>'},
         cooldown(){return n(600)},
-        canClick(){return player.resource.star.gte(getResourceCapped('star'))},
-        unlocked(){return !player.resource.star.eq(0)},
+        canClick(){return player.resource.meteorite.gte(getResourceCapped('meteorite'))},
+        unlocked(){return !player.resource.meteorite.eq(0)},
     }
 }

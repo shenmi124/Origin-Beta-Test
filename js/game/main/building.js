@@ -37,13 +37,41 @@ var MainBuilding = {
             }
             return '一个用泥土搭建的临时庇护所,无法提供什么安全感,但是可以遮风挡雨'
         },
+        allocation(){return false},
         unlocked(){return player.building.civics.gte(1)},
         cost: {
             food(){return n(10)},
             dirt(){return n(8)},
         },
-        costPower(){return n(0.1)},
+        costPower(){return n(0.15)},
         effect: {
+            capped: {
+                add: {
+                    citizens(){return n(1)},
+                }
+            }
+        }
+    },
+    huts: {
+        name(){
+            return '木屋'
+        },
+        tooltip(){
+            return '真正意义上的家,在居住的同时可以提升幸福度'
+        },
+        unlocked(){return player.workshop.huts},
+        cost: {
+            plank(){return n(50)},
+        },
+        costPower(){return n(0.15)},
+        effect: {
+            other:{
+                happiness: {
+                    name(){return '幸福度'},
+                    effect(){return n(0.8)},
+                    display(){return ['+','%']},
+                }
+            },
             capped: {
                 add: {
                     citizens(){return n(1)},
@@ -75,7 +103,7 @@ var MainBuilding = {
         tooltip(){return '储存物资<joker>鼠鼠我呀...???</joker>'},
         unlocked(){return player.building.civics.gte(1)},
         cost: {
-            woodenBeams(){return n(5)},
+            plank(){return n(5)},
         },
         costPower(){return n(0.15)},
         effect: {
@@ -117,6 +145,31 @@ var MainBuilding = {
             gain: {
                 add: {
                     wood(){return n(0.25)},
+                }
+            }
+        }
+    },
+    brewery: {
+        name(){return '酿酒厂'},
+        tooltip(){return '酿酒厂的存在提升了每位村民消耗食物的基础值'},
+        unlocked(){return player.workshop.brewery},
+        allocation(){return true},
+        cost: {
+            plank(){return n(40)},
+            food(){return n(800)}
+        },
+        costPower(){return n(0.05)},
+        effect: {
+            other:{
+                happiness: {
+                    name(){return '幸福度'},
+                    effect(){return n(8)},
+                    display(){return ['+','%']},
+                },
+                cost: {
+                    name(){return '食物消耗'},
+                    effect(){return n(1)},
+                    display(){return ['+','<mul>×</mul>']},
                 }
             }
         }

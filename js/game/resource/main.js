@@ -13,7 +13,7 @@ var ResourceMain = {
             gain: {
                 add: {
                     idea(){return n(1).mul(getEfficient('happiness'))},
-                    food(){return n(-0.1).mul(getEfficient('happiness').max(1))}
+                    food(){return n(-0.1).mul(getEfficient('happiness').max(1)).mul(player.building.brewery.add(1))}
                 }
             }
         },
@@ -42,12 +42,12 @@ var ResourceMain = {
         unlocked(){return getResourceUnlocked('citizens')},
     },
     food:{
-        name(){return "食物"},
+        name(){return "粮食"},
         color(){return '#cf7004'},
         capped(){return n(20)},
         gain(){return n(-0.1)},
         gainTooltip(){return '食用'},
-        tooltip(){return '在这样荒芜的地方,植物确实是不常见的东西'},
+        tooltip(){return '立足根本'},
         unlocked(){return true},
     },
     leather:{
@@ -99,19 +99,19 @@ var ResourceMain = {
         unlocked(){return getResourceUnlocked('iron')},
     },
 
-    woodenBeams:{
-        name(){return "木梁"},
+    plank:{
+        name(){return "木板"},
         tooltip(){return '锻造资源'},
         color(){return 'rgb(158 103 19)'},
         gain(){return n(0)},
-        unlocked(){return getResourceUnlocked('woodenBeams')},
+        unlocked(){return getResourceUnlocked('plank')},
     },
-    stoneBricks:{
+    bricks:{
         name(){return "石砖"},
         tooltip(){return '锻造资源'},
         color(){return '#000'},
         gain(){return n(0)},
-        unlocked(){return getResourceUnlocked('stoneBricks')},
+        unlocked(){return getResourceUnlocked('bricks')},
     },
     tile:{
         name(){return "瓦"},
@@ -121,17 +121,17 @@ var ResourceMain = {
         unlocked(){return getResourceUnlocked('tile')},
     },
     
-    star:{
-        name(){return "陨石碎片"},
+    meteorite:{
+        name(){return "陨石"},
         color(){return '#000'},
-        Class(){return 'star'},
+        Class(){return 'meteorite'},
         capped(){return n(0.1)},
         cappedMul(){return n(10).pow(player.resource.stardust)},
         tooltip(){return '陨石坠落'},
         unlockAction(){
-            addLog('这些陨石碎片应该有特殊的用处')
+            addLog('这些陨石的碎片应该有特殊的用处')
         },
-        unlocked(){return getResourceUnlocked('star')},
+        unlocked(){return getResourceUnlocked('meteorite')},
     },
     stardust:{
         name(){return "星尘"},
@@ -139,7 +139,7 @@ var ResourceMain = {
         Class(){return 'stardust'},
         tooltip(){
             return `群星闪耀<hr><a style='font-size: 14px'>影响</a>`
-            +effectText('陨石碎片', '<mul>×</mul>', n(10), '上限', player.resource.stardust)
+            +effectText('陨石', '<mul>×</mul>', n(10), '上限', player.resource.stardust)
             +effectText('幸福度', '+', n(10), '', player.resource.stardust)
         },
         unlockAction(){

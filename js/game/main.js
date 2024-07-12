@@ -1,6 +1,18 @@
 var mainButton = {
     main:{
         name(){return "主页"},
+        subTab: {
+            action: {
+                name(){return "行动"},
+                data(){return ""},
+                unlocked(){return false}
+            },
+            allocation: {
+                name(){return "配置"},
+                data(){return ""},
+                unlocked(){return false}
+            }
+        }
     },
     civics:{
         name(){return '村庄'},
@@ -9,8 +21,14 @@ var mainButton = {
     setting:{
         name(){return "设置"},
         subTab: {
-            setting(){return "设置"},
-            stats(){return "统计"}
+            setting: {
+                name(){return "设置"},
+                data(){return ""},
+            },
+            stats: {
+                name(){return "统计"},
+                data(){return ""},
+            },
         }
     },
 }
