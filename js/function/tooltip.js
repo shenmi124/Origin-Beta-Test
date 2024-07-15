@@ -349,7 +349,7 @@ function tooltip(id,id2){
 				num = ''
 			}
 		}
-		return getTooltipDoc(colorText(id)[1]+"<small>"+bas+gain+capped+num+time+'</small>')
+		return getTooltipID(colorText(id)[1]+"<small>"+bas+gain+capped+num+time+'</small>')
 	}
 
 	if(id2=='LoadTooltipAction'){
@@ -358,9 +358,9 @@ function tooltip(id,id2){
 			name = main['action'][id]['name']()
 		}
 		if(main['action'][id]['tooltip']!=undefined){
-			return getTooltipDoc(name+'<hr><small>'+main['action'][id]['tooltip']())
+			return getTooltipID(name+'<hr><small>'+main['action'][id]['tooltip']())
 		}else{
-			return getTooltipDoc('未命名')
+			return getTooltipID('未命名')
 		}
     }
 
@@ -421,7 +421,7 @@ function tooltip(id,id2){
 				amount = ''
 			}
 		}
-		return getTooltipDoc(name+amount+'<small>'+bas+cost+gainhr+gain+cappedhr+capped+otherhr+other+'</samll>')
+		return getTooltipID(name+amount+'<small>'+bas+cost+gainhr+gain+cappedhr+capped+otherhr+other+'</samll>')
 	}
 
 	if(id2=='LoadTooltipCraft'){
@@ -430,9 +430,9 @@ function tooltip(id,id2){
 			name = main['craft'][id]['name']()
 		}
 		if(main['craft'][id]['tooltip']!=undefined){
-			return getTooltipDoc(name+'<hr><small>'+main['craft'][id]['tooltip']())
+			return getTooltipID(name+'<hr><small>'+main['craft'][id]['tooltip']())
 		}else{
-			return getTooltipDoc('未命名')
+			return getTooltipID('未命名')
 		}
 	}
 
@@ -475,7 +475,7 @@ function tooltip(id,id2){
 				}
 			}
 		}
-		return getTooltipDoc(civics['citizens'][id]['name']()+'<small>'+too+actionhr+action+gainhr+gain+otherhr+other+'</small>')
+		return getTooltipID(civics['citizens'][id]['name']()+'<small>'+too+actionhr+action+gainhr+gain+otherhr+other+'</small>')
 	}
 
 	if(id2=='LoadTooltipCitizenJobs'){
@@ -483,7 +483,7 @@ function tooltip(id,id2){
 		if(civics['jobs'][id]['tooltip']!==undefined){
 			too += '<hr>'+civics['jobs'][id]['tooltip']()
 		}
-		return getTooltipDoc(civics['jobs'][id]['name']()+'<small>'+too+'</small>')
+		return getTooltipID(civics['jobs'][id]['name']()+'<small>'+too+'</small>')
 	}
 
 	if(id2=='LoadTooltipWorkshop'){
@@ -548,7 +548,7 @@ function tooltip(id,id2){
 			}
 		}
 		cost += '</left>'
-		return getTooltipDoc(civics['workshop'][id]['name']()+keep+'<small>'+too+cost+gainhr+gain+buildinghr+building+otherhr+other+unlockedhr+unlocked+'</samll>')
+		return getTooltipID(civics['workshop'][id]['name']()+keep+'<small>'+too+cost+gainhr+gain+buildinghr+building+otherhr+other+unlockedhr+unlocked+'</samll>')
 	}
 
 	if(id2=='efficient'){
@@ -584,6 +584,6 @@ function tooltip(id,id2){
 				}
 			}
 		}
-		return getTooltipDoc(name+'<hr><small>'+too+'<left><li-hid>-> 总计: '+formatScientific(n(getEfficient(id)).mul(100),1)+'%</left></small>')
+		return getTooltipID(name+'<hr><small>'+too+'<left><li-hid>-> 总计: '+formatScientific(n(getEfficient(id)).mul(100),1)+'%</left></small>')
 	}
 }

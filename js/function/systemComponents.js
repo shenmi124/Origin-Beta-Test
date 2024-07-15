@@ -27,9 +27,15 @@ function componentBuilding(id){
     }
     getByID(id+"LoadBuildingID",`
     <tooltip `+loadTooltip(id,'LoadTooltipBuilding')+`>
-        <button style="`+style+`" id="`+id+`BuildingButtonID" onclick="Build('`+id+`')">`+main['building'][id]['name']()+number+`</button>
+        <a id="`+id+`LoadBuildingAllocationID"></a>
+        <button style="`+style+`" id="`+id+`BuildingButtonID" onclick="Build('`+id+`')">`+main['building'][id]['name']()+`</button>
     </tooltip>
     `)
+    getByID(id+'LoadBuildingAllocationID', `<div style="position: absolute; display: inline-block; width: 0;"><div class="allocation" onclick="Build('`+id+`')">`+formatWhole(player['building'][id])+`</div></div>`)
+    if(main['building'][id]['allocation']!==undefined){
+        if(main['building'][id]['allocation']()){
+        }
+    }
 
     let resCan = true
     let cappedCan = true
@@ -51,14 +57,6 @@ function componentBuilding(id){
     }
     if(resCan){
         removeCss(id+"BuildingButtonID", 'res')
-    }
-}
-
-function componentBuildingAllocation(id){
-    if(main['building'][id]['allocation']!==undefined){
-        if(main['building'][id]['allocation']()){
-            getByID(id+'LoadBuildingAllocationID', `<div class="allocation">+</div>`)
-        }
     }
 }
 

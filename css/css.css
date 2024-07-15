@@ -3,6 +3,7 @@ body {
 	font-size: 16px;
 	cursor: default;
     background: rgb(255, 255, 255);
+    user-select: none;
 }
 
 *::-webkit-scrollbar {
@@ -21,7 +22,7 @@ button {
     cursor: pointer;
     transition-duration: 0.2s;
     font-size: 14px;
-    border-radius: 5px;
+    border-radius: 6px;
     border: 1px solid rgb(255, 255, 255);
     text-align: center;
     margin-bottom: 5px;
@@ -68,13 +69,21 @@ button.capped:hover {
 .allocation {
     display: inline-block;
     position: relative;
-    width: 16px;
-    background: rgb(245, 245, 245);
+    left: -2px;
+    top: -2px;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(212, 212, 212);
     cursor: pointer;
     transition-duration: 0.2s;
     font-size: 14px;
-    border-radius: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 12px;
     text-align: center;
+}
+
+.allocation:hover {
+    background: rgb(212, 212, 212);
 }
 
 .citizens {

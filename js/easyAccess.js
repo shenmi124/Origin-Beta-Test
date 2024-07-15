@@ -25,63 +25,21 @@ function gainResource(res,gain){
 }
 
 function getResourceUnlocked(res){
-    return player['resource'][res].gt(0) || player['resource'][resource+'Unlocked']
+    return player['resource'][res].gt(0) || player['resource'][res+'Unlocked']
 }
 
-function getBuildCost(building, res){
-    return n(main['building'][building]['cost'][res]()).add(1).mul(player['building'][building].mul(0.1).add(1)).pow(player['building'][building].mul(main['building'][building]['costPower']()).add(1)).sub(1)
-}
-
-function getBuildGainBase(building,res){
-    let mul = n(1) 
-    for(let i in civics['workshop']){
-        if(civics['workshop'][i]['effect']!==undefined){
-            if(civics['workshop'][i]['effect']['building']!==undefined){
-                for(let ib in civics['workshop'][i]['effect']['building']){
-                    if(civics['workshop'][i]['effect']['building'][ib]['effect']!==undefined){
-                        if(civics['workshop'][i]['effect']['building'][ib]['effect']['mul']!==undefined){
-                            if(ib==building && player['workshop'][i]){
-                                mul = mul.mul(civics['workshop'][i]['effect']['building'][ib]['effect']['mul']())
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return n(main['building'][building]['effect']['gain']['add'][res]()).mul(mul)
-}
-
-function getBuildGain(building, res){
-    return n(getBuildGainBase(building, res)).mul(player['building'][building])
-}
-
-function getBuildCappedBase(building,res){
-    let mul = n(1)
-    for(let i in civics['workshop']){
-        if(civics['workshop'][i]['effect']!==undefined){
-            if(civics['workshop'][i]['effect']['building']!==undefined){
-                for(let ib in civics['workshop'][i]['effect']['building']){
-                    if(civics['workshop'][i]['effect']['building'][ib]['effect']!==undefined){
-                        if(civics['workshop'][i]['effect']['building'][ib]['effect']['mul']!==undefined){
-                            if(ib==i && player['workshop'][i]){
-                                mul = mul.mul(civics['workshop'][i]['effect']['building'][ib]['effect']['mul']())
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return n(main['building'][building]['effect']['capped']['add'][res]()).mul(mul)
-}
-
-function getBuildCapped(building,res){
-    return n(main['building'][building]['effect']['capped']['add'][res]()).mul(player['building'][building])
-}
 
 function getCitizensEffect(citizens,effect){
     return player['citizens'][citizens].mul(civics['citizens'][citizens]['effect']['other'][effect]['effect']())
+}
+
+function nameCorrection(type,old,name){
+    if(type=='building'){
+        getByID(old+'BuildingButtonID', name+'('+formatWhole(player['building'][old])+')')
+    }
+    if(type=='citiznes'){
+        getByID(old+'CitizensNameID', name)
+    }
 }
 
 function effectText(name,begin,res,end,mul,Class=null,display=true){
@@ -138,15 +96,6 @@ function costText(name,res,cost,type){
 					<div style="color: `+((n(getResourceCapped(res)).gte(cost) || resource['main'][res]['capped']==undefined) ? `` : `red` )+`">`+format(cost)+`</div>
 				</span>
 			</span>`+time+`<br>`
-}
-
-function nameCorrection(type,old,name){
-    if(type=='building'){
-        getByID(old+'BuildingButtonID', name+'('+formatWhole(player['building'][old])+')')
-    }
-    if(type=='citiznes'){
-        getByID(old+'CitizensNameID', name)
-    }
 }
 
 function colorText(id){

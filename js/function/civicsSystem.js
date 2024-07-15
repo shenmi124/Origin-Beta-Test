@@ -116,6 +116,6 @@ function Upgrade(id){
     }else{
         addLog('已购买', '#888')
     }
-    getID()
+    intervalID()
     componentWorkshop(id)
 }

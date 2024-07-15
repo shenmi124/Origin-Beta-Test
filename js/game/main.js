@@ -33,6 +33,16 @@ var mainButton = {
     },
 }
 
+var resource = {
+    main: ResourceMain,
+}
+
+var main = {
+    action: MainAction,
+    building: MainBuilding,
+    craft: MainCraft,
+}
+
 var mainTab = {
     action:{
         name(){return '行动'},
@@ -46,16 +56,6 @@ var mainTab = {
         name(){return '采集'},
         id(){return 'craft'},
     },
-}
-
-var main = {
-    action: MainAction,
-    building: MainBuilding,
-    craft: MainCraft,
-}
-
-var resource = {
-    main: ResourceMain,
 }
 
 var civics = {

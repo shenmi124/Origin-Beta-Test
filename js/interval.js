@@ -232,7 +232,7 @@ function dataDiff(){
 	}
 }
 
-function getID(){
+function intervalID(){
 	dataDiff()
 	for(let i in mainButton){
 		let unlocked = true
@@ -317,5 +317,5 @@ setInterval(function(){
 			settings[i]['effect']()
 		}
 	}
-	getID()
+	intervalID()
 }, 50)

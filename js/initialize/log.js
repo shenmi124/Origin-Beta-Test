@@ -14,7 +14,7 @@ function addLog(id,color="#000"){
 
 function insLog(){
     if(logQueue[0]!==undefined){
-        misByID('logLoadID',logQueue[0])
+        addByID('logLoadID',logQueue[0])
         document.getElementById('logTimes'+logComplete).style.opacity = 0
         const times = logComplete
         setTimeout(function(){
