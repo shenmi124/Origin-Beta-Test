@@ -1,0 +1,24 @@
+body {
+	font-family: serif, monospace;
+	font-size: 16px;
+	cursor: default;
+    background: rgb(255, 255, 255);
+    user-select: none;
+}
+
+*::-webkit-scrollbar {
+    width: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #ddd;
+}
+
+#game {
+    width: calc(100% - 16px);
+    height: calc(100% - 63px);
+    position: absolute;
+    margin: 0 auto;
+    white-space: normal;
+}

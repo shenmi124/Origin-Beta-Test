@@ -1,3 +1,16 @@
+function gainResource(res,gain){
+    if(gain.gte(0)){
+        if(getResourceCapped(res)!==null){
+            gain = gain.min(n(getResourceCapped(res)).sub(player['resource'][res]))
+        }
+        player['resource'][res] = player['resource'][res].add(gain)
+        player['resource'][res+'Total'] = player['resource'][res+'Total'].add(gain)
+        player['resource'][res+'Best'] = player['resource'][res+'Best'].max(player['resource'][res])
+    }else{
+        player['resource'][res] = player['resource'][res].add(gain).max(0)
+    }
+}
+
 function getResourceTitleID(id,res_name){
 	let Class = ''
 	if(resource['main'][res_name]['Class']!==undefined){
@@ -85,27 +98,17 @@ function getResourceID(res){
 	getResourceDoc(res)
 }
 
-function resourceCompute(id){
-	if(resource['main'][id]['number']!==undefined){
-		player['resource'][id] = n(resource['main'][id]['number']())
+function resourceUpdate(id){
+	if(resource['main'][id]['amount']!==undefined){
+		player['resource'][id] = n(resource['main'][id]['amount']())
 	}else{
-		if(!n(getResourceGain(id)).eq(-1)){
+		if(getResourceGain(id)!==null){
 			let unlocked = true
 			if(resource['main'][id]['unlocked']!==undefined){
 				unlocked = resource['main'][id]['unlocked']()
 			}
 			if(unlocked){
-				let gain = getResourceGain(id)
-				gain = n(gain).mul(DIFF)
-				if(gain.gte(0)){
-					if(!n(getResourceCapped(id)).eq(-1)){
-						gain = gain.min(n(getResourceCapped(id)).sub(player['resource'][id])).max()
-					}
-					player['resource'][id] = player['resource'][id].add(gain)
-					player['resource'][id+'Total'] = player['resource'][id+'Total'].add(gain)
-				}else{
-					player['resource'][id] = player['resource'][id].add(gain).max(0)
-				}
+                gainResource(id, n(getResourceGain(id)).mul(DIFF))
 			}
 		}
 	}
@@ -114,7 +117,7 @@ function resourceCompute(id){
 
 function getResourceGain(res){
     if(resource['main'][res]['gain']==undefined){
-        return n(-1)
+        return null
     }
     return n(getResourceGainBase(res)).mul(getResourceGainMul(res))
 }
@@ -173,29 +176,21 @@ function getResourceGainMul(res){
             gain = gain.mul(n(resource['main'][res]['mul']()))
         }
         for(let i in resource['main']){
-            if(resource['main'][i]['effect']!==undefined){
-                if(resource['main'][i]['effect']['gain']!==undefined){
-                    if(resource['main'][i]['effect']['gain']['mul']!==undefined){
-                        for(let im in resource['main'][i]['effect']['gain']['mul']){
-                            if(res==im){
-                                gain = gain.mul(n(resource['main'][i]['effect']['gain']['mul'][im]()).mul(player['resource'][i]))
-                            }
-                        }
+            if(resource['main'][i]['effect']?.['gain']?.['mul']!==undefined){
+                for(let im in resource['main'][i]['effect']['gain']['mul']){
+                    if(res==im){
+                        gain = gain.mul(n(resource['main'][i]['effect']['gain']['mul'][im]()).mul(player['resource'][i]))
                     }
                 }
             }
         }
         for(let i in civics['workshop']){
             if(player['workshop'][i]){
-                if(civics['workshop'][i]['effect']!==undefined){
-                    if(civics['workshop'][i]['effect']['resource']!==undefined){
-                        for(let iw in civics['workshop'][i]['effect']['resource']){
-                            if(civics['workshop'][i]['effect']['resource'][iw]['gain']!==undefined){
-                                if(civics['workshop'][i]['effect']['resource'][iw]['gain']['mul']!==undefined){
-                                    if(res==iw){
-                                        gain = gain.mul(civics['workshop'][i]['effect']['resource'][iw]['gain']['mul']())
-                                    }
-                                }
+                if(civics['workshop'][i]['effect']?.['resource']!==undefined){
+                    for(let iw in civics['workshop'][i]['effect']['resource']){
+                        if(civics['workshop'][i]['effect']['resource'][iw]['gain']?.['mul']!==undefined){
+                            if(res==iw){
+                                gain = gain.mul(civics['workshop'][i]['effect']['resource'][iw]['gain']['mul']())
                             }
                         }
                     }
@@ -208,7 +203,7 @@ function getResourceGainMul(res){
 
 function getResourceCapped(res){
     if(resource['main'][res]['capped']==undefined){
-        return n(-1)
+        return null
     }
     return n(getResourceCappedBase(res)).mul(getResourceCappedMul(res))
 }
@@ -218,27 +213,19 @@ function getResourceCappedBase(res){
     if(resource['main'][res]['capped']!==undefined){
         capped = capped.add(resource['main'][res]['capped']())
         for(let i in resource['main']){
-            if(resource['main'][i]['effect']!==undefined){
-                if(resource['main'][i]['effect']['capped']!==undefined){
-                    if(resource['main'][i]['effect']['capped']['add']!==undefined){
-                        for(let im in resource['main'][i]['effect']['capped']['add']){
-                            if(res==im){
-                                capped = capped.add(n(resource['main'][i]['effect']['capped']['add'][im]()).mul(player['resource'][i]))
-                            }
-                        }
+            if(resource['main'][i]['effect']?.['capped']?.['add']!==undefined){
+                for(let im in resource['main'][i]['effect']['capped']['add']){
+                    if(res==im){
+                        capped = capped.add(n(resource['main'][i]['effect']['capped']['add'][im]()).mul(player['resource'][i]))
                     }
                 }
             }
         }
         for(let i in main['building']){
-            if(main['building'][i]['effect']!==undefined){
-                if(main['building'][i]['effect']['capped']!==undefined){
-                    if(main['building'][i]['effect']['capped']['add']!==undefined){
-                        for(let im in main['building'][i]['effect']['capped']['add']){
-                            if(res==im){
-                                capped = capped.add(getBuildCapped(i, im))
-                            }
-                        }
+            if(main['building'][i]['effect']?.['capped']?.['add']!==undefined){
+                for(let im in main['building'][i]['effect']['capped']['add']){
+                    if(res==im){
+                        capped = capped.add(getBuildCapped(i, im))
                     }
                 }
             }
@@ -252,6 +239,28 @@ function getResourceCappedMul(res){
     if(resource['main'][res]['capped']!==undefined){
         if(resource['main'][res]['cappedMul']!==undefined){
             capped = capped.mul(n(resource['main'][res]['cappedMul']()))
+        }
+        for(let i in resource['main']){
+            if(resource['main'][i]['effect']?.['capped']?.['mul']!==undefined){
+                for(let im in resource['main'][i]['effect']['capped']['mul']){
+                    if(res==im){
+                        capped = capped.mul(n(resource['main'][i]['effect']['capped']['mul'][im]()).pow(player['resource'][i]))
+                    }
+                }
+            }
+        }
+        for(let i in civics['workshop']){
+            if(player['workshop'][i]){
+                if(civics['workshop'][i]['effect']?.['resource']!==undefined){
+                    for(let iw in civics['workshop'][i]['effect']['resource']){
+                        if(civics['workshop'][i]['effect']['resource'][iw]['capped']?.['mul']!==undefined){
+                            if(res==iw){
+                                capped = capped.mul(civics['workshop'][i]['effect']['resource'][iw]['capped']['mul']())
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     return formatScientific(capped, 8)

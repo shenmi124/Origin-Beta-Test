@@ -15,27 +15,38 @@ function componentCraft(id){
 }
 
 function componentBuilding(id){
-    let number = `(`+player['building'][id]+`)`
-    let style = ''
-    if(main['building'][id]['allocation']!==undefined){
-        if(main['building'][id]['allocation']()){
-            style = ''
-        }
-    }
-    if(main['building'][id]['unique']!==undefined){
-        number = main['building'][id]['unique']() ? `` : `(`+player['building'][id]+`)`
-    }
     getByID(id+"LoadBuildingID",`
     <tooltip `+loadTooltip(id,'LoadTooltipBuilding')+`>
+        <a id="`+id+`LoadBuildingAmountID"></a>
         <a id="`+id+`LoadBuildingAllocationID"></a>
-        <button style="`+style+`" id="`+id+`BuildingButtonID" onclick="Build('`+id+`')">`+main['building'][id]['name']()+`</button>
+        <button id="`+id+`BuildingButtonID" onclick="Build('`+id+`')">`+main['building'][id]['name']()+`</button>
     </tooltip>
     `)
-    getByID(id+'LoadBuildingAllocationID', `<div style="position: absolute; display: inline-block; width: 0;"><div class="allocation" onclick="Build('`+id+`')">`+formatWhole(player['building'][id])+`</div></div>`)
-    if(main['building'][id]['allocation']!==undefined){
-        if(main['building'][id]['allocation']()){
+
+    let revised = formatWhole(player['building'][id])
+    if(main['building'][id]['allocation'] ?? false){
+        if(!player['building'][id].eq(player['building'][id+'Allocation'])){
+            revised = formatWhole(player['building'][id+'Allocation'])+`<grey>|`+formatWhole(player['building'][id])+`</grey>`
         }
     }
+    let buildingAmount = 
+    `<div style="position: absolute; display: inline-block; width: 0;">
+        <div class="buildingAmount" onclick="Build('`+id+`')">`+revised+`</div>
+    </div>`
+    if(main['building'][id]['unique'] ?? false){
+        buildingAmount = ``
+    }
+    getByID(id+'LoadBuildingAmountID', buildingAmount)
+    
+    let buildingAllocation = ``
+    if(main['building'][id]['allocation'] ?? false){
+        buildingAllocation = `
+        <div style="position: absolute; display: inline-block; width: 0;">
+            <div class="buildingAllocationAdd" onclick="buildingAllocation(n(1), 'add', '`+id+`')">+</div>
+            <div class="buildingAllocationSub" onclick="buildingAllocation(n(1), 'sub', '`+id+`')">-</div>
+        </div>`
+    }
+    getByID(id+'LoadBuildingAllocationID', buildingAllocation)
 
     let resCan = true
     let cappedCan = true

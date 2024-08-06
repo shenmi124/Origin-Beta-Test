@@ -29,6 +29,10 @@ var mainButton = {
                 name(){return "统计"},
                 data(){return ""},
             },
+            information: {
+                name(){return "信息"},
+                data(){return ""},
+            },
         }
     },
 }
@@ -53,7 +57,7 @@ var mainTab = {
         id(){return 'building'},
     },
     craft:{
-        name(){return '采集'},
+        name(){return '探索'},
         id(){return 'craft'},
     },
 }

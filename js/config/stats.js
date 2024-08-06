@@ -23,22 +23,24 @@ function statsDiff(){
     for(let i in resource['main']){
         if(player['resource'][i+'Unlocked']){
             resU = true
-            res += `<div style="display: inline-grid; width: 100px">`+colorText(i)[1]+`</div>
-                        <div style="display: inline-grid; width: 100px">`+format(player['resource'][i])+`</div>
-                        <div style="display: inline-grid; width: 100px">`+format(player['resource'][i+'Best'])+`</div>
-                        <div style="display: inline-grid; width: 100px">`+format(player['resource'][i+'Total'])+`</div>
-                        <br>`
+            res += `
+            <div style="display: inline-grid; width: 100px">`+colorText(i)[1]+`</div>
+            <div style="display: inline-grid; width: 100px">`+format(player['resource'][i])+`</div>
+            <div style="display: inline-grid; width: 100px">`+format(player['resource'][i+'Best'])+`</div>
+            <div style="display: inline-grid; width: 100px">`+format(player['resource'][i+'Total'])+`</div>
+            <br>`
         }
     }
 
     let action = ''
     let actionU = false
-    action += `<div style="display: inline-grid; width: 100px">行动</div>
-                <div style="display: inline-grid; width: 100px">完成次数</div>
-                <div style="display: inline-grid; width: 100px">基础耗时</div>
-                <div style="display: inline-grid; width: 100px">自动耗时</div>
-                <div style="display: inline-grid; width: 100px">手动耗时</div>
-                <br>`
+    action += `
+    <div style="display: inline-grid; width: 100px">行动</div>
+    <div style="display: inline-grid; width: 100px">完成次数</div>
+    <div style="display: inline-grid; width: 100px">基础耗时</div>
+    <div style="display: inline-grid; width: 100px">自动耗时</div>
+    <div style="display: inline-grid; width: 100px">手动耗时</div>
+    <br>`
     for(let i in main['action']){
         if(player['action'][i+'Total'].gte(1)){
             actionU = true
@@ -68,23 +70,25 @@ function statsDiff(){
                     act = formatTime(n(time).div(actionSpeed))
                 }
             }
-            action += `<div style="display: inline-grid; width: 100px">`+main['action'][i]['name']()+`</div>
-                        <div style="display: inline-grid; width: 100px">`+formatWhole(player['action'][i+'Total'])+`</div>
-                        <div style="display: inline-grid; width: 100px">`+base+`</div>
-                        <div style="display: inline-grid; width: 100px">`+auto+`</div>
-                        <div style="display: inline-grid; width: 100px">`+act+`</div>
-                        <br>`
+            action += `
+            <div style="display: inline-grid; width: 100px">`+main['action'][i]['name']()+`</div>
+            <div style="display: inline-grid; width: 100px">`+formatWhole(player['action'][i+'Total'])+`</div>
+            <div style="display: inline-grid; width: 100px">`+base+`</div>
+            <div style="display: inline-grid; width: 100px">`+auto+`</div>
+            <div style="display: inline-grid; width: 100px">`+act+`</div>
+            <br>`
         }
     }
 
     let craft = ''
     let craftU = false
-    craft += `<div style="display: inline-grid; width: 100px">采集</div>
-                <div style="display: inline-grid; width: 100px">完成次数</div>
-                <div style="display: inline-grid; width: 100px">基础耗时</div>
-                <div style="display: inline-grid; width: 100px">自动耗时</div>
-                <div style="display: inline-grid; width: 100px">手动耗时</div>
-                <br>`
+    craft += `
+    <div style="display: inline-grid; width: 100px">采集</div>
+    <div style="display: inline-grid; width: 100px">完成次数</div>
+    <div style="display: inline-grid; width: 100px">基础耗时</div>
+    <div style="display: inline-grid; width: 100px">自动耗时</div>
+    <div style="display: inline-grid; width: 100px">手动耗时</div>
+    <br>`
     for(let i in main['craft']){
         if(player['craft'][i+'Total'].gte(1)){
             craftU = true
@@ -114,40 +118,44 @@ function statsDiff(){
                     act = formatTime(n(time).div(actionSpeed))
                 }
             }
-            craft += `<div style="display: inline-grid; width: 100px">`+main['craft'][i]['name']()+`</div>
-                        <div style="display: inline-grid; width: 100px">`+formatWhole(player['craft'][i+'Total'])+`</div>
-                        <div style="display: inline-grid; width: 100px">`+base+`</div>
-                        <div style="display: inline-grid; width: 100px">`+auto+`</div>
-                        <div style="display: inline-grid; width: 100px">`+act+`</div>
-                        <br>`
+            craft += `
+            <div style="display: inline-grid; width: 100px">`+main['craft'][i]['name']()+`</div>
+            <div style="display: inline-grid; width: 100px">`+formatWhole(player['craft'][i+'Total'])+`</div>
+            <div style="display: inline-grid; width: 100px">`+base+`</div>
+            <div style="display: inline-grid; width: 100px">`+auto+`</div>
+            <div style="display: inline-grid; width: 100px">`+act+`</div>
+            <br>`
         }
     }
 
     let building = ''
     let buildingU = false
-    building += `<div style="display: inline-grid; width: 100px">建筑</div>
-                <div style="display: inline-grid; width: 100px">拥有</div>
-                <br>`
+    building += `
+    <div style="display: inline-grid; width: 100px">建筑</div>
+    <div style="display: inline-grid; width: 100px">拥有</div>
+    <br>`
     for(let i in main['building']){
         if(player['building'][i].gte(1)){
             buildingU = true
-            let number = formatWhole(player['building'][i])
+            let amount = formatWhole(player['building'][i])
             if(main['building'][i]['unique']!==undefined){
                 if(main['building'][i]['unique']()){
-                    number = ''
+                    amount = ''
                 }
             }
-            building += `<div style="display: inline-grid; width: 100px">`+main['building'][i]['name']()+`</div>
-                        <div style="display: inline-grid; width: 100px">`+number+`</div>
-                        <br>`
+            building += `
+            <div style="display: inline-grid; width: 100px">`+main['building'][i]['name']()+`</div>
+            <div style="display: inline-grid; width: 100px">`+amount+`</div>
+            <br>`
         }
     }
 
     let workshop = ''
     let workshopU = false
-    workshop += `<div style="display: inline-grid; width: 100px">工坊</div>
-                <div style="display: inline-grid; width: 100px">拥有</div>
-                <br>`
+    workshop += `
+    <div style="display: inline-grid; width: 100px">工坊</div>
+    <div style="display: inline-grid; width: 100px">拥有</div>
+    <br>`
     let br = 0
     for(let i in civics['workshop']){
         if(player['workshop'][i]){
@@ -163,8 +171,9 @@ function statsDiff(){
                     color = 'rgb(186, 0, 192)'
                 }
             }
-            workshop += `<div style="display: inline-grid; width: 100px; color: `+color+`">`+civics['workshop'][i]['name']()+`</div>
-                        <div style="display: inline-grid; width: 0px"></div>`+hbr
+            workshop += `
+            <div style="display: inline-grid; width: 100px; color: `+color+`">`+civics['workshop'][i]['name']()+`</div>
+            <div style="display: inline-grid; width: 0px"></div>`+hbr
         }
     }
 

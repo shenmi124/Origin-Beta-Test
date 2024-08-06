@@ -1,0 +1,18 @@
+#leftColumn {
+    padding-right: 15px;
+    overflow-y: auto;
+    transition-duration: 0.1s;
+}
+
+#rightColumn {
+    width: 450px;
+    overflow-y: auto;
+    transition-duration: 0.1s;
+}
+
+.column {
+    min-height: 100%;
+    height: 100%;
+    display: inline-block;
+    margin-top: 4px;
+}

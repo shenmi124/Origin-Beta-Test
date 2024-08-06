@@ -1,4 +1,4 @@
-var VERSION = '10w 04a'
+var VERSION = '10w 05a'
 var VERSIONTIMES = n(4)
 
 function loadVersion(){

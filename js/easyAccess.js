@@ -1,33 +1,10 @@
-function NumberFix(){
-	for(i in resource['main']){
-		if(resource['main'][i]['capped']!==undefined){
-			player['resource'][i] = player['resource'][i].min(getResourceCappedBase(i))
-			getResourceID(i)
-		}
-	}
-}
-
 function nc(Decimal){
     return n(Decimal).mul(getEfficient('happiness'))
-}
-
-function gainResource(res,gain){
-    if(gain.gte(0)){
-        if(!n(getResourceCapped(res)).eq(-1)){
-            gain = gain.min(n(getResourceCapped(res)).sub(player['resource'][res]))
-        }
-        player['resource'][res] = player['resource'][res].add(gain)
-        player['resource'][res+'Total'] = player['resource'][res+'Total'].add(gain)
-        player['resource'][res+'Best'] = player['resource'][res+'Best'].max(player['resource'][res])
-    }else{
-        player['resource'][res] = player['resource'][res].add(gain).max(0)
-    }
 }
 
 function getResourceUnlocked(res){
     return player['resource'][res].gt(0) || player['resource'][res+'Unlocked']
 }
-
 
 function getCitizensEffect(citizens,effect){
     return player['citizens'][citizens].mul(civics['citizens'][citizens]['effect']['other'][effect]['effect']())
@@ -42,7 +19,7 @@ function nameCorrection(type,old,name){
     }
 }
 
-function effectText(name,begin,res,end,mul,Class=null,display=true){
+function effectText(name,begin,res,end,mul,Class=null,display=true,type='add'){
     let unique = ``
     let beginClass = ``
     let endClass = ``
@@ -55,9 +32,15 @@ function effectText(name,begin,res,end,mul,Class=null,display=true){
         beginClass = `<`+Class+`>`
         endClass = `</`+Class+`>`
     }
+    let amount = n(0)
+    if(type=='add'){
+        amount = n(res).mul(mul)
+    }else if(type=='mul'){
+        amount = n(res).pow(mul)
+    }
     return `<left><span>
                 <div style="width: 80px; display: table-cell">`+name+`</div>
-                <div style="width: 124px; display: table-cell">`+beginClass+begin+format(n(res).mul(mul))+end+endClass+`</div>
+                <div style="width: 124px; display: table-cell">`+beginClass+begin+format(amount)+end+endClass+`</div>
                 `+unique+`
             </span></left>`
 }

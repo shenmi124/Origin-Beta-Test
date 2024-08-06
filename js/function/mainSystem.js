@@ -181,7 +181,7 @@ function getBuildGainBase(building,res){
 }
 
 function getBuildGain(building, res){
-    return n(getBuildGainBase(building, res)).mul(player['building'][building])
+    return n(getBuildGainBase(building, res)).mul(player['building'][building+'Allocation'] ?? player['building'][building])
 }
 
 function getBuildCappedBase(building,res){
@@ -205,5 +205,14 @@ function getBuildCappedBase(building,res){
 }
 
 function getBuildCapped(building,res){
-    return n(main['building'][building]['effect']['capped']['add'][res]()).mul(player['building'][building])
+    return n(main['building'][building]['effect']['capped']['add'][res]()).mul(player['building'][building+'Allocation'] ?? player['building'][building])
+}
+
+function buildingAllocation(amount,type,id){
+    if(type=='add'){
+        player['building'][id+'Allocation'] = player['building'][id+'Allocation'].add(amount).min(player['building'][id])
+    }else{
+        player['building'][id+'Allocation'] = player['building'][id+'Allocation'].sub(amount).max(0)
+    }
+    componentBuilding(id)
 }

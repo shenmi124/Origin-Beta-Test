@@ -153,4 +153,5 @@ let loadingGame = function(){
 	loadVersion()
 	
 	loadSetting()
+	loadInformation()
 }

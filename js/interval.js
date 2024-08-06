@@ -5,15 +5,15 @@ function getBr(){
 	let width = document.getElementById('game').offsetWidth-document.getElementById('leftColumn').offsetWidth-450-48
 	if(width!==TICKWIDTH){
 		MID = Math.floor(width/206)
-		if(width<=412){
+		if(width<=618){
 			MID = Math.floor((width+450)/206)
 		}
-		if(width<=412 && (TICKWIDTH==undefined || TICKWIDTH>412)){
+		if(width<=618 && (TICKWIDTH==undefined || TICKWIDTH>618)){
 			Open('loadRightColumn', 'block')
 			Close('rightColumn')
 			getByID('loadRightColumn', document.getElementById('rightColumn').innerHTML)
 			getByID('rightColumn', '')
-		}else if(width>=412 && (TICKWIDTH==undefined || TICKWIDTH<412)){
+		}else if(width>=618 && (TICKWIDTH==undefined || TICKWIDTH<618)){
 			Open('rightColumn')
 			Close('loadRightColumn')
 			getByID('rightColumn', document.getElementById('loadRightColumn').innerHTML)
@@ -252,7 +252,7 @@ function intervalID(){
 	}
 
 	for(let i in resource['main']){
-		resourceCompute(i)
+		resourceUpdate(i)
 		getResourceID(i)
 	}
 

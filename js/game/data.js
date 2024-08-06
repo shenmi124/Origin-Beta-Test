@@ -10,7 +10,7 @@ function getGametime(){
     let logDay = n(day).floor()+' 天 '
     let logHour = ''
     let logMinute = ''
-    if(player.workshop.logMinute){
+    if(player.workshop.minute){
         logMinute = n(minute%60).floor()+' 分 '
     }
     if(player.workshop.hour){

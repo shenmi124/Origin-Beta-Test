@@ -1,0 +1,46 @@
+button {
+    width: 200px;
+    height: 38px;
+    background: rgb(245, 245, 245);
+    cursor: pointer;
+    transition-duration: 0.2s;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid rgb(255, 255, 255);
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+button:hover {
+    background: rgb(219, 219, 219);
+}
+
+button.cold {
+    background: rgb(245, 245, 245, 0.9);
+    position: absolute;
+    z-index: 2;
+}
+
+button.cold.complete {
+    cursor: not-allowed;
+}
+
+button.cold:hover {
+    background: rgb(219, 219, 219, 0.9);
+}
+
+button.res {
+    color: red;
+}
+
+button.bought {
+    color:black;
+}
+
+button.capped {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+button.capped:hover {
+    background-color: rgba(255, 0, 0, 0.2);
+}

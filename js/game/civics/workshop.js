@@ -1,10 +1,10 @@
 var CivicsWorkshop = {
     minute: {
-        name(){return '五轮沙漏'},
+        name(){return '沙漏轮翻'},
         keep(){return true},
-        tooltip(){return '观察沙漏,以此来判断分钟<joker>不能暂时性减速敌人</joker>'},
+        tooltip(){return '观察沙漏,以此来判断分钟'},
         cost: {
-            idea(){return n(10000)},
+            idea(){return n(5000)},
         },
         effect: {
             other:{
@@ -15,17 +15,17 @@ var CivicsWorkshop = {
                 }
             },
             unlocked:{
-                1(){return '允许玩家知晓实时游戏时'},
+                1(){return '允许玩家知晓实时游戏分'},
             }
         },
-        unlocked(){return player.workshop.hour && false}
+        unlocked(){return player.workshop.hour}
     },
     hour: {
         name(){return '日晷渐移'},
         keep(){return true},
         tooltip(){return '观察影子的位移,以此来判断时期'},
         cost: {
-            idea(){return n(1000)},
+            idea(){return n(500)},
         },
         effect: {
             other:{
@@ -46,7 +46,7 @@ var CivicsWorkshop = {
         keep(){return true},
         tooltip(){return '观察太阳的东升西落,以此来判断日期'},
         cost: {
-            idea(){return n(500)},
+            idea(){return n(200)},
         },
         effect: {
             other:{
@@ -67,7 +67,7 @@ var CivicsWorkshop = {
         keep(){return true},
         tooltip(){return '观察月亮的阴晴圆缺,以此来判断月份'},
         cost: {
-            idea(){return n(5000)},
+            idea(){return n(1000)},
         },
         effect: {
             other:{
@@ -88,7 +88,7 @@ var CivicsWorkshop = {
         keep(){return true},
         tooltip(){return '观察四季变换,以此来判断年份'},
         cost: {
-            idea(){return n(50000)},
+            idea(){return n(2000)},
         },
         effect: {
             other:{
@@ -244,6 +244,11 @@ var CivicsWorkshop = {
             wood(){return n(5)},
             stone(){return n(30)},
         },
+        onBuy(){
+            addLog('力量决定了你类狩猎行为的倍率')
+            addLog('当你的力量大于对方时可以进行狩猎')
+            addLog('同时你的力量每溢出一倍的需求最大狩猎数量就+1')
+        },
     },
     armor: {
         name(){return '护甲'},
@@ -282,7 +287,7 @@ var CivicsWorkshop = {
         effect: {
             resource: {
                 idea: {
-                    gain: {
+                    capped: {
                         mul(){return n(1.2)}
                     },
                 },

@@ -1,0 +1,78 @@
+.buildingAmount {
+    display: inline-block;
+    height: 16px;
+    position: relative;
+    left: 1px;
+    top: 1px;
+    background: rgb(250, 250, 250);
+    border: 1px solid rgb(255, 255, 255);
+    border-top-width: 0px;
+    border-left-width: 0px;
+    cursor: pointer;
+    transition-duration: 0.2s;
+    font-size: 14px;
+    padding-left: 6px;
+    padding-right: 6px;
+    border-radius: 5px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    text-align: center;
+}
+
+.buildingAmount:hover {
+    background: rgb(212, 212, 212);
+}
+
+.buildingAllocationAdd {
+    display: inline-block;
+    height: 18px;
+    position: relative;
+    left: 176px;
+    top: 1px;
+    background: rgb(245, 245, 245);
+    border: 1px solid rgb(255, 255, 255);
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    border-right-width: 0px;
+    cursor: pointer;
+    transition-duration: 0.2s;
+    font-size: 14px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 5px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    text-align: center;
+}
+
+.buildingAllocationAdd:hover {
+    background: rgb(212, 212, 212);
+}
+
+.buildingAllocationSub {
+    display: inline-block;
+    height: 18px;
+    position: relative;
+    left: 176px;
+    top: 1px;
+    background: rgb(245, 245, 245);
+    border: 1px solid rgb(255, 255, 255);
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    border-right-width: 0px;
+    cursor: pointer;
+    transition-duration: 0.2s;
+    font-size: 14px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 5px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    text-align: center;
+}
+
+.buildingAllocationSub:hover {
+    background: rgb(212, 212, 212);
+}

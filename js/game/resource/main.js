@@ -15,14 +15,22 @@ var ResourceMain = {
                     idea(){return n(1).mul(getEfficient('happiness'))},
                     food(){return n(-0.1).mul(getEfficient('happiness').max(1)).mul(player.building.brewery.add(1))}
                 }
-            }
+            },
+            capped: {
+                add: {
+                    idea(){return n(1000).mul(getEfficient('happiness'))},
+                }
+            },
+            other:{
+                happiness: {
+                    name(){return '幸福度'},
+                    effect(){return n(1)},
+                    display(){return ['+','%']},
+                }
+            },
         },
         tooltip(){
-            return `一旦居民不再幸福他们很可能会离开你<br>同时居民的增加意味着安定度的降低<hr>
-            <a style='font-size: 14px'>影响</a>`
-            +effectText(colorText('idea')[1], '+', this.effect.gain.add.idea(), '/s', player.resource.citizens)
-            +effectText(colorText('food')[1], '', this.effect.gain.add.food(), '/s', player.resource.citizens, 'red')
-            +effectText('幸福度', '-', n(1), '', player.resource.citizens, 'red')
+            return `一旦居民不再幸福他们很可能会离开你<br>同时居民的增加意味着安定度的降低`
         },
         unlockAction(){
             getStage(3)
@@ -36,9 +44,8 @@ var ResourceMain = {
         name(){return "思想"},
         color(){return 'rgb(186, 0, 192)'},
         gain(){return n(0)},
-        mul(){return n(1).div(player.resource.idea.pow(0.5).add(1))},
-        mulTooltip(){return '思想枯竭'},
-        tooltip(){return '默默收集散落的想法...'},
+        capped(){return n(0)},
+        tooltip(){return '默默收集散落的想法,只是思想也会被遗忘'},
         unlocked(){return getResourceUnlocked('citizens')},
     },
     food:{
@@ -126,7 +133,6 @@ var ResourceMain = {
         color(){return '#000'},
         Class(){return 'meteorite'},
         capped(){return n(0.1)},
-        cappedMul(){return n(10).pow(player.resource.stardust)},
         tooltip(){return '陨石坠落'},
         unlockAction(){
             addLog('这些陨石的碎片应该有特殊的用处')
@@ -137,10 +143,22 @@ var ResourceMain = {
         name(){return "星尘"},
         color(){return '#00ffff'},
         Class(){return 'stardust'},
+        effect: {
+            capped: {
+                mul: {
+                    meteorite(){return n(10)},
+                }
+            },
+            other:{
+                happiness: {
+                    name(){return '幸福度'},
+                    effect(){return n(10)},
+                    display(){return ['+','%']},
+                }
+            },
+        },
         tooltip(){
-            return `群星闪耀<hr><a style='font-size: 14px'>影响</a>`
-            +effectText('陨石', '<mul>×</mul>', n(10), '上限', player.resource.stardust)
-            +effectText('幸福度', '+', n(10), '', player.resource.stardust)
+            return `群星闪耀`
         },
         unlockAction(){
             addLog('这是你的第一颗<span class="stardust">星尘</span>')

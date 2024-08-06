@@ -88,12 +88,12 @@ var CivicsCitizens = {
 var CivicsJobs = {
     unemployed: {
         name(){return '无业游民'},
-        number(){return n(player.resource.citizens)},
+        amount(){return n(player.resource.citizens)},
     },
     lumberyards: {
         name(){return '空闲伐木场'},
         tooltip(){return '每个伐木场可以就业一名伐木工'},
-        number(){return n(player.building.lumberyards)},
+        amount(){return n(player.building.lumberyards)},
     },
 }
 

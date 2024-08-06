@@ -1,0 +1,26 @@
+.maintab {
+    transition-duration: 0.2s;
+    padding-right: 2px;
+    font-size: 17px;
+}
+
+.maintab.subtab {
+    border-bottom: 1px solid rgb(0, 0, 0);
+}
+
+.maintab:hover {
+    opacity: 0.8;
+}
+
+.maintab.setting {
+    float: right;
+    padding-right: 0px;
+    padding-left: 2px;
+    color: #888;
+}
+
+.maintab.data {
+    float: right;
+    padding-right: 0px;
+    padding-left: 2px;
+}

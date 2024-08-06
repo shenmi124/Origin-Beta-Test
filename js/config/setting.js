@@ -37,7 +37,7 @@ var settings = {
 		type(){return 'click'},
 		onClick(){
 			exportSave()
-			addLog('已导出到接切板', '#888')
+			addLog('已导出到剪切板', '#888')
 		},
 	},
 	import:{

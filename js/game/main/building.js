@@ -37,7 +37,6 @@ var MainBuilding = {
             }
             return '一个用泥土搭建的临时庇护所,无法提供什么安全感,但是可以遮风挡雨'
         },
-        allocation(){return true},
         unlocked(){return player.building.civics.gte(1)},
         cost: {
             food(){return n(10)},
