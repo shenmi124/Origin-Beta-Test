@@ -210,7 +210,6 @@ var CivicsWorkshop = {
             unlocked: {
                 1(){return '解锁建筑 伐木场'},
                 2(){return '解锁职业 伐木工'},
-                3(){return '获得建筑 伐木场'},
             },
         },
         cost: {
