@@ -38,7 +38,7 @@ let efficient = {
         },
         resource: {
             name(){return '资源影响'},
-            effect(){return player.resource.stardust.mul(10)},
+            effect(){return player.resource.stardust.mul(5)},
         },
         building: {
             name(){return '建筑影响'},
@@ -51,7 +51,7 @@ let efficient = {
         workshop: {
             name(){return '工坊影响'},
             effect(){return n(gameGetWorkshopHappiness())}
-        },
+        }
     }
 }
 
@@ -69,5 +69,5 @@ function getEfficient(id){
 			base = base.add(efficient[id][i]['effect']())
 		}
 	}
-    return base.max(5).div(100)
+    return base.max(1).div(100)
 }

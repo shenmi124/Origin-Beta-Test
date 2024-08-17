@@ -59,7 +59,7 @@ var settings = {
 		},
 	},
 	language:{
-		title(){return '主题'},
+		title(){return '游戏'},
 		name(){return '语言'},
 		type(){return 'choose'},
 		choose:{
@@ -74,7 +74,20 @@ var settings = {
 			},
 		},
 	},
+	theme:{
+		name(){return '主题'},
+		type(){return 'choose'},
+		choose:{
+			default:{
+				name(){return '黑暗#制作中'},
+			},
+			en:{
+				name(){return '光亮'}
+			},
+		},
+	},
 	notation:{
+		title(){return '偏好'},
 		name(){return '计数法'},
 		type(){return 'choose'},
 		choose:{
@@ -91,6 +104,21 @@ var settings = {
 				name(){return '字母'}
 			},
 		},
+	},
+	action:{
+		name(){return '行动动画'},
+		type(){return 'choose'},
+		choose:{
+			default:{
+				name(){return '平滑'},
+			},
+			realtime:{
+				name(){return '实时'}
+			},
+			quick:{
+				name(){return '快速'}
+			},
+		}
 	},
 	mouse:{
 		title(){return '调试'},

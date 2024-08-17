@@ -41,7 +41,7 @@ function sumValues(x) {
     return x.reduce((a, b) => Decimal.add(a, b))
 }
 
-function format(decimal, precision = 2, small) {
+function format(decimal, precision = 3, small) {
     decimal = new Decimal(decimal)
     if (isNaN(decimal.sign) || isNaN(decimal.layer) || isNaN(decimal.mag)) {
         return "NaN"
@@ -50,14 +50,14 @@ function format(decimal, precision = 2, small) {
     if(decimal.mag == Number.POSITIVE_INFINITY){return "Infinity"}
 
     if(player.setting.notation=='scientific'){
-        if(decimal.gte(1e4)){
+        if(decimal.gte(1e3)){
             return exponentialFormat(decimal, precision)
         }else if(decimal.gte(0.0001) || !small){
             return regularFormat(decimal, precision)
         }else if(decimal.eq(0)){
             return n(0).toFixed(precision)
-        }else if(decimal.lt(0.01)){
-            return '<0.01'
+        }else if(decimal.lt(0.001)){
+            return '<0.001'
         }
     }else if(player.setting.notation=='default'){
         let e = n(decimal).log10().ceil()
@@ -82,8 +82,6 @@ function format(decimal, precision = 2, small) {
             return '<0.001'
         }
 
-        if(decimal)
-
         return n(m).mul(n(10).pow(n(e).sub(n(max).sub(1).mul(3)))).toFixed(3) + txt
     }else if(player.setting.notation=='engineering'){
         let e = n(decimal).log10().ceil()
@@ -92,7 +90,7 @@ function format(decimal, precision = 2, small) {
         let max = 1
         let showE = 0
         for(let i=1;i<=max;i++){   
-            if(log >= (i*3+1)){
+            if(log >= (i*3)){
                 max += 1
             }else{
                 showE = (max-1)*3
@@ -103,8 +101,8 @@ function format(decimal, precision = 2, small) {
             return n(0).toFixed(3)
         }
         
-        if(decimal.lt(0.01)){
-            return '<0.01'
+        if(decimal.lt(0.001)){
+            return '<0.001'
         }
         
         let show = ''
@@ -112,7 +110,7 @@ function format(decimal, precision = 2, small) {
             show = 'e' + showE
         }
 
-        return n(m).mul(n(10).pow(n(e).sub(n(max).sub(1).mul(3)))).toFixed(2) + show
+        return n(m).mul(n(10).pow(n(e).sub(n(max).sub(1).mul(3)))).toFixed(3) + show
     }else if(player.setting.notation=='letter'){
         let e = n(decimal).log10().ceil()
         let log = n(decimal).log10()
@@ -121,7 +119,7 @@ function format(decimal, precision = 2, small) {
         let txt = ''
         let txtnum = ['','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','o','v','w','x','y','z','A']
         for(let i=1;i<=max;i++){   
-            if(log >= (i*3+1)){
+            if(log >= (i*3)){
                 max += 1
             }else{
                 txt = txtnum[max-1]
@@ -160,6 +158,9 @@ function formatScientific(decimal, precision = 2, small) {
 
 function formatWhole(decimal) {
     decimal = new Decimal(decimal)
+    if(decimal.gte(1000)){
+        return format(decimal)
+    }
     return formatScientific(decimal, 0)
 }
 

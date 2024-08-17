@@ -50,8 +50,14 @@ function getBr(){
 		if(civics['workshop'][i]['unlocked']!==undefined){
 			unlocked = civics['workshop'][i]['unlocked']()
 		}
-		if(unlocked && !player['workshop'][i]){
-			br += 1
+		if(!WORKSHOPBOUGHT){
+			if(unlocked && !player['workshop'][i]){
+				br += 1
+			}
+		}else{
+			if(unlocked && player['workshop'][i]){
+				br += 1
+			}
 		}
 		if(br%MID===0 && br!==0){
 			document.getElementById(i+'workshopBrID').style.display = ''
@@ -105,7 +111,6 @@ function dataDiff(){
 				main['action'][i]['onClick']()
 				player['action'][i+'Total'] = player['action'][i+'Total'].add(1)
 				NumberFix()
-				let autoSpeed = n(getActionAuto(i))
 				if(autoSpeed.gt(0)){
 					player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].sub(getActionCooldown(i))
 				}else{
@@ -122,7 +127,13 @@ function dataDiff(){
 				document.getElementById("action"+i+"ButtonID").disabled = false
 			}
 
-			document.getElementById("action"+i+"BorderID").style.transitionDuration = '0.2s'
+			if(player.setting.action=='default'){
+				document.getElementById("action"+i+"BorderID").style.transitionDuration = '0.2s'
+			}else if(player.setting.action=='realtime'){
+				document.getElementById("action"+i+"BorderID").style.transitionDuration = '0s'
+			}else{
+				document.getElementById("action"+i+"BorderID").style.transitionDuration = '0.05s'
+			}
 			let border = player.action[i+'Cooldown'].div(n(getActionCooldown(i)).max(0.001)).min(1).mul(100)
 			if(player['action'][i+'Cooldown'].lte(0)){border = 100}
 			document.getElementById("action"+i+"BorderID").style.clipPath = 'inset(0% '+border+'% 0% 0%)'
@@ -169,7 +180,13 @@ function dataDiff(){
 				document.getElementById("craft"+i+"ButtonID").disabled = false
 			}
 
-			document.getElementById("craft"+i+"BorderID").style.transitionDuration = '0.2s'
+			if(player.setting.action=='default'){
+				document.getElementById("craft"+i+"BorderID").style.transitionDuration = '0.2s'
+			}else if(player.setting.action=='realtime'){
+				document.getElementById("craft"+i+"BorderID").style.transitionDuration = '0s'
+			}else{
+				document.getElementById("craft"+i+"BorderID").style.transitionDuration = '0.05s'
+			}
 			let border = player.craft[i+'Cooldown'].div(n(getCraftCooldown(i)).max(0.001)).min(1).mul(100)
 			if(player['craft'][i+'Cooldown'].lte(0)){border = 100}
 			document.getElementById("craft"+i+"BorderID").style.clipPath = 'inset(0% '+border+'% 0% 0%)'
@@ -232,6 +249,7 @@ function dataDiff(){
 	}
 }
 
+var RESOURCEUNLOCKEDTIMES = 0
 function intervalID(){
 	dataDiff()
 	for(let i in mainButton){
@@ -251,6 +269,7 @@ function intervalID(){
 		}
 	}
 
+	RESOURCEUNLOCKEDTIMES = 0
 	for(let i in resource['main']){
 		resourceUpdate(i)
 		getResourceID(i)
@@ -285,7 +304,15 @@ function intervalID(){
 		if(civics['citizens'][i]['unlocked']!==undefined){
 			unlocked = civics['citizens'][i]['unlocked']()
 		}
-		unlockedLoad(i+'LoadCitizensID', unlocked)
+		unlockedLoad(i+'LoadCitizens', unlocked)
+	}
+
+	for(let i in civics['jobs']){
+		let unlocked = true
+		if(civics['jobs'][i]['unlocked']!==undefined){
+			unlocked = civics['jobs'][i]['unlocked']()
+		}
+		unlockedLoad(i+'LoadCitizenJobs', unlocked && n(getUnemployedJobs(i)).gt(0))
 	}
 
 	for(let i in civics['workshop']){

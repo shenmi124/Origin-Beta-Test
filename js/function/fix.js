@@ -8,6 +8,13 @@ function NumberFix(){
 }
 
 function CitizensFix(){
+    for(let i in civics['citizens']){
+        if(civics['citizens'][i]['unlocked']!==undefined){
+            if(!civics['citizens'][i]['unlocked']() && player['citizens'][i].neq(0)){
+                citizensAllocate(i, player['citizens'][i].neg())
+            }
+        }
+    }
 	for(let i in civics['jobs']){
         let num = n(civics['jobs'][i]['amount']())
         for(let ic in civics['citizens']){

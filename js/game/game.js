@@ -17,48 +17,65 @@ function gameGetPower(){
     let power = n(0)
     if(player.workshop.knife){power = power.add(3)}
     if(player.workshop.armor){power = power.add(2)}
+    if(player.workshop.lance){power = power.add(2)}
     return power
+}
+
+function gameOpenMaking(id){
+    for(let i in main['action']){
+        if(main['action'][i]['data']?.['make']!==undefined){
+            if(i==id){
+                player['action'][i]['make'] = !player['action'][i]['make']
+            }else{
+                player['action'][i]['make'] = false
+            }
+        }
+    }
 }
 
 function gameGetBuildingHappiness(){
     let happy = n(0)
     for(let i in main['building']){
-        if(main['building'][i]['effect']!==undefined){
-            if(main['building'][i]['effect']['other']!==undefined){
-                if(main['building'][i]['effect']['other']['happiness']!==undefined){
-                    happy = happy.add(n(main['building'][i]['effect']['other']['happiness']['effect']()).mul(player['building'][i]))
-                }
-            }
+        if(main['building'][i]['effect']?.['other']?.['happiness']!==undefined){
+            happy = happy.add(n(main['building'][i]['effect']['other']['happiness']['effect']()).mul(player['building'][i+'Allocation'] ?? player['building'][i]))
         }
     }
     return happy
 }
 
-
 function gameGetJobHappiness(){
     let happy = n(0)
     for(let i in civics['citizens']){
-        if(civics['citizens'][i]['effect']!==undefined){
-            if(civics['citizens'][i]['effect']['other']!==undefined){
-                if(civics['citizens'][i]['effect']['other']['happiness']!==undefined){
-                    happy = happy.add(n(civics['citizens'][i]['effect']['other']['happiness']['effect']()).mul(player['citizens'][i]))
-                }
+            if(civics['citizens'][i]['effect']?.['other']?.['happiness']!==undefined){
+                happy = happy.add(n(civics['citizens'][i]['effect']['other']['happiness']['effect']()).mul(player['citizens'][i]))
+            }
+        }
+    return happy
+}
+
+function gameGetForging(){
+    let forging = n(0)
+    for(let i in main['building']){
+        if(main['building'][i]['effect']?.['other']?.['forging']!==undefined){
+            forging = forging.add(n(main['building'][i]['effect']['other']['forging']['effect']()).mul(player['building'][i+'Allocation'] ?? player['building'][i]))
+        }
+    }
+    for(let i in civics['workshop']){
+        if(civics['workshop'][i]['effect']?.['other']?.['forging']!==undefined){
+            if(player['workshop'][i]){
+                forging = forging.add(civics['workshop'][i]['effect']['other']['forging']['effect']())
             }
         }
     }
-    return happy
+    return n(forging).div(100).add(1)
 }
 
 function gameGetWorkshopAction(){
     let action = n(0)
     for(let i in civics['workshop']){
-        if(civics['workshop'][i]['effect']!==undefined){
-            if(civics['workshop'][i]['effect']['other']!==undefined){
-                if(civics['workshop'][i]['effect']['other']['action']!==undefined){
-                    if(player['workshop'][i]){
-                        action = action.add(civics['workshop'][i]['effect']['other']['action']['effect']())
-                    }
-                }
+        if(civics['workshop'][i]['effect']?.['other']?.['action']!==undefined){
+            if(player['workshop'][i]){
+                action = action.add(civics['workshop'][i]['effect']['other']['action']['effect']())
             }
         }
     }
@@ -68,13 +85,9 @@ function gameGetWorkshopAction(){
 function gameGetWorkshopHappiness(){
     let happy = n(0)
     for(let i in civics['workshop']){
-        if(civics['workshop'][i]['effect']!==undefined){
-            if(civics['workshop'][i]['effect']['other']!==undefined){
-                if(civics['workshop'][i]['effect']['other']['happiness']!==undefined){
-                    if(player['workshop'][i]){
-                        happy = happy.add(civics['workshop'][i]['effect']['other']['happiness']['effect']())
-                    }
-                }
+        if(civics['workshop'][i]['effect']?.['other']?.['happiness']!==undefined){
+            if(player['workshop'][i]){
+                happy = happy.add(civics['workshop'][i]['effect']['other']['happiness']['effect']())
             }
         }
     }
@@ -92,7 +105,7 @@ function calcGame(){
 
 function gameLoader(){
 	getStage(null)
-	if(player.game.stage.lte(1)){
+	if(player.game.stage.lte(2)){
 		addLog('这是一个新的存档,要<u style="color: #000" onclick="importSave()">导入</u>吗?','#888')
 		addLog('此版本为测试版,请自行备份存档','#888')
 	}

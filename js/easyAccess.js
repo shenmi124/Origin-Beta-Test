@@ -12,7 +12,7 @@ function getCitizensEffect(citizens,effect){
 
 function nameCorrection(type,old,name){
     if(type=='building'){
-        getByID(old+'BuildingButtonID', name+'('+formatWhole(player['building'][old])+')')
+        getByID(old+'BuildingButtonID', name)
     }
     if(type=='citiznes'){
         getByID(old+'CitizensNameID', name)
@@ -49,7 +49,7 @@ function costText(name,res,cost,type){
     let time = ''
     if(player['resource'][res].lt(cost)){
         if(n(getResourceGain(res)).gt(0)){
-            if(n(getResourceCapped(res)).gte(cost) || n(getResourceCapped(res)).eq(-1)){
+            if(n(getResourceCapped(res)).gte(cost) || getResourceCapped(res)==null){
                 time = '( '+formatTime(n(cost).sub(player['resource'][res]).div(getResourceGain(res)))+' )'
             }else{
                 time = '<grey>( '+format(n(getResourceCapped(res)).sub(cost))+' )</grey>'
@@ -64,21 +64,21 @@ function costText(name,res,cost,type){
     }
     if(type=="workshop" && WORKSHOPBOUGHT){
         return `<span>
-                    <div style="width: 80px; display: table-cell">`+name+`</div>
-                    <div style="width: 55px; display: table-cell; color: rgb(31, 70, 71)">`+format(cost)+`</div>
-                </span><br>`
+            <div style="width: 80px; display: table-cell">`+name+`</div>
+            <div style="width: 55px; display: table-cell; color: rgb(31, 70, 71)">`+format(cost)+`</div>
+        </span><br>`
     }
     return `<span>
-				<span>
-					<div style="width: 80px; display: table-cell">`+name+`</div>
-					<div style="width: 55px; display: table-cell; color: `+(player['resource'][res].gte(cost) ? `rgb(31, 70, 71)` : `red` )+`">`+format(player['resource'][res])+`</div>
-				</span>
-				<span style="width: 30px; display: table-cell; color: rgb(31, 70, 71);"> / 
-				</span>
-				<span style="width: 55px; display: table-cell; color: rgb(31, 70, 71);">
-					<div style="color: `+((n(getResourceCapped(res)).gte(cost) || resource['main'][res]['capped']==undefined) ? `` : `red` )+`">`+format(cost)+`</div>
-				</span>
-			</span>`+time+`<br>`
+        <span>
+            <div style="width: 80px; display: table-cell">`+name+`</div>
+            <div style="width: 55px; display: table-cell; color: `+(player['resource'][res].gte(cost) ? `rgb(31, 70, 71)` : `red` )+`">`+format(player['resource'][res])+`</div>
+        </span>
+        <span style="width: 30px; display: table-cell; color: rgb(31, 70, 71);"> / 
+        </span>
+        <span style="width: 55px; display: table-cell; color: rgb(31, 70, 71);">
+                <div style="color: `+((n(getResourceCapped(res)).gte(cost) || resource['main'][res]['capped']==undefined) ? `` : `red` )+`">`+format(cost)+`</div>
+        </span>
+	</span>`+time+`<br>`
 }
 
 function colorText(id){

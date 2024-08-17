@@ -1,11 +1,23 @@
 var ResourceMain = {
-    explore:{
+    explore: {
         name(){return "探索"},
         color(){return '#2ca02c'},
         gain(){return n(0)},
         unlocked(){return false},
     },
-    citizens:{
+    pollution: {
+        name(){return "污染"},
+        tooltip(){return '每分钟污染会减少1%外加2000点<joker>主打一个致敬</joker>'},
+        color(){return '#603708'},
+        gain(){return n(2000).add(player.resource.pollution.mul(0.01)).div(60).neg()},
+        unlocked(){return getResourceUnlocked('pollution') || player.building.kiln.gte(1)},
+    },
+    node1: {
+        type(){return 'node'},
+        unlocked(){return getResourceUnlocked('pollution')},
+    },
+
+    citizens: {
         name(){return "居民"},
         color(){return '#000'},
         capped(){return n(0)},
@@ -13,19 +25,19 @@ var ResourceMain = {
             gain: {
                 add: {
                     idea(){return n(1).mul(getEfficient('happiness'))},
-                    food(){return n(-0.1).mul(getEfficient('happiness').max(1)).mul(player.building.brewery.add(1))}
+                    food(){return n(-0.1).mul(getEfficient('happiness').max(1))}
                 }
             },
             capped: {
                 add: {
-                    idea(){return n(1000).mul(getEfficient('happiness'))},
+                    idea(){return n(1000)},
                 }
             },
             other:{
                 happiness: {
                     name(){return '幸福度'},
                     effect(){return n(1)},
-                    display(){return ['+','%']},
+                    display(){return ['-','%']},
                 }
             },
         },
@@ -40,7 +52,7 @@ var ResourceMain = {
         },
         unlocked(){return getResourceUnlocked('citizens')},
     },
-    idea:{
+    idea: {
         name(){return "思想"},
         color(){return 'rgb(186, 0, 192)'},
         gain(){return n(0)},
@@ -48,7 +60,20 @@ var ResourceMain = {
         tooltip(){return '默默收集散落的想法,只是思想也会被遗忘'},
         unlocked(){return getResourceUnlocked('citizens')},
     },
-    food:{
+    knowledge: {
+        name(){return "思维"},
+        color(){return 'rgb(0 143 255)'},
+        gain(){return n(0)},
+        capped(){return n(0)},
+        tooltip(){return '非圣人莫能为,非智者莫能先'},
+        unlocked(){return getResourceUnlocked('knowledge') || player.workshop.parchment},
+    },
+    node2: {
+        type(){return 'node'},
+        unlocked(){return getResourceUnlocked('citizens')},
+    },
+
+    food: {
         name(){return "粮食"},
         color(){return '#cf7004'},
         capped(){return n(20)},
@@ -57,21 +82,21 @@ var ResourceMain = {
         tooltip(){return '立足根本'},
         unlocked(){return true},
     },
-    leather:{
+    leather: {
         name(){return "皮革"},
         color(){return '#763f00'},
+        gain(){return n(0)},
         capped(){return n(50)},
-        tooltip(){return '具有贸易价值'},
         unlocked(){return getResourceUnlocked('leather')},
     },
-    dirt:{
+    dirt: {
         name(){return "泥土"},
         color(){return 'rgb(150, 108, 74)'},
         capped(){return n(30)},
         gain(){return n(0)},
         unlocked(){return getResourceUnlocked('dirt')},
     },
-    wood:{
+    wood: {
         name(){return "木材"},
         color(){return 'rgb(180,144,90)'},
         capped(){return n(30)},
@@ -82,7 +107,7 @@ var ResourceMain = {
         },
         unlocked(){return getResourceUnlocked('wood')},
     },
-    stone:{
+    stone: {
         name(){return "石料"},
         color(){return '#666'},
         capped(){return n(50)},
@@ -92,77 +117,98 @@ var ResourceMain = {
         },
         unlocked(){return getResourceUnlocked('stone')},
     },
-    copper:{
+    copper: {
         name(){return "铜"},
         color(){return '#FF9224'},
         capped(){return n(50)},
         gain(){return n(0)},
         unlocked(){return getResourceUnlocked('copper')},
     },
-    iron:{
+    coal: {
+        name(){return "煤"},
+        color(){return 'rgb(23 21 21)'},
+        capped(){return n(500)},
+        gain(){return n(0)},
+        unlocked(){return getResourceUnlocked('coal')},
+    },
+    iron: {
         name(){return "铁"},
         color(){return '#999'},
-        capped(){return n(0)},
+        gain(){return n(0)},
+        capped(){return n(50)},
         unlocked(){return getResourceUnlocked('iron')},
     },
+    steel: {
+        name(){return "钢"},
+        color(){return '#444'},
+        gain(){return n(0)},
+        capped(){return n(50)},
+        unlocked(){return getResourceUnlocked('steel')},
+    },
+    node3: {
+        type(){return 'node'},
+        unlocked(){return getResourceUnlocked('plank')},
+    },
 
-    plank:{
+    plank: {
         name(){return "木板"},
         tooltip(){return '锻造资源'},
         color(){return 'rgb(158 103 19)'},
         gain(){return n(0)},
+        mul(){return gameGetForging()},
         unlocked(){return getResourceUnlocked('plank')},
     },
-    bricks:{
-        name(){return "石砖"},
+    brick: {
+        name(){return "砖"},
         tooltip(){return '锻造资源'},
-        color(){return '#000'},
+        color(){return '#68533f'},
         gain(){return n(0)},
-        unlocked(){return getResourceUnlocked('bricks')},
+        mul(){return gameGetForging()},
+        max(){return n(1000)},
+        unlocked(){return getResourceUnlocked('brick')},
     },
-    tile:{
-        name(){return "瓦"},
+    parchment: {
+        name(){return "羊皮纸"},
         tooltip(){return '锻造资源'},
-        color(){return '#000'},
+        color(){return '#a37d59'},
         gain(){return n(0)},
-        unlocked(){return getResourceUnlocked('tile')},
+        mul(){return gameGetForging()},
+        unlocked(){return getResourceUnlocked('parchment')},
+    },
+    blueprint: {
+        name(){return "蓝图"},
+        tooltip(){return '锻造资源'},
+        color(){return '#00aaff'},
+        gain(){return n(0)},
+        effect: {
+            capped: {
+                add: {
+                    knowledge(){return n(5)}
+                }
+            }
+        },
+        mul(){return gameGetForging()},
+        unlocked(){return getResourceUnlocked('blueprint')},
+    },
+    node4: {
+        type(){return 'node'},
+        unlocked(){return getResourceUnlocked('stardust')},
     },
     
-    meteorite:{
-        name(){return "陨石"},
-        color(){return '#000'},
-        Class(){return 'meteorite'},
-        capped(){return n(0.1)},
-        tooltip(){return '陨石坠落'},
-        unlockAction(){
-            addLog('这些陨石的碎片应该有特殊的用处')
-        },
-        unlocked(){return getResourceUnlocked('meteorite')},
-    },
-    stardust:{
+    stardust: {
         name(){return "星尘"},
         color(){return '#00ffff'},
         Class(){return 'stardust'},
         effect: {
-            capped: {
-                mul: {
-                    meteorite(){return n(10)},
-                }
-            },
             other:{
                 happiness: {
                     name(){return '幸福度'},
-                    effect(){return n(10)},
+                    effect(){return n(2)},
                     display(){return ['+','%']},
                 }
             },
         },
-        tooltip(){
-            return `群星闪耀`
-        },
         unlockAction(){
-            addLog('这是你的第一颗<span class="stardust">星尘</span>')
-            addLog('它可以提高陨石碎片的储存上限与幸福度')
         },
         unlocked(){return getResourceUnlocked('stardust')},
     },

@@ -1,4 +1,15 @@
 let MainCraft = {
+    bloodStone: {
+        name(){return '血石碎片'},
+        capped(){return n(2).mul(n(getCitizensEffect('explorer', 'memory')).add(1)).floor()},
+        tooltip(){
+            let times = formatWhole(player.action.explore.citizens,0)+' <grey>/ '+formatWhole(this.capped(),0)+'</grey>'
+            return times
+        },
+        cooldown(){return n(0)},
+        canClick(){return false},
+        unlocked(){return player.action.explore.bloodStoneFound},
+    },
     citizens: {
         name(){return '原住民'},
         capped(){return n(2).mul(n(getCitizensEffect('explorer', 'memory')).add(1)).floor()},
@@ -15,7 +26,7 @@ let MainCraft = {
         },
         cooldown(){return n(20)},
         canClick(){return player.action.explore.citizens.gte(1) && player.resource.food.gt(0) && player.resource.citizens.lt(getResourceCapped('citizens'))},
-        unlocked(){return player.action.explore.citizensFined==true},
+        unlocked(){return player.action.explore.citizensFound==true},
     },
     collect: {
         name(){return '土堆'},
@@ -38,14 +49,6 @@ let MainCraft = {
                 base(){return n(0.05)},
                 float(){return n(0.1)},
                 unlocked(){return true},
-            },
-            
-            meteorite: {
-                probability(){return n(0.02)},
-                base(){return n(0.2)},
-                float(){return n(0.3)},
-                unlocked(){return true},
-                tooltip(){return '你在泥土中发现了一些<span class="meteorite">陨石碎片</span>'}
             },
         },
         luck(){
@@ -104,10 +107,10 @@ let MainCraft = {
         data:{
             actionDirt(){return []},
         },
-        unlocked(){return player.action.explore.collectFined==true},
+        unlocked(){return player.action.explore.collectFound && !player.workshop.mine},
     },
     stone: {
-        name(){return '石头'},
+        name(){return '石料'},
         capped(){return n(10).mul(n(getCitizensEffect('explorer', 'memory')).add(1)).floor()},
         speed(){
             let base = n(1)
@@ -183,9 +186,9 @@ let MainCraft = {
 
             player.action.explore.stone = player.action.explore.stone.sub(1)
         },
-        cooldown(){return n(30).div(main['craft']['stone']['speed']())},
+        cooldown(){return n(30)},
         canClick(){return player.action.explore.stone.gte(1) && player.workshop.pickaxe},
-        unlocked(){return player.action.explore.stoneFined==true},
+        unlocked(){return player.action.explore.stoneFound && !player.workshop.mine},
     },
     drop: {
         name(){return '树枝'},
@@ -227,7 +230,7 @@ let MainCraft = {
         },
         cooldown(){return n(5)},
         canClick(){return player.action.explore.drop.gte(1)},
-        unlocked(){return player.action.explore.dropFined==true},
+        unlocked(){return player.action.explore.dropFound==true},
     },
     harvest: {
         name(){return '收割'},
@@ -270,7 +273,7 @@ let MainCraft = {
         cooldown(){return n(5)},
         auto(){return n(0)},
         canClick(){return player.action.explore.harvest.gte(1)},
-        unlocked(){return player.action.explore.harvestFined==true},
+        unlocked(){return player.action.explore.harvestFound==true},
     },
     beast: {
         name(){return '野兽'},
@@ -336,11 +339,13 @@ let MainCraft = {
             if(!n(leather).eq(0)){
                 get += '<br><li-hid>'+format(leather)+colorText('leather')[1]
             }
-            addLog('你捕猎到'+formatWhole(mul)+'只野兽,为你带来了'+get)
+            if(player.citizens.hunt.lte(0)){
+                addLog('你捕猎到'+formatWhole(mul)+'只野兽,为你带来了'+get)
+            }
         },
         cooldown(){return n(45)},
         canClick(){return player.action.explore.beast.gte(1) && n(gameGetPower()).gte(1)},
-        unlocked(){return player.action.explore.beastFined==true},
+        unlocked(){return player.action.explore.beastFound},
     },
     tree: {
         name(){return '树'},
@@ -374,6 +379,36 @@ let MainCraft = {
         },
         cooldown(){return n(15)},
         canClick(){return player.action.explore.tree.gte(1) && player.workshop.axe},
-        unlocked(){return player.action.explore.treeFined==true},
+        unlocked(){return player.action.explore.treeFound==true},
+    },
+    meteorite: {
+        name(){return '陨铁'},
+        capped(){return n(5).mul(n(getCitizensEffect('explorer', 'memory')).add(1)).floor()},
+        gain:{
+            iron:{
+                probability(){return n(100)},
+                base(){return n(2)},
+                float(){return n(1)},
+                unlocked(){return true},
+            },
+        },
+        tooltip(){
+            let times = '已标记: '+formatWhole(player.action.explore.meteorite,0)+' <grey>/ '+formatWhole(this.capped(),0)+' (遗忘)</grey>'
+            return times
+        },
+        onClick(){
+            for(i in main['craft']['meteorite']['gain']){
+                let exp = n(Math.random() * 100)
+                if(n(main['craft']['meteorite']['gain'][i]['probability']()).gte(exp)){
+                    let random = n(Math.random()).mul(main['craft']['meteorite']['gain'][i]['float']())
+                    gainResource(i, n(main['craft']['meteorite']['gain'][i]['base']()).add(random))
+                }
+            }
+
+            player.action.explore.meteorite = player.action.explore.meteorite.sub(1)
+        },
+        cooldown(){return n(40)},
+        canClick(){return player.action.explore.meteorite.gte(1)},
+        unlocked(){return player.action.explore.meteoriteFound},
     },
 }

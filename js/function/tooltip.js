@@ -1,15 +1,17 @@
 var TOOLTIPSEL
 
 function loadTooltip(id,id2,onClick=`onclick='document.getElementById("tooltip").style.display="none"`){
-	return `onmouseenter='mouseLoad("`+id+`","`+id2+`")' onmouseleave='document.getElementById("tooltip").style.display="none";window.clearInterval(TOOLTIPSEL)'`+onClick+`;window.clearInterval(TOOLTIPSEL)'`
+	return `onmouseenter='mouseLoad("`+id+`","`+id2+`")' onmouseleave='document.getElementById("tooltip").style.display="none";window.clearInterval(TOOLTIPSEL);TOOLTIPSEL=undefined'`+onClick+`;window.clearInterval(TOOLTIPSEL);TOOLTIPSEL=undefined'`
 }
 
 function mouseLoad(id,id2){
 	document.getElementById("tooltip").style.display = ''
 	tooltip(id,id2)
-	TOOLTIPSEL = self.setInterval(function(){
-		tooltip(id,id2)
-	},50)
+	if(TOOLTIPSEL==undefined){
+		TOOLTIPSEL = self.setInterval(function(){
+			tooltip(id, id2)
+		},50)
+	}
 }
 
 function tooltipGain(boolean,name,base,mul,gainAll,id,type,self){
@@ -148,7 +150,7 @@ function tooltipDirectlyCapped(name,base,cappedAll,id){
 
 function tooltipDirectlyCappedMul(boolean,name,amount,cappedAll,id){
 	cappedAll = formatScientific(cappedAll, 8)
-	if(n(format(cappedAll)).eq(format(getResourceGain(id)))){
+	if(n(format(cappedAll)).eq(format(getResourceCapped(id)))){
 		cappedAll = '<u>'+formatA(cappedAll)+'</u>'
 	}else{
 		cappedAll = formatA(cappedAll)
@@ -191,9 +193,9 @@ function tooltip(id,id2){
 		if(resource['main'][id]['effect']?.['gain']?.['add']!==undefined){
 			for(let iga in resource['main'][id]['effect']['gain']['add']){
 				if(n(iga).gt(0)){
-					effect += effectText(colorText(iga)[1], '+', resource['main'][id]['effect']['gain']['add'][iga](), '/s', player['resource'][id])
+					effect += effectText(colorText(iga)[1], '+', getResourceEffectGainBase(id, iga), '/s', player['resource'][id])
 				}else{
-					effect += effectText(colorText(iga)[1], '', resource['main'][id]['effect']['gain']['add'][iga](), '/s', player['resource'][id], 'red')
+					effect += effectText(colorText(iga)[1], '', getResourceEffectGainBase(id, iga), '/s', player['resource'][id], 'red')
 				}
 			}
 		}
@@ -241,7 +243,7 @@ function tooltip(id,id2){
 				if(resource['main'][i]['effect']?.['gain']?.['add']!==undefined){
 					for(let ig in resource['main'][i]['effect']['gain']['add']){
 						let gainName = '资源: '+resource['main'][i]['name']()
-						let gainBase = resource['main'][i]['effect']['gain']['add'][ig]()
+						let gainBase = getResourceEffectGainBase(i, ig)
 						let gainMul = player['resource'][i]
 						if(id==ig && !n(gainBase).mul(gainMul).eq(0)){
 							gainAll = gainAll.add(n(gainBase).mul(gainMul))
@@ -267,7 +269,7 @@ function tooltip(id,id2){
 						let gainName = '建筑: '+main['building'][i]['name']()
 						let gainBase = getBuildGainBase(i, ig)
 						let gainMul = player['building'][i+'Allocation'] ?? player['building'][i]
-						if(id==ig && !n(gainBase).mul(gainMul).eq(0)){
+						if(id==ig && !n(getBuildGain(i, ig)).eq(0)){
 							gainAll = gainAll.add(n(gainBase).mul(gainMul))
 							gain += tooltipGain(n(gainBase).mul(gainMul).gte(0), gainName, gainBase, gainMul, gainAll, id, 'building', i)
 						}
@@ -278,7 +280,7 @@ function tooltip(id,id2){
 				if(civics['citizens'][i]['effect']?.['gain']?.['add']!==undefined){
 					for(let ig in civics['citizens'][i]['effect']['gain']['add']){
 						let gainName = '村民: '+civics['citizens'][i]['name']()
-						let gainBase = nc(civics['citizens'][i]['effect']['gain']['add'][ig]())
+						let gainBase = nc(getCitizensGainBase(i, ig))
 						let gainMul = player.citizens[i]
 						if(id==ig && !n(gainBase).mul(gainMul).eq(0)){
 							gainAll = gainAll.add(n(gainBase).mul(gainMul))
@@ -290,13 +292,13 @@ function tooltip(id,id2){
 
 
 			if(resource['main'][id]['mul']!==undefined){
-				gainAll = gainAll.mul(resource['main'][id]['mul']())
-				if(!gainAll.eq(1)){
-					let gainName = '基础'
-					let gainBase = resource['main'][id]['mul']()
+				let gainName = '倍率'
+				let gainBase = resource['main'][id]['mul']()
+				if(gainBase.neq(1)){
 					if(resource['main'][id]['mulTooltip']!==undefined){
 						gainName = resource['main'][id]['mulTooltip']()
 					}
+					gainAll = gainAll.mul(resource['main'][id]['mul']())
 					gain += tooltipDirectlyGainMul(n(gainBase).gt(1), gainName, gainBase, gainAll, id)
 				}
 			}
@@ -331,29 +333,6 @@ function tooltip(id,id2){
 					}
 				}
 			}
-			/*for(let i in civics['workshop']){
-				if(civics['workshop'][i]['effect']!==undefined){
-					if(civics['workshop'][i]['effect']['resource']!==undefined){
-						let gainBase = n(1)
-						for(let iw in civics['workshop'][i]['effect']['resource']){
-							if(player['workshop'][i]){
-								if(civics['workshop'][i]['effect']['resource'][iw]['gain']!==undefined){
-									if(civics['workshop'][i]['effect']['resource'][iw]['gain']['mul']!==undefined){
-										if(id==iw && !n(civics['workshop'][i]['effect']['resource'][iw]['gain']['mul']()).eq(1)){
-											gainBase = gainBase.mul(civics['workshop'][i]['effect']['resource'][iw]['gain']['mul']())
-										}
-									}
-								}
-							}
-						}
-						let gainName = '工坊'
-						if(!n(gainBase).eq(1)){
-							gainAll = gainAll.mul(gainBase)
-							mul += tooltipDirectlyGainMul(n(gainBase).mul(gainMul).gt(1), gainName, gainBase, gainAll, id)
-						}
-					}
-				}
-			}*/
 
 			gainAll = formatScientific(gainAll, 8)
 			gain = "<hr><a style='font-size: 14px'>资源生产</a>" + gain
@@ -403,11 +382,27 @@ function tooltip(id,id2){
 				if(main['building'][i]['effect']?.['capped']?.['add']!==undefined){
 					for(let ib in main['building'][i]['effect']['capped']['add']){
 						let cappedName = '建筑: '+main['building'][i]['name']()
-						let cappedBase = main['building'][i]['effect']['capped']['add'][ib]()
+						let cappedBase = getBuildCappedBase(i, ib)
 						let cappedMul = player['building'][i+'Allocation'] ?? player['building'][i]
 						if(id==ib && !n(cappedBase).mul(cappedMul).eq(0)){
 							cappedAll = cappedAll.add(n(cappedBase).mul(cappedMul))
 							capped += tooltipCapped(cappedName, cappedBase, cappedMul, cappedAll, id, 'building', i)
+						}
+					}
+				}
+			}
+			for(let i in civics['workshop']){
+				if(player['workshop'][i]){
+					if(civics['workshop'][i]['effect']?.['resource']!==undefined){
+						for(let iw in civics['workshop'][i]['effect']['resource']){
+							if(civics['workshop'][i]['effect']['resource'][iw]['capped']?.['add']!==undefined){
+								let gainName = '工坊: '+civics['workshop'][i]['name']()
+								let gainBase = civics['workshop'][i]['effect']['resource'][iw]['capped']['add']()
+								if(id==iw && !n(gainBase).eq(0)){
+									cappedAll = cappedAll.add(gainBase)
+									capped += tooltipDirectlyCapped(gainName, gainBase, cappedAll, id)
+								}
+							}
 						}
 					}
 				}
@@ -481,8 +476,20 @@ function tooltip(id,id2){
 		if(main['action'][id]['name']!=undefined){
 			name = main['action'][id]['name']()
 		}
+		let action = getActionAuto(id)
+		if(hasActionClick(id)){
+			let base = n(1)
+			if(main['action'][id]['player']!==undefined){
+				base = main['action'][id]['player']()
+			}
+			action = action.add(n(base).mul(getEfficient('action')))
+		}
+		let time = '<hr><left>'+format(player['action'][id+'Cooldown'])+' / '+format(getActionCooldown(id))+' | '+format(n(player['action'][id+'Cooldown']).div(getActionCooldown(id)).mul(100))+'% | '+format(n(getActionCooldown(id)).div(action))+'s</left>'
+		if(isNaN(n(getActionCooldown(id)).div(action))){
+			time = '<hr><left>'+format(player['action'][id+'Cooldown'])+' / '+format(getActionCooldown(id))+'</left>'
+		}
 		if(main['action'][id]['tooltip']!=undefined){
-			return getTooltipID(name+'<hr><small>'+main['action'][id]['tooltip']())
+			return getTooltipID(name+'<hr><small>'+main['action'][id]['tooltip']()+time)
 		}else{
 			return getTooltipID('未命名')
 		}
@@ -512,28 +519,61 @@ function tooltip(id,id2){
 		let gain = ''
 		if(main['building'][id]['effect']?.['gain']?.['add']!==undefined){
 			for(let i in main['building'][id]['effect']['gain']['add']){
-				if(!n(main['building'][id]['effect']['gain']['add'][i]()).eq(0)){
+				if(n(getBuildGainBase(id, i)).neq(0)){
 					gainhr = `<hr><a style='font-size: 14px'>生产</a>`
-					gain += effectText(colorText(i)[1], '+', getBuildGainBase(id, i), '/s', player['building'][id+'Allocation'] ?? player['building'][id], null, true)
+					if(n(getBuildGainBase(id, i)).gt(0)){
+						gain += effectText(colorText(i)[1], '+', getBuildGainBase(id, i), '/s', player['building'][id+'Allocation'] ?? player['building'][id], null, true)
+					}else{
+						gain += effectText(colorText(i)[1], '-', n(getBuildGainBase(id, i)).neg(), '/s', player['building'][id+'Allocation'] ?? player['building'][id], 'red', true)
+					}
 				}
 			}
 		}
-		gain += ''
 
 		let cappedhr = ''
 		let capped = ''
 		if(main['building'][id]['effect']?.['capped']?.['add']!==undefined){
 			for(let i in main['building'][id]['effect']['capped']['add']){
-				if(!n(main['building'][id]['effect']['capped']['add'][i]()).eq(0)){
+				if(n(getBuildCappedBase(id, i)).neq(0)){
 					cappedhr = `<hr><a style='font-size: 14px'>上限</a>`
 					capped += effectText(colorText(i)[1], '+', getBuildCappedBase(id, i), '', player['building'][id+'Allocation'] ?? player['building'][id], null)
 				}
 			}
 		}
 
+		let reshr = ''
+		let res = ''
+		if(main['building'][id]['effect']?.['resource']!==undefined){
+			for(let i in main['building'][id]['effect']['resource']){
+				if(main['building'][id]['effect']['resource'][i]['gain']?.['add']!==undefined){
+					for(let iga in main['building'][id]['effect']['resource'][i]['gain']?.['add']){
+						if(main['building'][id]['effect']['resource'][i]['gain']?.['add'][iga]['addmul']!==undefined){
+							reshr = `<hr><a style='font-size: 14px'>资源</a>`
+                            if(n(resource['main'][i]['effect']['gain']['add'][iga]()).gt(0)){
+                                res += effectText(colorText(iga)[1], '生产+', main['building'][id]['effect']['resource'][i]['gain']['add'][iga]['addmul'](), '<mul>×</mul>', player['building'][id+'Allocation'] ?? player['building'][id], null, true)
+                            }else{
+                                res += effectText(colorText(iga)[1], '消耗+', main['building'][id]['effect']['resource'][i]['gain']['add'][iga]['addmul'](), '<mul>×</mul>', player['building'][id+'Allocation'] ?? player['building'][id], 'red', true)
+                            }
+						}
+					}
+				}
+			}
+		}
+
+		let citizenshr = ''
+		let citizens = ''
+		if(main['building'][id]['effect']?.['citizens']!==undefined){
+			for(let i in main['building'][id]['effect']['citizens']){
+				if(main['building'][id]['effect']['citizens'][i]['effect']?.['addmul']!==undefined){
+					citizenshr = `<hr><a style='font-size: 14px'>居民</a>`
+					citizens += effectText(civics['citizens'][i]['name'](), '效率+', main['building'][id]['effect']['citizens'][i]['effect']?.['addmul'](), '<mul>×</mul>', player['building'][id+'Allocation'] ?? player['building'][id], null)
+				}
+			}
+		}
+
 		let otherhr = ''
 		let other = ''
-		if(main['building'][id]['effect']['other']!==undefined){
+		if(main['building'][id]['effect']?.['other']!==undefined){
 			for(let i in main['building'][id]['effect']['other']){
 				otherhr = `<hr><a style='font-size: 14px'>特殊</a>`
 				other += effectText(main['building'][id]['effect']['other'][i]['name'](), main['building'][id]['effect']['other'][i]['display']()[0], main['building'][id]['effect']['other'][i]['effect'](), main['building'][id]['effect']['other'][i]['display']()[1], player['building'][id+'Allocation'] ?? player['building'][id], null, true)
@@ -546,7 +586,7 @@ function tooltip(id,id2){
 				amount = '<hr>('+formatWhole(player['building'][id+'Allocation'],0)+' / '+formatWhole(player['building'][id],0)+')'
 			}
 		}
-		return getTooltipID(name+'<small>'+amount+bas+cost+gainhr+gain+cappedhr+capped+otherhr+other+'</samll>')
+		return getTooltipID(name+'<small>'+amount+bas+cost+gainhr+gain+cappedhr+capped+reshr+res+citizenshr+citizens+otherhr+other+'</samll>')
 	}
 
 	if(id2=='LoadTooltipCraft'){
@@ -554,8 +594,20 @@ function tooltip(id,id2){
 		if(main['craft'][id]['name']!=undefined){
 			name = main['craft'][id]['name']()
 		}
+		let craft = getCraftAuto(id)
+		if(hasCraftClick(id)){
+			let base = n(1)
+			if(main['craft'][id]['player']!==undefined){
+				base = main['craft'][id]['player']()
+			}
+			craft = craft.add(n(base).mul(getEfficient('action')))
+		}
+		let time = '<hr><left>'+format(player['craft'][id+'Cooldown'])+' / '+format(getCraftCooldown(id))+' | '+format(n(player['craft'][id+'Cooldown']).div(getCraftCooldown(id)).mul(100))+'% | '+format(n(getCraftCooldown(id)).div(craft))+'s</left>'
+		if(isNaN(n(getCraftCooldown(id)).div(craft))){
+			time = '<hr><left>'+format(player['craft'][id+'Cooldown'])+' / '+format(getCraftCooldown(id))+'</left>'
+		}
 		if(main['craft'][id]['tooltip']!=undefined){
-			return getTooltipID(name+'<hr><small>'+main['craft'][id]['tooltip']())
+			return getTooltipID(name+'<hr><small>'+main['craft'][id]['tooltip']()+time)
 		}else{
 			return getTooltipID('未命名')
 		}
@@ -571,14 +623,18 @@ function tooltip(id,id2){
 		let actionhr = ''
 		if(civics['citizens'][id]['effect']?.['action']!==undefined){
 			for(let ia in civics['citizens'][id]['effect']['action']){
-				actionhr = `<hr><a style='font-size: 14px'>行动</a>`
-				action += effectText(main['action'][ia]['name'](), '', nc(civics['citizens'][id]['effect']['action'][ia]()), '/s', player.citizens[id])
+				if(n(civics['citizens'][id]['effect']['action'][ia]()).neq(0)){
+					actionhr = `<hr><a style='font-size: 14px'>行动</a>`
+					action += effectText(main['action'][ia]['name'](), '', getCitizensActionBase(id, ia), '/s', player.citizens[id])
+				}
 			}
 		}
 		if(civics['citizens'][id]['effect']?.['craft']!==undefined){
 			for(let ic in civics['citizens'][id]['effect']['craft']){
-				actionhr = `<hr><a style='font-size: 14px'>行动</a>`
-				action += effectText(main['craft'][ic]['name'](), '', nc(civics['citizens'][id]['effect']['craft'][ic]()), '/s', player.citizens[id])
+				if(n(civics['citizens'][id]['effect']['craft'][ic]()).neq(0)){
+					actionhr = `<hr><a style='font-size: 14px'>行动</a>`
+					action += effectText(main['craft'][ic]['name'](), '', getCitizensCraftBase(id, ic), '/s', player.citizens[id])
+				}
 			}
 		}
 		
@@ -586,8 +642,13 @@ function tooltip(id,id2){
 		let gainhr = ''
 		if(civics['citizens'][id]['effect']?.['gain']?.['add']!==undefined){
 			for(let i in civics['citizens'][id]['effect']['gain']['add']){
-				gainhr = `<hr><a style='font-size: 14px'>生产</a>`
-				gain += effectText(colorText(i)[1], '+', civics['citizens'][id]['effect']['gain']['add'][i](), '/s', player.citizens[id])
+				if(n(civics['citizens'][id]['effect']['gain']['add'][i]()).gt(0)){
+					gainhr = `<hr><a style='font-size: 14px'>生产</a>`
+					gain += effectText(colorText(i)[1], '+', getCitizensGainBase(id, i), '/s', player.citizens[id])
+				}else if(n(civics['citizens'][id]['effect']['gain']['add'][i]()).lt(0)){
+					gainhr = `<hr><a style='font-size: 14px'>生产</a>`
+					gain += effectText(colorText(i)[1], '', getCitizensGainBase(id, i), '/s', player.citizens[id], 'red')
+				}
 			}
 		}
 
@@ -595,8 +656,10 @@ function tooltip(id,id2){
 		let otherhr = ''
 		if(civics['citizens'][id]['effect']?.['other']!==undefined){
 			for(let i in civics['citizens'][id]['effect']['other']){
-				otherhr = `<hr><a style='font-size: 14px'>特殊</a>`
-				other += effectText(civics['citizens'][id]['effect']['other'][i]['name'](), civics['citizens'][id]['effect']['other'][i]['display']()[0], civics['citizens'][id]['effect']['other'][i]['effect'](), civics['citizens'][id]['effect']['other'][i]['display']()[1], player.citizens[id])
+				if(n(civics['citizens'][id]['effect']['other'][i]['effect']()).neq(0)){
+					otherhr = `<hr><a style='font-size: 14px'>特殊</a>`
+					other += effectText(civics['citizens'][id]['effect']['other'][i]['name'](), civics['citizens'][id]['effect']['other'][i]['display']()[0], civics['citizens'][id]['effect']['other'][i]['effect'](), civics['citizens'][id]['effect']['other'][i]['display']()[1], player.citizens[id])
+				}
 			}
 		}
 		return getTooltipID(civics['citizens'][id]['name']()+'<small>'+too+actionhr+action+gainhr+gain+otherhr+other+'</small>')
@@ -636,18 +699,103 @@ function tooltip(id,id2){
 			for(let i in civics['workshop'][id]['effect']['resource']){
 				if(civics['workshop'][id]['effect']['resource'][i]['gain']?.['mul']!==undefined){
 					gainhr = `<hr><a style='font-size: 14px'>生产</a>`
-					gain += effectText(colorText(i)[1], '产量<mul>×</mul>', civics['workshop'][id]['effect']['resource'][i]['gain']['mul'](), '', null, null, false)
+					gain += effectText(colorText(i)[1], '<mul>×</mul>', civics['workshop'][id]['effect']['resource'][i]['gain']['mul'](), '', null, null, false)
+				}
+			}
+		}
+
+		let cappedhr = ''
+		let capped = ''
+		if(civics['workshop'][id]['effect']?.['resource']!==undefined){
+			for(let i in civics['workshop'][id]['effect']['resource']){
+				if(civics['workshop'][id]['effect']['resource'][i]['capped']?.['add']!==undefined){
+					cappedhr = `<hr><a style='font-size: 14px'>上限</a>`
+					capped += effectText(colorText(i)[1], '+', civics['workshop'][id]['effect']['resource'][i]['capped']['add'](), '', null, null, false)
+				}
+				if(civics['workshop'][id]['effect']['resource'][i]['capped']?.['mul']!==undefined){
+					cappedhr = `<hr><a style='font-size: 14px'>上限</a>`
+					capped += effectText(colorText(i)[1], '<mul>×</mul>', civics['workshop'][id]['effect']['resource'][i]['capped']['mul'](), '', null, null, false)
+				}
+			}
+		}
+
+		let actionhr = ''
+		let action = ''
+		if(civics['workshop'][id]['effect']?.['action']!==undefined){
+			for(let i in civics['workshop'][id]['effect']['action']){
+				if(civics['workshop'][id]['effect']['action'][i]['speed']?.['mul']!==undefined){
+					actionhr = `<hr><a style='font-size: 14px'>行动</a>`
+					action += effectText(main['action'][i]['name'](), '速度<mul>×</mul>', civics['workshop'][id]['effect']['action'][i]['speed']['mul'](), '', null, null, false)
 				}
 			}
 		}
 	
+		let crafthr = ''
+		let craft = ''
+		if(civics['workshop'][id]['effect']?.['craft']!==undefined){
+			for(let i in civics['workshop'][id]['effect']['craft']){
+				if(civics['workshop'][id]['effect']['craft'][i]['speed']?.['mul']!==undefined){
+					crafthr = `<hr><a style='font-size: 14px'>行动</a>`
+					craft += effectText(main['craft'][i]['name'](), '速度<mul>×</mul>', civics['workshop'][id]['effect']['craft'][i]['speed']['mul'](), '', null, null, false)
+				}
+			}
+		}
+
+		let markdownhr = ''
+		let markdown = ''
+		if(civics['workshop'][id]['effect']?.['markdown']?.['building']!==undefined){
+			for(let i in civics['workshop'][id]['effect']['markdown']['building']){
+				markdownhr = `<hr><a style='font-size: 14px'>减价</a>`
+				if(civics['workshop'][id]['effect']['markdown']['building'][i]['effect']?.['mul']!==undefined){
+					markdown += effectText(main['building'][i]['name'](), '基础价格<mul>÷</mul>', civics['workshop'][id]['effect']['markdown']['building'][i]['effect']?.['mul'](), '', null, null, false)
+				}
+			}
+		}
+
 		let buildinghr = ''
 		let building = ''
 		if(civics['workshop'][id]['effect']?.['building']!==undefined){
 			for(let i in civics['workshop'][id]['effect']['building']){
+				if(civics['workshop'][id]['effect']['building'][i]['gain']?.['add']!==undefined){
+					for(let iga in civics['workshop'][id]['effect']['building'][i]['gain']['add']){
+						if(civics['workshop'][id]['effect']['building'][i]['gain']['add'][iga]['mul']!==undefined){
+							buildinghr = `<hr><a style='font-size: 14px'>建筑</a>`
+							if(n(main['building'][i]['effect']['gain']['add'][iga]()).lt(0)){
+								building += effectText(main['building'][i]['name'](), colorText(iga)[1]+'消耗<mul>×</mul>', civics['workshop'][id]['effect']['building'][i]['gain']['add'][iga]['mul'](), '', null, null, false)
+							}else{
+								building += effectText(main['building'][i]['name'](), colorText(iga)[1]+'生产<mul>×</mul>', civics['workshop'][id]['effect']['building'][i]['gain']['add'][iga]['mul'](), '', null, null, false)
+							}
+						}
+					}
+				}
+
+
+				if(civics['workshop'][id]['effect']['building'][i]['capped']?.['add']!==undefined){
+					if(civics['workshop'][id]['effect']['building'][i]['capped']?.['add']!==undefined){
+						for(let iga in civics['workshop'][id]['effect']['building'][i]['capped']['add']){
+							if(civics['workshop'][id]['effect']['building'][i]['capped']['add'][iga]['add']!==undefined){
+								buildinghr = `<hr><a style='font-size: 14px'>建筑</a>`
+								building += effectText(main['building'][i]['name'](), colorText(iga)[1]+'上限+', civics['workshop'][id]['effect']['building'][i]['capped']['add'][iga]['add'](), '', null, null, false)
+							}
+						}
+					}
+				}
+
+
 				if(civics['workshop'][id]['effect']['building'][i]['effect']?.['mul']!==undefined){
 					buildinghr = `<hr><a style='font-size: 14px'>建筑</a>`
 					building += effectText(main['building'][i]['name'](), '效率<mul>×</mul>', civics['workshop'][id]['effect']['building'][i]['effect']['mul'](), '', null, null, false)
+				}
+			}
+		}
+
+		let citizenshr = ''
+		let citizens = ''
+		if(civics['workshop'][id]['effect']?.['citizens']!==undefined){
+			for(let i in civics['workshop'][id]['effect']['citizens']){
+				if(civics['workshop'][id]['effect']['citizens'][i]['effect']?.['mul']!==undefined){
+					citizenshr = `<hr><a style='font-size: 14px'>居民</a>`
+					citizens += effectText(civics['citizens'][i]['name'](), '效率<mul>×</mul>', civics['workshop'][id]['effect']['citizens'][i]['effect']['mul'](), '', null, null, false)
 				}
 			}
 		}
@@ -670,7 +818,7 @@ function tooltip(id,id2){
 			}
 		}
 		cost += '</left>'
-		return getTooltipID(civics['workshop'][id]['name']()+keep+'<small>'+too+cost+gainhr+gain+buildinghr+building+otherhr+other+unlockedhr+unlocked+'</samll>')
+		return getTooltipID(civics['workshop'][id]['name']()+keep+'<small>'+too+cost+gainhr+gain+cappedhr+capped+actionhr+crafthr+craft+action+markdownhr+markdown+buildinghr+building+citizenshr+citizens+otherhr+other+unlockedhr+unlocked+'</samll>')
 	}
 
 	if(id2=='efficient'){

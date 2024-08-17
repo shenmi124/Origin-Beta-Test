@@ -73,10 +73,24 @@ function componentBuilding(id){
 
 function componentCitizens(id){		
     getByID(id+'LoadCitizensNameID', `<tooltip `+loadTooltip(id,'LoadTooltipCitizens',null)+`><div id="`+id+`CitizensNameID" style="display: inline-grid; width: 120px">`+civics['citizens'][id]['name']()+`</div></tooltip>`)
-    getByID(id+'LoadCitizensAllocatedID', '<div style="display: inline-grid; width: 60px">'+formatWhole(player['citizens'][id])+'</div>')
+    let allocated = formatWhole(player['citizens'][id])
+    let allocatedMax = n(Infinity)
+    for(let i in civics['citizens'][id]['allocated']){
+        let display = true
+        if(civics['jobs'][i]['display']!==undefined){
+            display = civics['jobs'][i]['display']()
+        }
+        if(display){
+            allocatedMax = allocatedMax.min(n(civics['jobs'][i]['amount']()).div(civics['citizens'][id]['allocated'][i]()).floor())
+        }
+    }
+    if(allocatedMax.neq(Infinity)){
+        allocated += ' / '+formatWhole(allocatedMax)+''
+    }
+    getByID(id+'LoadCitizensAllocatedID', '<div style="display: inline-grid; width: 100px">'+allocated+'</div>')
     getByID(id+'LoadCitizensButtonID', `
-        <div style="display: inline-grid; width: 30px"><button onclick="allocateCitizens('`+id+`', -1); CitizensFix()" style="display: inline-grid;" class="citizens"> < </button></div>
-        <div style="display: inline-grid; width: 30px"><button onclick="allocateCitizens('`+id+`', 1); CitizensFix()" style="display: inline-grid;" class="citizens"> > </button></div>
+        <div style="display: inline-grid; width: 30px"><button onclick="citizensAllocate('`+id+`', -1); CitizensFix()" style="display: inline-grid;" class="citizens"> < </button></div>
+        <div style="display: inline-grid; width: 30px"><button onclick="citizensAllocate('`+id+`', 1); CitizensFix()" style="display: inline-grid;" class="citizens"> > </button></div>
     `)
 }
 

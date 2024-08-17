@@ -5,11 +5,14 @@ function statsDiff(){
             <div style="display: inline-grid; width: 100px">真实时间</div>
             <div style="display: inline-grid; width: 500px">`+formatTime(player.game.time)+`</div>
             <br>
-            <div style="display: inline-grid; width: 100px">游戏时间</div>
-            <div style="display: inline-grid; width: 500px">`+getGametime()+`</div>
-            <br>
             <div style="display: inline-grid; width: 100px">点击次数</div>
             <div style="display: inline-grid; width: 500px">`+formatWhole(player.data.click)+`</div>
+            <br>
+            <div style="display: inline-grid; width: 100px">游戏时间</div>
+            <div style="display: inline-grid; width: 500px">`+getGametime()[0]+`</div>
+            <br>
+            <div style="display: inline-grid; width: 100px">游戏阶段</div>
+            <div style="display: inline-grid; width: 500px">`+getWorldTime()+`</div>
             <br>
             `
 
@@ -22,6 +25,12 @@ function statsDiff(){
                 <br>`
     for(let i in resource['main']){
         if(player['resource'][i+'Unlocked']){
+            if(resource['main'][i]['type']!==undefined){
+                if(resource['main'][i]['type']()=='node'){
+                    res += `<br>`
+                    continue
+                }
+            }
             resU = true
             res += `
             <div style="display: inline-grid; width: 100px">`+colorText(i)[1]+`</div>
@@ -173,7 +182,7 @@ function statsDiff(){
             }
             workshop += `
             <div style="display: inline-grid; width: 100px; color: `+color+`">`+civics['workshop'][i]['name']()+`</div>
-            <div style="display: inline-grid; width: 0px"></div>`+hbr
+            `+hbr
         }
     }
 

@@ -15,7 +15,7 @@ function loadMain(){
 				subTab += `<span id="`+i+'_'+is+`SubMainTabID" class="maintab subtab sub_`+is+`" onclick="showSubTab('`+i+`', '`+is+`')">`+mainButton[i]['subTab'][is]['name']()+`</span>`
 				subMain += `<div id="subtab_`+i+'_'+is+`">`+mainButton[i]['subTab'][is]['data']()+`</div>`
 			}
-			getByID('tab_'+i, subTab+subMain)
+			getByID('tab_'+i, subTab+'<subTab>'+subMain+'</subTab>')
 		}
 	}
 	buttonStr += `<div style="border-top: 1px solid #000; margin-top: 5px"></div>`
@@ -46,7 +46,7 @@ function loadBase(){
 	}
 	getByID('loadResource', resourceStr)
 	for(let i in resource['main']){
-		getByID(i+'LoadResource', `<div style="border-right: 2px solid #999"><a id="`+i+`LoadResourceTitleID"></a><a id="`+i+`LoadResourceID"></a><a id="`+i+`LoadResourceBorderID"></a></div>`)
+		getByID(i+'LoadResource', `<div id="`+i+`LoadResourceBackground" style="border-right: 2px solid #999"><a id="`+i+`LoadResourceTitleID"></a><a id="`+i+`LoadResourceID"></a><a id="`+i+`LoadResourceBorderID"></a></div>`)
 		getResourceTitleID(i+'LoadResource', i)
 	}
 
@@ -83,19 +83,19 @@ function loadBase(){
 	let citizensStr = ''
 	citizensStr += `居民 <a id="CitizensTip" style="color: grey"></a><br>`
 	for(let i in civics['citizens']){
-		citizensStr += '<div style="transition-duration: 1s; margin-top: 3px; margin-left: 10px" id="'+i+'LoadCitizensID"></div>'
+		citizensStr += '<div style="transition-duration: 1s; margin-top: 3px; margin-left: 10px" id="'+i+'LoadCitizens"></div>'
 	}
 	citizensStr += `<br><a id="CitizenJobs">*未分配</a><br>`
 	for(let i in civics['jobs']){
-		citizensStr += '<div style="transition-duration: 1s; margin-top: 3px; margin-left: 10px" id="'+i+'LoadCitizenJobsID"></div>'
+		citizensStr += '<div style="transition-duration: 1s; margin-top: 3px; margin-left: 10px" id="'+i+'LoadCitizenJobs"></div>'
 	}
 	getByID('citizensLoadID',citizensStr)
 	for(let i in civics['citizens']){
-		getByID(i+'LoadCitizensID',`<a style="display: inline-flex" id="`+i+`LoadCitizensNameID"></a><a style="display: inline-flex" id="`+i+`LoadCitizensAllocatedID"></a><a style="display: inline-flex" id="`+i+`LoadCitizensButtonID"></a>`)
+		getByID(i+'LoadCitizens',`<a style="display: inline-flex" id="`+i+`LoadCitizensNameID"></a><a style="display: inline-flex" id="`+i+`LoadCitizensAllocatedID"></a><a style="display: inline-flex" id="`+i+`LoadCitizensButtonID"></a>`)
 		componentCitizens(i)
 	}
 	for(let i in civics['jobs']){
-		getByID(i+'LoadCitizenJobsID',`<a style="display: inline-flex" id="`+i+`CitizenJobsNameLoadID"></a><a style="display: inline-flex" id="`+i+`CitizenJobsAllocatedLoadID"></a>`)
+		getByID(i+'LoadCitizenJobs',`<a style="display: inline-flex" id="`+i+`CitizenJobsNameLoadID"></a><a style="display: inline-flex" id="`+i+`CitizenJobsAllocatedLoadID"></a>`)
 		componentJobs(i)
 	}
 	getByID('CitizensTip',CitizensTip())

@@ -1,3 +1,13 @@
+function getWorldTime(){
+    if(player.workshop.camp){
+        return '蒸汽时代'
+    }
+    if(player.workshop.campfire){
+        return '手工工场时代'
+    }
+    return ''
+}
+
 function getGametime(){
     let time = player.game.time.mul(600)
     let year = n(time).div(31104000)
@@ -10,6 +20,7 @@ function getGametime(){
     let logDay = n(day).floor()+' 天 '
     let logHour = ''
     let logMinute = ''
+    let night = true
     if(player.workshop.minute){
         logMinute = n(minute%60).floor()+' 分 '
     }
@@ -24,11 +35,22 @@ function getGametime(){
         logYear = n(year).floor()+' 年 '
         logMonth = n(month%12).floor()+' 月 '
     }
-    if(player.workshop.day){
-        getByID('logTime', ' - '+logYear+logMonth+logDay+logHour+logMinute)
-        document.title = '起源 - '+logYear+logMonth+logDay+logHour
+    if(n(hour%24).floor().gte(18) || n(hour%24).floor().lte(5)){
+        night = true
+    }else{
+        night = false
     }
-    return logYear+logMonth+logDay+logHour
+    if(player.workshop.day){
+        let logTime = ''
+        if(night){
+            logTime = ' <grey>(夜晚)</grey>'
+        }else{
+            logTime = ''
+        }
+        getByID('logTime', '<small><grey>'+getWorldTime()+'</grey><br>'+logYear+logMonth+logDay+logHour+logMinute+logTime+'</small>')
+        document.title = '起源 - '+logYear+logMonth+logDay
+    }
+    return [logYear+logMonth+logDay+logHour, night]
 }
 
 function getStage(num){
