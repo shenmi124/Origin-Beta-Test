@@ -198,8 +198,9 @@ var ResourceMain = {
     
     stardust: {
         name(){return "瓶装星尘"},
-        color(){return '#00ffff'},
+        color(){return '#0000ff88'},
         Class(){return 'stardust'},
+        capped(){return n(1)},
         effect: {
             other:{
                 happiness: {

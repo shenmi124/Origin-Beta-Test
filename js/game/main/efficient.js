@@ -38,7 +38,7 @@ let efficient = {
         },
         resource: {
             name(){return '资源影响'},
-            effect(){return player.resource.stardust.mul(5)},
+            effect(){return player.resource.stardust.mul(2)},
         },
         building: {
             name(){return '建筑影响'},

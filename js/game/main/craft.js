@@ -50,6 +50,13 @@ let MainCraft = {
                 float(){return n(0.1)},
                 unlocked(){return true},
             },
+
+            stardust: {
+                probability(){return n(0.01)},
+                base(){return n(1)},
+                float(){return n(0)},
+                unlocked(){return true},
+            },
         },
         luck(){
             let base = n(1)
