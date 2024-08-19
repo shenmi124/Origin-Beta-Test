@@ -43,9 +43,9 @@ var MainAction = {
             let find = []
             let special = []
             for(let i in main['action']['explore']['gain']){
-                let exp = n(Math.random() * 100)
-                if(n(main['action']['explore']['gain'][i]['probability']()).mul(main['action']['explore']['lucky']()).mul(player['action']['explore'][i+'LuckyUp'].add(1)).gte(exp)){
-                    if(main['action']['explore']['gain'][i]['unlocked']()){
+                if(main['action']['explore']['gain'][i]['unlocked']()){
+                    let exp = n(Math.random() * 100)
+                    if(n(main['action']['explore']['gain'][i]['probability']()).mul(main['action']['explore']['lucky']()).mul(player['action']['explore'][i+'LuckyUp'].add(1)).gte(exp)){
                         if(!main['action']['explore']['gain'][i]['instant']()){
                             let random = n(Math.random()).mul(main['action']['explore']['gain'][i]['float']())
                             let gain = n(main['action']['explore']['gain'][i]['base']()).add(random).ceil()
@@ -60,9 +60,10 @@ var MainAction = {
                                 special.push(i)
                             }
                         }
+                        player['action']['explore'][i+'LuckyUp'] = n(0)
+                    }else{
+                        player['action']['explore'][i+'LuckyUp'] = player['action']['explore'][i+'LuckyUp'].add(0.1)
                     }
-                }else{
-                    player['action']['explore'][i+'LuckyUp'] = player['action']['explore'][i+'LuckyUp'].add(0.1)
                 }
             }
             if(find[0]!==undefined){
