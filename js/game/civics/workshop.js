@@ -148,14 +148,14 @@ var CivicsWorkshop = {
             action: {
                 explore: {
                     speed: {
-                        mul(){return n(1.2)}
+                        mul(){return n(1.1)}
                     }
                 }
             },
             other: {
                 lucky: {
                     name(){return '行动探索'},
-                    effect(){return n(20)},
+                    effect(){return n(10)},
                     display(){return ['幸运+','%']},
                 },
                 explorerHappiness: {

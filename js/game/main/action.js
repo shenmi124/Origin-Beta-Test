@@ -16,7 +16,7 @@ var MainAction = {
         lucky(){
             let base = n(1)
             if(player.workshop.mountaineeringPickaxe){
-                base = base.add(0.2)
+                base = base.add(0.1)
             }
             return base
         },
@@ -43,8 +43,8 @@ var MainAction = {
             let find = []
             let special = []
             for(let i in main['action']['explore']['gain']){
-                let exp = n(Math.random() * 100).mul(main['action']['explore']['lucky']()).mul(player['action']['explore'][i+'LuckyUp'].add(1))
-                if(n(main['action']['explore']['gain'][i]['probability']()).gte(exp)){
+                let exp = n(Math.random() * 100)
+                if(n(main['action']['explore']['gain'][i]['probability']()).mul(main['action']['explore']['lucky']()).mul(player['action']['explore'][i+'LuckyUp'].add(1)).gte(exp)){
                     if(main['action']['explore']['gain'][i]['unlocked']()){
                         if(!main['action']['explore']['gain'][i]['instant']()){
                             let random = n(Math.random()).mul(main['action']['explore']['gain'][i]['float']())
@@ -180,7 +180,7 @@ var MainAction = {
                 name(){return '血石'},
                 instant(){return false},
                 unlocked(){return player.workshop.compass},
-                probability(){return n(0.0001)},
+                probability(){return n(0.0000001)},
                 base(){return n(1)},
                 float(){return n(0)},
             },
