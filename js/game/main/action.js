@@ -180,7 +180,7 @@ var MainAction = {
                 name(){return '血石'},
                 instant(){return false},
                 unlocked(){return player.workshop.compass},
-                probability(){return n(0.01)},
+                probability(){return n(0.0001)},
                 base(){return n(1)},
                 float(){return n(0)},
             },

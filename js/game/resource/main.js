@@ -197,7 +197,7 @@ var ResourceMain = {
     },
     
     stardust: {
-        name(){return "星尘"},
+        name(){return "瓶装星尘"},
         color(){return '#00ffff'},
         Class(){return 'stardust'},
         effect: {

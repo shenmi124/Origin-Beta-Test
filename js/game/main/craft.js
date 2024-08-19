@@ -1,7 +1,7 @@
 let MainCraft = {
     bloodStone: {
         name(){return '血石碎片'},
-        capped(){return n(2).mul(n(getCitizensEffect('explorer', 'memory')).add(1)).floor()},
+        capped(){return n(1)},
         tooltip(){
             let times = formatWhole(player.action.explore.citizens,0)+' <grey>/ '+formatWhole(this.capped(),0)+'</grey>'
             return times
