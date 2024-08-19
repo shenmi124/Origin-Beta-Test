@@ -140,7 +140,7 @@ let MainCraft = {
                 unlocked(){return true},
             },
             copper: {
-                probability(){return n(5)},
+                probability(){return n(7.5)},
                 base(){return n(2)},
                 float(){return n(2)},
                 unlocked(){return true},

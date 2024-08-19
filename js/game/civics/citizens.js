@@ -264,7 +264,7 @@ var CivicsJobs = {
     },
     mine: {
         name(){return '空闲矿井'},
-        tooltip(){return '每一个矿井可以就业一名伐木工'},
+        tooltip(){return '每一个矿井可以就业一名矿工'},
         amount(){return n(player.building.mine)},
     },
     circus: {

@@ -521,10 +521,22 @@ function tooltip(id,id2){
 			for(let i in main['building'][id]['effect']['gain']['add']){
 				if(n(getBuildGainBase(id, i)).neq(0)){
 					gainhr = `<hr><a style='font-size: 14px'>生产</a>`
-					if(n(getBuildGainBase(id, i)).gt(0)){
-						gain += effectText(colorText(i)[1], '+', getBuildGainBase(id, i), '/s', player['building'][id+'Allocation'] ?? player['building'][id], null, true)
+					let negative = false
+					if(resource['main'][i]['negative']!==undefined){
+						negative = resource['main'][i]['negative']()
+					}
+					if(negative){
+						if(n(getBuildGainBase(id, i)).lt(0)){
+							gain += effectText(colorText(i)[1], '', getBuildGainBase(id, i), '/s', player['building'][id+'Allocation'] ?? player['building'][id], null, true)
+						}else{
+							gain += effectText(colorText(i)[1], '+', n(getBuildGainBase(id, i)), '/s', player['building'][id+'Allocation'] ?? player['building'][id], 'red', true)
+						}
 					}else{
-						gain += effectText(colorText(i)[1], '-', n(getBuildGainBase(id, i)).neg(), '/s', player['building'][id+'Allocation'] ?? player['building'][id], 'red', true)
+						if(n(getBuildGainBase(id, i)).gt(0)){
+							gain += effectText(colorText(i)[1], '+', getBuildGainBase(id, i), '/s', player['building'][id+'Allocation'] ?? player['building'][id], null, true)
+						}else{
+							gain += effectText(colorText(i)[1], '-', n(getBuildGainBase(id, i)).neg(), '/s', player['building'][id+'Allocation'] ?? player['building'][id], 'red', true)
+						}
 					}
 				}
 			}

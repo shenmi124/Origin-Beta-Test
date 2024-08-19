@@ -45,11 +45,23 @@ function getResourceDoc(id){
 	}
 	if(resource['main'][id]['gain']!==undefined){
 		if(!getResourceGain(id).eq(0)){
-			if(getResourceGain(id).gt(0)){
-				getByID(id+'GainID','(+ '+format(getResourceGain(id))+' /s)')
-			}else{
-				getByID(id+'GainID','(- '+format(n(getResourceGain(id)).abs())+' /s)')
-			}
+            let negative = false
+            if(resource['main'][id]['negative']!==undefined){
+                negative = resource['main'][id]['negative']()
+            }
+            if(negative){
+                if(getResourceGain(id).gt(0)){
+                    getByID(id+'GainID','<red>(+ '+format(getResourceGain(id))+' /s)</red>')
+                }else{
+                    getByID(id+'GainID','(- '+format(n(getResourceGain(id)).abs())+' /s)')
+                }
+            }else{
+                if(getResourceGain(id).gt(0)){
+                    getByID(id+'GainID','(+ '+format(getResourceGain(id))+' /s)')
+                }else{
+                    getByID(id+'GainID','<red>(- '+format(n(getResourceGain(id)).abs())+' /s)</red>')
+                }
+            }
 		}
 	}
 }

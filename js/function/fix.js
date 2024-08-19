@@ -1,7 +1,7 @@
 function NumberFix(){
 	for(let i in resource['main']){
 		if(resource['main'][i]['capped']!==undefined){
-			player['resource'][i] = player['resource'][i].min(getResourceCappedBase(i))
+			player['resource'][i] = player['resource'][i].min(getResourceCapped(i))
 			getResourceID(i)
 		}
 	}

@@ -106,7 +106,7 @@ var CivicsWorkshop = {
     },
     pickaxe: {
         name(){return '燧石镐'},
-        tooltip(){return '用石头做出石镐以开采石头<br><grey>收集时有概率获得石头</grey><joker>开采石头做出石镐以开采石头</joker>'},
+        tooltip(){return '用石头做出石镐以开采石头<br><grey>采集土堆时有概率获得石头</grey><joker>开采石头做出石镐以开采石头</joker>'},
         effect: {
             unlocked: {
                 1(){return '允许开采石堆'}
@@ -143,7 +143,7 @@ var CivicsWorkshop = {
     },
     mountaineeringPickaxe: {
         name(){return '登山杖'},
-        tooltip(){return '提供探索加成,同时允许玩家进一步的探索'},
+        tooltip(){return '提供探索加成,同时允许玩家进一步的探索<br><grey>采集石料时有概率获得石头</grey>'},
         effect: {
             action: {
                 explore: {
@@ -421,7 +421,7 @@ var CivicsWorkshop = {
             other: {
                 minerHappiness: {
                     name(){return '职业矿工'},
-                    effect(){return n(5)},
+                    effect(){return n(2.5)},
                     display(){return ['幸福度修正+','%']},
                 }
             },

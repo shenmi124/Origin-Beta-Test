@@ -11,6 +11,7 @@ var ResourceMain = {
         color(){return '#603708'},
         gain(){return n(2000).add(player.resource.pollution.mul(0.01)).div(60).neg()},
         unlocked(){return getResourceUnlocked('pollution') || player.building.kiln.gte(1)},
+        negative(){return true}
     },
     node1: {
         type(){return 'node'},

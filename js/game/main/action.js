@@ -43,7 +43,7 @@ var MainAction = {
             let find = []
             let special = []
             for(let i in main['action']['explore']['gain']){
-                let exp = n(Math.random() * 100).mul(main['action']['explore']['lucky']())
+                let exp = n(Math.random() * 100).mul(main['action']['explore']['lucky']()).mul(player['action']['explore'][i+'LuckyUp'].add(1))
                 if(n(main['action']['explore']['gain'][i]['probability']()).gte(exp)){
                     if(main['action']['explore']['gain'][i]['unlocked']()){
                         if(!main['action']['explore']['gain'][i]['instant']()){
@@ -61,6 +61,8 @@ var MainAction = {
                             }
                         }
                     }
+                }else{
+                    player['action']['explore'][i+'LuckyUp'] = player['action']['explore'][i+'LuckyUp'].add(0.1)
                 }
             }
             if(find[0]!==undefined){
@@ -80,7 +82,7 @@ var MainAction = {
                     }
                     if(find[i]=='bloodStone' && !player.action.explore.bloodStoneFound){
                         addLog('奇怪,指南针突然猛的指向一个方向')
-                        addLog('你们像那走去,发现了一块发光的<red>血石</red>')
+                        addLog('你们向那走去,发现了一块发光的<red>血石</red>')
                     }
                     if(find[i]=='bloodStone'){
                         addLog('你发现了一块<red>血石</red>')
@@ -178,7 +180,7 @@ var MainAction = {
                 name(){return '血石'},
                 instant(){return false},
                 unlocked(){return player.workshop.compass},
-                probability(){return n(0.0001)},
+                probability(){return n(0.01)},
                 base(){return n(1)},
                 float(){return n(0)},
             },
@@ -198,32 +200,43 @@ var MainAction = {
         },
         data: {
             citizens(){return n(0)},
+            citizensLuckyUp(){return n(0)},
             citizensFound(){return false},
             collect(){return n(0)},
+            collectLuckyUp(){return n(0)},
             collectFound(){return false},
             stone(){return n(0)},
+            stoneLuckyUp(){return n(0)},
             stoneFound(){return false},
             harvest(){return n(0)},
+            harvestLuckyUp(){return n(0)},
             harvestFound(){return false},
             drop(){return n(0)},
+            dropLuckyUp(){return n(0)},
             dropFound(){return false},
             beast(){return n(0)},
+            beastLuckyUp(){return n(0)},
             beastFound(){return false},
             tree(){return n(0)},
+            treeLuckyUp(){return n(0)},
             treeFound(){return false},
             bloodStone(){return n(0)},
+            bloodStoneLuckyUp(){return n(0)},
             bloodStoneFound(){return false},
             meteorite(){return n(0)},
+            meteoriteLuckyUp(){return n(0)},
             meteoriteFound(){return false},
 
             civicsFound(){return false},
+            civicsLuckyUp(){return n(0)},
             magnetFound(){return false},
+            magnetLuckyUp(){return n(0)},
         },
         cooldown(){return n(7.5)},
         unlocked(){return player.game.stage.gte(1)},
     },
     plank: {
-        name(){return '加工木梁'},
+        name(){return '加工木板'},
         tooltip(){
             let effect = ''
             if(player.action.plank.make){

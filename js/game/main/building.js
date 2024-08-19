@@ -131,12 +131,12 @@ var MainBuilding = {
             stone(){return n(100)},
             brick(){return n(1)}
         },
-        costPower(){return n(0.02)},
+        costPower(){return n(0.025)},
         effect: {
             other:{
                 forging: {
                     name(){return '锻造资源'},
-                    effect(){return n(6)},
+                    effect(){return n(4)},
                     display(){return ['+','%']},
                 }
             }
@@ -210,13 +210,6 @@ var MainBuilding = {
     },
     farm: {
         name(){return '农田'},
-        time(){
-            if(getGametime()[1]){
-                return true
-            }
-            return false
-        },
-        tooltip(){return '<grey>在 夜晚 农田的基础产量会减少25%</grey>'},
         unlocked(){return player.building.civics.gte(1)},
         cost: {
             food(){return n(2.5)}
@@ -226,9 +219,6 @@ var MainBuilding = {
             gain: {
                 add: {
                     food(){
-                        if(main['building']['farm']['time']()){
-                            return n(0.075)
-                        }
                         return n(0.1)
                     },
                 }
