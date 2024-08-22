@@ -185,5 +185,5 @@ function getCitizensCraftBase(id,craft){
 }
 
 function getCitizensCraft(id,craft){
-    return nc(getCitizensActionBase(id, craft)).mul(player['citizens'][id])
+    return nc(getCitizensCraftBase(id, craft)).mul(player['citizens'][id])
 }
