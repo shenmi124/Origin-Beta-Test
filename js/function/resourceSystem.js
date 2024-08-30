@@ -67,8 +67,8 @@ function getResourceDoc(id){
 }
 
 function resourceUnlocked(res){
+    let unlocked = false
     if(resource['main'][res]['unlocked']!==undefined){
-        let unlocked = false
 		if(resource['main'][res]['unlocked']!==undefined){
 			unlocked = resource['main'][res]['unlocked']()
 		}
@@ -94,6 +94,13 @@ function resourceUnlocked(res){
 		document.getElementById(res+"LoadResourceID").style.display = ''
 		player['resource'][res+'Unlocked'] = true
 	}
+    if(resource['main'][res]['type']!==undefined){
+        if(resource['main'][res]['type']()=='node'){
+            if(unlocked){
+                RESOURCEUNLOCKEDTIMES = 0
+            }
+        }
+    }
     if(!(RESOURCEUNLOCKEDTIMES%2)){
         if(resource['main'][res]['type']!==undefined){
             if(resource['main'][res]['type']()=='node'){

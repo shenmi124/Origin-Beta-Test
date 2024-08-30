@@ -86,7 +86,7 @@ var MainAction = {
                         addLog('你们向那走去,发现了一块发光的<red>血石</red>')
                     }
                     if(find[i]=='bloodStone'){
-                        addLog('你发现了一块<red>血石</red>')
+                        addLog('你发现了一块<span style="color: #ff000088">血石</style>')
                     }
                 }
                 if(n(getActionAuto('explore')).lte(0)){
@@ -180,8 +180,8 @@ var MainAction = {
             bloodStone: {
                 name(){return '血石'},
                 instant(){return false},
-                unlocked(){return player.workshop.compass},
-                probability(){return n(0.0000001)},
+                unlocked(){return player.workshop.compass && !player.action.explore.bloodStoneFound},
+                probability(){return n(0.1)},
                 base(){return n(1)},
                 float(){return n(0)},
             },

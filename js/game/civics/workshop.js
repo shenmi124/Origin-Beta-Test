@@ -1083,9 +1083,12 @@ var CivicsWorkshop = {
             },
             unlocked: {
                 1(){return '阶段2 - 工业时代'},
-                2(){return '解锁标签页 开发'},
-                3(){return '解锁建筑 蒸汽机'},
-                4(){return '以及更多...'},
+                2(){return '在开发中解锁 决策'},
+                3(){return '在调配中解锁 贸易'},
+                4(){return '解锁建筑 蒸汽机'},
+                4(){return '解锁资源 蒸汽'},
+                5(){return '以及更多...'},
+                6(){return '<grey>#购买此项已达到游戏的残局</grey>'},
             },
         },
         cost: {
@@ -1094,6 +1097,9 @@ var CivicsWorkshop = {
             iron(){return n(50)},
             steel(){return n(1)},
             brick(){return n(50)},
+        },
+        onBuy(){
+            getStage(5)
         },
         unlocked(){return player.workshop.campfire}
     },

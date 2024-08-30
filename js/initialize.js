@@ -10,12 +10,12 @@ function loadMain(){
 		if(mainButton[i]['subTab']!==undefined){
 			let subTab = ''
 			let subMain = ''
-			subTab += `<div style="margin-top: 5px"></div>`
+			subTab += `<div style="margin-top: 4px"></div>`
 			for(let is in mainButton[i]['subTab']){
 				subTab += `<span id="`+i+'_'+is+`SubMainTabID" class="maintab subtab sub_`+is+`" onclick="showSubTab('`+i+`', '`+is+`')">`+mainButton[i]['subTab'][is]['name']()+`</span>`
 				subMain += `<div id="subtab_`+i+'_'+is+`">`+mainButton[i]['subTab'][is]['data']()+`</div>`
 			}
-			getByID('tab_'+i, subTab+'<subTab>'+subMain+'</subTab>')
+			getByID('tab_'+i, subTab+'<div id="'+i+'_subTabBr" style="border-top: 1px solid #000; margin-top: 4px"></div><subTab>'+subMain+'</subTab>')
 		}
 	}
 	buttonStr += `<div style="border-top: 1px solid #000; margin-top: 5px"></div>`
@@ -89,7 +89,7 @@ function loadBase(){
 	for(let i in civics['jobs']){
 		citizensStr += '<div style="transition-duration: 1s; margin-top: 3px; margin-left: 10px" id="'+i+'LoadCitizenJobs"></div>'
 	}
-	getByID('citizensLoadID',citizensStr)
+	getByID('subtab_civics_allocation', citizensStr)
 	for(let i in civics['citizens']){
 		getByID(i+'LoadCitizens',`<a style="display: inline-flex" id="`+i+`LoadCitizensNameID"></a><a style="display: inline-flex" id="`+i+`LoadCitizensAllocatedID"></a><a style="display: inline-flex" id="`+i+`LoadCitizensButtonID"></a>`)
 		componentCitizens(i)
@@ -98,14 +98,14 @@ function loadBase(){
 		getByID(i+'LoadCitizenJobs',`<a style="display: inline-flex" id="`+i+`CitizenJobsNameLoadID"></a><a style="display: inline-flex" id="`+i+`CitizenJobsAllocatedLoadID"></a>`)
 		componentJobs(i)
 	}
-	getByID('CitizensTip',CitizensTip())
+	getByID('CitizensTip', CitizensTip())
 	
-	let workshopStr = '<br><br>'
+	let workshopStr = ''
 	workshopStr += `工坊<input type="checkbox" onclick="switchWorkshopBought()"><br>`
 	for(let i in civics['workshop']){
 		workshopStr += '<a style="transition-duration: 1s;" id='+i+'LoadWorkshop></a>'
 	}
-	getByID('workshopLoadID',workshopStr)
+	getByID('subtab_civics_develop',workshopStr)
 	for(let i in civics['workshop']){
 		getByID(i+'LoadWorkshop',`<br id="`+i+`workshopBrID"><a id="`+i+`LoadWorkshopID"></a> `)
 		componentWorkshop(i)

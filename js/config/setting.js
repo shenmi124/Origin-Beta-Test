@@ -1,5 +1,5 @@
 var settings = {
-	save:{
+	save: {
 		title(){return '储存'},
 		name(){return '保存'},
 		type(){return 'click'},
@@ -9,7 +9,7 @@ var settings = {
 			HARDRESTCLICK = 6
 		},
 	},
-	autoSave:{
+	autoSave: {
 		name(){return '自动保存'},
 		display(){return player.setting.autoSave ? ' - <a id="AUTOSAVETIME"></a>s' : ''},
 		type(){return 'boolean'},
@@ -32,7 +32,7 @@ var settings = {
 			}
 		},
 	},
-	export:{
+	export: {
 		name(){return '导出'},
 		type(){return 'click'},
 		onClick(){
@@ -40,14 +40,14 @@ var settings = {
 			addLog('已导出到剪切板', '#888')
 		},
 	},
-	import:{
+	import: {
 		name(){return '导入'},
 		type(){return 'click'},
 		onClick(){
 			importSave()
 		},
 	},
-	hardReset:{
+	hardReset: {
 		name(){return '<red>硬重置</red>'},
 		display(){return HARDRESTCLICK!==6 ? '<red> - !重复点击'+HARDRESTCLICK+'次!</red>' : ''},
 		type(){return 'click'},
@@ -58,49 +58,49 @@ var settings = {
 			}
 		},
 	},
-	language:{
+	language: {
 		title(){return '游戏'},
 		name(){return '语言'},
 		type(){return 'choose'},
-		choose:{
-			default:{
+		choose: {
+			default: {
 				name(){return '浏览器语言'},
 			},
-			en:{
+			en: {
 				name(){return '英文'}
 			},
-			zh:{
+			zh: {
 				name(){return '中文'}
 			},
 		},
 	},
-	theme:{
-		name(){return '主题'},
-		type(){return 'choose'},
-		choose:{
-			default:{
-				name(){return '黑暗#制作中'},
-			},
-			en:{
-				name(){return '光亮'}
-			},
+	darkTheme: {
+		name(){return '深色模式'},
+		type(){return 'boolean'},
+		boolean(){return false},
+		effect(){
+			if(player.setting.darkTheme){
+				document.getElementById('html').style.filter = `invert(85%) hue-rotate(180deg)`
+			}else{
+				document.getElementById('html').style.filter = ``
+			}
 		},
 	},
-	notation:{
+	notation: {
 		title(){return '偏好'},
 		name(){return '计数法'},
 		type(){return 'choose'},
-		choose:{
-			default:{
+		choose: {
+			default: {
 				name(){return '标准'},
 			},
-			scientific:{
+			scientific: {
 				name(){return '科学'}
 			},
-			engineering:{
+			engineering: {
 				name(){return '工程'}
 			},
-			letter:{
+			letter: {
 				name(){return '字母'}
 			},
 		},
@@ -184,7 +184,7 @@ function loadSetting(){
 		}
 
 		if(settings[i]['type']()=='click'){
-			set += `<button class="settingBto" onclick="$(settings['`+i+`']['onClick']()); loadSetting()">`+settings[i]['name']()+display+`</button>`
+			set += `<button class="settingBto" onclick="settings['`+i+`']['onClick'](); loadSetting()">`+settings[i]['name']()+display+`</button>`
 		}else if(settings[i]['type']()=='boolean'){
 			set += `<button class="settingBto" onclick="player.setting['`+i+`'] = !player.setting['`+i+`']; loadSetting()">`+settings[i]['name']()+`: `+(player.setting[i] ? '开启' : '关闭')+display+`</button>`
 		}else if(settings[i]['type']()=='choose'){

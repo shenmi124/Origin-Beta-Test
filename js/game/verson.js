@@ -1,5 +1,5 @@
-var VERSION = '11w 03a'
-var VERSIONTIMES = n(5)
+var VERSION = '11w 04a'
+var VERSIONTIMES = n(6)
 
 function loadVersion(){
 	getByID('version', VERSION)
@@ -16,6 +16,12 @@ function loadVersion(){
 		if(!player.data.versiontimes.eq(VERSIONTIMES)){
 			addLog('版本迁移:<br>&nbsp;- 部分游戏已改变,已根据你的进度对存档进行了迁移')
 			addLog('<br>')
+
+			if(player.data.versiontimes.lte(5)){
+				if(player.workshop.camp){
+					getStage(5)
+				}
+			}
 
 			if(player.data.versiontimes.lte(4)){
 				for(let i in main['action']['explore']['gain']){

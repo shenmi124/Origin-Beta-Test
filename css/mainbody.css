@@ -1,8 +1,9 @@
 body {
 	font-family: 宋体, serif, monospace;
 	font-size: 16px;
+    background: #fff;
+    color: #000;
 	cursor: default;
-    background: rgb(255, 255, 255);
     user-select: none;
 }
 

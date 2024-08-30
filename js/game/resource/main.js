@@ -193,7 +193,7 @@ var ResourceMain = {
     },
     node4: {
         type(){return 'node'},
-        unlocked(){return getResourceUnlocked('stardust')},
+        unlocked(){return getResourceUnlocked('stardust') || getResourceUnlocked('bloodStone')},
     },
     
     stardust: {
@@ -213,5 +213,23 @@ var ResourceMain = {
         unlockAction(){
         },
         unlocked(){return getResourceUnlocked('stardust')},
+    },
+    bloodStone: {
+        name(){return "血石"},
+        color(){return '#ff000088'},
+        Class(){return 'bloodStone'},
+        capped(){return n(1)},
+        effect: {
+            other:{
+                happiness: {
+                    name(){return '幸福度'},
+                    effect(){return n(2)},
+                    display(){return ['+','%']},
+                }
+            },
+        },
+        unlockAction(){
+        },
+        unlocked(){return getResourceUnlocked('bloodStone') && false},
     },
 }

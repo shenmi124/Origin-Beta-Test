@@ -3,12 +3,15 @@ let MainCraft = {
         name(){return '血石碎片'},
         capped(){return n(1)},
         tooltip(){
-            let times = formatWhole(player.action.explore.citizens,0)+' <grey>/ '+formatWhole(this.capped(),0)+'</grey>'
+            let times = '<red>'+formatWhole(player.action.explore.bloodStone)+'</red> <grey>/ '+formatWhole(this.capped())+'</grey>'
             return times
         },
-        cooldown(){return n(0)},
-        canClick(){return false},
-        unlocked(){return player.action.explore.bloodStoneFound},
+        cooldown(){return n(1)},
+        onClick(){
+            gainResource('bloodStone', n(1))
+        },
+        canClick(){return player.action.explore.bloodStoneFound},
+        unlocked(){return player.action.explore.bloodStoneFound && player.resource.bloodStone.lte(0)},
     },
     citizens: {
         name(){return '原住民'},

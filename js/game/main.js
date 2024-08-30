@@ -1,5 +1,5 @@
 var mainButton = {
-    main:{
+    main: {
         name(){return "主页"},
         subTab: {
             action: {
@@ -14,11 +14,23 @@ var mainButton = {
             }
         }
     },
-    civics:{
+    civics: {
         name(){return '村庄'},
+        subTab: {
+            allocation: {
+                name(){return "调配"},
+                data(){return ""},
+                unlocked(){return true}
+            },
+            develop: {
+                name(){return "开发"},
+                data(){return ""},
+                unlocked(){return true}
+            }
+        },
         unlocked(){return player.game.stage.gte(4)}
     },
-    setting:{
+    setting: {
         name(){return "设置"},
         subTab: {
             setting: {

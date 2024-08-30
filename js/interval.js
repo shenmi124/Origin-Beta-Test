@@ -259,12 +259,17 @@ function intervalID(){
 		}
 		unlockedLoad(i+'MainTabID', unlocked)
 		if(mainButton[i]['subTab']!==undefined){
+			let allSubUnlocked = false
 			for(let is in mainButton[i]['subTab']){
 				let subUnlocked = true
 				if(mainButton[i]['subTab'][is]['unlocked']!==undefined){
 					subUnlocked = mainButton[i]['subTab'][is]['unlocked']()
 				}
+				allSubUnlocked = allSubUnlocked || subUnlocked
 				unlockedLoad(i+'_'+is+'SubMainTabID', subUnlocked)
+			}
+			if(!allSubUnlocked){
+				unlockedLoad(i+'_subTabBr', allSubUnlocked)
 			}
 		}
 	}
