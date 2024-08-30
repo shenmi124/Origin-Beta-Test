@@ -106,7 +106,8 @@ function calcGame(){
 function gameLoader(){
 	getStage(null)
 	if(player.game.stage.lte(2)){
-		addLog('这是一个新的存档,要<u style="color: #000" onclick="importSave()">导入</u>吗?','#888')
+		addLog('这是一个新的存档,要<u style="cursor: pointer; color: #000" onclick="importSave()">导入</u>吗?','#888')
+		addLog('点击<u style="cursor: pointer; color: #000" onclick="player.setting.darkTheme = !player.setting.darkTheme; loadSetting()">此处</u>切换深色模式','#888')
 		addLog('此版本为测试版,请自行备份存档','#888')
 	}
 }
