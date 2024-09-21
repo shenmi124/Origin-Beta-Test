@@ -389,7 +389,7 @@ let MainCraft = {
         },
         cooldown(){return n(15)},
         canClick(){return player.action.explore.tree.gte(1) && player.workshop.axe},
-        unlocked(){return player.action.explore.treeFound==true},
+        unlocked(){return player.action.explore.treeFound},
     },
     meteorite: {
         name(){return '陨铁'},

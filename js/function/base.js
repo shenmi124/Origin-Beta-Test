@@ -50,7 +50,7 @@ function showTab(tab){
 		document.getElementById(i+"MainTabID").style.cursor = 'pointer'
 	}
 	Open('tab_'+tab)
-	document.getElementById(tab+"MainTabID").style.color = 'rgb(0, 123, 255)'
+	document.getElementById(tab+"MainTabID").style.color = '#007bff'
 	document.getElementById(tab+"MainTabID").style.opacity = '0.8'
 	document.getElementById(tab+"MainTabID").style.cursor = 'default'
 }
@@ -63,7 +63,7 @@ function showSubTab(tab, subTab){
 		document.getElementById(tab+'_'+i+"SubMainTabID").style.cursor = 'pointer'
 	}
 	Open('subtab_'+tab+'_'+subTab)
-	document.getElementById(tab+'_'+subTab+"SubMainTabID").style.color = 'rgb(0 145 255)'
+	document.getElementById(tab+'_'+subTab+"SubMainTabID").style.color = '#007bffaa'
 	document.getElementById(tab+'_'+subTab+"SubMainTabID").style.opacity = '0.8'
 	document.getElementById(tab+'_'+subTab+"SubMainTabID").style.cursor = 'default'
 }

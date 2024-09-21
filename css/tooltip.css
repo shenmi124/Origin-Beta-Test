@@ -18,4 +18,12 @@
 
 tooltip {
     cursor: help;
+    display: contents;
+}
+
+tooltip.building {
+    display: inline-block;
+    border-radius: 6px;
+    height: 37px;
+    margin-bottom: 5px;
 }

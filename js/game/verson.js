@@ -1,4 +1,4 @@
-var VERSION = '11w 04a'
+var VERSION = '11w 05a'
 var VERSIONTIMES = n(6)
 
 function loadVersion(){
@@ -47,4 +47,37 @@ function loadVersion(){
 		player.data.version = VERSION
 		player.data.versiontimes = VERSIONTIMES
 	}
+}
+
+function loadDonate(){
+	let useParams = {"page":1}
+	let useTs = Number(new Date()) / 1000
+
+	$.ajax({
+		url: 'https://afdian.com/api/open/query-sponsor',
+		method: 'GET',
+		data: {
+			user_id: useUserID,
+			params: JSON.stringify(useParams),
+			ts: useTs,
+			sign: md5(useApiToken+'params'+JSON.stringify(useParams)+'ts'+useTs+'user_id'+useUserID)
+		},
+		success: function(response){
+			let data = ''
+			let amount = n(0)
+			for(let allUser in response.data.list){
+				let date = new Date(response.data.list[allUser].last_pay_time*1000)
+				data += `<li-hid>用户昵称: `+response.data.list[allUser].user.name+`<br>
+				<li-hid>最近日期: `+date.getFullYear()+`年`+(date.getMonth()+1)+`月`+date.getDate()+`日<br>
+				<li-hid>赞助金额: `+response.data.list[allUser].all_sum_amount+`￥<hr>`
+				amount = amount.add(response.data.list[allUser].all_sum_amount)
+			}
+			getByID('subtab_setting_donate', `<br><li-hid>我的<a href="https://afdian.com/a/Shinwmyste" target="_blank" style="color: black;">爱发电</a>数据<grey>(以时间排序)</grey>:<br><br>`+data)
+		},
+		error: function(){
+			getByID('subtab_setting_donate', '未能获取数据,正在尝试重新获取,请检查你的网络状态')
+		}
+	})
+
+	setTimeout(function(){loadDonate()}, 300000);
 }

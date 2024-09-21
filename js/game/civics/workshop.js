@@ -142,7 +142,7 @@ var CivicsWorkshop = {
         unlocked(){return player.workshop.pickaxe}
     },
     mountaineeringPickaxe: {
-        name(){return '登山杖'},
+        name(){return '手杖'},
         tooltip(){return '提供探索加成,同时允许玩家进一步的探索<br><grey>采集石料时有概率获得石头</grey>'},
         effect: {
             action: {
@@ -305,7 +305,7 @@ var CivicsWorkshop = {
 
     mine: {
         name(){return '矿井'},
-        tooltip(){return '在石头上搭建矿井并派人去开采矿石<br><grey>矿井会基于 行动石料 的倍率<joker>不~牢工~</joker><hr>速度倍率 将提升矿井的基础产量<br>幸运倍率 将提升矿井的矿石产量'},
+        tooltip(){return '在石头上搭建矿井并派人去开采矿石<br><grey>矿井会基于 行动石料 的倍率<hr>速度倍率 将提升矿井的基础产量<br>幸运倍率 将提升矿井的矿石产量'},
         effect: {
             unlocked: {
                 1(){return '解锁建筑 矿井'},

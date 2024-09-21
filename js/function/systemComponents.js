@@ -16,7 +16,7 @@ function componentCraft(id){
 
 function componentBuilding(id){
     getByID(id+"LoadBuildingID",`
-    <tooltip `+loadTooltip(id,'LoadTooltipBuilding')+`>
+    <tooltip `+loadTooltip(id, 'LoadTooltipBuilding', `onclick='document.getElementById("tooltip").style.display="none"`, 'building')+`>
         <a id="`+id+`LoadBuildingAmountID"></a>
         <a id="`+id+`LoadBuildingAllocationID"></a>
         <button id="`+id+`BuildingButtonID" onclick="Build('`+id+`')">`+main['building'][id]['name']()+`</button>
@@ -101,7 +101,7 @@ function componentJobs(id){
 
 function componentWorkshop(id){
     getByID(id+"LoadWorkshopID", `
-    <tooltip `+loadTooltip(id,'LoadTooltipWorkshop')+`>
+    <tooltip `+loadTooltip(id, 'LoadTooltipWorkshop', `onclick='document.getElementById("tooltip").style.display="none"`, 'button')+`>
         <button id="`+id+`WorkshopButtonID" onclick="Upgrade('`+id+`')">`+civics['workshop'][id]['name']()+`</button>
     </tooltip>
     `)

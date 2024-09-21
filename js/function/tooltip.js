@@ -1,7 +1,7 @@
 var TOOLTIPSEL
 
-function loadTooltip(id,id2,onClick=`onclick='document.getElementById("tooltip").style.display="none"`){
-	return `onmouseenter='mouseLoad("`+id+`","`+id2+`")' onmouseleave='document.getElementById("tooltip").style.display="none";window.clearInterval(TOOLTIPSEL);TOOLTIPSEL=undefined'`+onClick+`;window.clearInterval(TOOLTIPSEL);TOOLTIPSEL=undefined'`
+function loadTooltip(id,id2,onClick=`onclick='document.getElementById("tooltip").style.display="none"`,Class=``){
+	return `class="`+Class+`" onmouseenter='mouseLoad("`+id+`","`+id2+`")' onmouseleave='document.getElementById("tooltip").style.display="none";window.clearInterval(TOOLTIPSEL);TOOLTIPSEL=undefined'`+onClick+`;window.clearInterval(TOOLTIPSEL);TOOLTIPSEL=undefined'`
 }
 
 function mouseLoad(id,id2){

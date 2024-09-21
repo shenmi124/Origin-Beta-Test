@@ -31,7 +31,7 @@ var mainButton = {
         unlocked(){return player.game.stage.gte(4)}
     },
     setting: {
-        name(){return "设置"},
+        name(){return "其他"},
         subTab: {
             setting: {
                 name(){return "设置"},
@@ -39,6 +39,10 @@ var mainButton = {
             },
             stats: {
                 name(){return "统计"},
+                data(){return ""},
+            },
+            donate: {
+                name(){return "捐助"},
                 data(){return ""},
             },
             information: {

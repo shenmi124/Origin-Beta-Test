@@ -10,12 +10,12 @@ function loadMain(){
 		if(mainButton[i]['subTab']!==undefined){
 			let subTab = ''
 			let subMain = ''
-			subTab += `<div style="margin-top: 4px"></div>`
+			subTab += `<div style="margin-top: 5px"></div>`
 			for(let is in mainButton[i]['subTab']){
 				subTab += `<span id="`+i+'_'+is+`SubMainTabID" class="maintab subtab sub_`+is+`" onclick="showSubTab('`+i+`', '`+is+`')">`+mainButton[i]['subTab'][is]['name']()+`</span>`
 				subMain += `<div id="subtab_`+i+'_'+is+`">`+mainButton[i]['subTab'][is]['data']()+`</div>`
 			}
-			getByID('tab_'+i, subTab+'<div id="'+i+'_subTabBr" style="border-top: 1px solid #000; margin-top: 4px"></div><subTab>'+subMain+'</subTab>')
+			getByID('tab_'+i, subTab+'<div id="'+i+'_subTabBr" style="border-top: 1px solid #000a; margin-top: 4px"></div><subTab>'+subMain+'</subTab>')
 		}
 	}
 	buttonStr += `<div style="border-top: 1px solid #000; margin-top: 5px"></div>`
@@ -107,7 +107,7 @@ function loadBase(){
 	}
 	getByID('subtab_civics_develop',workshopStr)
 	for(let i in civics['workshop']){
-		getByID(i+'LoadWorkshop',`<br id="`+i+`workshopBrID"><a id="`+i+`LoadWorkshopID"></a> `)
+		getByID(i+'LoadWorkshop',`<br id="`+i+`workshopBrID"><a style="display: inline-flex;" id="`+i+`LoadWorkshopID"></a> `)
 		componentWorkshop(i)
 	}
 }
@@ -151,6 +151,7 @@ let loadingGame = function(){
 	loadGame()
 
 	loadVersion()
+	loadDonate()
 	
 	loadSetting()
 	loadInformation()
