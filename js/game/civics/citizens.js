@@ -218,7 +218,7 @@ var CivicsCitizens = {
         effect: {
             gain: {
                 add: {
-                    idea(){return n(1)},
+                    idea(){return n(5)},
                     knowledge(){return n(0.1)}
                 }
             },

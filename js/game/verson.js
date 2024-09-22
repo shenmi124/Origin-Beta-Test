@@ -1,5 +1,5 @@
-var VERSION = '11w 05a'
-var VERSIONTIMES = n(6)
+var VERSION = '11w 06a'
+var VERSIONTIMES = n(7)
 
 function loadVersion(){
 	getByID('version', VERSION)
@@ -16,6 +16,14 @@ function loadVersion(){
 		if(!player.data.versiontimes.eq(VERSIONTIMES)){
 			addLog('版本迁移:<br>&nbsp;- 部分游戏已改变,已根据你的进度对存档进行了迁移')
 			addLog('<br>')
+
+			if(player.data.versiontimes.lte(6)){
+				player.action.explore.bloodStone = false
+				player.action.explore.bloodStoneFound = false
+				player.resource.bloodStoneUnlock = false
+				player.resource.bloodStoneUnlocked = false
+				player.resource.bloodStone = n(0)
+			}
 
 			if(player.data.versiontimes.lte(5)){
 				if(player.workshop.camp){
@@ -49,12 +57,31 @@ function loadVersion(){
 	}
 }
 
+let donateHistory = `
+<li-hid>我的<a href="https://afdian.com/a/Shinwmyste" target="_blank" style="color: black;">爱发电</a>数据<grey>(以时间排序)</grey>:<br><br>
+<li-hid>用户昵称: p_p<br>
+<li-hid>最近日期: 2024年9月21日<br>
+<li-hid>赞助金额: 50.00￥<hr><li-hid>用户昵称: ᅟᅠ<br>
+<li-hid>最近日期: 2024年9月20日<br>
+<li-hid>赞助金额: 180.00￥<hr><li-hid>用户昵称: yuyanMC<br>
+<li-hid>最近日期: 2023年11月11日<br>
+<li-hid>赞助金额: 60.00￥<hr><li-hid>用户昵称: 爱发电用户_811a5<br>
+<li-hid>最近日期: 2022年6月22日<br>
+<li-hid>赞助金额: 30.00￥<hr><li-hid>用户昵称: AJL2008<br>
+<li-hid>最近日期: 2022年6月6日<br>
+<li-hid>赞助金额: 10.00￥<hr><li-hid>用户昵称: 爱发电用户_ad8ed<br>
+<li-hid>最近日期: 2022年3月27日<br>
+<li-hid>赞助金额: 5.00￥<hr><li-hid>用户昵称: 爱发电用户_5XbC<br>
+<li-hid>最近日期: 2022年6月29日<br>
+<li-hid>赞助金额: 65.00￥<hr><li-hid>用户昵称: 奶他酱<br>
+<li-hid>最近日期: 2022年8月15日<br>
+<li-hid>赞助金额: 40.00￥<hr>`
 function loadDonate(){
 	let useParams = {"page":1}
 	let useTs = Number(new Date()) / 1000
 
 	$.ajax({
-		url: 'https://afdian.com/api/open/query-sponsor',
+		url: 'https://cors-anywhere.herokuapp.com/https://afdian.com/api/open/query-sponsor',
 		method: 'GET',
 		data: {
 			user_id: useUserID,
@@ -73,9 +100,10 @@ function loadDonate(){
 				amount = amount.add(response.data.list[allUser].all_sum_amount)
 			}
 			getByID('subtab_setting_donate', `<br><li-hid>我的<a href="https://afdian.com/a/Shinwmyste" target="_blank" style="color: black;">爱发电</a>数据<grey>(以时间排序)</grey>:<br><br>`+data)
+			console.log(data)
 		},
 		error: function(){
-			getByID('subtab_setting_donate', '未能获取数据,正在尝试重新获取,请检查你的网络状态')
+			getByID('subtab_setting_donate', `<br><li-hid>未能正常获取实时数据,以下是截止为2024年9月22日的捐助名单<br><br>`+donateHistory)
 		}
 	})
 

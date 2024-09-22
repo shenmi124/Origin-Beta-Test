@@ -3,8 +3,8 @@ function gameDiff(){
     getGametime()
 
     if(player.resource.food.lte(0) && player.resource.citizens.gte(1)){
-        let leave = n(Math.random() * 100000).round()
-        if(leave.lte(10)){
+        let leave = n(Math.random() * 10000).round()
+        if(leave.lte(n(1).mul(player.resource.citizens))){
             player.resource.citizens = player.resource.citizens.sub(1)
             CitizensFix()
             GameCraftFix()

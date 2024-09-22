@@ -64,7 +64,8 @@ var ResourceMain = {
     knowledge: {
         name(){return "思维"},
         color(){return 'rgb(0 143 255)'},
-        gain(){return n(0)},
+        gain(){return n(main['action']['blueprint']['costSecond']()[1]).neg()},
+        gainTooltip(){return '加工'},
         capped(){return n(0)},
         tooltip(){return '非圣人莫能为,非智者莫能先'},
         unlocked(){return getResourceUnlocked('knowledge') || player.workshop.parchment},
@@ -86,7 +87,8 @@ var ResourceMain = {
     leather: {
         name(){return "皮革"},
         color(){return '#763f00'},
-        gain(){return n(0)},
+        gain(){return n(main['action']['parchment']['costSecond']()).neg()},
+        gainTooltip(){return '加工'},
         capped(){return n(50)},
         unlocked(){return getResourceUnlocked('leather')},
     },
@@ -101,7 +103,8 @@ var ResourceMain = {
         name(){return "木材"},
         color(){return 'rgb(180,144,90)'},
         capped(){return n(30)},
-        gain(){return n(0)},
+        gain(){return n(main['action']['plank']['costSecond']()).neg()},
+        gainTooltip(){return '加工'},
         unlockAction(){
             addLog('在这样的平原上你几乎找不到树')
             addLog('但起码你可以确定这里是有木头的')
@@ -155,7 +158,8 @@ var ResourceMain = {
         name(){return "木板"},
         tooltip(){return '锻造资源'},
         color(){return 'rgb(158 103 19)'},
-        gain(){return n(0)},
+        gain(){return main['action']['plank']['gainSecond']()},
+        gainTooltip(){return '加工'},
         mul(){return gameGetForging()},
         unlocked(){return getResourceUnlocked('plank')},
     },
@@ -172,7 +176,8 @@ var ResourceMain = {
         name(){return "羊皮纸"},
         tooltip(){return '锻造资源'},
         color(){return '#a37d59'},
-        gain(){return n(0)},
+        gain(){return n(main['action']['parchment']['gainSecond']()).sub(main['action']['blueprint']['costSecond']()[0])},
+        gainTooltip(){return '加工'},
         mul(){return gameGetForging()},
         unlocked(){return getResourceUnlocked('parchment')},
     },
@@ -180,7 +185,8 @@ var ResourceMain = {
         name(){return "蓝图"},
         tooltip(){return '锻造资源'},
         color(){return '#00aaff'},
-        gain(){return n(0)},
+        gain(){return main['action']['blueprint']['gainSecond']()},
+        gainTooltip(){return '加工'},
         effect: {
             capped: {
                 add: {
@@ -230,6 +236,6 @@ var ResourceMain = {
         },
         unlockAction(){
         },
-        unlocked(){return getResourceUnlocked('bloodStone') && false},
+        unlocked(){return getResourceUnlocked('bloodStone')},
     },
 }

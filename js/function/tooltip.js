@@ -340,7 +340,6 @@ function tooltip(id,id2){
 				gain = ''
 			}
 			if(resource['main'][id]['capped']!==undefined){
-				time = '<hr>无法抵达上限'
 				if(player['resource'][id].gte(getResourceCapped(id))){
 					time = '<hr>已抵达上限'
 				}else if(resource['main'][id]['gain']!==undefined){
@@ -349,6 +348,10 @@ function tooltip(id,id2){
 					}else if(n(getResourceGain(id)).lt(0) && !player['resource'][id].eq(0)){
 						time = '<hr>'+formatTime(player['resource'][id].div(getResourceGain(id)).abs())+'后耗尽'
 					}
+				}
+			}else if(resource['main'][id]['gain']!==undefined){
+				if(n(getResourceGain(id)).lt(0) && !player['resource'][id].eq(0)){
+				time = '<hr>'+formatTime(player['resource'][id].div(getResourceGain(id)).abs())+'后耗尽'
 				}
 			}
 		}
