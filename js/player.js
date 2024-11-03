@@ -13,53 +13,53 @@ function calcData(){
 }
 
 function calcAutomator(){
-    for(let i in resource['main']){
+    for(let i in RESOURCE['main']){
 		loader(['resource',i], n(0))
 		loader(['resource',i+'Total'], n(0))
 		loader(['resource',i+'Best'], n(0))
         loader(['resource',i+'Unlocked'], false)
 	}
 
-    for(let i in main['action']){
+    for(let i in MAIN['action']){
         loader(['action',i+'Total'], n(0))
-        if(main['action'][i]['cooldown']!==undefined){
+        if(MAIN['action'][i]['cooldown']!==undefined){
             loader(['action',i+'Cooldown'], n(0))
             loader(['action',i+'Click'], false)
         }
-        if(main['action'][i]['data']!==undefined){
-            for(let id in main['action'][i]['data']){
-                loader(['action',i,id], main['action'][i]['data'][id]())
+        if(MAIN['action'][i]['data']!==undefined){
+            for(let id in MAIN['action'][i]['data']){
+                loader(['action',i,id], MAIN['action'][i]['data'][id]())
             }
         }
     }
 
-    for(let i in main['building']){
+    for(let i in MAIN['building']){
 		loader(['building',i], n(0))
-        if(main['building'][i]['allocation']!==undefined){
-            if(main['building'][i]['allocation']()){
+        if(MAIN['building'][i]['allocation']!==undefined){
+            if(MAIN['building'][i]['allocation']()){
                 loader(['building',i+'Allocation'], n(0))
             }
         }
 	}
 
-    for(let i in main['craft']){
+    for(let i in MAIN['craft']){
         loader(['craft',i+'Total'], n(0))
-        if(main['craft'][i]['cooldown']!==undefined){
+        if(MAIN['craft'][i]['cooldown']!==undefined){
             loader(['craft',i+'Cooldown'], n(0))
             loader(['craft',i+'Click'], false)
         }
-        if(main['craft'][i]['data']!==undefined){
-            for(let id in main['craft'][i]['data']){
-                loader(['craft',i,id], main['craft'][i]['data'][id]())
+        if(MAIN['craft'][i]['data']!==undefined){
+            for(let id in MAIN['craft'][i]['data']){
+                loader(['craft',i,id], MAIN['craft'][i]['data'][id]())
             }
         }
     }
 
-    for(let i in civics['citizens']){
+    for(let i in CIVICS['citizens']){
         loader(['citizens',i], n(0))
     }
 
-    for(let i in civics['workshop']){
+    for(let i in CIVICS['workshop']){
         loader(['workshop',i], false)
     }
 

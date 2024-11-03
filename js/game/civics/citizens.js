@@ -77,13 +77,13 @@ var CivicsCitizens = {
         effect: {
             craft: {
                 collect(){
-                    if(main['craft']['collect']['unlocked']()){
+                    if(MAIN['craft']['collect']['unlocked']()){
                         return n(0.1)
                     }
                     return n(0)
                 },
                 drop(){
-                    if(main['craft']['collect']['unlocked']()){
+                    if(MAIN['craft']['collect']['unlocked']()){
                         return n(0.05)
                     }
                     return n(0)

@@ -159,7 +159,7 @@ var CivicsWorkshop = {
                     display(){return ['幸运+','%']},
                 },
                 explorerHappiness: {
-                name(){return '职业'+civics['citizens']['explorer']['name']()},
+                name(){return '职业'+CIVICS['citizens']['explorer']['name']()},
                     effect(){return n(0.5)},
                     display(){return ['幸福度修正+','%']},
                 }
@@ -872,7 +872,7 @@ var CivicsWorkshop = {
             leather(){return n(50)},
         },
         onBuy(){
-            gainResource('parchment', n(main['action']['parchment']['gain']()))
+            gainResource('parchment', n(MAIN['action']['parchment']['gain']()))
         },
         unlocked(){return player.workshop.campfire}
     },
@@ -953,7 +953,7 @@ var CivicsWorkshop = {
             parchment(){return n(1)}
         },
         onBuy(){
-            gainResource('blueprint', n(main['action']['blueprint']['gain']()))
+            gainResource('blueprint', n(MAIN['action']['blueprint']['gain']()))
         },
         unlocked(){return player.workshop.knowledge}
     },

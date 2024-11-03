@@ -43,27 +43,33 @@ function unlockedLoad(id,unlocked){
 }
 
 function showTab(tab){
-	for(let i in mainButton){
-		Close('tab_'+i)
-		document.getElementById(i+"MainTabID").style.color = ''
-		document.getElementById(i+"MainTabID").style.opacity = ''
-		document.getElementById(i+"MainTabID").style.cursor = 'pointer'
+	for(let i in TABBUTTON){
+		Close(i+'Tab')
+		Close(i+'SubtabButton')
+		document.getElementById(i+"TabButton").style.color = ''
+		document.getElementById(i+"TabButton").style.opacity = ''
+		document.getElementById(i+"TabButton").style.cursor = 'pointer'
 	}
-	Open('tab_'+tab)
-	document.getElementById(tab+"MainTabID").style.color = '#007bff'
-	document.getElementById(tab+"MainTabID").style.opacity = '0.8'
-	document.getElementById(tab+"MainTabID").style.cursor = 'default'
+	Open(tab+'Tab')
+	Open(tab+'SubtabButton')
+	document.getElementById(tab+"TabButton").style.color = '#007bff'
+	document.getElementById(tab+"TabButton").style.opacity = '0.8'
+	document.getElementById(tab+"TabButton").style.cursor = 'default'
 }
 
-function showSubTab(tab, subTab){
-	for(let i in mainButton[tab]['subTab']){
-		Close('subtab_'+tab+'_'+i)
-		document.getElementById(tab+'_'+i+"SubMainTabID").style.color = ''
-		document.getElementById(tab+'_'+i+"SubMainTabID").style.opacity = ''
-		document.getElementById(tab+'_'+i+"SubMainTabID").style.cursor = 'pointer'
+function showSubTab(subtab){
+	for(let i in TABBUTTON){
+		if(subtab in TABBUTTON[i]['subtab']){
+			for(let it in TABBUTTON[i]['subtab']){
+				Close(it+'Subtab')
+				document.getElementById(it+"SubtabID").style.color = ''
+				document.getElementById(it+"SubtabID").style.opacity = ''
+				document.getElementById(it+"SubtabID").style.cursor = 'pointer'
+			}
+		}
 	}
-	Open('subtab_'+tab+'_'+subTab)
-	document.getElementById(tab+'_'+subTab+"SubMainTabID").style.color = '#007bffaa'
-	document.getElementById(tab+'_'+subTab+"SubMainTabID").style.opacity = '0.8'
-	document.getElementById(tab+'_'+subTab+"SubMainTabID").style.cursor = 'default'
+	Open(subtab+'Subtab')
+	document.getElementById(subtab+"SubtabID").style.color = '#007bffaa'
+	document.getElementById(subtab+"SubtabID").style.opacity = '0.8'
+	document.getElementById(subtab+"SubtabID").style.cursor = 'default'
 }

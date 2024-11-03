@@ -7,7 +7,7 @@ function getResourceUnlocked(res){
 }
 
 function getCitizensEffect(citizens,effect){
-    return player['citizens'][citizens].mul(civics['citizens'][citizens]['effect']['other'][effect]['effect']())
+    return player['citizens'][citizens].mul(CIVICS['citizens'][citizens]['effect']['other'][effect]['effect']())
 }
 
 function nameCorrection(type,old,name){
@@ -56,8 +56,8 @@ function costText(name,res,cost,type){
             }
         }
     }
-    if(resource['main'][res]['unlocked']!==undefined){
-        if(!resource['main'][res]['unlocked']()){
+    if(RESOURCE['main'][res]['unlocked']!==undefined){
+        if(!RESOURCE['main'][res]['unlocked']()){
             name = '<gery>???</gery>'
             time = ''
         }
@@ -76,7 +76,7 @@ function costText(name,res,cost,type){
         <span style="width: 30px; display: table-cell; color: rgb(31, 70, 71);"> / 
         </span>
         <span style="width: 55px; display: table-cell; color: rgb(31, 70, 71);">
-                <div style="color: `+((n(getResourceCapped(res)).gte(cost) || resource['main'][res]['capped']==undefined) ? `` : `red` )+`">`+format(cost)+`</div>
+                <div style="color: `+((n(getResourceCapped(res)).gte(cost) || RESOURCE['main'][res]['capped']==undefined) ? `` : `red` )+`">`+format(cost)+`</div>
         </span>
 	</span>`+time+`<br>`
 }
@@ -85,16 +85,16 @@ function colorText(id){
 	let color = '#c3c3c3'
 	let Text = '未命名'
 	let Class = ''
-	for(let resourceColor in resource['main']){
+	for(let resourceColor in RESOURCE['main']){
 		if(id==resourceColor){
-			if(resource['main'][resourceColor]['color']!==undefined){
-				color = resource['main'][resourceColor]['color']()
+			if(RESOURCE['main'][resourceColor]['color']!==undefined){
+				color = RESOURCE['main'][resourceColor]['color']()
 			}
-			if(resource['main'][resourceColor]['name']!==undefined){
-				Text = resource['main'][resourceColor]['name']()
+			if(RESOURCE['main'][resourceColor]['name']!==undefined){
+				Text = RESOURCE['main'][resourceColor]['name']()
 			}
-			if(resource['main'][resourceColor]['Class']!==undefined){
-				Class = resource['main'][resourceColor]['Class']()
+			if(RESOURCE['main'][resourceColor]['Class']!==undefined){
+				Class = RESOURCE['main'][resourceColor]['Class']()
 			}
 		}
 	}

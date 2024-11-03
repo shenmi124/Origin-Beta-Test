@@ -206,7 +206,7 @@ function loadSetting(){
 			set += `<button class="settingBto" onclick="player.setting['`+i+`']='`+sc+`'; loadSetting()">`+settings[i]['name']()+`: <grey>`+choose+`</grey>`+display+`</button>`
 		}
 	}
-	getByID('subtab_setting_setting', set)
+	getByID('settingSubtab', set)
 	for(let i in settings){
 		if(settings[i]['effect']!==undefined){
 			settings[i]['effect']()

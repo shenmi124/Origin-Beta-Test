@@ -66,9 +66,11 @@ function getStage(num){
         },100)
 	}
 	if(player.game.stage.gte(3)){
-		document.getElementById("tab_button").style.visibility = ''
+		document.getElementById("tabButton").style.visibility = ''
+		document.getElementById("subtabButton").style.visibility = ''
         setTimeout(function(){
-			document.getElementById("tab_button").style.opacity = 1
+			document.getElementById("tabButton").style.opacity = 1
+			document.getElementById("subtabButton").style.opacity = 1
         },100)
 
 		document.getElementById("bottomTab").style.visibility = ''

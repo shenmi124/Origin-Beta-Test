@@ -66,7 +66,7 @@
 	<link rel="stylesheet" type="text/css" href="css/load.css"/>
 	<link rel="stylesheet" type="text/css" href="css/logs.css"/>
 	<link rel="stylesheet" type="text/css" href="css/mainbody.css"/>
-	<link rel="stylesheet" type="text/css" href="css/maintab.css"/>
+	<link rel="stylesheet" type="text/css" href="css/tabButton.css"/>
 	<link rel="stylesheet" type="text/css" href="css/others.css"/>
 	<link rel="stylesheet" type="text/css" href="css/resource.css"/>
 	<link rel="stylesheet" type="text/css" href="css/side.css"/>
@@ -93,19 +93,9 @@
 			<a id="loadRightColumn" style="width: 430px; padding-top: 50px;"></a>
 		</div>
 		<div id="midColumn" class="column" style="vertical-align: top;">
-			<mainTab id="tab_button" style="opacity: 0; visibility: hidden;">
-				<a id="loadMainButton"></a>
-			</mainTab>
-
-			<mainTab id="tab_main">
-			</mainTab>
-			<mainTab id="tab_civics">
-				<a id="citizensLoadID"></a>
-				<a id="workshopLoadID"></a>
-			</mainTab>
-			<mainTab id="tab_develop">
-			</mainTab>
-			<mainTab id="tab_setting" style="display: none;"></mainTab>
+			<div id="tabButton" style="opacity: 0; visibility: hidden;"></div>
+			<div id="subtabButton" style="opacity: 0; visibility: hidden;"></div>
+			<div id="midTab" style="overflow-y: auto;"></div>
 		</div>
 		<div id="rightColumn" class="column">
 			<div id="datePage">

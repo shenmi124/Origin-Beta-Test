@@ -1,4 +1,4 @@
-var VERSION = '11w 06a'
+var VERSION = '11w 07a'
 var VERSIONTIMES = n(7)
 
 function loadVersion(){
@@ -32,7 +32,7 @@ function loadVersion(){
 			}
 
 			if(player.data.versiontimes.lte(4)){
-				for(let i in main['action']['explore']['gain']){
+				for(let i in MAIN['action']['explore']['gain']){
 					if(player['action']['explore'][i]!==undefined){
 						if(player['action']['explore'][i].gt(0)){
 							player['action']['explore'][i+'Found'] = true
@@ -44,7 +44,7 @@ function loadVersion(){
 			}
 
 			if(player.data.versiontimes.lte(3)){
-				for(let i in resource['main']){
+				for(let i in RESOURCE['main']){
 					player['resource'][i+'Best'] = player['resource'][i]
 					player['resource'][i+'Total'] = player['resource'][i]
 				}
@@ -99,13 +99,10 @@ function loadDonate(){
 				<li-hid>赞助金额: `+response.data.list[allUser].all_sum_amount+`￥<hr>`
 				amount = amount.add(response.data.list[allUser].all_sum_amount)
 			}
-			getByID('subtab_setting_donate', `<br><li-hid>我的<a href="https://afdian.com/a/Shinwmyste" target="_blank" style="color: black;">爱发电</a>数据<grey>(以时间排序)</grey>:<br><br>`+data)
-			console.log(data)
+			getByID('donateSubtab', `<br><li-hid>我的<a href="https://afdian.com/a/Shinwmyste" target="_blank" style="color: black;">爱发电</a>数据<grey>(以时间排序)</grey>:<br><br>`+data)
 		},
 		error: function(){
-			getByID('subtab_setting_donate', `<br><li-hid>未能正常获取实时数据,以下是截止为2024年9月22日的捐助名单<br><br>`+donateHistory)
+			getByID('donateSubtab', `<br><li-hid>未能正常获取实时数据,以下是截止为2024年9月22日的捐助名单<br><br>`+donateHistory)
 		}
 	})
-
-	setTimeout(function(){loadDonate()}, 300000);
 }

@@ -24,16 +24,16 @@ function getBr(){
 	}
 
 	let u = false
-	for(let maini in mainTab){
+	for(let maini in MainActionData){
 		let br = -1
-		for(let i in main[maini]){
+		for(let i in MAIN[maini]){
 			let unlocked = true
-			if(main[maini][i]['unlocked']!==undefined){
-				unlocked = main[maini][i]['unlocked']()
+			if(MAIN[maini][i]['unlocked']!==undefined){
+				unlocked = MAIN[maini][i]['unlocked']()
 			}
 			if(unlocked){
 				br += 1
-				getByID(mainTab[maini]['id']()+"TextID",(u ? '<br><br>' : '')+mainTab[maini]['name']()+'<br>')
+				getByID(MainActionData[maini]['id']()+"TextID",(u ? '<br><br>' : '')+MainActionData[maini]['name']()+'<br>')
 			}
 			if(br%MID===0 && br!==0){
 				document.getElementById(i+maini+'BrID').style.display = ''
@@ -45,10 +45,10 @@ function getBr(){
 	}
 
 	let br = -1
-	for(let i in civics['workshop']){
+	for(let i in CIVICS['workshop']){
 		let unlocked = true
-		if(civics['workshop'][i]['unlocked']!==undefined){
-			unlocked = civics['workshop'][i]['unlocked']()
+		if(CIVICS['workshop'][i]['unlocked']!==undefined){
+			unlocked = CIVICS['workshop'][i]['unlocked']()
 		}
 		if(!WORKSHOPBOUGHT){
 			if(unlocked && !player['workshop'][i]){
@@ -88,14 +88,14 @@ function dataDiff(){
 	systemDiff()
 	gameDiff()
 	
-	for(let i in main['action']){
+	for(let i in MAIN['action']){
 		if(getActionCooldown(i)!==undefined){
 			let activeSpeed = n(0)
 			let autoSpeed = n(getActionAuto(i))
 			if(hasActionClick(i)){
 				let base = n(1)
-				if(main['action'][i]['player']!==undefined){
-					base = main['action'][i]['player']()
+				if(MAIN['action'][i]['player']!==undefined){
+					base = MAIN['action'][i]['player']()
 				}
 				activeSpeed = activeSpeed.add(n(base).mul(getEfficient('action')))
 			}
@@ -108,7 +108,7 @@ function dataDiff(){
 			player['action'][i+'Cooldown'] = player['action'][i+'Cooldown'].add(n(actionSpeed).mul(DIFF))
 
 			if(player['action'][i+'Cooldown'].gte(getActionCooldown(i)) && getActionCanClick(i)){
-				main['action'][i]['onClick']()
+				MAIN['action'][i]['onClick']()
 				player['action'][i+'Total'] = player['action'][i+'Total'].add(1)
 				NumberFix()
 				if(autoSpeed.gt(0)){
@@ -140,14 +140,14 @@ function dataDiff(){
 		}
 	}
 
-	for(let i in main['craft']){
+	for(let i in MAIN['craft']){
 		if(getCraftCooldown(i)!==undefined){
 			let activeSpeed = n(0)
 			let autoSpeed = n(getCraftAuto(i))
 			if(hasCraftClick(i)){
 				let base = n(1)
-				if(main['craft'][i]['player']!==undefined){
-					base = main['craft'][i]['player']()
+				if(MAIN['craft'][i]['player']!==undefined){
+					base = MAIN['craft'][i]['player']()
 				}
 				activeSpeed = activeSpeed.add(n(base).mul(getEfficient('action')))
 			}
@@ -160,7 +160,7 @@ function dataDiff(){
 			player['craft'][i+'Cooldown'] = player['craft'][i+'Cooldown'].add(n(actionSpeed).mul(DIFF))
 
 			if(player['craft'][i+'Cooldown'].gte(getCraftCooldown(i)) && getCraftCanClick(i)){
-				main['craft'][i]['onClick']()
+				MAIN['craft'][i]['onClick']()
 				player['craft'][i+'Total'] = player['craft'][i+'Total'].add(1)
 				NumberFix()
 				autoSpeed = n(getCraftAuto(i))
@@ -193,12 +193,12 @@ function dataDiff(){
 		}
 	}
 
-	for(let id in main['building']){
+	for(let id in MAIN['building']){
 		let resCan = true
 		let cappedCan = true
-		for(let i in main['building'][id]['cost']){
+		for(let i in MAIN['building'][id]['cost']){
             let res = getBuildCost(id, i)
-			if(resource['main'][i]['capped']!==undefined){
+			if(RESOURCE['main'][i]['capped']!==undefined){
 				if(n(getResourceCapped(i)).lt(res)){
 					addedCss(id+"BuildingButtonID", 'capped')
 					cappedCan = false
@@ -217,14 +217,14 @@ function dataDiff(){
 		}
 	}
 
-	for(let id in civics['workshop']){
+	for(let id in CIVICS['workshop']){
 		if(!WORKSHOPBOUGHT){
 			let resCan = true
 			let cappedCan = true
 			removeCss(id+"WorkshopButtonID", 'bought')
-			for(let i in civics['workshop'][id]['cost']){
-				let res = n(civics['workshop'][id]['cost'][i]())
-				if(resource['main'][i]['capped']!==undefined){
+			for(let i in CIVICS['workshop'][id]['cost']){
+				let res = n(CIVICS['workshop'][id]['cost'][i]())
+				if(RESOURCE['main'][i]['capped']!==undefined){
 					if(n(getResourceCapped(i)).lt(res)){
 						addedCss(id+"WorkshopButtonID", 'capped')
 						cappedCan = false
@@ -252,79 +252,80 @@ function dataDiff(){
 var RESOURCEUNLOCKEDTIMES = 0
 function intervalID(){
 	dataDiff()
-	for(let i in mainButton){
+	for(let i in TABBUTTON){
 		let unlocked = true
-		if(mainButton[i]['unlocked']!==undefined){
-			unlocked = mainButton[i]['unlocked']()
+		if(TABBUTTON[i]['unlocked']!==undefined){
+			unlocked = TABBUTTON[i]['unlocked']()
 		}
-		unlockedLoad(i+'MainTabID', unlocked)
-		if(mainButton[i]['subTab']!==undefined){
+		unlockedLoad(i+'TabButton', unlocked)
+		if(TABBUTTON[i]['subtab']!==undefined){
 			let allSubUnlocked = false
-			for(let is in mainButton[i]['subTab']){
+			for(let is in TABBUTTON[i]['subtab']){
 				let subUnlocked = true
-				if(mainButton[i]['subTab'][is]['unlocked']!==undefined){
-					subUnlocked = mainButton[i]['subTab'][is]['unlocked']()
+				if(TABBUTTON[i]['subtab'][is]['unlocked']!==undefined){
+					subUnlocked = TABBUTTON[i]['subtab'][is]['unlocked']()
 				}
 				allSubUnlocked = allSubUnlocked || subUnlocked
-				unlockedLoad(i+'_'+is+'SubMainTabID', subUnlocked)
+				unlockedLoad(is+'SubtabID', subUnlocked)
 			}
 			if(!allSubUnlocked){
-				unlockedLoad(i+'_subTabBr', allSubUnlocked)
+				unlockedLoad(i+'SubtabBr', false)
+				unlockedLoad(i+'SubtabTop', false)
 			}
 		}
 	}
 
 	RESOURCEUNLOCKEDTIMES = 0
-	for(let i in resource['main']){
+	for(let i in RESOURCE['main']){
 		resourceUpdate(i)
 		getResourceID(i)
 	}
 
-	for(let i in main['action']){
+	for(let i in MAIN['action']){
 		let unlocked = true
-		if(main['action'][i]['unlocked']!==undefined){
-			unlocked = main['action'][i]['unlocked']()
+		if(MAIN['action'][i]['unlocked']!==undefined){
+			unlocked = MAIN['action'][i]['unlocked']()
 		}
 		unlockedLoad(i+'LoadAction', unlocked)
 	}
 
-	for(let i in main['building']){
+	for(let i in MAIN['building']){
 		let unlocked = true
-		if(main['building'][i]['unlocked']!==undefined){
-			unlocked = main['building'][i]['unlocked']()
+		if(MAIN['building'][i]['unlocked']!==undefined){
+			unlocked = MAIN['building'][i]['unlocked']()
 		}
 		unlockedLoad(i+'LoadBuilding', unlocked)
 	}
 
-	for(let i in main['craft']){
+	for(let i in MAIN['craft']){
 		let unlocked = true
-		if(main['craft'][i]['unlocked']!==undefined){
-			unlocked = main['craft'][i]['unlocked']()
+		if(MAIN['craft'][i]['unlocked']!==undefined){
+			unlocked = MAIN['craft'][i]['unlocked']()
 		}
 		unlockedLoad(i+'LoadCraft', unlocked)
 	}
 
-	for(let i in civics['citizens']){
+	for(let i in CIVICS['citizens']){
 		let unlocked = true
-		if(civics['citizens'][i]['unlocked']!==undefined){
-			unlocked = civics['citizens'][i]['unlocked']()
+		if(CIVICS['citizens'][i]['unlocked']!==undefined){
+			unlocked = CIVICS['citizens'][i]['unlocked']()
 		}
 		unlockedLoad(i+'LoadCitizens', unlocked)
 	}
 
-	for(let i in civics['jobs']){
+	for(let i in CIVICS['jobs']){
 		let unlocked = true
-		if(civics['jobs'][i]['unlocked']!==undefined){
-			unlocked = civics['jobs'][i]['unlocked']()
+		if(CIVICS['jobs'][i]['unlocked']!==undefined){
+			unlocked = CIVICS['jobs'][i]['unlocked']()
 		}
 		unlockedLoad(i+'LoadCitizenJobs', unlocked && n(getUnemployedJobs(i)).gt(0))
 	}
 
-	for(let i in civics['workshop']){
+	for(let i in CIVICS['workshop']){
 		let unlocked = true
 		let bought = !player['workshop'][i]
-		if(civics['workshop'][i]['unlocked']!==undefined){
-			unlocked = civics['workshop'][i]['unlocked']()
+		if(CIVICS['workshop'][i]['unlocked']!==undefined){
+			unlocked = CIVICS['workshop'][i]['unlocked']()
 		}
 		if(WORKSHOPBOUGHT){
 			bought = !bought

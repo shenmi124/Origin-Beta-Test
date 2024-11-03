@@ -252,12 +252,12 @@ var MainBuilding = {
             let speed = ''
             let lucky = ''
             let hr = ''
-            if(n(main['craft']['stone']['speed']()).gt(1)){
-                speed = '<left>速度倍率: <mul>×</mul>'+format(main['craft']['stone']['speed']())+' <grey>#提升全局产量</grey></left>'
+            if(n(MAIN['craft']['stone']['speed']()).gt(1)){
+                speed = '<left>速度倍率: <mul>×</mul>'+format(MAIN['craft']['stone']['speed']())+' <grey>#提升全局产量</grey></left>'
                 hr = '<hr>'
             }
-            if(n(main['craft']['stone']['lucky']()).gt(1)){
-                lucky = '<left>幸运倍率: <mul>×</mul>'+format(main['craft']['stone']['lucky']())+' <grey>#提升矿石产量</grey></left>'
+            if(n(MAIN['craft']['stone']['lucky']()).gt(1)){
+                lucky = '<left>幸运倍率: <mul>×</mul>'+format(MAIN['craft']['stone']['lucky']())+' <grey>#提升矿石产量</grey></left>'
                 hr = '<hr>'
             }
             return '建造矿井采集矿石<br><grey>矿井会继承 行动石料 的倍率</grey>'+hr+speed+lucky
@@ -271,15 +271,15 @@ var MainBuilding = {
         effect: {
             gain: {
                 add: {
-                    stone(){return n(2).mul(main['craft']['stone']['speed']())},
-                    copper(){return n(0.01).mul(main['craft']['stone']['speed']()).mul(main['craft']['stone']['lucky']())},
-                    coal(){return n(0.001).mul(main['craft']['stone']['speed']()).mul(main['craft']['stone']['lucky']())},
+                    stone(){return n(2).mul(MAIN['craft']['stone']['speed']())},
+                    copper(){return n(0.01).mul(MAIN['craft']['stone']['speed']()).mul(MAIN['craft']['stone']['lucky']())},
+                    coal(){return n(0.001).mul(MAIN['craft']['stone']['speed']()).mul(MAIN['craft']['stone']['lucky']())},
                     iron(){
                         let base = n(0)
                         if(player.workshop.elevator){
                             base = base.add(0.01)
                         }
-                        return n(base).mul(main['craft']['stone']['speed']()).mul(main['craft']['stone']['lucky']())
+                        return n(base).mul(MAIN['craft']['stone']['speed']()).mul(MAIN['craft']['stone']['lucky']())
                     },
                 }
             }

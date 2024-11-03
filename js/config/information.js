@@ -1,5 +1,5 @@
 function loadInformation(){
-    getByID('subtab_setting_information', `
+    getByID('informationSubtab', `
     <br>
     <li-hid>本游戏(起源) 由 辉影神秘(Shinwmyste) 制作<br><br>
     <li-hid>本游戏使用了:

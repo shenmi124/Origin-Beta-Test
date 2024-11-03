@@ -7,7 +7,7 @@ var ResourceMain = {
     },
     pollution: {
         name(){return "污染"},
-        tooltip(){return '每分钟污染会减少1%外加2000点<joker>主打一个致敬</joker>'},
+        tooltip(){return '每分钟污染会减少1%外加2000点<joker>- GregTech</joker>'},
         color(){return '#603708'},
         gain(){return n(2000).add(player.resource.pollution.mul(0.01)).div(60).neg()},
         unlocked(){return getResourceUnlocked('pollution') || player.building.kiln.gte(1)},
@@ -64,7 +64,7 @@ var ResourceMain = {
     knowledge: {
         name(){return "思维"},
         color(){return 'rgb(0 143 255)'},
-        gain(){return n(main['action']['blueprint']['costSecond']()[1]).neg()},
+        gain(){return n(MAIN['action']['blueprint']['costSecond']()[1]).neg()},
         gainTooltip(){return '加工'},
         capped(){return n(0)},
         tooltip(){return '非圣人莫能为,非智者莫能先'},
@@ -87,7 +87,7 @@ var ResourceMain = {
     leather: {
         name(){return "皮革"},
         color(){return '#763f00'},
-        gain(){return n(main['action']['parchment']['costSecond']()).neg()},
+        gain(){return n(MAIN['action']['parchment']['costSecond']()).neg()},
         gainTooltip(){return '加工'},
         capped(){return n(50)},
         unlocked(){return getResourceUnlocked('leather')},
@@ -103,7 +103,7 @@ var ResourceMain = {
         name(){return "木材"},
         color(){return 'rgb(180,144,90)'},
         capped(){return n(30)},
-        gain(){return n(main['action']['plank']['costSecond']()).neg()},
+        gain(){return n(MAIN['action']['plank']['costSecond']()).neg()},
         gainTooltip(){return '加工'},
         unlockAction(){
             addLog('在这样的平原上你几乎找不到树')
@@ -158,7 +158,7 @@ var ResourceMain = {
         name(){return "木板"},
         tooltip(){return '锻造资源'},
         color(){return 'rgb(158 103 19)'},
-        gain(){return main['action']['plank']['gainSecond']()},
+        gain(){return MAIN['action']['plank']['gainSecond']()},
         gainTooltip(){return '加工'},
         mul(){return gameGetForging()},
         unlocked(){return getResourceUnlocked('plank')},
@@ -176,7 +176,7 @@ var ResourceMain = {
         name(){return "羊皮纸"},
         tooltip(){return '锻造资源'},
         color(){return '#a37d59'},
-        gain(){return n(main['action']['parchment']['gainSecond']()).sub(main['action']['blueprint']['costSecond']()[0])},
+        gain(){return n(MAIN['action']['parchment']['gainSecond']()).sub(MAIN['action']['blueprint']['costSecond']()[0])},
         gainTooltip(){return '加工'},
         mul(){return gameGetForging()},
         unlocked(){return getResourceUnlocked('parchment')},
@@ -185,7 +185,7 @@ var ResourceMain = {
         name(){return "蓝图"},
         tooltip(){return '锻造资源'},
         color(){return '#00aaff'},
-        gain(){return main['action']['blueprint']['gainSecond']()},
+        gain(){return MAIN['action']['blueprint']['gainSecond']()},
         gainTooltip(){return '加工'},
         effect: {
             capped: {

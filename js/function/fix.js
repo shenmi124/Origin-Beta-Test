@@ -1,6 +1,6 @@
 function NumberFix(){
-	for(let i in resource['main']){
-		if(resource['main'][i]['capped']!==undefined){
+	for(let i in RESOURCE['main']){
+		if(RESOURCE['main'][i]['capped']!==undefined){
 			player['resource'][i] = player['resource'][i].min(getResourceCapped(i))
 			getResourceID(i)
 		}
@@ -8,25 +8,25 @@ function NumberFix(){
 }
 
 function CitizensFix(){
-    for(let i in civics['citizens']){
-        if(civics['citizens'][i]['unlocked']!==undefined){
-            if(!civics['citizens'][i]['unlocked']() && player['citizens'][i].neq(0)){
+    for(let i in CIVICS['citizens']){
+        if(CIVICS['citizens'][i]['unlocked']!==undefined){
+            if(!CIVICS['citizens'][i]['unlocked']() && player['citizens'][i].neq(0)){
                 citizensAllocate(i, player['citizens'][i].neg())
             }
         }
     }
-	for(let i in civics['jobs']){
-        let num = n(civics['jobs'][i]['amount']())
-        for(let ic in civics['citizens']){
-            if(civics['citizens'][ic]['allocated']?.[i]!==undefined){
-                num = num.sub(n(player['citizens'][ic]).mul(civics['citizens'][ic]['allocated'][i]()))                        
+	for(let i in CIVICS['jobs']){
+        let num = n(CIVICS['jobs'][i]['amount']())
+        for(let ic in CIVICS['citizens']){
+            if(CIVICS['citizens'][ic]['allocated']?.[i]!==undefined){
+                num = num.sub(n(player['citizens'][ic]).mul(CIVICS['citizens'][ic]['allocated'][i]()))                        
             }
         }
         if(num.lt(0)){
-            for(let ic in civics['citizens']){
-                if(civics['citizens'][ic]['allocated']?.[i]!==undefined){
+            for(let ic in CIVICS['citizens']){
+                if(CIVICS['citizens'][ic]['allocated']?.[i]!==undefined){
                     let remain = n(num).abs()
-                    let over = n(remain).div(civics['citizens'][ic]['allocated'][i]()).ceil()
+                    let over = n(remain).div(CIVICS['citizens'][ic]['allocated'][i]()).ceil()
                     if(player['citizens'][ic].gte(over)){
                         player['citizens'][ic] = player['citizens'][ic].sub(over)
                         break
@@ -40,11 +40,11 @@ function CitizensFix(){
         }
 	}
 
-	for(let i in civics['citizens']){
+	for(let i in CIVICS['citizens']){
 		componentCitizens(i)
 	}
 
-	for(let i in civics['jobs']){
+	for(let i in CIVICS['jobs']){
 		componentJobs(i)
 	}
 

@@ -6,12 +6,14 @@
 
 #midColumn {
     overflow-y: auto;
+    display: inline-grid;
+    align-content: flex-start;
 }
 
 #rightColumn {
     width: 450px;
-    overflow-y: auto;
     transition-duration: 0.1s;
+    vertical-align: top;
 }
 
 .column {

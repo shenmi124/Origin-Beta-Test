@@ -1,25 +1,25 @@
-.maintab {
+.tabButton {
     transition-duration: 0.2s;
     padding-right: 8px;
     font-size: 17px;
 }
 
-.maintab.subtab {
+.tabButton.subtab {
     color: #000a;
 }
 
-.maintab:hover {
+.tabButton:hover {
     opacity: 0.8;
 }
 
-.maintab.setting {
+.tabButton.setting {
     float: right;
     padding-right: 0px;
     padding-left: 2px;
     color: #888;
 }
 
-.maintab.data {
+.tabButton.data {
     float: right;
     padding-right: 0px;
     padding-left: 2px;

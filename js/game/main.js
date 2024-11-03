@@ -1,30 +1,22 @@
-var mainButton = {
+var TABBUTTON = {
     main: {
         name(){return "主页"},
-        subTab: {
+        subtab: {
             action: {
                 name(){return "行动"},
-                data(){return ""},
                 unlocked(){return false}
             },
-            allocation: {
-                name(){return "配置"},
-                data(){return ""},
-                unlocked(){return false}
-            }
         }
     },
     civics: {
         name(){return '村庄'},
-        subTab: {
+        subtab: {
             allocation: {
                 name(){return "调配"},
-                data(){return ""},
                 unlocked(){return true}
             },
             develop: {
                 name(){return "开发"},
-                data(){return ""},
                 unlocked(){return true}
             }
         },
@@ -32,54 +24,56 @@ var mainButton = {
     },
     setting: {
         name(){return "其他"},
-        subTab: {
+        subtab: {
             setting: {
                 name(){return "设置"},
-                data(){return ""},
             },
             stats: {
                 name(){return "统计"},
-                data(){return ""},
             },
             donate: {
                 name(){return "捐助"},
-                data(){return ""},
             },
             information: {
                 name(){return "信息"},
-                data(){return ""},
             },
         }
     },
 }
 
-var resource = {
+var RESOURCE = {
     main: ResourceMain,
 }
 
-var main = {
+var MAIN = {
     action: MainAction,
     building: MainBuilding,
     craft: MainCraft,
 }
 
-var mainTab = {
-    action:{
-        name(){return '行动'},
-        id(){return 'action'},
-    },
-    building:{
-        name(){return '建筑'},
-        id(){return 'building'},
-    },
-    craft:{
-        name(){return '探索'},
-        id(){return 'craft'},
-    },
-}
-
-var civics = {
+var CIVICS = {
     citizens: CivicsCitizens,
     jobs: CivicsJobs,
     workshop: CivicsWorkshop,
+}
+
+var GAME = {
+    RESOURCE,
+    MAIN,
+    CIVICS
+}
+
+var MainActionData = {
+    action: {
+        name(){return '行动'},
+        id(){return 'action'},
+    },
+    building: {
+        name(){return '建筑'},
+        id(){return 'building'},
+    },
+    craft: {
+        name(){return '探索'},
+        id(){return 'craft'},
+    },
 }

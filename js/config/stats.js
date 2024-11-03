@@ -1,32 +1,33 @@
 function statsDiff(){
     let game = ''
-    game += `<div style="display: inline-grid; width: 100px">统计</div>
-            <br>
-            <div style="display: inline-grid; width: 100px">真实时间</div>
-            <div style="display: inline-grid; width: 500px">`+formatTime(player.game.time)+`</div>
-            <br>
-            <div style="display: inline-grid; width: 100px">点击次数</div>
-            <div style="display: inline-grid; width: 500px">`+formatWhole(player.data.click)+`</div>
-            <br>
-            <div style="display: inline-grid; width: 100px">游戏时间</div>
-            <div style="display: inline-grid; width: 500px">`+getGametime()[0]+`</div>
-            <br>
-            <div style="display: inline-grid; width: 100px">游戏阶段</div>
-            <div style="display: inline-grid; width: 500px">`+getWorldTime()+`</div>
-            <br>
-            `
+    game += `
+    <div style="display: inline-grid; width: 100px">统计</div>
+    <br>
+    <div style="display: inline-grid; width: 100px">真实时间</div>
+    <div style="display: inline-grid; width: 500px">`+formatTime(player.game.time)+`</div>
+    <br>
+    <div style="display: inline-grid; width: 100px">点击次数</div>
+    <div style="display: inline-grid; width: 500px">`+formatWhole(player.data.click)+`</div>
+    <br>
+    <div style="display: inline-grid; width: 100px">游戏时间</div>
+    <div style="display: inline-grid; width: 500px">`+getGametime()[0]+`</div>
+    <br>
+    <div style="display: inline-grid; width: 100px">游戏阶段</div>
+    <div style="display: inline-grid; width: 500px">`+getWorldTime()+`</div>
+    <br>`
 
     let res = ''
     let resU = false
-    res += `<div style="display: inline-grid; width: 100px">资源</div>
-                <div style="display: inline-grid; width: 100px">拥有</div>
-                <div style="display: inline-grid; width: 100px">最大</div>
-                <div style="display: inline-grid; width: 100px">总计</div>
-                <br>`
-    for(let i in resource['main']){
+    res += `
+    <div style="display: inline-grid; width: 100px">资源</div>
+    <div style="display: inline-grid; width: 100px">拥有</div>
+    <div style="display: inline-grid; width: 100px">最大</div>
+    <div style="display: inline-grid; width: 100px">总计</div>
+    <br>`
+    for(let i in RESOURCE['main']){
         if(player['resource'][i+'Unlocked']){
-            if(resource['main'][i]['type']!==undefined){
-                if(resource['main'][i]['type']()=='node'){
+            if(RESOURCE['main'][i]['type']!==undefined){
+                if(RESOURCE['main'][i]['type']()=='node'){
                     res += `<br>`
                     continue
                 }
@@ -50,23 +51,23 @@ function statsDiff(){
     <div style="display: inline-grid; width: 100px">自动耗时</div>
     <div style="display: inline-grid; width: 100px">手动耗时</div>
     <br>`
-    for(let i in main['action']){
+    for(let i in MAIN['action']){
         if(player['action'][i+'Total'].gte(1)){
             actionU = true
             let time = n(0)
 			let activeSpeed = n(0)
 			let autoSpeed = n(getActionAuto(i))
 			let playerBase = n(1)
-			if(main['action'][i]['player']!==undefined){
-				playerBase = main['action'][i]['player']()
+			if(MAIN['action'][i]['player']!==undefined){
+				playerBase = MAIN['action'][i]['player']()
 			}
 			activeSpeed = activeSpeed.add(n(playerBase).mul(getEfficient('action')))
 			let actionSpeed = activeSpeed.add(autoSpeed)
             let base = ''
-            if(main['action'][i]['cooldown']!==undefined){
-                if(!n(main['action'][i]['cooldown']()).eq(0)){
-                    base = formatTime(main['action'][i]['cooldown']())
-                    time = main['action'][i]['cooldown']()
+            if(MAIN['action'][i]['cooldown']!==undefined){
+                if(!n(MAIN['action'][i]['cooldown']()).eq(0)){
+                    base = formatTime(MAIN['action'][i]['cooldown']())
+                    time = MAIN['action'][i]['cooldown']()
                 }
             }
             let auto = ''
@@ -80,7 +81,7 @@ function statsDiff(){
                 }
             }
             action += `
-            <div style="display: inline-grid; width: 100px">`+main['action'][i]['name']()+`</div>
+            <div style="display: inline-grid; width: 100px">`+MAIN['action'][i]['name']()+`</div>
             <div style="display: inline-grid; width: 100px">`+formatWhole(player['action'][i+'Total'])+`</div>
             <div style="display: inline-grid; width: 100px">`+base+`</div>
             <div style="display: inline-grid; width: 100px">`+auto+`</div>
@@ -98,23 +99,23 @@ function statsDiff(){
     <div style="display: inline-grid; width: 100px">自动耗时</div>
     <div style="display: inline-grid; width: 100px">手动耗时</div>
     <br>`
-    for(let i in main['craft']){
+    for(let i in MAIN['craft']){
         if(player['craft'][i+'Total'].gte(1)){
             craftU = true
             let time = n(0)
 			let activeSpeed = n(0)
 			let autoSpeed = n(getCraftAuto(i))
 			let playerBase = n(1)
-			if(main['craft'][i]['player']!==undefined){
-				playerBase = main['craft'][i]['player']()
+			if(MAIN['craft'][i]['player']!==undefined){
+				playerBase = MAIN['craft'][i]['player']()
 			}
 			activeSpeed = activeSpeed.add(n(playerBase).mul(getEfficient('action')))
 			let actionSpeed = activeSpeed.add(autoSpeed)
             let base = ''
-            if(main['craft'][i]['cooldown']!==undefined){
-                if(!n(main['craft'][i]['cooldown']()).eq(0)){
-                    base = formatTime(main['craft'][i]['cooldown']())
-                    time = main['craft'][i]['cooldown']()
+            if(MAIN['craft'][i]['cooldown']!==undefined){
+                if(!n(MAIN['craft'][i]['cooldown']()).eq(0)){
+                    base = formatTime(MAIN['craft'][i]['cooldown']())
+                    time = MAIN['craft'][i]['cooldown']()
                 }
             }
             let auto = ''
@@ -128,7 +129,7 @@ function statsDiff(){
                 }
             }
             craft += `
-            <div style="display: inline-grid; width: 100px">`+main['craft'][i]['name']()+`</div>
+            <div style="display: inline-grid; width: 100px">`+MAIN['craft'][i]['name']()+`</div>
             <div style="display: inline-grid; width: 100px">`+formatWhole(player['craft'][i+'Total'])+`</div>
             <div style="display: inline-grid; width: 100px">`+base+`</div>
             <div style="display: inline-grid; width: 100px">`+auto+`</div>
@@ -143,17 +144,17 @@ function statsDiff(){
     <div style="display: inline-grid; width: 100px">建筑</div>
     <div style="display: inline-grid; width: 100px">拥有</div>
     <br>`
-    for(let i in main['building']){
+    for(let i in MAIN['building']){
         if(player['building'][i].gte(1)){
             buildingU = true
             let amount = formatWhole(player['building'][i])
-            if(main['building'][i]['unique']!==undefined){
-                if(main['building'][i]['unique']()){
+            if(MAIN['building'][i]['unique']!==undefined){
+                if(MAIN['building'][i]['unique']()){
                     amount = ''
                 }
             }
             building += `
-            <div style="display: inline-grid; width: 100px">`+main['building'][i]['name']()+`</div>
+            <div style="display: inline-grid; width: 100px">`+MAIN['building'][i]['name']()+`</div>
             <div style="display: inline-grid; width: 100px">`+amount+`</div>
             <br>`
         }
@@ -166,7 +167,7 @@ function statsDiff(){
     <div style="display: inline-grid; width: 100px">拥有</div>
     <br>`
     let br = 0
-    for(let i in civics['workshop']){
+    for(let i in CIVICS['workshop']){
         if(player['workshop'][i]){
             workshopU = true
             br++
@@ -175,13 +176,13 @@ function statsDiff(){
                 hbr = '<br>'
             }
             let color = ''
-            if(civics['workshop'][i]['keep']!==undefined){
-                if(civics['workshop'][i]['keep']()){
+            if(CIVICS['workshop'][i]['keep']!==undefined){
+                if(CIVICS['workshop'][i]['keep']()){
                     color = 'rgb(186, 0, 192)'
                 }
             }
             workshop += `
-            <div style="display: inline-grid; width: 100px; color: `+color+`">`+civics['workshop'][i]['name']()+`</div>
+            <div style="display: inline-grid; width: 100px; color: `+color+`">`+CIVICS['workshop'][i]['name']()+`</div>
             `+hbr
         }
     }
@@ -191,5 +192,5 @@ function statsDiff(){
     if(!buildingU){building = ''}
     if(!craftU){craft = ''}
     if(!workshopU){workshop = ''}
-	getByID('subtab_setting_stats', game+'<br>'+res+'<br>'+action+'<br>'+building+'<br>'+craft+'<br>'+workshop)
+	getByID('statsSubtab', game+'<br>'+res+'<br>'+action+'<br>'+building+'<br>'+craft+'<br>'+workshop)
 }

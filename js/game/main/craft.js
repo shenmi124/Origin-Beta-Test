@@ -72,18 +72,18 @@ let MainCraft = {
         onClick(){
             getStage(2)
 
-            for(i in main['craft']['collect']['gain']){
+            for(i in MAIN['craft']['collect']['gain']){
                 let exp = n(Math.random() * 100)
                 let unlocked = true
-                if(main['craft']['collect']['gain'][i]['unlocked']!==undefined){
-                    unlocked = main['craft']['collect']['gain'][i]['unlocked']
+                if(MAIN['craft']['collect']['gain'][i]['unlocked']!==undefined){
+                    unlocked = MAIN['craft']['collect']['gain'][i]['unlocked']
                 }
                 if(unlocked){
-                    if(n(main['craft']['collect']['gain'][i]['probability']()).gte(exp)){
-                        let random = n(Math.random()).mul(main['craft']['collect']['gain'][i]['float']())
-                        gainResource(i, n(main['craft']['collect']['gain'][i]['base']()).add(random))
-                        if(main['craft']['collect']['gain'][i]['tooltip']!==undefined){
-                            addLog(main['craft']['collect']['gain'][i]['tooltip']())
+                    if(n(MAIN['craft']['collect']['gain'][i]['probability']()).gte(exp)){
+                        let random = n(Math.random()).mul(MAIN['craft']['collect']['gain'][i]['float']())
+                        gainResource(i, n(MAIN['craft']['collect']['gain'][i]['base']()).add(random))
+                        if(MAIN['craft']['collect']['gain'][i]['tooltip']!==undefined){
+                            addLog(MAIN['craft']['collect']['gain'][i]['tooltip']())
                         }
                     }
                 }
@@ -97,16 +97,16 @@ let MainCraft = {
             let mul = ''
             let luck = ''
             let hr = ''
-            if(n(main['craft']['collect']['luck']()).gt(1)){
-                luck = '<div>幸运倍率:<br><li-hid>×'+format(main['craft']['collect']['luck']())+'</div>'
+            if(n(MAIN['craft']['collect']['luck']()).gt(1)){
+                luck = '<div>幸运倍率:<br><li-hid>×'+format(MAIN['craft']['collect']['luck']())+'</div>'
                 hr = '<hr>'
             }
-            if(n(main['craft']['collect']['mul']()).gt(1)){
-                mul = '<div>产出倍率:<br><li-hid>×'+format(main['craft']['collect']['mul']())+'</div>'
+            if(n(MAIN['craft']['collect']['mul']()).gt(1)){
+                mul = '<div>产出倍率:<br><li-hid>×'+format(MAIN['craft']['collect']['mul']())+'</div>'
                 hr = '<hr>'
             }
-            if(n(main.craft.harvest.mul()).gt(1)){
-                mul = '<left><small><div>产出倍率:<br><li-hid>×'+format(main.craft.harvest.mul())+'</div></small></left>'
+            if(n(MAIN['craft']['harvest']['mul']()).gt(1)){
+                mul = '<left><small><div>产出倍率:<br><li-hid>×'+format(MAIN['craft']['harvest']['mul']())+'</div></small></left>'
                 hr = '<hr>'
             }
             let times = '<hr>已标记: '+formatWhole(player.action.explore.collect,0)+' <grey>/ '+formatWhole(this.capped(),0)+' (遗忘)</grey>'
@@ -160,12 +160,12 @@ let MainCraft = {
             let speed = ''
             let lucky = ''
             let hr = ''
-            if(n(main['craft']['stone']['speed']()).gt(1)){
-                speed = '<left>速度倍率: <mul>×</mul>'+format(main['craft']['stone']['speed']())+'</left>'
+            if(n(MAIN['craft']['stone']['speed']()).gt(1)){
+                speed = '<left>速度倍率: <mul>×</mul>'+format(MAIN['craft']['stone']['speed']())+'</left>'
                 hr = '<hr>'
             }
-            if(n(main['craft']['stone']['lucky']()).gt(1)){
-                lucky = '<left>幸运倍率: <mul>×</mul>'+format(main['craft']['stone']['lucky']())+'</left>'
+            if(n(MAIN['craft']['stone']['lucky']()).gt(1)){
+                lucky = '<left>幸运倍率: <mul>×</mul>'+format(MAIN['craft']['stone']['lucky']())+'</left>'
                 hr = '<hr>'
             }
             let times = '<hr>已标记: '+formatWhole(player.action.explore.stone,0)+' <grey>/ '+formatWhole(this.capped(),0)+' (遗忘)</grey>'
@@ -180,16 +180,16 @@ let MainCraft = {
             return base
         },
         onClick(){
-            for(i in main['craft']['stone']['gain']){
+            for(i in MAIN['craft']['stone']['gain']){
                 let exp = n(Math.random() * 100)
                 let unlocked = true
-                if(main['craft']['stone']['gain'][i]['unlocked']!==undefined){
-                    unlocked = main['craft']['stone']['gain'][i]['unlocked']
+                if(MAIN['craft']['stone']['gain'][i]['unlocked']!==undefined){
+                    unlocked = MAIN['craft']['stone']['gain'][i]['unlocked']
                 }
                 if(unlocked){
-                    if(n(main['craft']['stone']['gain'][i]['probability']()).gte(exp)){
-                        let random = n(Math.random()).mul(main['craft']['stone']['gain'][i]['float']())
-                        gainResource(i, n(main['craft']['stone']['gain'][i]['base']()).add(random))
+                    if(n(MAIN['craft']['stone']['gain'][i]['probability']()).gte(exp)){
+                        let random = n(Math.random()).mul(MAIN['craft']['stone']['gain'][i]['float']())
+                        gainResource(i, n(MAIN['craft']['stone']['gain'][i]['base']()).add(random))
                     }
                 }
             }
@@ -214,8 +214,8 @@ let MainCraft = {
         tooltip(){
             let mul = ''
             let hr = ''
-            if(n(main.craft.drop.mul()).gt(1)){
-                mul = '<left><small><div>产出倍率:<br><li-hid>×'+format(main.craft.drop.mul())+'</div></small></left>'
+            if(n(MAIN['craft']['drop']['mul']()).gt(1)){
+                mul = '<left><small><div>产出倍率:<br><li-hid>×'+format(MAIN['craft']['drop']['mul']())+'</div></small></left>'
                 hr = '<hr>'
             }
             let times = '<hr>已标记: '+formatWhole(player.action.explore.drop,0)+' <grey>/ '+formatWhole(this.capped(),0)+' (遗忘)</grey>'
@@ -228,11 +228,11 @@ let MainCraft = {
         onClick(){
             getStage(2)
 
-            for(i in main['craft']['drop']['gain']){
+            for(i in MAIN['craft']['drop']['gain']){
                 let exp = n(Math.random() * 100)
-                if(n(main['craft']['drop']['gain'][i]['probability']()).gte(exp)){
-                    let random = n(Math.random()).mul(main['craft']['drop']['gain'][i]['float']())
-                    gainResource(i, n(main['craft']['drop']['gain'][i]['base']()).add(random))
+                if(n(MAIN['craft']['drop']['gain'][i]['probability']()).gte(exp)){
+                    let random = n(Math.random()).mul(MAIN['craft']['drop']['gain'][i]['float']())
+                    gainResource(i, n(MAIN['craft']['drop']['gain'][i]['base']()).add(random))
                 }
             }
 
@@ -256,8 +256,8 @@ let MainCraft = {
         tooltip(){
             let mul = ''
             let hr = ''
-            if(n(main.craft.harvest.mul()).gt(1)){
-                mul = '<left><small><div>产出倍率:<br><li-hid>×'+format(main.craft.harvest.mul())+'</div></small></left>'
+            if(n(MAIN['craft']['harvest']['mul']()).gt(1)){
+                mul = '<left><small><div>产出倍率:<br><li-hid>×'+format(MAIN['craft']['harvest']['mul']())+'</div></small></left>'
                 hr = '<hr>'
             }
             let times = '<hr>已标记: '+formatWhole(player.action.explore.harvest,0)+' <grey>/ '+formatWhole(this.capped(),0)+' (遗忘)</grey>'
@@ -270,11 +270,11 @@ let MainCraft = {
         onClick(){
             getStage(2)
 
-            for(i in main['craft']['harvest']['gain']){
+            for(i in MAIN['craft']['harvest']['gain']){
                 let exp = n(Math.random() * 100)
-                if(n(main['craft']['harvest']['gain'][i]['probability']()).gte(exp)){
-                    let random = n(Math.random()).mul(main['craft']['harvest']['gain'][i]['float']())
-                    gainResource(i, n(main['craft']['harvest']['gain'][i]['base']()).add(random))
+                if(n(MAIN['craft']['harvest']['gain'][i]['probability']()).gte(exp)){
+                    let random = n(Math.random()).mul(MAIN['craft']['harvest']['gain'][i]['float']())
+                    gainResource(i, n(MAIN['craft']['harvest']['gain'][i]['base']()).add(random))
                 }
             }
 
@@ -324,11 +324,11 @@ let MainCraft = {
             let leather = n(0)
 
             for(let times = 0; times<Number(mul); times++){
-                for(let i in main['craft']['beast']['gain']){
+                for(let i in MAIN['craft']['beast']['gain']){
                     let exp = n(Math.random() * 100)
-                    if(n(main['craft']['beast']['gain'][i]['probability']()).gte(exp)){
-                        let random = n(Math.random()).mul(main['craft']['beast']['gain'][i]['float']())
-                        let gain = n(main['craft']['beast']['gain'][i]['base']()).add(random)
+                    if(n(MAIN['craft']['beast']['gain'][i]['probability']()).gte(exp)){
+                        let random = n(Math.random()).mul(MAIN['craft']['beast']['gain'][i]['float']())
+                        let gain = n(MAIN['craft']['beast']['gain'][i]['base']()).add(random)
                         gainResource(i, n(gain))
                         if(i=='food'){
                             food = food.add(gain)
@@ -377,11 +377,11 @@ let MainCraft = {
             return unl+times
         },
         onClick(){
-            for(i in main['craft']['tree']['gain']){
+            for(i in MAIN['craft']['tree']['gain']){
                 let exp = n(Math.random() * 100)
-                if(n(main['craft']['tree']['gain'][i]['probability']()).gte(exp)){
-                    let random = n(Math.random()).mul(main['craft']['tree']['gain'][i]['float']())
-                    gainResource(i, n(main['craft']['tree']['gain'][i]['base']()).add(random))
+                if(n(MAIN['craft']['tree']['gain'][i]['probability']()).gte(exp)){
+                    let random = n(Math.random()).mul(MAIN['craft']['tree']['gain'][i]['float']())
+                    gainResource(i, n(MAIN['craft']['tree']['gain'][i]['base']()).add(random))
                 }
             }
 
@@ -407,11 +407,11 @@ let MainCraft = {
             return times
         },
         onClick(){
-            for(i in main['craft']['meteorite']['gain']){
+            for(i in MAIN['craft']['meteorite']['gain']){
                 let exp = n(Math.random() * 100)
-                if(n(main['craft']['meteorite']['gain'][i]['probability']()).gte(exp)){
-                    let random = n(Math.random()).mul(main['craft']['meteorite']['gain'][i]['float']())
-                    gainResource(i, n(main['craft']['meteorite']['gain'][i]['base']()).add(random))
+                if(n(MAIN['craft']['meteorite']['gain'][i]['probability']()).gte(exp)){
+                    let random = n(Math.random()).mul(MAIN['craft']['meteorite']['gain'][i]['float']())
+                    gainResource(i, n(MAIN['craft']['meteorite']['gain'][i]['base']()).add(random))
                 }
             }
 

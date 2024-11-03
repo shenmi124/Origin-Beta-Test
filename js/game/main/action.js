@@ -33,8 +33,8 @@ var MainAction = {
             }
             let lucky = ''
             let hr = ''
-            if(n(main['action']['explore']['lucky']()).gt(1)){
-                lucky = '<left>幸运倍率: <mul>×</mul>'+format(main['action']['explore']['lucky']())+'</left>'
+            if(n(MAIN['action']['explore']['lucky']()).gt(1)){
+                lucky = '<left>幸运倍率: <mul>×</mul>'+format(MAIN['action']['explore']['lucky']())+'</left>'
                 hr = '<hr>'
             }
             return '在茫茫无际的草原中寻找可用资源'+con+hr+lucky
@@ -42,14 +42,14 @@ var MainAction = {
         onClick(){
             let find = []
             let special = []
-            for(let i in main['action']['explore']['gain']){
-                if(main['action']['explore']['gain'][i]['unlocked']()){
+            for(let i in MAIN['action']['explore']['gain']){
+                if(MAIN['action']['explore']['gain'][i]['unlocked']()){
                     let exp = n(Math.random() * 100)
-                    if(n(main['action']['explore']['gain'][i]['probability']()).mul(main['action']['explore']['lucky']()).mul(player['action']['explore'][i+'LuckyUp'].add(1)).gte(exp)){
-                        if(!main['action']['explore']['gain'][i]['instant']()){
-                            let random = n(Math.random()).mul(main['action']['explore']['gain'][i]['float']())
-                            let gain = n(main['action']['explore']['gain'][i]['base']()).add(random).ceil()
-                            player['action']['explore'][i] = player['action']['explore'][i].add(gain).min(main['craft'][i]['capped']())
+                    if(n(MAIN['action']['explore']['gain'][i]['probability']()).mul(MAIN['action']['explore']['lucky']()).mul(player['action']['explore'][i+'LuckyUp'].add(1)).gte(exp)){
+                        if(!MAIN['action']['explore']['gain'][i]['instant']()){
+                            let random = n(Math.random()).mul(MAIN['action']['explore']['gain'][i]['float']())
+                            let gain = n(MAIN['action']['explore']['gain'][i]['base']()).add(random).ceil()
+                            player['action']['explore'][i] = player['action']['explore'][i].add(gain).min(MAIN['craft'][i]['capped']())
                             if(!player['action']['explore'][i+'Found']){
                                 player['action']['explore'][i+'Found'] = true
                             }
@@ -69,7 +69,7 @@ var MainAction = {
             if(find[0]!==undefined){
                 let t = ''
                 for(let i in find){
-                    t += (i!==0 ? ' ' : '')+main['action']['explore']['gain'][find[i]]['name']()
+                    t += (i!==0 ? ' ' : '')+MAIN['action']['explore']['gain'][find[i]]['name']()
                     if(find[i]=='stone' && !player.action.explore.stoneFound){
                         addLog('你找到了一处裸露的矿石,或许你可以从中开采到石料和矿石')
                     }
@@ -245,12 +245,12 @@ var MainAction = {
             }else{
                 effect = '暂停'
             }
-            let gain = `<br><grey>`+format(main['action']['plank']['costSecond']())+colorText('wood')[1]+`/s -> `+format(main['action']['plank']['gainSecond']())+colorText('plank')[1]+`/s</grey>`
-            if(n(main['action']['plank']['gainSecond']()).eq(0)){
+            let gain = `<br><grey>`+format(MAIN['action']['plank']['costSecond']())+colorText('wood')[1]+`/s -> `+format(MAIN['action']['plank']['gainSecond']())+colorText('plank')[1]+`/s</grey>`
+            if(n(MAIN['action']['plank']['gainSecond']()).eq(0)){
                 gain = ``
             }
             return `将木材加工<hr>点击切换制造状态<br>当前: `+effect+`<left><hr>`
-            +format(main['action']['plank']['cost']())+colorText('wood')[1]+` -> `+format(main['action']['plank']['gain']())+colorText('plank')[1]
+            +format(MAIN['action']['plank']['cost']())+colorText('wood')[1]+` -> `+format(MAIN['action']['plank']['gain']())+colorText('plank')[1]
             +gain+`<br></left>`
         },
         cost(){
@@ -264,7 +264,7 @@ var MainAction = {
             return base
         },
         costSecond(){
-            let cost = main['action']['plank']['cost']()
+            let cost = MAIN['action']['plank']['cost']()
             return cost.div(getActionCooldown('plank')).mul(getActionAuto('plank'))
         },
         gain(){return n(1)},
@@ -273,7 +273,7 @@ var MainAction = {
                 player.action.plank.make = false
                 return n(0)
             }
-            let gain = main['action']['plank']['gain']()
+            let gain = MAIN['action']['plank']['gain']()
             return gain.div(getActionCooldown('plank')).mul(getActionAuto('plank'))
         },
         onClick(){},
@@ -288,14 +288,14 @@ var MainAction = {
         },
         handoff(){
             gameOpenMaking('plank')
-            if(player.resource.wood.lt(main['action']['plank']['costSecond']())){
+            if(player.resource.wood.lt(MAIN['action']['plank']['costSecond']())){
                 player.action.plank.make = false
             }
         },
         cooldown(){return n(20)},
-        coerciveClick(){return player.resource.wood.gte(main['action']['plank']['costSecond']()) || hasActionClick('plank')},
+        coerciveClick(){return player.resource.wood.gte(MAIN['action']['plank']['costSecond']()) || hasActionClick('plank')},
         player(){return n(0)},
-        canClick(){return player.resource.wood.gte(main['action']['plank']['costSecond']())},
+        canClick(){return player.resource.wood.gte(MAIN['action']['plank']['costSecond']())},
         unlocked(){return player.workshop.axe},
     },
     parchment: {
@@ -307,12 +307,12 @@ var MainAction = {
             }else{
                 effect = '暂停'
             }
-            let gain = `<br><grey>`+format(main['action']['parchment']['costSecond']())+colorText('leather')[1]+`/s -> `+format(main['action']['parchment']['gainSecond']())+colorText('parchment')[1]+`/s</grey>`
-            if(n(main['action']['parchment']['gainSecond']()).eq(0)){
+            let gain = `<br><grey>`+format(MAIN['action']['parchment']['costSecond']())+colorText('leather')[1]+`/s -> `+format(MAIN['action']['parchment']['gainSecond']())+colorText('parchment')[1]+`/s</grey>`
+            if(n(MAIN['action']['parchment']['gainSecond']()).eq(0)){
                 gain = ``
             }
             return `将皮革加工<hr>点击切换制造状态<br>当前: `+effect+`<left><hr>`
-            +format(main['action']['parchment']['cost']())+colorText('leather')[1]+` -> `+format(main['action']['parchment']['gain']())+colorText('parchment')[1]
+            +format(MAIN['action']['parchment']['cost']())+colorText('leather')[1]+` -> `+format(MAIN['action']['parchment']['gain']())+colorText('parchment')[1]
             +gain+`<br></left>`
         },
         cost(){
@@ -323,7 +323,7 @@ var MainAction = {
             return cost
         },
         costSecond(){
-            let cost = main['action']['parchment']['cost']()
+            let cost = MAIN['action']['parchment']['cost']()
             return cost.div(getActionCooldown('parchment')).mul(getActionAuto('parchment'))
         },
         gain(){return n(1)},
@@ -332,7 +332,7 @@ var MainAction = {
                 player.action.parchment.make = false
                 return n(0)
             }
-            let gain = main['action']['parchment']['gain']()
+            let gain = MAIN['action']['parchment']['gain']()
             return gain.div(getActionCooldown('parchment')).mul(getActionAuto('parchment'))
         },
         onClick(){},
@@ -347,14 +347,14 @@ var MainAction = {
         },
         handoff(){
             gameOpenMaking('parchment')
-            if(player.resource.leather.lt(main['action']['parchment']['costSecond']())){
+            if(player.resource.leather.lt(MAIN['action']['parchment']['costSecond']())){
                 player.action.parchment.make = false
             }
         },
         cooldown(){return n(60)},
-        coerciveClick(){return player.resource.leather.gte(main['action']['parchment']['costSecond']()) || hasActionClick('parchment')},
+        coerciveClick(){return player.resource.leather.gte(MAIN['action']['parchment']['costSecond']()) || hasActionClick('parchment')},
         player(){return n(0)},
-        canClick(){return player.resource.leather.gte(main['action']['parchment']['costSecond']())},
+        canClick(){return player.resource.leather.gte(MAIN['action']['parchment']['costSecond']())},
         unlocked(){return player.workshop.parchment},
     },
     blueprint: {
@@ -366,12 +366,12 @@ var MainAction = {
             }else{
                 effect = '暂停'
             }
-            let gain = `<br><grey>`+format(main['action']['blueprint']['costSecond']()[0])+colorText('parchment')[1]+`/s + `+format(main['action']['blueprint']['costSecond']()[1])+colorText('knowledge')[1]+`/s -> `+format(main['action']['blueprint']['gainSecond']())+colorText('blueprint')[1]+`/s</grey>`
-            if(n(main['action']['blueprint']['gainSecond']()).eq(0)){
+            let gain = `<br><grey>`+format(MAIN['action']['blueprint']['costSecond']()[0])+colorText('parchment')[1]+`/s + `+format(MAIN['action']['blueprint']['costSecond']()[1])+colorText('knowledge')[1]+`/s -> `+format(MAIN['action']['blueprint']['gainSecond']())+colorText('blueprint')[1]+`/s</grey>`
+            if(n(MAIN['action']['blueprint']['gainSecond']()).eq(0)){
                 gain = ``
             }
             return `将羊皮纸刻画<hr>点击切换制造状态<br>当前: `+effect+`<left><hr>`
-            +format(main['action']['blueprint']['cost']()[0])+colorText('parchment')[1]+` + `+format(main['action']['blueprint']['cost']()[1])+colorText('knowledge')[1]+` -> `+format(main['action']['blueprint']['gain']())+colorText('blueprint')[1]
+            +format(MAIN['action']['blueprint']['cost']()[0])+colorText('parchment')[1]+` + `+format(MAIN['action']['blueprint']['cost']()[1])+colorText('knowledge')[1]+` -> `+format(MAIN['action']['blueprint']['gain']())+colorText('blueprint')[1]
             +gain+`<br></left>`
         },
         cost(){
@@ -380,8 +380,8 @@ var MainAction = {
             return [cost,cost2]
         },
         costSecond(){
-            let cost = main['action']['blueprint']['cost']()[0]
-            let cost2 = main['action']['blueprint']['cost']()[1]
+            let cost = MAIN['action']['blueprint']['cost']()[0]
+            let cost2 = MAIN['action']['blueprint']['cost']()[1]
             return [cost.div(getActionCooldown('blueprint')).mul(getActionAuto('blueprint')),cost2.div(getActionCooldown('blueprint')).mul(getActionAuto('blueprint'))]
         },
         gain(){return n(1)},
@@ -390,7 +390,7 @@ var MainAction = {
                 player.action.blueprint.make = false
                 return n(0)
             }
-            let gain = main['action']['blueprint']['gain']()
+            let gain = MAIN['action']['blueprint']['gain']()
             return gain.div(getActionCooldown('blueprint')).mul(getActionAuto('blueprint'))
         },
         onClick(){},
@@ -405,14 +405,14 @@ var MainAction = {
         },
         handoff(){
             gameOpenMaking('blueprint')
-            if(player.resource.knowledge.lt(main['action']['blueprint']['costSecond']()[0]) && player.resource.parchment.lt(main['action']['blueprint']['costSecond']()[1])){
+            if(player.resource.parchment.lt(MAIN['action']['blueprint']['costSecond']()[0]) && player.resource.knowledge.lt(MAIN['action']['blueprint']['costSecond']()[1])){
                 player.action.blueprint.make = false
             }
         },
         cooldown(){return n(120)},
-        coerciveClick(){return (player.resource.knowledge.gte(main['action']['blueprint']['costSecond']()[0]) && player.resource.parchment.gte(main['action']['blueprint']['costSecond']()[1])) || hasActionClick('blueprint')},
+        coerciveClick(){return (player.resource.parchment.gte(MAIN['action']['blueprint']['costSecond']()[0]) && player.resource.knowledge.gte(MAIN['action']['blueprint']['costSecond']()[1])) || hasActionClick('blueprint')},
         player(){return n(0)},
-        canClick(){return player.resource.knowledge.gte(main['action']['blueprint']['costSecond']()[0]) && player.resource.parchment.gte(main['action']['blueprint']['costSecond']()[1])},
+        canClick(){return player.resource.parchment.gte(MAIN['action']['blueprint']['costSecond']()[0]) && player.resource.knowledge.gte(MAIN['action']['blueprint']['costSecond']()[1])},
         unlocked(){return player.workshop.blueprint},
     },
 }
