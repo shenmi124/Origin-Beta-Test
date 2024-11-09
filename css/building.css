@@ -29,6 +29,7 @@
     display: inline-block;
     position: relative;
     z-index: 3;
+    width: 7px;
     height: 18px;
     left: 176px;
     top: 1px;
@@ -58,6 +59,7 @@
     display: inline-block;
     position: relative;
     z-index: 3;
+    width: 7px;
     height: 18px;
     left: 176px;
     top: 1px;

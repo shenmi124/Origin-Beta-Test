@@ -1,0 +1,6 @@
+.action {
+    display: inline-flex;
+    border: 1px solid rgb(255, 255, 255);
+    border-left: 0px;
+    border-right: 0px;
+}

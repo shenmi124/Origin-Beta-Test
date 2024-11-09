@@ -78,8 +78,18 @@ function loadBase(){
 	}
 	getByID('actionLoadID',actionStr)
 	for(let i in MAIN['action']){
-		getByID(i+'LoadAction',`<br id="`+i+`actionBrID"><a id="`+i+`LoadActionID" style="display: inline-flex"></a><button id="action`+i+`BorderID" class="bar" style="clip-path: inset(0% 0% 0% 0%);"></button>`)
+		getByID(i+'LoadAction',`<br id="`+i+`actionBrID"><a id="`+i+`LoadActionID" class="action"></a><button id="action`+i+`BorderID" class="bar" style="clip-path: inset(0% 0% 0% 0%);"></button>`)
 		componentAction(i)
+	}
+
+	let craftStr = ''
+	for(let i in MAIN['craft']){
+		craftStr += '<a style="transition-duration: 1s;" id='+i+'LoadCraft></a>'
+	}
+	getByID('craftLoadID',craftStr)
+	for(let i in MAIN['craft']){
+		getByID(i+'LoadCraft',`<br id="`+i+`craftBrID"><a id="`+i+`LoadCraftID" class="action"></a><button id="craft`+i+`BorderID" class="bar" style="clip-path: inset(0% 0% 0% 0%);"></button>`)
+		componentCraft(i)
 	}
 
 	let buildingStr = ''
@@ -90,16 +100,6 @@ function loadBase(){
 	for(let i in MAIN['building']){
 		getByID(i+'LoadBuilding',`<br id="`+i+`buildingBrID"><a id="`+i+`LoadBuildingID" style="display: inline-flex; padding-right: 8px"></a>`)
 		componentBuilding(i)
-	}
-
-	let craftStr = ''
-	for(let i in MAIN['craft']){
-		craftStr += '<a style="transition-duration: 1s;" id='+i+'LoadCraft></a>'
-	}
-	getByID('craftLoadID',craftStr)
-	for(let i in MAIN['craft']){
-		getByID(i+'LoadCraft',`<br id="`+i+`craftBrID"><a id="`+i+`LoadCraftID" style="display: inline-flex"></a><button id="craft`+i+`BorderID" class="bar" style="clip-path: inset(0% 0% 0% 0%);"></button>`)
-		componentCraft(i)
 	}
 
 	let citizensStr = ''
