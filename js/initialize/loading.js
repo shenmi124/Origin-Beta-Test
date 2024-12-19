@@ -1,5 +1,5 @@
 document.onreadystatechange=function(){
-    if (document.readyState=="complete"){
+    if(document.readyState=="complete"){
         loadingFade();
     }else{
         loadingGame()
