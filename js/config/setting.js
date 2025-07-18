@@ -162,6 +162,12 @@ var settings = {
 			}
 		},
 	},
+	network: {
+		title(){return '实验性玩法'},
+		name(){return '工坊网状图'},
+		type(){return 'boolean'},
+		boolean(){return false}
+	},
 }
 
 let AUTOSAVETIME = 60

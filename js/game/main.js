@@ -15,10 +15,14 @@ var TABBUTTON = {
                 name(){return "调配"},
                 unlocked(){return true}
             },
-            develop: {
+            workshop: {
                 name(){return "开发"},
                 unlocked(){return true}
-            }
+            },
+            network: {
+                name(){return "网状图"},
+                unlocked(){return player.setting.network}
+            },
         },
         unlocked(){return player.game.stage.gte(4)}
     },

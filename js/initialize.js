@@ -123,15 +123,20 @@ function loadBase(){
 	getByID('CitizensTip', CitizensTip())
 	
 	let workshopStr = ''
-	workshopStr += `工坊<input type="checkbox" onclick="switchWorkshopBought()"><br>`
+	workshopStr += `工坊<input id="workshopInput" type="checkbox" onclick="switchWorkshopBought()"><br>`
 	for(let i in CIVICS['workshop']){
 		workshopStr += '<a style="transition-duration: 1s;" id='+i+'LoadWorkshop></a>'
 	}
-	getByID('developSubtab',workshopStr)
+	getByID('workshopSubtab', workshopStr)
 	for(let i in CIVICS['workshop']){
 		getByID(i+'LoadWorkshop',`<br id="`+i+`workshopBrID"><a style="display: inline-flex;" id="`+i+`LoadWorkshopID"></a> `)
 		componentWorkshop(i)
 	}
+
+	let netwrokStr = ''
+	netwrokStr += '工坊网状图<br><div id="network"></div>'
+	getByID('networkSubtab', netwrokStr)
+	getNetwork()
 }
 
 function loadGame(){

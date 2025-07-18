@@ -1,4 +1,13 @@
 var CivicsWorkshop = {
+    start: {
+        name(){return '起始'},
+        tooltip(){return '一切的开始'},
+        keep(){return true},
+        cost: {
+            idea(){return n(10)},
+        },
+    },
+
     minute: {
         name(){return '沙漏轮翻'},
         keep(){return true},
@@ -18,7 +27,7 @@ var CivicsWorkshop = {
                 1(){return '允许玩家知晓实时游戏分'},
             }
         },
-        unlocked(){return player.workshop.hour}
+        preliminary(){return ['hour']}
     },
     hour: {
         name(){return '日晷渐移'},
@@ -39,7 +48,7 @@ var CivicsWorkshop = {
                 1(){return '允许玩家知晓实时游戏时'},
             }
         },
-        unlocked(){return player.workshop.day}
+        preliminary(){return ['day']}
     },
     day: {
         name(){return '东升西落'},
@@ -60,6 +69,7 @@ var CivicsWorkshop = {
                 1(){return '允许玩家知晓已经进行了多少个游戏日'},
             }
         },
+        preliminary(){return ['start']},
         unlocked(){return player.game.time.gte(144)}
     },
     month: {
@@ -81,7 +91,8 @@ var CivicsWorkshop = {
                 1(){return '允许玩家知晓已经进行了多少个游戏月'},
             }
         },
-        unlocked(){return player.workshop.day && player.game.time.gte(4320)}
+        preliminary(){return ['day']},
+        unlocked(){return player.game.time.gte(4320)}
     },
     year: {
         name(){return '四季轮转'},
@@ -102,7 +113,8 @@ var CivicsWorkshop = {
                 1(){return '允许玩家知晓已经进行了多少个游戏年'},
             }
         },
-        unlocked(){return player.workshop.month && player.game.time.gte(51840)}
+        preliminary(){return ['month']},
+        unlocked(){return player.game.time.gte(51840)}
     },
     pickaxe: {
         name(){return '燧石镐'},
@@ -115,6 +127,7 @@ var CivicsWorkshop = {
         cost: {
             stone(){return n(1)},
         },
+        preliminary(){return ['start']},
     },
     binding: {
         name(){return '绑定结'},
@@ -139,7 +152,7 @@ var CivicsWorkshop = {
             wood(){return n(5)},
             stone(){return n(10)},
         },
-        unlocked(){return player.workshop.pickaxe}
+        preliminary(){return ['pickaxe']}
     },
     mountaineeringPickaxe: {
         name(){return '手杖'},
@@ -172,7 +185,7 @@ var CivicsWorkshop = {
             stone(){return n(30)},
             copper(){return n(2)},
         },
-        unlocked(){return player.workshop.pickaxe}
+        preliminary(){return ['pickaxe']}
     },
     axe: {
         name(){return '燧石斧'},
@@ -186,6 +199,7 @@ var CivicsWorkshop = {
             wood(){return n(5)},
             stone(){return n(30)},
         },
+        preliminary(){return ['start']},
     },
     hoe: {
         name(){return '燧石锄头'},
@@ -202,6 +216,7 @@ var CivicsWorkshop = {
             wood(){return n(200)},
             stone(){return n(50)},
         },
+        preliminary(){return ['start']},
     },
     lumberyards: {
         name(){return '伐木场'},
@@ -221,7 +236,7 @@ var CivicsWorkshop = {
             componentBuilding('lumberyards')
             CitizensFix()
         },
-        unlocked(){return player.workshop.axe && player.action.explore.treeFound}
+        preliminary(){return ['axe', 'treeFound']}
     },
     knife: {
         name(){return '燧石小刀'},
@@ -239,6 +254,7 @@ var CivicsWorkshop = {
             wood(){return n(5)},
             stone(){return n(30)},
         },
+        preliminary(){return ['start']},
     },
     armor: {
         name(){return '护甲'},
@@ -254,6 +270,7 @@ var CivicsWorkshop = {
         cost: {
             leather(){return n(30)},
         },
+        preliminary(){return ['start']},
     },
     clothes: {
         name(){return '皮衣'},
@@ -269,6 +286,7 @@ var CivicsWorkshop = {
         cost: {
             leather(){return n(20)},
         },
+        preliminary(){return ['start']},
     },
     campfire: {
         name(){return '营火'},
@@ -300,7 +318,8 @@ var CivicsWorkshop = {
             nameCorrection('building', 'shelter', '小屋')
             nameCorrection('citiznes', 'explorer', '探险家')
             addLog('*以免你不知道,将鼠标移动到资源,职业等名字上可以看见对应的信息','#888')
-        }
+        },
+        preliminary(){return ['start']},
     },
 
     mine: {
@@ -324,7 +343,7 @@ var CivicsWorkshop = {
             componentBuilding('mine')
             CitizensFix()
         },
-        unlocked(){return player.workshop.campfire}
+        preliminary(){return ['campfire']}
     },
     kiln: {
         name(){return '窑炉'},
@@ -341,7 +360,7 @@ var CivicsWorkshop = {
             player.building.kiln = player.building.kiln.add(1)
             componentBuilding('kiln')
         },
-        unlocked(){return player.workshop.mine}
+        preliminary(){return ['mine']}
     },
     hut: {
         name(){return '木屋'},
@@ -358,7 +377,7 @@ var CivicsWorkshop = {
             player.building.hut = player.building.hut.add(1)
             componentBuilding('hut')
         },
-        unlocked(){return player.workshop.campfire}
+        preliminary(){return ['campfire']}
     },
     brewery: {
         name(){return '酿酒厂'},
@@ -376,7 +395,7 @@ var CivicsWorkshop = {
             player.building.brewery = player.building.brewery.add(1)
             componentBuilding('brewery')
         },
-        unlocked(){return player.workshop.campfire}
+        preliminary(){return ['campfire']}
     },
     circus: {
         name(){return '马戏团'},
@@ -395,7 +414,7 @@ var CivicsWorkshop = {
             componentBuilding('circus')
             CitizensFix()
         },
-        unlocked(){return player.workshop.campfire}
+        preliminary(){return ['campfire']}
     },
     depth: {
         name(){return '深层采集'},
@@ -412,7 +431,7 @@ var CivicsWorkshop = {
         cost: {
             plank(){return n(200)},
         },
-        unlocked(){return player.workshop.mine}
+        preliminary(){return ['mine']}
     },
     supportBeam: {
         name(){return '支撑柱'},
@@ -429,7 +448,7 @@ var CivicsWorkshop = {
         cost: {
             plank(){return n(300)},
         },
-        unlocked(){return player.workshop.mine}
+        preliminary(){return ['mine']}
     },
     fireBrick: {
         name(){return '耐火砖'},
@@ -450,7 +469,7 @@ var CivicsWorkshop = {
         cost: {
             brick(){return n(5)},
         },
-        unlocked(){return player.workshop.kiln}
+        preliminary(){return ['kiln']}
     },
     highTemperature: {
         name(){return '高温生产'},
@@ -471,7 +490,7 @@ var CivicsWorkshop = {
         cost: {
             coal(){return n(150)},
         },
-        unlocked(){return player.workshop.kiln}
+        preliminary(){return ['kiln']}
     },
     highTemperatureProcessing: {
         name(){return '高温炼制'},
@@ -489,7 +508,7 @@ var CivicsWorkshop = {
             knowledge(){return n(200)},
             iron(){return n(20)}
         },
-        unlocked(){return player.workshop.fireBrick && player.workshop.highTemperature}
+        preliminary(){return ['fireBrick', 'highTemperature']}
     },
     steel: {
         name(){return '高炉'},
@@ -508,7 +527,7 @@ var CivicsWorkshop = {
             player.building.steel = player.building.steel.add(1)
             componentBuilding('steel')
         },
-        unlocked(){return player.workshop.fireBrick && player.workshop.highTemperature}
+        preliminary(){return ['fireBrick', 'highTemperature']}
     },
     dryAirBlastlns: {
         name(){return '自然干化法'},
@@ -530,7 +549,7 @@ var CivicsWorkshop = {
             plank(){return n(50)},
             knowledge(){return n(30)},
         },
-        unlocked(){return player.workshop.kiln && player.workshop.knowledge}
+        preliminary(){return ['kiln', 'knowledge']}
     },
     brickReinforcement: {
         name(){return '砖材加固'},
@@ -558,7 +577,7 @@ var CivicsWorkshop = {
         cost: {
             brick(){return n(20)},
         },
-        unlocked(){return player.workshop.kiln}
+        preliminary(){return ['kiln']}
     },
     workshop: {
         name(){return '工坊'},
@@ -576,7 +595,7 @@ var CivicsWorkshop = {
             player.building.workshop = player.building.workshop.add(1)
             componentBuilding('workshop')
         },
-        unlocked(){return player.workshop.kiln}
+        preliminary(){return ['kiln']}
     },
     lance: {
         name(){return '长矛'},
@@ -597,7 +616,7 @@ var CivicsWorkshop = {
             stone(){return n(100)},
             copper(){return n(20)}
         },
-        unlocked(){return player.workshop.workshop}
+        preliminary(){return ['workshop']}
     },
     cooperReinforcement: {
         name(){return '铜材加固'},
@@ -618,7 +637,7 @@ var CivicsWorkshop = {
             brick(){return n(10)},
             copper(){return n(50)},
         },
-        unlocked(){return player.workshop.workshop}
+        preliminary(){return ['workshop']}
     },
     copperShovel: {
         name(){return '铜铲'},
@@ -641,7 +660,7 @@ var CivicsWorkshop = {
         cost: {
             copper(){return n(50)},
         },
-        unlocked(){return player.workshop.workshop}
+        preliminary(){return ['workshop']}
     },
     landImprovement: {
         name(){return '土地改良'},
@@ -657,7 +676,7 @@ var CivicsWorkshop = {
         cost: {
             dirt(){return n(1000)}
         },
-        unlocked(){return player.workshop.copperShovel}
+        preliminary(){return ['copperShovel']}
     },
     copperAxe: {
         name(){return '铜锯'},
@@ -693,7 +712,7 @@ var CivicsWorkshop = {
             copper(){return n(40)},
             plank(){return n(180)}
         },
-        unlocked(){return player.workshop.workshop}
+        preliminary(){return ['workshop']}
     },
     copperPickaxe: {
         name(){return '铜镐'},
@@ -716,7 +735,7 @@ var CivicsWorkshop = {
         cost: {
             copper(){return n(80)}
         },
-        unlocked(){return player.workshop.workshop}
+        preliminary(){return ['workshop']}
     },
     copperPoe: {
         name(){return '耒耜'},
@@ -740,7 +759,7 @@ var CivicsWorkshop = {
             wood(){return n(50)},
             copper(){return n(149)},
         },
-        unlocked(){return player.workshop.workshop}
+        preliminary(){return ['workshop']}
     },
     copperAnvil: {
         name(){return '铜砧'},
@@ -756,7 +775,7 @@ var CivicsWorkshop = {
         cost: {
             copper(){return n(120)}
         },
-        unlocked(){return player.workshop.workshop}
+        preliminary(){return ['workshop']}
     },
     ironReinforcement: {
         name(){return '金属加固'},
@@ -774,7 +793,7 @@ var CivicsWorkshop = {
             copper(){return n(10)},
             iron(){return n(50)},
         },
-        unlocked(){return player.workshop.workshop && player.workshop.highTemperatureProcessing}
+        preliminary(){return ['workshop', 'highTemperatureProcessing']}
     },
     ironShovel: {
         name(){return '金属铲'},
@@ -791,7 +810,7 @@ var CivicsWorkshop = {
             knowledge(){return n(100)},
             iron(){return n(50)},
         },
-        unlocked(){return player.workshop.workshop && player.workshop.highTemperatureProcessing}
+        preliminary(){return ['workshop', 'highTemperatureProcessing']}
     },
     ironAxe: {
         name(){return '金属锯'},
@@ -823,7 +842,7 @@ var CivicsWorkshop = {
             iron(){return n(40)},
             plank(){return n(360)}
         },
-        unlocked(){return player.workshop.workshop && player.workshop.highTemperatureProcessing}
+        preliminary(){return ['workshop', 'highTemperatureProcessing']}
     },
     ironPickaxe: {
         name(){return '金属镐'},
@@ -840,7 +859,7 @@ var CivicsWorkshop = {
             knowledge(){return n(300)},
             iron(){return n(80)}
         },
-        unlocked(){return player.workshop.workshop && player.workshop.highTemperatureProcessing}
+        preliminary(){return ['workshop', 'highTemperatureProcessing']}
     },
     ironAnvil: {
         name(){return '铁砧'},
@@ -857,7 +876,7 @@ var CivicsWorkshop = {
             knowledge(){return n(200)},
             iron(){return n(120)}
         },
-        unlocked(){return player.workshop.workshop && player.workshop.highTemperatureProcessing}
+        preliminary(){return ['workshop', 'highTemperatureProcessing']}
     },
     parchment: {
         name(){return '羊皮纸'},
@@ -874,7 +893,7 @@ var CivicsWorkshop = {
         onBuy(){
             gainResource('parchment', n(MAIN['action']['parchment']['gain']()))
         },
-        unlocked(){return player.workshop.campfire}
+        preliminary(){return ['campfire']}
     },
     map: {
         name(){return '地图'},
@@ -897,7 +916,7 @@ var CivicsWorkshop = {
         onBuy(){
             addLog('效率 不会提升 特殊 一栏下的效果' ,'#888')
         },
-        unlocked(){return player.workshop.parchment && player.workshop.workshop}
+        preliminary(){return ['parchment', 'workshop']}
     },
     compass: {
         name(){return '指南针'},
@@ -917,7 +936,7 @@ var CivicsWorkshop = {
         cost: {
             iron(){return n(5)},
         },
-        unlocked(){return player.workshop.parchment && player.action.explore.magnetFound}
+        preliminary(){return ['parchment', 'magnetFound']}
     },
     knowledge: {
         name(){return '学院'},
@@ -938,7 +957,7 @@ var CivicsWorkshop = {
             componentBuilding('school')
             CitizensFix()
         },
-        unlocked(){return player.workshop.parchment}
+        preliminary(){return ['parchment']}
     },
     blueprint: {
         name(){return '蓝图'},
@@ -955,7 +974,7 @@ var CivicsWorkshop = {
         onBuy(){
             gainResource('blueprint', n(MAIN['action']['blueprint']['gain']()))
         },
-        unlocked(){return player.workshop.knowledge}
+        preliminary(){return ['knowledge']}
     },
     papermaking: {
         name(){return '造纸术'},
@@ -976,7 +995,7 @@ var CivicsWorkshop = {
             parchment(){return n(50)},
             knowledge(){return n(220)},
         },
-        unlocked(){return player.workshop.parchment && player.workshop.knowledge}
+        preliminary(){return ['knowledge']}
     },
     simplifiedMachinery: {
         name(){return '简单机械'},
@@ -995,7 +1014,7 @@ var CivicsWorkshop = {
             iron(){return n(10)},
             blueprint(){return n(1)},
         },
-        unlocked(){return player.workshop.workshop}
+        preliminary(){return ['workshop']}
     },
     pulley: {
         name(){return '吊轮'},
@@ -1021,7 +1040,7 @@ var CivicsWorkshop = {
             iron(){return n(10)},
             blueprint(){return n(3)},
         },
-        unlocked(){return player.workshop.simplifiedMachinery}
+        preliminary(){return ['simplifiedMachinery']}
     },
     truck: {
         name(){return '手推车'},
@@ -1038,7 +1057,7 @@ var CivicsWorkshop = {
             copper(){return n(60)},
             iron(){return n(40)},
         },
-        unlocked(){return player.workshop.simplifiedMachinery}
+        preliminary(){return ['simplifiedMachinery']}
     },
     elevator: {
         name(){return '升降机'},
@@ -1051,7 +1070,7 @@ var CivicsWorkshop = {
             copper(){return n(100)},
             blueprint(){return n(5)},
         },
-        unlocked(){return player.workshop.pulley}
+        preliminary(){return ['pulley']}
     },
     brickHouse: {
         name(){return '砖瓦房'},
@@ -1067,7 +1086,7 @@ var CivicsWorkshop = {
             player.building.brickHouse = player.building.brickHouse.add(1)
             componentBuilding('brickHouse')
         },
-        unlocked(){return player.workshop.pulley && player.workshop.truck}
+        preliminary(){return ['pulley', 'truck']}
     },
     camp: {
         name(){return '营地'},
@@ -1101,7 +1120,7 @@ var CivicsWorkshop = {
         onBuy(){
             getStage(5)
         },
-        unlocked(){return player.workshop.campfire}
+        preliminary(){return ['campfire']}
     },
 }
 

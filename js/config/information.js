@@ -7,8 +7,10 @@ function loadInformation(){
     <br><li-hid><li-hid>TinyColor
     <br><li-hid><li-hid>i18n.js
     <br><li-hid><li-hid>jQ
-    <br><li-hid><li-hid>JavaScript MD5
-    <br><li-hid><li-hid>lz-string<br><br>
+    <br><li-hid><li-hid>lz-string
+    <br><li-hid><li-hid>vis.js
+    <br><li-hid><li-hid>HackTimer
+    <br><br>
     <li-hid>想法源于:<br><li-hid><li-hid>猫国建设者<br><li-hid><li-hid>小黑屋<br><li-hid><li-hid>进化<br><li-hid><li-hid>格雷科技：新视野<br><br>
     <li-hid>感谢:<br><li-hid><li-hid>QwQe308 提供本游戏的存档系统<br><br>
     <li-hid>感谢捐赠者对我的帮助<br><br>

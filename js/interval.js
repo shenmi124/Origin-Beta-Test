@@ -323,14 +323,22 @@ function intervalID(){
 
 	for(let i in CIVICS['workshop']){
 		let unlocked = true
+		let preliminary = true
 		let bought = !player['workshop'][i]
 		if(CIVICS['workshop'][i]['unlocked']!==undefined){
 			unlocked = CIVICS['workshop'][i]['unlocked']()
 		}
+		if(CIVICS['workshop'][i]['preliminary']!==undefined){
+			for(let ip in CIVICS['workshop'][i]['preliminary']()){
+				preliminary = preliminary && player.workshop[CIVICS['workshop'][i]['preliminary']()[ip]]
+			}
+		}
 		if(WORKSHOPBOUGHT){
 			bought = !bought
+			unlocked = true
+			preliminary = true
 		}
-		unlockedLoad(i+'LoadWorkshop', unlocked && bought)
+		unlockedLoad(i+'LoadWorkshop', unlocked && preliminary && bought)
 	}
 
 	getBr()

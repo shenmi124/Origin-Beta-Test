@@ -43,6 +43,60 @@ function switchWorkshopBought(){
 	}
 }
 
+function getNetwork(){
+    let networkNodes = []
+    let networkEdges = []
+
+    for(let i in CIVICS['workshop']){
+        let color = '#000'
+        if(CIVICS['workshop'][i]['keep']!==undefined){
+            if(CIVICS['workshop'][i]['keep']()){
+                color = 'rgb(186, 0, 192)'
+            }
+        }
+        networkNodes.push({id: i, label: CIVICS['workshop'][i]['name'](), color: {border: color}})
+
+        if(CIVICS['workshop'][i]['preliminary']!==undefined){
+            for(let ip in CIVICS['workshop'][i]['preliminary']()){
+                networkEdges.push({from: CIVICS['workshop'][i]['preliminary']()[ip], to: i})
+            }
+        }
+    }
+
+    var nodes = new vis.DataSet(networkNodes)
+    var edges = new vis.DataSet(networkEdges)
+
+    var container = document.getElementById("network");
+    var data = {
+        nodes: nodes,
+        edges: edges,
+    };
+    var options = {
+        nodes: {
+            shape: 'dot',
+            size: 10,
+            color: {
+                border: '#000',
+                background: '#fff',
+                highlight: {
+                    border: '#000',
+                    background: '#fff',
+                }
+            },
+            mass: 2,
+        },
+        edges:{
+            arrows: {
+                to: {
+                    enabled: true,
+                    scaleFactor: 0.8,
+                },
+            },
+        },
+    }
+    var network = new vis.Network(container, data, options);
+}
+
 function Upgrade(id){
     if(!WORKSHOPBOUGHT){
         let canbuy = true
