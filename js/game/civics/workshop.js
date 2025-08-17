@@ -236,7 +236,8 @@ var CivicsWorkshop = {
             componentBuilding('lumberyards')
             CitizensFix()
         },
-        preliminary(){return ['axe', 'treeFound']}
+        unlocked(){return player.action.explore.treeFound},
+        preliminary(){return ['axe']}
     },
     knife: {
         name(){return '燧石小刀'},
