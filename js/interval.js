@@ -47,15 +47,21 @@ function getBr(){
 	let br = -1
 	for(let i in CIVICS['workshop']){
 		let unlocked = true
+		let preliminary = true
 		if(CIVICS['workshop'][i]['unlocked']!==undefined){
 			unlocked = CIVICS['workshop'][i]['unlocked']()
 		}
+		if(CIVICS['workshop'][i]['preliminary']!==undefined){
+			for(let ip in CIVICS['workshop'][i]['preliminary']()){
+				preliminary = preliminary && player.workshop[CIVICS['workshop'][i]['preliminary']()[ip]]
+			}
+		}
 		if(!WORKSHOPBOUGHT){
-			if(unlocked && !player['workshop'][i]){
+			if(unlocked && preliminary && !player['workshop'][i]){
 				br += 1
 			}
 		}else{
-			if(unlocked && player['workshop'][i]){
+			if(unlocked && preliminary && player['workshop'][i]){
 				br += 1
 			}
 		}
